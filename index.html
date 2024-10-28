@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Record System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        /* Basic layout */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .sidebar div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .sidebar div:hover {
+            background-color: #e0e0e0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Content visibility */
+        .hidden {
+            display: none;
+        }
+
+        /* PE tabs */
+        .pe-tabs {
+            margin-bottom: 20px;
+        }
+
+        .pe-tabs span {
+            padding: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+        }
+
+        .pe-tabs span:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pe-content {
+            margin-top: 20px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        /* ICD Search Styles */
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-box {
+            padding: 10px;
+            width: 400px;
+            font-size: 16px;
+            margin-right: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-box:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .highlight {
+            background-color: #fff3cd;
+        }
+        #results {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .count-info {
+            margin-top: 10px;
+            color: #666;
+        }
+        .loading {
+            color: #666;
+            margin-top: 20px;
+        }
+        .min-length-notice {
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head><body>
+    <div class="sidebar">
+        <div data-page="History">History</div>
+        <div data-page="PE">PE</div>
+        <div data-page="ICD_code">ICD Code</div>
+        <div data-page="Plan">Plan</div>
+        <div data-page="Diagnosis">certificate</div>
+        <div data-page="DoctorCode">VS_code</div>
+    </div>
+
+    <div class="main-content">
+        <div id="History" class="content">
+            <div class="section">
+                <p class="mb-2">
+                    The patient who denied systemic disease before. NKA. No op history.
+                </p>
+                <h3>Negative findings:</h3>
+                <p>
+                    chills(-), fever(-), cough(-), sputum(-), hemoptysis(-), chest tightness(-), chest pain(-), refer pain(-), cold sweating(-), SOB(-), DOE(-), PND(-), orthopnea(-), abdominal pain(-), anorexia(-), dysphagia(-), nausea(-), vomiting(-), constipation(-), diarrhea(-),hematemesis(-), tarry stools(-), hematochezia(-), urgency(-), burning sensation(-), frequency(-), dysuria(-), hematuria(-), oligouria(-), body weight loss(-)
+                </p>
+            </div>
+            <div class="section">
+                <h3>TOCC history:</h3>
+                <ul style="padding-left: 20px;">
+                    <li>Occupation:</li>
+                    <li>Cluster/contact history: Nil</li>
+                    <li>Traveling history: Nil</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h3>CAD risk factors:</h3>
+                <p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
+                Old age (-) Male (-) Post menopause (-)</p>
+            </div>
+        </div>
+
+        <div id="PE" class="content hidden">
+    <div class="pe-tabs">
+        <span data-tab="內科">MER</span>
+        <span data-tab="外科">SER</span>
+        <span data-tab="OHCA">OHCA</span>
+    </div>
+
+    <div id="內科" class="pe-content">
+    <p>
+        Consciousness: Clear, GCS: E4M6V5<br>
+        Skin: Normal skin turgor<br>
+        HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br>
+        Neck: Supple. No JVE noted.<br>
+        Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br>
+        Heart: Regular heart beat<br>
+        Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br>
+        Extremities: no skin rash. no edema.<br>
+        MP: 5, all limbs.
+    </p>
+</div>
+
+    <div id="外科" class="pe-content hidden">
+    <p>
+        Consciousness: Clear <br>
+        GCS: E4M6V5, pupil: 2+/2+<br>
+        Neck: Supple.<br>
+        Chest: Symmetrical expension.Wheezing(-)<br>
+        Heart: Regular heart beat<br>
+        Abdomen: Soft. No tenderness.<br>
+        Extremities: Free of ROM. <br>
+        MP: 5, all limbs.
+    </p>
+</div>
+    <div id="OHCA" class="pe-content hidden">
+	<p>
+        Consciousness: Coma GCS: E1M1V1<br>
+        Skin:Normal skin turgor, no skin rash<br>
+        Neck: Supple.no palpable pulsation.<br>
+        Chest: No breath sound.<br>
+        Heart: No heart beat.<br>
+        Abdomen: Soft and ovoid.<br>
+        Extremities: No obvious wound over four limbs.<br>
+        </p>
+</div>
+</div>
+
+        <div id="ICD_code" class="content hidden">
+            <h1>ICD-10-CM 診斷碼搜尋系統</h1>
+            <div class="search-container">
+                <input type="text" 
+                       id="searchInput" 
+                       class="search-box" 
+                       placeholder="請輸入至少2個字元進行搜尋"
+                       oninput="debounceSearch()">
+            </div>
+            <div id="countInfo" class="count-info"></div>
+            <div id="minLengthNotice" class="min-length-notice"></div>
+            <div id="results"></div>
+        </div>
+
+        <div id="Plan" class="content hidden">
+            <p>已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</p>
+            <p>已詳細向病患與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</p>
+	   <p>opd f/u and inform of toxic signs</p>
+        </div>
+
+        <div id="Diagnosis" class="content hidden">
+            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <h2 style="margin-bottom: 24px;">診斷證明書</h2>
+                <p>
+                    病患因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。
+                </p>
+            </div>
+        </div>
+
+        <div id="DoctorCode" class="content hidden">
+    <div class="pe-tabs">
+        <span data-tab="內科">內科</span>
+        <span data-tab="外科">外科</span>
+        <span data-tab="其他">其他</span>
+    </div>
+
+    <div id="內科Code" class="pe-content">
+        <div class="doctor-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px;">
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>林耕民 TRE12</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>孫銘聰 TRE19</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>陳楷文 INT21</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>吳宗叡 INT28</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>鐘培碩 INT36</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>張展源 INT62</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>巴重翰 INT64</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>蔡松樵 INT106</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>呂孟銓 INT117</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="外科Code" class="pe-content hidden">
+        <div class="doctor-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px;">
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>吳逸騹 SUR09</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>王友立 TRE03</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>曾豐仁 SUR11</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>謝長殷 SUR41</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>蘇志偉 SUR46</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>尤仲豪 SUR96</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>郭威廷 SUR118</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>劉家睿 SUR120</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>李則叡 ENT20</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="其他Code" class="pe-content hidden">
+        <div class="doctor-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px;">
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>莊奇憲 AL47</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>許崇智 AL79</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>李嵩濤 AL108</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>簡建文 AL111</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>羅羿凡 AL112</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>歐璿 AL116</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>吳文綺 BS30</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>李宗翰 TRE14</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                <p>龍大永 PED16</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        // 頁面切換功能
+        document.querySelector('.sidebar').addEventListener('click', function(e) {
+            const targetPage = e.target.getAttribute('data-page');
+            if (!targetPage) return;
+            
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(targetPage).classList.remove('hidden');
+        });
+
+        // PE分頁切換功能
+        document.querySelector('.pe-tabs')?.addEventListener('click', function(e) {
+            const targetTab = e.target.getAttribute('data-tab');
+            if (!targetTab) return;
+            
+            document.querySelectorAll('.pe-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(targetTab).classList.remove('hidden');
+        });
+
+        // ICD搜尋功能
+        let csvData = [];
+        let headers = [];
+        let searchTimeout;
+
+        // 載入 CSV 檔案
+        showLoading();
+        fetch('ICD_10_CM.csv')
+            .then(response => response.text())
+            .then(data => {
+                Papa.parse(data, {
+                    complete: function(results) {
+                        csvData = results.data;
+                        headers = csvData[0];
+                        hideLoading();
+                        document.getElementById('minLengthNotice').textContent = 
+                            '請輸入至少2個字元開始搜尋';
+                    }
+                });
+            });
+
+        function showLoading() {
+            document.getElementById('results').innerHTML = 
+                '<div class="loading">載入中，請稍候...</div>';
+        }
+
+        function hideLoading() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        function debounceSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(searchData, 300);
+        }
+
+        function searchData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('countInfo').textContent = '';
+            document.getElementById('minLengthNotice').textContent = '';
+
+            if (searchTerm.length < 2) {
+                document.getElementById('minLengthNotice').textContent = 
+                    '請輸入至少2個字元開始搜尋';
+                return;
+            }
+
+            const filteredData = csvData.filter((row, index) => {
+                if (index === 0) return false;
+                
+                const icdCode = row[0]?.toString().toLowerCase() || '';
+                const icdName = row[1]?.toString().toLowerCase() || '';
+                const icdNameCh = row[2]?.toString().toLowerCase() || '';
+                
+                return icdCode.includes(searchTerm) || 
+                       icdName.includes(searchTerm) || 
+                       icdNameCh.includes(searchTerm);
+            });
+
+            displayData([headers, ...filteredData]);
+        }
+
+        function displayData(data) {
+            if (!data || data.length <= 1) {
+                document.getElementById('results').innerHTML = '<p>找不到符合的結果</p>';
+                document.getElementById('countInfo').textContent = '找到 0 筆符合的資料';
+                return;
+            }
+
+            let table = '<table><thead><tr>';
+            
+            data[0].forEach(header => {
+                table += `<th>${header}</th>`;
+            });
+            
+            table += '</tr></thead><tbody>';
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            for (let i = 1; i < data.length; i++) {
+                table += '<tr>';
+                data[i].forEach(cell => {
+                    const cellContent = cell || '';
+                    const cellStr = cellContent.toString();
+                    if (searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
+                        const highlightedContent = cellStr.replace(
+                            new RegExp(searchTerm, 'gi'),
+                            match => `<mark>${match}</mark>`
+                        );
+                        table += `<td>${highlightedContent}</td>`;
+                    } else {
+                        table += `<td>${cellStr}</td>`;
+                    }
+                });
+                table += '</tr>';
+            }
+
+            table += '</tbody></table>';
+            document.getElementById('results').innerHTML = table;
+            document.getElementById('countInfo').textContent = 
+                `找到 ${data.length - 1} 筆符合的資料`;
+        }
+
+        // 初始顯示第一個分頁
+        document.getElementById('History').classList.remove('hidden');
+document.querySelector('#DoctorCode .pe-tabs')?.addEventListener('click', function(e) {
+    const targetTab = e.target.getAttribute('data-tab');
+    if (!targetTab) return;
+    
+    const contentId = targetTab + 'Code';
+    document.querySelectorAll('#DoctorCode .pe-content').forEach(content => {
+        content.classList.add('hidden');
+    });
+    
+    document.getElementById(contentId)?.classList.remove('hidden');
+});
+
+// Show first tab content by default
+document.getElementById('內科Code')?.classList.remove('hidden');
+    </script>
+</body>
+</html>
