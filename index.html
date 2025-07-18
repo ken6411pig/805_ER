@@ -124,14 +124,14 @@
             font-style: italic;
         }
     </style>
-</head><body>
+</head>
+<body>
     <div class="sidebar">
         <div data-page="History">History</div>
         <div data-page="PE">PE</div>
         <div data-page="ICD_code">ICD Code</div>
         <div data-page="Plan">Plan</div>
-        <div data-page="Diagnosis">certificate</div>
-        <div data-page="DoctorCode">VS_code</div>
+        <div data-page="Diagnosis">Certificate</div>
     </div>
 
     <div class="main-content">
@@ -161,50 +161,51 @@
         </div>
 
         <div id="PE" class="content hidden">
-    <div class="pe-tabs">
-        <span data-tab="內科">MER</span>
-        <span data-tab="外科">SER</span>
-        <span data-tab="OHCA">OHCA</span>
-    </div>
+            <div class="pe-tabs">
+                <span data-tab="內科">MER</span>
+                <span data-tab="外科">SER</span>
+                <span data-tab="OHCA">OHCA</span>
+            </div>
 
-    <div id="內科" class="pe-content">
-    <p>
-        Consciousness: Clear, GCS: E4M6V5<br>
-        Skin: Normal skin turgor<br>
-        HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br>
-        Neck: Supple. No JVE noted.<br>
-        Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br>
-        Heart: Regular heart beat<br>
-        Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br>
-        Extremities: no skin rash. no edema.<br>
-        MP: 5, all limbs.
-    </p>
-</div>
+            <div id="內科" class="pe-content">
+                <p>
+                    Consciousness: Clear, GCS: E4M6V5<br>
+                    Skin: Normal skin turgor<br>
+                    HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br>
+                    Neck: Supple. No JVE noted.<br>
+                    Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br>
+                    Heart: Regular heart beat<br>
+                    Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br>
+                    Extremities: no skin rash. no edema.<br>
+                    MP: 5, all limbs.
+                </p>
+            </div>
 
-    <div id="外科" class="pe-content hidden">
-    <p>
-        Consciousness: Clear <br>
-        GCS: E4M6V5, pupil: 2+/2+<br>
-        Neck: Supple.<br>
-        Chest: Symmetrical expension.Wheezing(-)<br>
-        Heart: Regular heart beat<br>
-        Abdomen: Soft. No tenderness.<br>
-        Extremities: Free of ROM. <br>
-        MP: 5, all limbs.
-    </p>
-</div>
-    <div id="OHCA" class="pe-content hidden">
-	<p>
-        Consciousness: Coma GCS: E1M1V1<br>
-        Skin:Normal skin turgor, no skin rash<br>
-        Neck: Supple.no palpable pulsation.<br>
-        Chest: No breath sound.<br>
-        Heart: No heart beat.<br>
-        Abdomen: Soft and ovoid.<br>
-        Extremities: No obvious wound over four limbs.<br>
-        </p>
-</div>
-</div>
+            <div id="外科" class="pe-content hidden">
+                <p>
+                    Consciousness: Clear <br>
+                    GCS: E4M6V5, pupil: 2+/2+<br>
+                    Neck: Supple.<br>
+                    Chest: Symmetrical expension.Wheezing(-)<br>
+                    Heart: Regular heart beat<br>
+                    Abdomen: Soft. No tenderness.<br>
+                    Extremities: Free of ROM. <br>
+                    MP: 5, all limbs.
+                </p>
+            </div>
+
+            <div id="OHCA" class="pe-content hidden">
+                <p>
+                    Consciousness: Coma GCS: E1M1V1<br>
+                    Skin:Normal skin turgor, no skin rash<br>
+                    Neck: Supple.no palpable pulsation.<br>
+                    Chest: No breath sound.<br>
+                    Heart: No heart beat.<br>
+                    Abdomen: Soft and ovoid.<br>
+                    Extremities: No obvious wound over four limbs.<br>
+                </p>
+            </div>
+        </div>
 
         <div id="ICD_code" class="content hidden">
             <h1>ICD-10-CM 診斷碼搜尋系統</h1>
@@ -223,121 +224,18 @@
         <div id="Plan" class="content hidden">
             <p>已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</p>
             <p>已詳細向病患與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</p>
-	   <p>opd f/u and inform of toxic signs</p>
+            <p>opd f/u and inform of toxic signs</p>
         </div>
 
         <div id="Diagnosis" class="content hidden">
             <div style="max-width: 600px; margin: 0 auto; text-align: center;">
                 <h2 style="margin-bottom: 24px;">診斷證明書</h2>
-                <p>
+                <p id="certificateText">
                     病患因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。
                 </p>
             </div>
         </div>
-
-        <div id="DoctorCode" class="content hidden">
-    <div class="pe-tabs">
-        <span data-tab="內科">內科</span>
-        <span data-tab="外科">外科</span>
-        <span data-tab="其他">其他</span>
     </div>
-
-    <div id="內科Code" class="pe-content">
-        <div class="doctor-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px;">
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>林耕民 TRE12</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>孫銘聰 TRE19</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>陳楷文 INT21</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>吳宗叡 INT28</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>鐘培碩 INT36</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>張展源 INT62</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>巴重翰 INT64</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>蔡松樵 INT106</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>呂孟銓 INT117</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="外科Code" class="pe-content hidden">
-        <div class="doctor-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px;">
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>吳逸騹 SUR09</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>王友立 TRE03</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>曾豐仁 SUR11</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>謝長殷 SUR41</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>蘇志偉 SUR46</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>尤仲豪 SUR96</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>郭威廷 SUR118</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>劉家睿 SUR120</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>李則叡 ENT20</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="其他Code" class="pe-content hidden">
-        <div class="doctor-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px;">
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>莊奇憲 AL47</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>許崇智 AL79</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>李嵩濤 AL108</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>簡建文 AL111</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>羅羿凡 AL112</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>歐璿 AL116</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>吳文綺 BS30</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>李宗翰 TRE14</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                <p>龍大永 PED16</p>
-            </div>
-        </div>
-    </div>
-</div>
 
     <script>
         // 頁面切換功能
@@ -350,6 +248,11 @@
             });
             
             document.getElementById(targetPage).classList.remove('hidden');
+            
+            // 如果切換到 Certificate 頁面，重新載入時間
+            if (targetPage === 'Diagnosis') {
+                updateCertificateDate();
+            }
         });
 
         // PE分頁切換功能
@@ -467,22 +370,29 @@
                 `找到 ${data.length - 1} 筆符合的資料`;
         }
 
+        // 自動填入診斷證明書的日期
+        function updateCertificateDate() {
+            const today = new Date();
+            const taiwanYear = today.getFullYear() - 1911; // 民國年
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+            const hours = today.getHours();
+            const minutes = today.getMinutes();
+            
+            // 格式化時間（補0）
+            const formattedHours = hours.toString().padStart(2, '0');
+            const formattedMinutes = minutes.toString().padStart(2, '0');
+            
+            // 更新證明書文字
+            const certificateText = `病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。`;
+            document.getElementById('certificateText').textContent = certificateText;
+        }
+
         // 初始顯示第一個分頁
         document.getElementById('History').classList.remove('hidden');
-document.querySelector('#DoctorCode .pe-tabs')?.addEventListener('click', function(e) {
-    const targetTab = e.target.getAttribute('data-tab');
-    if (!targetTab) return;
-    
-    const contentId = targetTab + 'Code';
-    document.querySelectorAll('#DoctorCode .pe-content').forEach(content => {
-        content.classList.add('hidden');
-    });
-    
-    document.getElementById(contentId)?.classList.remove('hidden');
-});
-
-// Show first tab content by default
-document.getElementById('內科Code')?.classList.remove('hidden');
+        
+        // 頁面載入時執行日期填入
+        updateCertificateDate();
     </script>
 </body>
 </html>
