@@ -147,12 +147,12 @@
 </head>
 <body>
 <div class="sidebar">
-<div onclick="showPage('History')">History</div>
-<div onclick="showPage('PE')">PE</div>
-<div onclick="showPage('ICD_code')">ICD Code</div>
-<div onclick="showPage('Plan')">Plan</div>
-<div onclick="showPage('Diagnosis')">Certificate</div>
-<div onclick="showPage('Surgery_ICD')">外傷ICD 代碼速查</div>
+    <div data-page="History">History</div>
+    <div data-page="PE">PE</div>
+    <div data-page="ICD_code">ICD Code</div>
+    <div data-page="Plan">Plan</div>
+    <div data-page="Diagnosis">Certificate</div>
+    <div data-page="Surgery_ICD">外傷ICD 代碼速查</div>
 </div>
 <div class="main-content">
 <div class="content" id="History">
@@ -652,148 +652,140 @@
 </div>
 </div>
 
-<script>
-        let historyData = [];
-        let peHistoryData = [];
-        let pePhysicalExamData = [];
-        let peImpressionData = [];
-        let pePlanData = [];
-        let surgeryICDData = [];
-
-        async function loadCSV(file, targetArray) {
-            try {
-                const response = await fetch(file);
-                const csvText = await response.text();
-                PapaParse.parse(csvText, {
-                    header: true,
-                    complete: function(results) {
-                        targetArray.push(...results.data);
-                    },
-                    error: function(err) {
-                        console.error('Error parsing CSV:', err);
-                    }
-                });
-            } catch (error) {
-                console.error('Error fetching CSV:', error);
+    <script>
+        // 頁面切換功能
+        document.querySelector('.sidebar').addEventListener('click', function(e) {
+            const targetPage = e.target.getAttribute('data-page');
+            if (!targetPage) return;
+            
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(targetPage).classList.remove('hidden');
+            
+            // 如果切換到 Certificate 頁面，重新載入時間
+            if (targetPage === 'Diagnosis') {
+                updateCertificateDate();
             }
-        }
-
-        // Load all CSVs on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadCSV('History_ICD.csv', historyData);
-            await loadCSV('PE_History.csv', peHistoryData);
-            await loadCSV('PE_Physical_Exam.csv', pePhysicalExamData);
-            await loadCSV('PE_Impression.csv', peImpressionData);
-            await loadCSV('PE_Plan.csv', pePlanData);
-            await loadCSV('Surgery_ICD.csv', surgeryICDData);
-            showPage('History'); // Show the initial page
-            updateCertificateDate(); // Update certificate date on load
         });
 
-        function showPage(pageId) {
-            const pages = document.querySelectorAll('.content');
-            pages.forEach(page => page.classList.add('hidden'));
-            document.getElementById(pageId).classList.remove('hidden');
+        // PE分頁切換功能
+        document.querySelector('.pe-tabs')?.addEventListener('click', function(e) {
+            const targetTab = e.target.getAttribute('data-tab');
+            if (!targetTab) return;
+            
+            document.querySelectorAll('.pe-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(targetTab).classList.remove('hidden');
+        });
 
-            // Handle active sidebar link
-            const sidebarDivs = document.querySelectorAll('.sidebar div');
-            sidebarDivs.forEach(div => div.classList.remove('active'));
-            document.querySelector(`.sidebar div[onclick="showPage('${pageId}')"]`).classList.add('active'); // Changed selector
+        // ICD搜尋功能
+        let csvData = [];
+        let headers = [];
+        let searchTimeout;
 
-            // For PE, ensure the default tab is active and visible
-            if (pageId === 'PE') {
-                showPETab('內科'); // Default to '內科' tab
-            }
-        }
-
-        function showPETab(tabId) {
-            const tabs = document.querySelectorAll('.pe-tabs span');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            document.querySelector(`.pe-tabs span[data-tab="${tabId}"]`).classList.add('active');
-
-            const tabContents = document.querySelectorAll('.pe-content');
-            tabContents.forEach(content => content.classList.add('hidden'));
-            document.getElementById(tabId).classList.remove('hidden');
-        }
-
-        function highlightText(text, query) {
-            if (!query) return text;
-            const regex = new RegExp(`(${query})`, 'gi');
-            return text.replace(regex, '<mark>$1</mark>');
-        }
-
-        // ICD Code search (original implementation, unchanged)
-        let icdData = []; // Assuming ICD_10_CM.csv data will be loaded here
-        async function loadICDCSV() {
-            try {
-                const response = await fetch('ICD_Code.csv');
-                const csvText = await response.text();
-                PapaParse.parse(csvText, {
-                    header: true,
+        // 載入 CSV 檔案
+        showLoading();
+        fetch('ICD_10_CM.csv')
+            .then(response => response.text())
+            .then(data => {
+                Papa.parse(data, {
                     complete: function(results) {
-                        icdData = results.data;
-                        document.getElementById('minLengthNotice').textContent = '資料載入完成，請輸入至少2個字元進行搜尋。';
-                    },
-                    error: function(err) {
-                        console.error('Error parsing ICD_10_CM.csv:', err);
-                        document.getElementById('minLengthNotice').textContent = '資料載入失敗。';
+                        csvData = results.data;
+                        headers = csvData[0];
+                        hideLoading();
+                        document.getElementById('minLengthNotice').textContent = 
+                            '請輸入至少2個字元開始搜尋';
                     }
                 });
-            } catch (error) {
-                console.error('Error fetching ICD_10_CM.csv:', error);
-                document.getElementById('minLengthNotice').textContent = '資料載入失敗。';
-            }
+            });
+
+        function showLoading() {
+            document.getElementById('results').innerHTML = 
+                '<div class="loading">載入中，請稍候...</div>';
         }
 
-        let searchTimeout;
+        function hideLoading() {
+            document.getElementById('results').innerHTML = '';
+        }
+
         function debounceSearch() {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(searchICDCode, 300); // 300ms debounce
+            searchTimeout = setTimeout(searchData, 300);
         }
 
-        function searchICDCode() {
-            const query = document.getElementById('searchInput').value.trim();
-            const resultsDiv = document.getElementById('results');
-            const countInfoDiv = document.getElementById('countInfo');
-            const minLengthNotice = document.getElementById('minLengthNotice');
+        function searchData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('countInfo').textContent = '';
+            document.getElementById('minLengthNotice').textContent = '';
 
-            resultsDiv.innerHTML = ''; // Clear previous results
-            countInfoDiv.textContent = ''; // Clear previous count info
-            minLengthNotice.textContent = ''; // Clear previous notice
-
-            if (query.length < 2) {
-                minLengthNotice.textContent = '請輸入至少2個字元進行搜尋。';
+            if (searchTerm.length < 2) {
+                document.getElementById('minLengthNotice').textContent = 
+                    '請輸入至少2個字元開始搜尋';
                 return;
             }
 
-            const lowerCaseQuery = query.toLowerCase();
-            const filteredData = icdData.filter(row => {
-                const code = row['ICD-10-CM'] ? String(row['ICD-10-CM']).toLowerCase() : '';
-                const description = row['內容'] ? String(row['內容']).toLowerCase() : '';
-                return code.includes(lowerCaseQuery) || description.includes(lowerCaseQuery);
+            const filteredData = csvData.filter((row, index) => {
+                if (index === 0) return false;
+                
+                const icdCode = row[0]?.toString().toLowerCase() || '';
+                const icdName = row[1]?.toString().toLowerCase() || '';
+                const icdNameCh = row[2]?.toString().toLowerCase() || '';
+                
+                return icdCode.includes(searchTerm) || 
+                       icdName.includes(searchTerm) || 
+                       icdNameCh.includes(searchTerm);
             });
 
-            if (filteredData.length > 0) {
-                let table = '<table><thead><tr><th>ICD-10-CM</th><th>內容</th></tr></thead><tbody>';
-                filteredData.forEach(row => {
-                    const code = row['ICD-10-CM'] ? String(row['ICD-10-CM']) : '';
-                    const description = row['內容'] ? String(row['內容']) : '';
-                    table += `<tr>
-                                <td>${highlightText(code, query)}</td>
-                                <td>${highlightText(description, query)}</td>
-                            </tr>`;
-                });
-                table += '</tbody></table>';
-                resultsDiv.innerHTML = table;
-                countInfoDiv.textContent = `找到 ${filteredData.length} 筆符合的資料`;
-            } else {
-                resultsDiv.innerHTML = '<p>沒有找到符合的資料。</p>';
-                countInfoDiv.textContent = '';
-            }
+            displayData([headers, ...filteredData]);
         }
 
+        function displayData(data) {
+            if (!data || data.length <= 1) {
+                document.getElementById('results').innerHTML = '<p>找不到符合的結果</p>';
+                document.getElementById('countInfo').textContent = '找到 0 筆符合的資料';
+                return;
+            }
 
-        // Automatically fill certificate date
+            let table = '<table><thead><tr>';
+            
+            data[0].forEach(header => {
+                table += `<th>${header}</th>`;
+            });
+            
+            table += '</tr></thead><tbody>';
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            for (let i = 1; i < data.length; i++) {
+                table += '<tr>';
+                data[i].forEach(cell => {
+                    const cellContent = cell || '';
+                    const cellStr = cellContent.toString();
+                    if (searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
+                        const highlightedContent = cellStr.replace(
+                            new RegExp(searchTerm, 'gi'),
+                            match => `<mark>${match}</mark>`
+                        );
+                        table += `<td>${highlightedContent}</td>`;
+                    } else {
+                        table += `<td>${cellStr}</td>`;
+                    }
+                });
+                table += '</tr>';
+            }
+
+            table += '</tbody></table>';
+            document.getElementById('results').innerHTML = table;
+            document.getElementById('countInfo').textContent = 
+                `找到 ${data.length - 1} 筆符合的資料`;
+        }
+
+        // 自動填入診斷證明書的日期
         function updateCertificateDate() {
             const today = new Date();
             const taiwanYear = today.getFullYear() - 1911; // 民國年
@@ -802,21 +794,20 @@
             const hours = today.getHours();
             const minutes = today.getMinutes();
             
-            // Format time (add leading zeros)
+            // 格式化時間（補0）
             const formattedHours = hours.toString().padStart(2, '0');
             const formattedMinutes = minutes.toString().padStart(2, '0');
             
-            // Update certificate text
+            // 更新證明書文字
             const certificateText = `病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。`;
             document.getElementById('certificateText').textContent = certificateText;
         }
 
-        // Initial display of the first page and load ICD data
-        document.addEventListener('DOMContentLoaded', () => {
-            showPage('History');
-            updateCertificateDate();
-            loadICDCSV(); // Load ICD data when DOM is ready
-        });
+        // 初始顯示第一個分頁
+        document.getElementById('History').classList.remove('hidden');
+        
+        // 頁面載入時執行日期填入
+        updateCertificateDate();
     </script>
 </body>
 </html>
