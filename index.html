@@ -149,7 +149,7 @@
 <div class="sidebar">
 <div onclick="showPage('History')">History</div>
 <div onclick="showPage('PE')">PE</div>
-<div onclick="showPage('ICD_code')">ICD-10 搜尋系統</div>
+<div onclick="showPage('ICD_code')">ICD Code</div>
 <div onclick="showPage('Plan')">Plan</div>
 <div onclick="showPage('Diagnosis')">Certificate</div>
 <div onclick="showPage('Surgery_ICD')">外傷ICD 代碼速查</div>
@@ -723,7 +723,7 @@
         }
 
         // ICD Code search (original implementation, unchanged)
-        let icdData = []; // Assuming ICD_Code.csv data will be loaded here
+        let icdData = []; // Assuming ICD_10_CM.csv data will be loaded here
         async function loadICDCSV() {
             try {
                 const response = await fetch('ICD_Code.csv');
@@ -735,12 +735,12 @@
                         document.getElementById('minLengthNotice').textContent = '資料載入完成，請輸入至少2個字元進行搜尋。';
                     },
                     error: function(err) {
-                        console.error('Error parsing ICD_Code.csv:', err);
+                        console.error('Error parsing ICD_10_CM.csv:', err);
                         document.getElementById('minLengthNotice').textContent = '資料載入失敗。';
                     }
                 });
             } catch (error) {
-                console.error('Error fetching ICD_Code.csv:', error);
+                console.error('Error fetching ICD_10_CM.csv:', error);
                 document.getElementById('minLengthNotice').textContent = '資料載入失敗。';
             }
         }
