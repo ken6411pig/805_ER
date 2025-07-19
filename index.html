@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Record System</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Medical Record System</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<style>
         /* Basic layout */
         body {
             margin: 0;
@@ -34,6 +35,7 @@
             flex: 1;
             padding: 20px;
             overflow-y: auto;
+            overflow-x: auto; /* Allow horizontal scrolling */
         }
 
         /* Content visibility */
@@ -123,254 +125,675 @@
             margin-top: 10px;
             font-style: italic;
         }
-    </style>
+    
+        /* Surgery ICD table styles */
+        .surgery-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+            table-layout: auto; /* Allows columns to auto-size based on content */
+        }
+
+        .surgery-table td, .surgery-table th {
+            padding: 10px;
+            border: 1px solid #ccc;
+            word-break: break-word; /* Still useful for extremely long single words */
+            vertical-align: top;
+            text-align: left;
+            white-space: nowrap; /* Ensures text stays on a single line */
+        }
+</style>
 </head>
 <body>
-    <div class="sidebar">
-        <div data-page="History">History</div>
-        <div data-page="PE">PE</div>
-        <div data-page="ICD_code">ICD Code</div>
-        <div data-page="Plan">Plan</div>
-        <div data-page="Diagnosis">Certificate</div>
-    </div>
-
-    <div class="main-content">
-        <div id="History" class="content">
-            <div class="section">
-                <p class="mb-2">
+<div class="sidebar">
+<div onclick="showPage('History')">History</div>
+<div onclick="showPage('PE')">PE</div>
+<div onclick="showPage('ICD_code')">ICD-10 搜尋系統</div>
+<div onclick="showPage('Plan')">Plan</div>
+<div onclick="showPage('Diagnosis')">Certificate</div>
+<div onclick="showPage('Surgery_ICD')">外傷ICD 代碼速查</div>
+</div>
+<div class="main-content">
+<div class="content" id="History">
+<div class="section">
+<p class="mb-2">
                     The patient who denied systemic disease before. NKA. No op history.
                 </p>
-                <h3>Negative findings:</h3>
-                <p>
+<h3>Negative findings:</h3>
+<p>
                     chills(-), fever(-), cough(-), sputum(-), hemoptysis(-), chest tightness(-), chest pain(-), refer pain(-), cold sweating(-), SOB(-), DOE(-), PND(-), orthopnea(-), abdominal pain(-), anorexia(-), dysphagia(-), nausea(-), vomiting(-), constipation(-), diarrhea(-),hematemesis(-), tarry stools(-), hematochezia(-), urgency(-), burning sensation(-), frequency(-), dysuria(-), hematuria(-), oligouria(-), body weight loss(-)
                 </p>
-            </div>
-            <div class="section">
-                <h3>TOCC history:</h3>
-                <ul style="padding-left: 20px;">
-                    <li>Occupation:</li>
-                    <li>Cluster/contact history: Nil</li>
-                    <li>Traveling history: Nil</li>
-                </ul>
-            </div>
-            <div class="section">
-                <h3>CAD risk factors:</h3>
-                <p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
+</div>
+<div class="section">
+<h3>TOCC history:</h3>
+<ul style="padding-left: 20px;">
+<li>Occupation:</li>
+<li>Cluster/contact history: Nil</li>
+<li>Traveling history: Nil</li>
+</ul>
+</div>
+<div class="section">
+<h3>CAD risk factors:</h3>
+<p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
                 Old age (-) Male (-) Post menopause (-)</p>
-            </div>
-        </div>
-
-        <div id="PE" class="content hidden">
-            <div class="pe-tabs">
-                <span data-tab="內科">MER</span>
-                <span data-tab="外科">SER</span>
-                <span data-tab="OHCA">OHCA</span>
-            </div>
-
-            <div id="內科" class="pe-content">
-                <p>
-                    Consciousness: Clear, GCS: E4M6V5<br>
-                    Skin: Normal skin turgor<br>
-                    HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br>
-                    Neck: Supple. No JVE noted.<br>
-                    Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br>
-                    Heart: Regular heart beat<br>
-                    Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br>
-                    Extremities: no skin rash. no edema.<br>
+</div>
+</div>
+<div class="content hidden" id="PE">
+<div class="pe-tabs">
+<span data-tab="內科" onclick="showPETab('內科')">MER</span>
+<span data-tab="外科" onclick="showPETab('外科')">SER</span>
+<span data-tab="OHCA" onclick="showPETab('OHCA')">OHCA</span>
+</div>
+<div class="pe-content" id="內科">
+<p>
+                    Consciousness: Clear, GCS: E4M6V5<br/>
+                    Skin: Normal skin turgor<br/>
+                    HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br/>
+                    Neck: Supple. No JVE noted.<br/>
+                    Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br/>
+                    Heart: Regular heart beat<br/>
+                    Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br/>
+                    Extremities: no skin rash. no edema.<br/>
                     MP: 5, all limbs.
                 </p>
-            </div>
-
-            <div id="外科" class="pe-content hidden">
-                <p>
-                    Consciousness: Clear <br>
-                    GCS: E4M6V5, pupil: 2+/2+<br>
-                    Neck: Supple.<br>
-                    Chest: Symmetrical expension.Wheezing(-)<br>
-                    Heart: Regular heart beat<br>
-                    Abdomen: Soft. No tenderness.<br>
-                    Extremities: Free of ROM. <br>
+</div>
+<div class="pe-content hidden" id="外科">
+<p>
+                    Consciousness: Clear <br/>
+                    GCS: E4M6V5, pupil: 2+/2+<br/>
+                    Neck: Supple.<br/>
+                    Chest: Symmetrical expension.Wheezing(-)<br/>
+                    Heart: Regular heart beat<br/>
+                    Abdomen: Soft. No tenderness.<br/>
+                    Extremities: Free of ROM. <br/>
                     MP: 5, all limbs.
                 </p>
-            </div>
-
-            <div id="OHCA" class="pe-content hidden">
-                <p>
-                    Consciousness: Coma GCS: E1M1V1<br>
-                    Skin:Normal skin turgor, no skin rash<br>
-                    Neck: Supple.no palpable pulsation.<br>
-                    Chest: No breath sound.<br>
-                    Heart: No heart beat.<br>
-                    Abdomen: Soft and ovoid.<br>
-                    Extremities: No obvious wound over four limbs.<br>
-                </p>
-            </div>
-        </div>
-
-        <div id="ICD_code" class="content hidden">
-            <h1>ICD-10-CM 診斷碼搜尋系統</h1>
-            <div class="search-container">
-                <input type="text" 
-                       id="searchInput" 
-                       class="search-box" 
-                       placeholder="請輸入至少2個字元進行搜尋"
-                       oninput="debounceSearch()">
-            </div>
-            <div id="countInfo" class="count-info"></div>
-            <div id="minLengthNotice" class="min-length-notice"></div>
-            <div id="results"></div>
-        </div>
-
-        <div id="Plan" class="content hidden">
-            <p>已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</p>
-            <p>已詳細向病患與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</p>
-            <p>opd f/u and inform of toxic signs</p>
-        </div>
-
-        <div id="Diagnosis" class="content hidden">
-            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-                <h2 style="margin-bottom: 24px;">診斷證明書</h2>
-                <p id="certificateText">
+</div>
+<div class="pe-content hidden" id="OHCA">
+<p>
+                    Consciousness: Coma GCS: E1M1V1<br/>
+                    Skin:Normal skin turgor, no skin rash<br/>
+                    Neck: Supple.no palpable pulsation.<br/>
+                    Chest: No breath sound.<br/>
+                    Heart: No heart beat.<br/>
+                    Abdomen: Soft and ovoid.<br/>
+                    Extremities: No obvious wound over four limbs.<br/>
+</p>
+</div>
+</div>
+<div class="content hidden" id="ICD_code">
+<h1>ICD-10-CM 診斷碼搜尋系統</h1>
+<div class="search-container">
+<input class="search-box" id="searchInput" oninput="debounceSearch()" placeholder="請輸入至少2個字元進行搜尋" type="text"/>
+</div>
+<div class="count-info" id="countInfo"></div>
+<div class="min-length-notice" id="minLengthNotice"></div>
+<div id="results"></div>
+</div>
+<div class="content hidden" id="Plan">
+<p>已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</p>
+<p>已詳細向病患與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</p>
+<p>opd f/u and inform of toxic signs</p>
+</div>
+<div class="content hidden" id="Diagnosis">
+<div style="max-width: 600px; margin: 0 auto; text-align: center;">
+<h2 style="margin-bottom: 24px;">診斷證明書</h2>
+<p id="certificateText">
                     病患因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。
                 </p>
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+<div class="content hidden" id="Surgery_ICD">
+    <table border="0" cellpadding="0" cellspacing="0" class="surgery-table">
+        <colgroup>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+            <col span="2"/>
+            <col/>
+            <col span="5"/>
+        </colgroup>
+        <thead>
+            <tr height="22">
+                <td class="xl67" colspan="5" height="22">急診醫學外傷部位 ICD-10 代碼速查表</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">部位</td>
+                <td class="xl69">A/W</td>
+                <td class="xl69">L/W</td>
+                <td class="xl69">Contusion</td>
+                <td class="xl69">Fr.</td>
+                <td class="xl69">Crush</td>
+                <td class="xl69">Burn</td>
+                <td class="xl69">Dislocation</td>
+                <td class="xl69">Sprain</td>
+                <td class="xl69">Strain</td>
+                <td class="xl69">Cellulitis</td>
+                <td class="xl69">OA</td>
+                <td class="xl70">M1990</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr height="23">
+                <td class="xl68" height="23">頭</td>
+                <td class="xl70">S0001XA</td>
+                <td class="xl70">S0101XA</td>
+                <td class="xl70">S0093XA</td>
+                <td class="xl70">S0291XA</td>
+                <td class="xl70">S078XXA</td>
+                <td class="xl70">T2009XA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">S039XXA</td>
+                <td class="xl70">S0911XA</td>
+                <td class="xl70">L03811</td>
+                <td class="xl75">咬傷</td>
+                <td class="xl75">放最後</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">臉</td>
+                <td class="xl70">S0081XA</td>
+                <td class="xl70">S01419A</td>
+                <td class="xl70">S0993XA</td>
+                <td class="xl70">S0292XA</td>
+                <td class="xl70">S070XXA</td>
+                <td class="xl70">T2009XA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">L03211</td>
+                <td class="xl75">鼠</td>
+                <td class="xl70">W5311XA</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">鼻</td>
+                <td class="xl70">S0031XA</td>
+                <td class="xl70">S0121XA</td>
+                <td class="xl70">S0033XA</td>
+                <td class="xl70">S022XA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">T2004XA</td>
+                <td class="xl70">S031XXA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70"><font class="font11">頸</font><font class="font7">L03221</font></td>
+                <td class="xl75">狗</td>
+                <td class="xl70">W540XXA</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">耳</td>
+                <td class="xl70">S00149A</td>
+                <td class="xl70">S01319A</td>
+                <td class="xl70">S00439A</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">T20019A</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">H6010</td>
+                <td class="xl75">貓</td>
+                <td class="xl70">W5501XA</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">口</td>
+                <td class="xl70">S00512A</td>
+                <td class="xl70">S01511A</td>
+                <td class="xl70">S00532A</td>
+                <td class="xl70"><font class="font11">鎖</font><font class="font7">S42009A</font></td>
+                <td class="xl70">　</td>
+                <td class="xl70">T280XXA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">K122</td>
+                <td class="xl75">哺乳類</td>
+                <td class="xl70">W5581XA</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">肩</td>
+                <td class="xl70">S40219A</td>
+                <td class="xl70">S41019A</td>
+                <td class="xl70">S40019A</td>
+                <td class="xl70">M84319A</td>
+                <td class="xl70">S479XXA</td>
+                <td class="xl70">T22059A</td>
+                <td class="xl70">S43006A</td>
+                <td class="xl70">S43409A</td>
+                <td class="xl70">S46019A</td>
+                <td class="xl70">　</td>
+                <td class="xl75">魚</td>
+                <td class="xl70">W5651XA</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">上臂</td>
+                <td class="xl70">S40819A</td>
+                <td class="xl70">S41109A</td>
+                <td class="xl70">S40029A</td>
+                <td class="xl70">肱<font class="font7">S42209A</font></td>
+                <td class="xl70">S479XXA</td>
+                <td class="xl70">T22039A</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">S46919A</td>
+                <td class="xl70">　</td>
+                <td class="xl75">蜂</td>
+                <td class="xl70">T63444A</td>
+            </tr>
+            <tr height="35">
+                <td class="xl68" height="35">肘</td>
+                <td class="xl70">S50319A</td>
+                <td class="xl70">S51019A</td>
+                <td class="xl70">S5000XA</td>
+                <td class="xl70">尺<font class="font7">S52009A<br/>
+</font><font class="font8">橈</font><font class="font7">S52109A</font></td>
+                <td class="xl70">S5700XA</td>
+                <td class="xl70">T22029A</td>
+                <td class="xl70"><font class="font11">橈</font><font class="font7">S53006A</font></td>
+                <td class="xl70">S53409A</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl75">黃蜂</td>
+                <td class="xl70">T63454A</td>
+            </tr>
+            <tr height="35">
+                <td class="xl68" height="35">前臂</td>
+                <td class="xl70">S50819A</td>
+                <td class="xl70">S51819A</td>
+                <td class="xl70">S5010XA</td>
+                <td class="xl70">尺<font class="font7">S52609A<br/>
+</font><font class="font8">橈</font><font class="font7">S52509A</font></td>
+                <td class="xl70">S5780XA</td>
+                <td class="xl70">T22019A</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl70">S56919A</td>
+                <td class="xl70">　</td>
+                <td class="xl75">蜈蚣</td>
+                <td class="xl70">T63414A</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">腕</td>
+                <td class="xl70">S60819A</td>
+                <td class="xl70">S61519A</td>
+                <td class="xl70">S60219A</td>
+                <td class="xl70">S62109A</td>
+                <td class="xl70">S6730XA</td>
+                <td class="xl70">T23079A</td>
+                <td class="xl70">S63006A</td>
+                <td class="xl70">S63509A</td>
+                <td class="xl70">S66919A</td>
+                <td class="xl70">　</td>
+                <td class="xl75">毒蛇</td>
+                <td class="xl70">T63094A</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">手</td>
+                <td class="xl70">S60519A</td>
+                <td class="xl70">S61419A</td>
+                <td class="xl70">S60229A</td>
+                <td class="xl70">S62399A</td>
+                <td class="xl70">S6720XA</td>
+                <td class="xl70">T23009A</td>
+                <td class="xl70">S63056A</td>
+                <td class="xl70">S638X9A</td>
+                <td class="xl70">S66919A</td>
+                <td class="xl70">　</td>
+                <td class="xl75">CO</td>
+                <td class="xl70">T5894XA</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">指</td>
+                <td class="xl70">S60419A</td>
+                <td class="xl70">S61219A</td>
+                <td class="xl70">S6000XA</td>
+                <td class="xl70">S62609A</td>
+                <td class="xl70">S6710XA</td>
+                <td class="xl70">T23049A</td>
+                <td class="xl70">S63259A</td>
+                <td class="xl70">S63619A</td>
+                <td class="xl70">S66519A</td>
+                <td class="xl70">L03019</td>
+                <td class="xl69">BZD</td>
+                <td class="xl70">T4274XA</td>
+            </tr>
+            <tr height="35">
+                <td class="xl68" height="35">前胸</td>
+                <td class="xl70">S20419A</td>
+                <td class="xl70">S21119A</td>
+                <td class="xl70">S20439A</td>
+                <td class="xl70">S2231XA</td>
+                <td class="xl70">S278XXA</td>
+                <td class="xl70">T2109XA</td>
+                <td class="xl70">S234XXA</td>
+                <td class="xl70">S235XXA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">L03311</td>
+                <td class="xl75">酒精</td>
+                <td class="xl70">T5194XA</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">背</td>
+                <td class="xl70">S2091XA</td>
+                <td class="xl70">S21219A</td>
+                <td class="xl70">S2093XA</td>
+                <td class="xl70">S2200XA</td>
+                <td class="xl70">S279XXA</td>
+                <td class="xl70">T2100XA</td>
+                <td class="xl70">S230XXA</td>
+                <td class="xl70">S233XXA</td>
+                <td class="xl70">S2911XA</td>
+                <td class="xl70">　</td>
+                <td class="xl75">安眠藥</td>
+                <td class="xl70">T426X4A</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">腰</td>
+                <td class="xl70">S30819A</td>
+                <td class="xl70">S31019A</td>
+                <td class="xl70">S300XXA</td>
+                <td class="xl70">S3200XA</td>
+                <td class="xl70">S379XXA</td>
+                <td class="xl70">T2100XA</td>
+                <td class="xl70">S335XXA</td>
+                <td class="xl70">S336XXA</td>
+                <td class="xl70">S3901XA</td>
+                <td class="xl70">M5450</td>
+                <td class="xl75">抗憂鬱劑</td>
+                <td class="xl70">T43204A</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">腹</td>
+                <td class="xl70">S3081XA</td>
+                <td class="xl70">S31119A</td>
+                <td class="xl70">S301XXA</td>
+                <td class="xl70">S329XXA</td>
+                <td class="xl70">S378XXA</td>
+                <td class="xl70">T2100XA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">S338XXA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">　</td>
+                <td class="xl75">其他藥物</td>
+                <td class="xl70">T50994A</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">臀</td>
+                <td class="xl70">S30819A</td>
+                <td class="xl70">S31819A</td>
+                <td class="xl70">S302XXA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">S378XXA</td>
+                <td class="xl70">T2100XA</td>
+                <td class="xl70">S330XXA</td>
+                <td class="xl70">S339XXA</td>
+                <td class="xl70">S3901XA</td>
+                <td class="xl70">L03316</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">股</td>
+                <td class="xl70">S70119A</td>
+                <td class="xl70">S71019A</td>
+                <td class="xl70">S7000XA</td>
+                <td class="xl70">S7290XA</td>
+                <td class="xl70">S771XXA</td>
+                <td class="xl70">T2400XA</td>
+                <td class="xl70">S73006A</td>
+                <td class="xl70">S73109A</td>
+                <td class="xl70">S76919A</td>
+                <td class="xl70">L03115</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">膝</td>
+                <td class="xl70">S80019A</td>
+                <td class="xl70">S81019A</td>
+                <td class="xl70">S8000XA</td>
+                <td class="xl70">S8290XA</td>
+                <td class="xl70">S878XXA</td>
+                <td class="xl70">T2400XA</td>
+                <td class="xl70">S8300XA</td>
+                <td class="xl70">S8391XA</td>
+                <td class="xl70">S86919A</td>
+                <td class="xl70">M25569</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">小腿</td>
+                <td class="xl70">S80119A</td>
+                <td class="xl70">S81819A</td>
+                <td class="xl70">S8010XA</td>
+                <td class="xl70">S8289XA</td>
+                <td class="xl70">S878XXA</td>
+                <td class="xl70">T2400XA</td>
+                <td class="xl70">S838X9A</td>
+                <td class="xl70">S8392XA</td>
+                <td class="xl70">S86919A</td>
+                <td class="xl70">L03116</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">踝</td>
+                <td class="xl70">S90019A</td>
+                <td class="xl70">S91019A</td>
+                <td class="xl70">S9000XA</td>
+                <td class="xl70">S92819A</td>
+                <td class="xl70">S970XXA</td>
+                <td class="xl70">T2500XA</td>
+                <td class="xl70">S930XXA</td>
+                <td class="xl70">S93409A</td>
+                <td class="xl70">S96919A</td>
+                <td class="xl70">M25579</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">足</td>
+                <td class="xl70">S90419A</td>
+                <td class="xl70">S91219A</td>
+                <td class="xl70">S90429A</td>
+                <td class="xl70">S92819A</td>
+                <td class="xl70">S971XXA</td>
+                <td class="xl70">T2500XA</td>
+                <td class="xl70">S9310XA</td>
+                <td class="xl70">S93609A</td>
+                <td class="xl70">S96919A</td>
+                <td class="xl70">L03116</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">腳趾</td>
+                <td class="xl70">S90119A</td>
+                <td class="xl70">S91319A</td>
+                <td class="xl70">S90129A</td>
+                <td class="xl70">S92509A</td>
+                <td class="xl70">S972XXA</td>
+                <td class="xl70">T2500XA</td>
+                <td class="xl70">S93509A</td>
+                <td class="xl70">S938X9A</td>
+                <td class="xl70">S96119A</td>
+                <td class="xl70">M25579</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+            <tr height="23">
+                <td class="xl68" height="23">會陰</td>
+                <td class="xl70">S30819A</td>
+                <td class="xl70">S3141XA</td>
+                <td class="xl70">S3020XA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">S376XXA</td>
+                <td class="xl70">T2100XA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">S339XXA</td>
+                <td class="xl70">　</td>
+                <td class="xl70">L03314</td>
+                <td class="xl75">　</td>
+                <td class="xl70">　</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
 
-    <script>
-        // 頁面切換功能
-        document.querySelector('.sidebar').addEventListener('click', function(e) {
-            const targetPage = e.target.getAttribute('data-page');
-            if (!targetPage) return;
-            
-            document.querySelectorAll('.content').forEach(content => {
-                content.classList.add('hidden');
-            });
-            
-            document.getElementById(targetPage).classList.remove('hidden');
-            
-            // 如果切換到 Certificate 頁面，重新載入時間
-            if (targetPage === 'Diagnosis') {
-                updateCertificateDate();
-            }
-        });
+<script>
+        let historyData = [];
+        let peHistoryData = [];
+        let pePhysicalExamData = [];
+        let peImpressionData = [];
+        let pePlanData = [];
+        let surgeryICDData = [];
 
-        // PE分頁切換功能
-        document.querySelector('.pe-tabs')?.addEventListener('click', function(e) {
-            const targetTab = e.target.getAttribute('data-tab');
-            if (!targetTab) return;
-            
-            document.querySelectorAll('.pe-content').forEach(content => {
-                content.classList.add('hidden');
-            });
-            
-            document.getElementById(targetTab).classList.remove('hidden');
-        });
-
-        // ICD搜尋功能
-        let csvData = [];
-        let headers = [];
-        let searchTimeout;
-
-        // 載入 CSV 檔案
-        showLoading();
-        fetch('ICD_10_CM.csv')
-            .then(response => response.text())
-            .then(data => {
-                Papa.parse(data, {
+        async function loadCSV(file, targetArray) {
+            try {
+                const response = await fetch(file);
+                const csvText = await response.text();
+                PapaParse.parse(csvText, {
+                    header: true,
                     complete: function(results) {
-                        csvData = results.data;
-                        headers = csvData[0];
-                        hideLoading();
-                        document.getElementById('minLengthNotice').textContent = 
-                            '請輸入至少2個字元開始搜尋';
+                        targetArray.push(...results.data);
+                    },
+                    error: function(err) {
+                        console.error('Error parsing CSV:', err);
                     }
                 });
-            });
-
-        function showLoading() {
-            document.getElementById('results').innerHTML = 
-                '<div class="loading">載入中，請稍候...</div>';
+            } catch (error) {
+                console.error('Error fetching CSV:', error);
+            }
         }
 
-        function hideLoading() {
-            document.getElementById('results').innerHTML = '';
+        // Load all CSVs on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCSV('History_ICD.csv', historyData);
+            await loadCSV('PE_History.csv', peHistoryData);
+            await loadCSV('PE_Physical_Exam.csv', pePhysicalExamData);
+            await loadCSV('PE_Impression.csv', peImpressionData);
+            await loadCSV('PE_Plan.csv', pePlanData);
+            await loadCSV('Surgery_ICD.csv', surgeryICDData);
+            showPage('History'); // Show the initial page
+            updateCertificateDate(); // Update certificate date on load
+        });
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.content');
+            pages.forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+
+            // Handle active sidebar link
+            const sidebarDivs = document.querySelectorAll('.sidebar div');
+            sidebarDivs.forEach(div => div.classList.remove('active'));
+            document.querySelector(`.sidebar div[onclick="showPage('${pageId}')"]`).classList.add('active'); // Changed selector
+
+            // For PE, ensure the default tab is active and visible
+            if (pageId === 'PE') {
+                showPETab('內科'); // Default to '內科' tab
+            }
         }
 
+        function showPETab(tabId) {
+            const tabs = document.querySelectorAll('.pe-tabs span');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`.pe-tabs span[data-tab="${tabId}"]`).classList.add('active');
+
+            const tabContents = document.querySelectorAll('.pe-content');
+            tabContents.forEach(content => content.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        // ICD Code search (original implementation, unchanged)
+        let icdData = []; // Assuming ICD_Code.csv data will be loaded here
+        async function loadICDCSV() {
+            try {
+                const response = await fetch('ICD_Code.csv');
+                const csvText = await response.text();
+                PapaParse.parse(csvText, {
+                    header: true,
+                    complete: function(results) {
+                        icdData = results.data;
+                        document.getElementById('minLengthNotice').textContent = '資料載入完成，請輸入至少2個字元進行搜尋。';
+                    },
+                    error: function(err) {
+                        console.error('Error parsing ICD_Code.csv:', err);
+                        document.getElementById('minLengthNotice').textContent = '資料載入失敗。';
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching ICD_Code.csv:', error);
+                document.getElementById('minLengthNotice').textContent = '資料載入失敗。';
+            }
+        }
+
+        let searchTimeout;
         function debounceSearch() {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(searchData, 300);
+            searchTimeout = setTimeout(searchICDCode, 300); // 300ms debounce
         }
 
-        function searchData() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            document.getElementById('results').innerHTML = '';
-            document.getElementById('countInfo').textContent = '';
-            document.getElementById('minLengthNotice').textContent = '';
+        function searchICDCode() {
+            const query = document.getElementById('searchInput').value.trim();
+            const resultsDiv = document.getElementById('results');
+            const countInfoDiv = document.getElementById('countInfo');
+            const minLengthNotice = document.getElementById('minLengthNotice');
 
-            if (searchTerm.length < 2) {
-                document.getElementById('minLengthNotice').textContent = 
-                    '請輸入至少2個字元開始搜尋';
+            resultsDiv.innerHTML = ''; // Clear previous results
+            countInfoDiv.textContent = ''; // Clear previous count info
+            minLengthNotice.textContent = ''; // Clear previous notice
+
+            if (query.length < 2) {
+                minLengthNotice.textContent = '請輸入至少2個字元進行搜尋。';
                 return;
             }
 
-            const filteredData = csvData.filter((row, index) => {
-                if (index === 0) return false;
-                
-                const icdCode = row[0]?.toString().toLowerCase() || '';
-                const icdName = row[1]?.toString().toLowerCase() || '';
-                const icdNameCh = row[2]?.toString().toLowerCase() || '';
-                
-                return icdCode.includes(searchTerm) || 
-                       icdName.includes(searchTerm) || 
-                       icdNameCh.includes(searchTerm);
+            const lowerCaseQuery = query.toLowerCase();
+            const filteredData = icdData.filter(row => {
+                const code = row['ICD-10-CM'] ? String(row['ICD-10-CM']).toLowerCase() : '';
+                const description = row['內容'] ? String(row['內容']).toLowerCase() : '';
+                return code.includes(lowerCaseQuery) || description.includes(lowerCaseQuery);
             });
 
-            displayData([headers, ...filteredData]);
-        }
-
-        function displayData(data) {
-            if (!data || data.length <= 1) {
-                document.getElementById('results').innerHTML = '<p>找不到符合的結果</p>';
-                document.getElementById('countInfo').textContent = '找到 0 筆符合的資料';
-                return;
-            }
-
-            let table = '<table><thead><tr>';
-            
-            data[0].forEach(header => {
-                table += `<th>${header}</th>`;
-            });
-            
-            table += '</tr></thead><tbody>';
-
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            for (let i = 1; i < data.length; i++) {
-                table += '<tr>';
-                data[i].forEach(cell => {
-                    const cellContent = cell || '';
-                    const cellStr = cellContent.toString();
-                    if (searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
-                        const highlightedContent = cellStr.replace(
-                            new RegExp(searchTerm, 'gi'),
-                            match => `<mark>${match}</mark>`
-                        );
-                        table += `<td>${highlightedContent}</td>`;
-                    } else {
-                        table += `<td>${cellStr}</td>`;
-                    }
+            if (filteredData.length > 0) {
+                let table = '<table><thead><tr><th>ICD-10-CM</th><th>內容</th></tr></thead><tbody>';
+                filteredData.forEach(row => {
+                    const code = row['ICD-10-CM'] ? String(row['ICD-10-CM']) : '';
+                    const description = row['內容'] ? String(row['內容']) : '';
+                    table += `<tr>
+                                <td>${highlightText(code, query)}</td>
+                                <td>${highlightText(description, query)}</td>
+                            </tr>`;
                 });
-                table += '</tr>';
+                table += '</tbody></table>';
+                resultsDiv.innerHTML = table;
+                countInfoDiv.textContent = `找到 ${filteredData.length} 筆符合的資料`;
+            } else {
+                resultsDiv.innerHTML = '<p>沒有找到符合的資料。</p>';
+                countInfoDiv.textContent = '';
             }
-
-            table += '</tbody></table>';
-            document.getElementById('results').innerHTML = table;
-            document.getElementById('countInfo').textContent = 
-                `找到 ${data.length - 1} 筆符合的資料`;
         }
 
-        // 自動填入診斷證明書的日期
+
+        // Automatically fill certificate date
         function updateCertificateDate() {
             const today = new Date();
             const taiwanYear = today.getFullYear() - 1911; // 民國年
@@ -379,20 +802,21 @@
             const hours = today.getHours();
             const minutes = today.getMinutes();
             
-            // 格式化時間（補0）
+            // Format time (add leading zeros)
             const formattedHours = hours.toString().padStart(2, '0');
             const formattedMinutes = minutes.toString().padStart(2, '0');
             
-            // 更新證明書文字
+            // Update certificate text
             const certificateText = `病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。`;
             document.getElementById('certificateText').textContent = certificateText;
         }
 
-        // 初始顯示第一個分頁
-        document.getElementById('History').classList.remove('hidden');
-        
-        // 頁面載入時執行日期填入
-        updateCertificateDate();
+        // Initial display of the first page and load ICD data
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('History');
+            updateCertificateDate();
+            loadICDCSV(); // Load ICD data when DOM is ready
+        });
     </script>
 </body>
 </html>
