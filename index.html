@@ -222,25 +222,25 @@
         }
         
         /* 正面視圖 */
-        .front-view .head { top: 20px; left: 100px; width: 100px; height: 80px; }
-        .front-view .neck { top: 100px; left: 120px; width: 60px; height: 40px; }
+        .front-view .head { top: 20px; left: 100px; width: 100px; height: 100px; border-radius: 50%; }
+        .front-view .neck { top: 115px; left: 130px; width: 40px; height: 30px; }
         .front-view .chest { top: 140px; left: 80px; width: 140px; height: 100px; }
         .front-view .abdomen { top: 240px; left: 90px; width: 120px; height: 80px; }
         .front-view .pelvis { top: 320px; left: 100px; width: 100px; height: 60px; }
-        .front-view .left-arm { top: 160px; right: 20px; width: 60px; height: 150px; }
-        .front-view .right-arm { top: 160px; left: 20px; width: 60px; height: 150px; }
+        .front-view .left-arm { top: 160px; right: 30px; width: 40px; height: 150px; }
+        .front-view .right-arm { top: 160px; left: 35px; width: 40px; height: 150px; }
         .front-view .left-leg { top: 380px; right: 90px; width: 50px; height: 180px; }
         .front-view .right-leg { top: 380px; left: 90px; width: 50px; height: 180px; }
         
         /* 背面視圖 */
-        .back-view .head { top: 20px; left: 100px; width: 100px; height: 80px; }
-        .back-view .neck { top: 100px; left: 120px; width: 60px; height: 40px; }
+        .back-view .head { top: 20px; left: 100px; width: 100px; height: 100px; border-radius: 50%; }
+        .back-view .neck { top: 115px; left: 130px; width: 40px; height: 30px; }
         .back-view .upper-back { top: 140px; left: 80px; width: 140px; height: 100px; }
         .back-view .lower-back { top: 240px; left: 90px; width: 120px; height: 80px; }
         .back-view .spine { top: 100px; left: 140px; width: 20px; height: 230px; }
         .back-view .buttocks { top: 320px; left: 100px; width: 100px; height: 60px; }
-        .back-view .left-arm { top: 160px; left: 20px; width: 60px; height: 150px; }
-        .back-view .right-arm { top: 160px; right: 20px; width: 60px; height: 150px; }
+        .back-view .left-arm { top: 160px; left: 35px; width: 40px; height: 150px; }
+        .back-view .right-arm { top: 160px; right: 30px; width: 40px; height: 150px; }
         .back-view .left-leg { top: 380px; left: 90px; width: 50px; height: 180px; }
         .back-view .right-leg { top: 380px; right: 90px; width: 50px; height: 180px; }
         
@@ -538,14 +538,14 @@
 <p>Due to the patient’s personal reason, the patient asked for AAD. After well informing the possibility of sepsis and toxic signs, AAD was arranged. Keep OPD follow up.<p>
 </div>
 <div class="content hidden" id="Diagnosis">
-<div style="max-width: 600px; margin: 0 auto; text-align: center;">
-<h2 style="margin-bottom: 24px;">診斷證明書</h2>
-<p id="certificateText">
-                    病患因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。
+<div>
+<h2>診斷證明書</h2>
+<p id="certificateText" style="white-space: pre-line;">
+                    病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。 <br/>
+                    病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
                 </p>
 </div>
-</div>
-<div class="content hidden" id="Surgery_ICD">
+</div><div class="content hidden" id="Surgery_ICD">
     <table border="0" cellpadding="0" cellspacing="0" class="surgery-table">
         <colgroup>
             <col/>
@@ -1117,7 +1117,7 @@
                 { type: 'L/W', icd: '男S3121XA/囊S3131XA/女S3141XA', english: 'laceration/wound of perineum', chinese: '會陰部撕裂傷' },
                 { type: 'Contusion', icd: 'S3021XA', english: 'contusion of perineum', chinese: '會陰部挫傷' },
                 { type: 'Burn', icd: '男T2106XA/女T2107XA', english: 'burn of perineum', chinese: '會陰部燒傷' },
-                { type: 'Fracture', icd: '穩定S32.810A/不穩定S32.811A', english: 'fracture of pelvis', chinese: '骨盆骨折' },
+                { type: 'Fracture', icd: '穩定骨盆S32810A/不穩定S32811A', english: 'fracture of pelvis(iliac/ischial/pubic bone/acetabular)', chinese: '骨盆骨折(髂骨/坐骨/恥骨/髖臼)' },
             ],
             '上背部': [
                 { type: 'A/W', icd: 'S20419A', english: 'abrasion/wound of upper back', chinese: '上背部擦傷' },
@@ -1142,24 +1142,24 @@
                 { type: 'L/W', icd: 'S31.801A', english: 'laceration/wound of buttock', chinese: '臀部撕裂傷' },
                 { type: 'Contusion', icd: 'S30.0XXA', english: 'contusion of buttock', chinese: '臀部挫傷' },
                 { type: 'Burn', icd: 'T21.05XA', english: 'burn of buttock', chinese: '臀部燒傷' },
-                { type: '骨盆Fracture', icd: '穩定骨盆S32810A/不穩定S32811A', english: 'fracture of pelvis', chinese: '骨盆骨折' },
+                { type: 'Fracture', icd: '穩定骨盆S32810A/不穩定S32811A', english: 'fracture of pelvis(iliac/ischial/pubic bone/acetabular)', chinese: '骨盆骨折(髂骨/坐骨/恥骨/髖臼)' },
             ],
             '頸椎': [
                 { type: 'Fracture', icd: 'S12.9XXA', english: 'fracture of cervical vertebra', chinese: '頸椎骨折' },
             ],
             '胸椎': [
-                { type: 'Fracture', icd: 'S22000A', english: 'fracture of thoracic vertebra', chinese: '胸椎骨折' },
+                { type: 'Fracture', icd: 'S22.000A', english: 'fracture of thoracic vertebra', chinese: '胸椎骨折' },
             ],
             '腰椎': [
-                { type: 'Fracture', icd: 'S32000A', english: 'fracture of lumbar vertebra', chinese: '腰椎骨折' },
+                { type: 'Fracture', icd: 'S32.000A', english: 'fracture of lumbar vertebra', chinese: '腰椎骨折' },
             ],
             '薦椎': [
-                { type: 'Fracture', icd: 'S3210XA', english: 'fracture of sacrum', chinese: '薦椎骨折' },
+                { type: 'Fracture', icd: 'S32.10XA', english: 'fracture of sacrum', chinese: '薦椎骨折' },
             ],
             '尾椎': [
-                { type: 'Fracture', icd: 'S322XXA', english: 'fracture of coccyx', chinese: '尾椎骨折' },
-                { type: 'Burn', icd: 'T2105XA', english: 'burn of coccyx', chinese: '尾椎燒傷' },
-                { type: 'Dislocation', icd: 'S332XXA', english: 'dislocation of coccyx', chinese: '尾椎脫位' }
+                { type: 'Fracture', icd: 'S32.2XXA', english: 'fracture of coccyx', chinese: '尾椎骨折' },
+                { type: 'Burn', icd: 'T21.05XA', english: 'burn of coccyx', chinese: '尾椎燒傷' },
+                { type: 'Dislocation', icd: 'S33.2XXA', english: 'dislocation of coccyx', chinese: '尾椎脫位' }
             ],
             '肩胛骨': [
                 { type: 'Fracture', icd: 'S42.109A', english: 'fracture of scapula', chinese: '肩胛骨骨折' },
@@ -1376,7 +1376,7 @@
                 { type: 'A/W', icd: 'S70219A', english: 'abrasion/wound of left hip', chinese: '左髖部擦傷' },
                 { type: 'L/W', icd: 'S71019A', english: 'laceration/wound of left hip', chinese: '左髖部撕裂傷' },
                 { type: 'Contusion', icd: 'S7000XA', english: 'contusion of left hip', chinese: '左髖部挫傷' },
-                { type: 'Fracture', icd: 'M84359A', english: 'fracture of left hip', chinese: '左髖部骨折' },
+                { type: 'Fracture', icd: 'M84359A', english: 'fracture of left hip(femoral neck/head/intertrochanteric/subtrochanteric)', chinese: '左髖部骨折(股骨頸/股骨頭/轉子間/轉子下)' },
                 { type: 'Crush', icd: 'S7700XA', english: 'crush injury of left hip', chinese: '左髖部壓砸傷' },
                 { type: 'Dislocation', icd: 'S73006A', english: 'dislocation of left hip', chinese: '左髖部脫位' },
                 { type: 'Sprain', icd: 'S73109A', english: 'sprain of left hip', chinese: '左髖部扭傷' },
@@ -1386,7 +1386,7 @@
                 { type: 'A/W', icd: 'S70219A', english: 'abrasion/wound of right hip', chinese: '右髖部擦傷' },
                 { type: 'L/W', icd: 'S71019A', english: 'laceration/wound of right hip', chinese: '右髖部撕裂傷' },
                 { type: 'Contusion', icd: 'S7000XA', english: 'contusion of right hip', chinese: '右髖部挫傷' },
-                { type: 'Fracture', icd: 'M84359A', english: 'fracture of right hip', chinese: '右髖部骨折' },
+                { type: 'Fracture', icd: 'M84359A', english: 'fracture of right hip(femoral neck/head/intertrochanteric/subtrochanteric)', chinese: '右髖部骨折(股骨頸/股骨頭/轉子間/轉子下)' },
                 { type: 'Crush', icd: 'S7700XA', english: 'crush injury of right hip', chinese: '右髖部壓砸傷' },
                 { type: 'Dislocation', icd: 'S73006A', english: 'dislocation of right hip', chinese: '右髖部脫位' },
                 { type: 'Sprain', icd: 'S73109A', english: 'sprain of right hip', chinese: '右髖部扭傷' },
@@ -1844,8 +1844,10 @@
             const formattedMinutes = minutes.toString().padStart(2, '0');
             
             // 更新證明書文字
-            const certificateText = `病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。`;
-            document.getElementById('certificateText').textContent = certificateText;
+            const certificateText = `病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br>
+                    病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedHours}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
+`;
+            document.getElementById('certificateText').innerHTML = certificateText;
         }
         document.addEventListener('DOMContentLoaded', function() {
             // 只在外傷系統頁面載入時初始化
