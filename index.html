@@ -1837,8 +1837,8 @@
             const formattedMinutes = minutes.toString().padStart(2, '0');
             
             // 更新證明書文字
-            const certificateText = `病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br>
-                    病患因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedHours}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
+            const certificateText = `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br>
+                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedHours}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
 `;
             document.getElementById('certificateText').innerHTML = certificateText;
         }
