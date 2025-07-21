@@ -408,6 +408,29 @@
         .back-button:hover {
             background: #495057;
         }
+        .copy-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .copy-button:hover {
+            background: #0056b3;
+        }
+        
+        .copy-button.success {
+            background: #28a745;
+        }
+        
+        .pe-content-wrapper {
+            position: relative;
+        }
 
 </style>
 </head>
@@ -453,6 +476,7 @@
 <span data-tab="OHCA" onclick="showPETab('OHCA')">OHCA</span>
 </div>
 <div class="pe-content" id="內科">
+<div class="pe-content-wrapper">
 <p>
                     Consciousness: Clear, GCS: E4M6V5<br/>
                     Skin: Normal skin turgor<br/>
@@ -464,8 +488,11 @@
                     Extremities: no skin rash. no edema.<br/>
                     MP: 5, all limbs.
                 </p>
+<button class="copy-button" onclick="copyPEContent('內科')">複製內容</button>
+</div>
 </div>
 <div class="pe-content hidden" id="外科">
+<div class="pe-content-wrapper">
 <p>
                     Consciousness: Clear <br/>
                     GCS: E4M6V5, pupil: 2+/2+<br/>
@@ -476,8 +503,11 @@
                     Extremities: Free of ROM. <br/>
                     MP: 5, all limbs.
                 </p>
+<button class="copy-button" onclick="copyPEContent('外科')">複製內容</button>
+</div>
 </div>
 <div class="pe-content hidden" id="OHCA">
+<div class="pe-content-wrapper">
 <p>
                     Consciousness: Coma GCS: E1M1V1<br/>
                     Skin:Normal skin turgor, no skin rash<br/>
@@ -487,6 +517,8 @@
                     Abdomen: Soft and ovoid.<br/>
                     Extremities: No obvious wound over four limbs.<br/>
 </p>
+<button class="copy-button" onclick="copyPEContent('OHCA')">複製內容</button>
+</div>
 </div>
 </div>
 <div class="content hidden" id="ICD_code">
@@ -1029,6 +1061,7 @@
 </div>
 
     <script>
+
         const subPartDatabase = {
             '頭部': [
                 { part: '頭部', english: 'head' },
@@ -1767,6 +1800,8 @@
                     '請輸入至少2個字元開始搜尋';
                 return;
             }
+            // 移除搜尋詞中的空白和標點符號，用於比較
+            const normalizedSearchTerm = searchTerm.replace(/[\s\.\-]/g, '');
 
             const filteredData = csvData.filter((row, index) => {
                 if (index === 0) return false;
@@ -1775,9 +1810,17 @@
                 const icdName = row[1]?.toString().toLowerCase() || '';
                 const icdNameCh = row[2]?.toString().toLowerCase() || '';
                 
+                // 移除資料中的空白和標點符號進行比較
+                const normalizedIcdCode = icdCode.replace(/[\s\.\-]/g, '');
+                const normalizedIcdName = icdName.replace(/[\s\.\-]/g, '');
+                const normalizedIcdNameCh = icdNameCh.replace(/[\s\.\-]/g, '');
+                
                 return icdCode.includes(searchTerm) || 
                        icdName.includes(searchTerm) || 
-                       icdNameCh.includes(searchTerm);
+                       icdNameCh.includes(searchTerm) ||
+                       normalizedIcdCode.includes(normalizedSearchTerm) ||
+                       normalizedIcdName.includes(normalizedSearchTerm) ||
+                       normalizedIcdNameCh.includes(normalizedSearchTerm);
             });
 
             displayData([headers, ...filteredData]);
@@ -1838,7 +1881,8 @@
             
             // 更新證明書文字
             const certificateText = `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br>
-                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedHours}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
+                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。<br>
+                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至本院急診就診，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於${formattedHours}時${formattedMinutes}分停止急救，病人死亡。
 `;
             document.getElementById('certificateText').innerHTML = certificateText;
         }
@@ -1854,6 +1898,81 @@
         
         // 頁面載入時執行日期填入
         updateCertificateDate();
+        // 複製PE內容功能
+        function copyPEContent(tabId) {
+            const content = document.querySelector(`#${tabId} p`).textContent;
+    
+            // 保留換行，但移除每行前後的空白
+            const cleanedContent = content
+                .split('\n')                    // 按換行分割
+                .map(line => line.trim())       // 每行去除前後空白
+                .filter(line => line.length > 0) // 過濾空行
+                .join('\n');                    // 重新組合
+    
+            // 使用 Clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(cleanedContent).then(() => {
+                    showCopySuccess(tabId);
+                }).catch(err => {
+                    console.error('複製失敗:', err);
+                    fallbackCopyTextToClipboard(cleanedContent, tabId);
+                });
+            } else {
+                // 降級方案
+                fallbackCopyTextToClipboard(cleanedContent, tabId);
+            }
+        }
+        
+        // 降級複製方案
+        function fallbackCopyTextToClipboard(text, tabId) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess(tabId);
+                } else {
+                    alert('複製失敗，請手動選擇文字複製');
+                }
+            } catch (err) {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動選擇文字複製');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        // 顯示複製成功提示
+        function showCopySuccess(tabId) {
+            const button = document.querySelector(`#${tabId} .copy-button`);
+            const originalText = button.textContent;
+            
+            button.textContent = '已複製！';
+            button.classList.add('success');
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('success');
+            }, 2000);
+        }
+        function showPETab(tabName) {
+            // 隱藏所有PE內容
+            document.querySelectorAll('.pe-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+    
+            // 顯示選中的PE內容
+            document.getElementById(tabName).classList.remove('hidden');
+        }
     </script>
 </body>
 </html>
