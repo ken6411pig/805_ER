@@ -443,6 +443,7 @@
     <div data-page="Diagnosis">Certificate</div>
     <div data-page="Surgery_ICD">外傷ICD 代碼速查</div>
     <div data-page="Trauma_System">外傷圖譜系統</div>
+    <div data-page="Note">備忘錄</div>
 </div>
 <div class="main-content">
 <div class="content" id="History">
@@ -467,6 +468,26 @@
 <h3>CAD risk factors:</h3>
 <p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
                 Old age (-) Male (-) Post menopause (-)</p>
+<h3>SER</h3>
+<p>
+This year-old woman denied any systemic disease.<br/>
+She suffered from TA (自摔) with helmet. ILOC(-), no head, chest, abdomen injury.<br/>
+There was no nausea/vomiting, limitation ROMo f extremities.<br/>
+<p>
+<h3>PER</h3>
+<p>
+Fever up to C for days.<br/>
+No fever, cough, rhinorrhea, SOB, abdominal discomfort, N/V, diarrhea, dysuria or skin rash.<br/>
+Fair activity, appetite and urine output.<br/>
+TOCC histories: denied; <br/>
+Vaccination hx: <br/>
+Allergy: denied; <br/>
+PMH: denied, no G6PD deficiency<br/>
+Last anti-pyretic medication:<br/>
+FHx: denied<br/>
+Last meal:<br/>
+LMP on<br/>
+<p>
 </div>
 </div>
 <div class="content hidden" id="PE">
@@ -474,6 +495,8 @@
 <span data-tab="內科" onclick="showPETab('內科')">MER</span>
 <span data-tab="外科" onclick="showPETab('外科')">SER</span>
 <span data-tab="OHCA" onclick="showPETab('OHCA')">OHCA</span>
+<span data-tab="NE" onclick="showPETab('NE')">NE</span>
+
 </div>
 <div class="pe-content" id="內科">
 <div class="pe-content-wrapper">
@@ -519,6 +542,25 @@
 </p>
 <button class="copy-button" onclick="copyPEContent('OHCA')">複製內容</button>
 </div>
+</div>
+<div class="pe-content hidden" id="NE">
+<div class="pe-content-wrapper">
+<p>
+                    GCS: E4V5M6, poor attention<br/>
+                    CNs: pupil: 3/3, LR: +/+, VF: intact by threatening test, <br/>
+                    EOM: full, right eye ptosis(+), no diplopia/nystagmus, (+)left central facial palsy, normal shoulder shrug<br/>
+                    MP: UE: proximal 5/5, distal 5/4+, LE: proximal 5/5, distal 5/5<br/>
+                    DTR: UE: ++/++, LE: knee: ++/++, ankle: ++/++<br/>
+                    Plantar reflex: downgoing bilaterally<br/>
+                    Sensation: symmetric by pinprick, left hemi-necglect(+)<br/>
+                    FNF: (+)righgt mild dysmetria/no dysmetria<br/>
+                    HKS: no zigzag/no zigzag<br/>
+                    Romberg test/Gait/Tandem gait: Cannot cooperate<br/>
+
+</p>
+<button class="copy-button" onclick="copyPEContent('NE')">複製內容</button>
+</div>
+
 </div>
 </div>
 <div class="content hidden" id="ICD_code">
@@ -982,6 +1024,14 @@
             </tr>
         </tbody>
     </table>
+</div>
+<div class="content hidden" id="Note">
+    <h2>備忘錄</h2>
+    <textarea id="noteText" placeholder="在此輸入備忘內容..." style="width: 50%; height: 300px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical;"></textarea>
+    <div style="margin-top: 15px;">
+        <button class="copy-button" onclick="copyNote()" style="margin-right: 10px;">複製</button>
+        <button class="copy-button" onclick="clearNote()" style="background: #dc3545;">清除</button>
+    </div>
 </div>
 
 <div class="content hidden" id="Trauma_System">
@@ -1972,6 +2022,68 @@
     
             // 顯示選中的PE內容
             document.getElementById(tabName).classList.remove('hidden');
+        }
+// 備忘錄功能
+        function copyNote() {
+            const noteText = document.getElementById('noteText').value;
+    
+            if (!noteText.trim()) {
+                alert('沒有內容可以複製！');
+                return;
+            }
+    
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(noteText).then(() => {
+                    showNoteCopySuccess();
+                }).catch(err => {
+                    console.error('複製失敗:', err);
+                    fallbackCopyNote(noteText);
+                });
+            } else {
+                fallbackCopyNote(noteText);
+            }
+        }
+
+        function fallbackCopyNote(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+    
+            document.body.appendChild(textArea);
+            textArea.select();
+    
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showNoteCopySuccess();
+                } else {
+                    alert('複製失敗，請手動選擇文字複製');
+                }
+            } catch (err) {
+                alert('複製失敗，請手動選擇文字複製');
+            }
+    
+            document.body.removeChild(textArea);
+        }
+
+        function showNoteCopySuccess() {
+            const button = document.querySelector('#Note .copy-button');
+            const originalText = button.textContent;
+    
+            button.textContent = '已複製！';
+            button.classList.add('success');
+    
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('success');
+            }, 2000);
+        }
+
+        function clearNote() {
+            if (confirm('確定要清除所有備忘內容嗎？')) {
+                document.getElementById('noteText').value = '';
+            }
         }
     </script>
 </body>
