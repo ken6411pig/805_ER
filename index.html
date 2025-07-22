@@ -1997,9 +1997,9 @@ LMP on<br/>
             const formattedMinutes = minutes.toString().padStart(2, '0');
             
             // 更新證明書文字
-            const certificateText = `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br>
-                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。<br>
-                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至本院急診就診，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於${formattedHours}時${formattedMinutes}分停止急救，病人死亡。
+            const certificateText = `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br>
+                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。<br>
+                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至本院急診就診，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分停止急救，病人死亡。
 `;
             document.getElementById('certificateText').innerHTML = certificateText;
         }
