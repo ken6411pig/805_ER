@@ -1205,33 +1205,6 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
 </div>
 <div class="content hidden" id="Antibiotic_Dosage">
     <h1>抗生素腎功能劑量調整查詢系統</h1>
-    <div class="section">
-        <h3>腎功能分級說明:</h3>
-        <p>
-        <table border="1">
-        <tr>
-            <td><strong>正常腎功能</strong></td>
-            <td>CCr > 50 mL/min</td>
-        </tr>
-        <tr>
-            <td><strong>輕度腎功能不全</strong></td>
-            <td>CCr 30-50 mL/min</td>
-        </tr>
-        <tr>
-            <td><strong>中度腎功能不全</strong></td>
-            <td>CCr 10-30 mL/min</td>
-        </tr>
-        <tr>
-            <td><strong>重度腎功能不全</strong></td>
-            <td>CCr < 10 mL/min</td>
-        </tr>
-        <tr>
-            <td><strong>血液透析</strong></td>
-            <td>需要血液透析治療</td>
-        </tr>
-        </table>
-        </p>
-    </div>
     <div class="search-container">
         <input class="search-box" id="antibioticSearchInput" oninput="debounceAntibioticSearch()" placeholder="請輸入藥物名稱進行搜尋" type="text"/>
     </div>
@@ -2107,17 +2080,24 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             }
 
             let table = '<table><thead><tr>';
-            
+    
+            table += '<th> </th>'; // 操作欄放到最前面
             data[0].forEach(header => {
                 table += `<th>${header}</th>`;
             });
-            
+    
             table += '</tr></thead><tbody>';
 
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             for (let i = 1; i < data.length; i++) {
                 table += '<tr>';
-                data[i].forEach(cell => {
+        
+                // 先添加複製按鈕欄位
+                const icdCode = data[i][0] || '';
+                table += `<td style="width: 80px; text-align: center;"><button class="copy-button" onclick="copyIcdCode('${icdCode}', this)" style="font-size: 12px; padding: 4px 8px; background-color: white; color: #495057; border: 1px solid #dee2e6;">複製ICD</button></td>`;
+        
+                // 再添加其他資料欄位
+                data[i].forEach((cell, cellIndex) => {
                     const cellContent = cell || '';
                     const cellStr = cellContent.toString();
                     if (searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
@@ -2138,6 +2118,7 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             document.getElementById('countInfo').textContent = 
                 `找到 ${data.length - 1} 筆符合的資料`;
         }
+
         // 抗生素搜尋功能
         function debounceAntibioticSearch() {
             clearTimeout(antibioticSearchTimeout);
@@ -2211,7 +2192,7 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
                     } else {
                         // 劑量欄位使用較小字體並保持換行
                         if (cellIndex >= 2) {
-                            table += `<td style="font-size: 12px; white-space: pre-wrap;">${cellStr}</td>`;
+                            table += `<td style="font-size: 16px; white-space: pre-wrap;">${cellStr}</td>`;
                         } else {
                             table += `<td>${cellStr}</td>`;
                         }
@@ -2395,6 +2376,70 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
                 document.getElementById('noteText').value = '';
             }
         }
+// ICD碼複製功能
+        function copyIcdCode(icdCode, buttonElement) {
+            if (!icdCode.trim()) {
+                alert('沒有ICD碼可以複製！');
+                return;
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(icdCode).then(() => {
+                    showIcdCopySuccess(buttonElement);
+                }).catch(err => {
+                    console.error('複製失敗:', err);
+                    fallbackCopyIcd(icdCode, buttonElement);
+                });
+            } else {
+                fallbackCopyIcd(icdCode, buttonElement);
+            }
+        }
+        function fallbackCopyIcd(text, button) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showIcdCopySuccess(button);
+                } else {
+                    alert('複製失敗，請手動選擇文字複製');
+                }
+            } catch (err) {
+                alert('複製失敗，請手動選擇文字複製');
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        function showIcdCopySuccess(button) {
+            if (!button) return;
+    
+            const originalText = button.textContent;
+    
+            // 記住原始樣式，如果沒有設定就用預設值
+            const originalBg = button.style.backgroundColor || 'white';
+            const originalColor = button.style.color || '#495057';
+            const originalBorder = button.style.border || '1px solid #dee2e6';
+
+            button.textContent = '已複製！';
+            button.style.backgroundColor = '#f8f9fa';
+            button.style.color = '#28a745';
+            button.style.border = '1px solid #28a745';
+
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.backgroundColor = originalBg;
+                button.style.color = originalColor;
+                button.style.border = originalBorder;
+            }, 2000);
+        }
+
     </script>
 </body>
 </html>
