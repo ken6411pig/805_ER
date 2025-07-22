@@ -497,6 +497,8 @@ LMP on<br/>
 <span data-tab="外科" onclick="showPETab('外科')">🔪 SER</span>
 <span data-tab="OHCA" onclick="showPETab('OHCA')">💔 OHCA</span>
 <span data-tab="NE" onclick="showPETab('NE')">🧠 NE</span>
+<span data-tab="外傷FAST" onclick="showPETab('外傷FAST')">🩸 外傷FAST</span>
+<span data-tab="POCUS" onclick="showPETab('POCUS')">🎯 POCUS</span>
 
 </div>
 <div class="pe-content" id="內科">
@@ -560,6 +562,26 @@ LMP on<br/>
 
 </p>
 <button class="copy-button" onclick="copyPEContent('NE')">複製內容</button>
+</div>
+</div>
+<div class="pe-content hidden" id="外傷FAST">
+<div class="pe-content-wrapper">
+<p>
+No pericardial effusion, bilateral lung sliding present, no pleural effusion, no ascites
+</p>
+</div>
+<button class="copy-button" onclick="copyPEContent('外傷FAST')">複製內容</button>
+</div>
+
+<div class="pe-content hidden" id="POCUS">
+<div class="pe-content-wrapper">
+<p>
+Cardiac: no pericardial effusion, normal global wall motion, no regional wall motion abnormalities, normal RV size, IVC normal caliber with >50% respiratory variation<br/>
+Thoracic: bilateral lung sliding present, B-lines <3 per intercostal space, no pleural effusion<br/>
+Abdominal: no ascites, no hydronephrosis, no IHD dilatation, no CBD dilatation or GB wall thickening, no echo Murphy sign<br/>
+DVT: femoral and popliteal veins compressible bilaterally<br/>
+</p>
+<button class="copy-button" onclick="copyPEContent('POCUS')">複製內容</button>
 </div>
 
 </div>
