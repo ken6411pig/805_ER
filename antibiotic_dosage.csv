@@ -1,4 +1,4 @@
-Generic name,Trade name,Normal dose,CCr 30-50,CCr 10-30,CCr <10,Hemodialysis
+學名,商品名,正常劑量,CCr 30-50,CCr 10-30,CCr <10,Hemodialysis
 Penicillin G,Penicillin G,3mu Q6H,3mu Q8H,3mu Q8H,2mu Q8H,2mu Q8H + 2mu Q8H AD
 Oxacillin,Prostaphlin,1000mg Q4-6H/2000mg Q4H,No adjustment,No adjustment,No adjustment,No adjustment
 Ampicillin,Ampolin,1000mg Q4-6H/2000mg Q4H,1-2g Q6-8H,1-2g Q8-12H,1-2g Q12H,1-2g Q12H + 1-2g AD
@@ -30,7 +30,7 @@ Daptomycin,Cubicin,4-6mg/kg QD,4-6mg/kg QD,6mg/kg QOD,6mg/kg QOD,6mg/kg QOD
 Linezolid,Zyvox,600mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
 Fosfomycin,Fosfomycin,2000mg Q8H,2000mg Q12H,2000mg Q12H,2000mg QD,2000mg QOD
 Tigecycline,Tygacil,100mg then 50mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
-Colistin,Colimycin,2MU Q12H,2MU QD,2MU QD,see Sanford Guide,see Sanford Guide
+Colistin,Colimycin,2MU Q12H,2MU QD,2MU QD,見熱病,見熱病
 TMP+SMX,Baktar/Sevatrim,5-20mg/kg/day divided Q6-12H,5-20mg/kg/day divided Q6-12H,5-10mg/kg/day divided Q12H,Not recommended/if use 5-10 mg/kg QD,Not recommended/if use 5-10 mg/kg QD
 Clindamycin,Ulecin,600mg Q8H/300mg Q6H,No adjustment,No adjustment,No adjustment,No adjustment
 Clindamycin,Clincin/Cleocin,150-450mg Q6H,No adjustment,No adjustment,No adjustment,No adjustment
@@ -40,6 +40,6 @@ Anidulafungin,Eraxis,L/D:200mg then 100mg QD,No adjustment,No adjustment,No adju
 Amphotericin-B,Fungizone,0.3-1 mg/kg QD,No adjustment,No adjustment,No adjustment,No adjustment
 Amphotericin-B,Ambisone,3-5mg/kg QD/6mg/kg QD,No adjustment,No adjustment,No adjustment,No adjustment
 Voriconazole,Vfend,6mg/kg Q12H*3 dose then 4mg/kg Q12H PO,PO,PO,avoid using,avoid using
-Ganciclovir,Cymevene,I/D: 5mg/kg Q12H / M/D: 2.5-5mg/kg QD,see Sanford Guide,see Sanford Guide,see Sanford Guide,see Sanford Guide
+Ganciclovir,Cymevene,I/D: 5mg/kg Q12H / M/D: 2.5-5mg/kg QD,見熱病,見熱病,見熱病,見熱病
 Acyclovir,Zovirax,5-12.5mg/kg QD,5-12.5mg/kg Q12-24H,5-12.5mg/kg Q12-24H,2.5-6.25mg/kg QD,2.5-6.25mg/kg QD (AD)
 Peramivir,Rapiacta,600mg QD,200mg QD,200mg QD,100mg QD,L/D:100mg then 15mg QD
