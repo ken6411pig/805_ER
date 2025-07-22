@@ -444,6 +444,7 @@
     <div data-page="Diagnosis">📄 Certificate</div>
     <div data-page="Surgery_ICD">📖 外傷ICD 代碼速查</div>
     <div data-page="Trauma_System">👤 外傷圖譜系統</div>
+    <div data-page="Antibiotic_Dosage">💊 抗生素劑量查詢</div>
     <div data-page="Note">📓 備忘錄</div>
 </div>
 <div class="main-content">
@@ -1202,7 +1203,42 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
         <button class="copy-button" onclick="clearNote()" style="background: #dc3545;">清除</button>
     </div>
 </div>
-
+<div class="content hidden" id="Antibiotic_Dosage">
+    <h1>抗生素腎功能劑量調整查詢系統</h1>
+    <div class="section">
+        <h3>腎功能分級說明:</h3>
+        <p>
+        <table border="1">
+        <tr>
+            <td><strong>正常腎功能</strong></td>
+            <td>CCr > 50 mL/min</td>
+        </tr>
+        <tr>
+            <td><strong>輕度腎功能不全</strong></td>
+            <td>CCr 30-50 mL/min</td>
+        </tr>
+        <tr>
+            <td><strong>中度腎功能不全</strong></td>
+            <td>CCr 10-30 mL/min</td>
+        </tr>
+        <tr>
+            <td><strong>重度腎功能不全</strong></td>
+            <td>CCr < 10 mL/min</td>
+        </tr>
+        <tr>
+            <td><strong>血液透析</strong></td>
+            <td>需要血液透析治療</td>
+        </tr>
+        </table>
+        </p>
+    </div>
+    <div class="search-container">
+        <input class="search-box" id="antibioticSearchInput" oninput="debounceAntibioticSearch()" placeholder="請輸入藥物名稱進行搜尋" type="text"/>
+    </div>
+    <div class="count-info" id="antibioticCountInfo"></div>
+    <div class="min-length-notice" id="antibioticMinLengthNotice"></div>
+    <div id="antibioticResults"></div>
+</div>
 <div class="content hidden" id="Trauma_System">
     <div class="container">
         <h1>外傷圖譜系統</h1>
@@ -1976,6 +2012,10 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
         let csvData = [];
         let headers = [];
         let searchTimeout;
+        // 抗生素搜尋功能
+        let antibioticData = [];
+        let antibioticHeaders = [];
+        let antibioticSearchTimeout;
 
         // 載入 CSV 檔案
         showLoading();
@@ -1992,6 +2032,20 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
                     }
                 });
             });
+
+        // 載入抗生素CSV檔案
+        fetch('antibiotic_dosage.csv')
+            .then(response => response.text())
+            .then(data => {
+                Papa.parse(data, {
+                    complete: function(results) {
+                        antibioticData = results.data;
+                        antibioticHeaders = antibioticData[0];
+                    }
+                });
+            });
+
+
 
         function showLoading() {
             document.getElementById('results').innerHTML = 
@@ -2083,6 +2137,93 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             document.getElementById('results').innerHTML = table;
             document.getElementById('countInfo').textContent = 
                 `找到 ${data.length - 1} 筆符合的資料`;
+        }
+        // 抗生素搜尋功能
+        function debounceAntibioticSearch() {
+            clearTimeout(antibioticSearchTimeout);
+            antibioticSearchTimeout = setTimeout(searchAntibioticData, 300);
+        }
+
+        function searchAntibioticData() {
+            const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
+    
+            document.getElementById('antibioticResults').innerHTML = '';
+            document.getElementById('antibioticCountInfo').textContent = '';
+            document.getElementById('antibioticMinLengthNotice').textContent = '';
+
+            if (searchTerm.length === 0) {
+                document.getElementById('antibioticMinLengthNotice').textContent = 
+                    '請輸入藥物名稱開始搜尋';
+                return;
+            }
+
+            // 移除搜尋詞中的空白和標點符號，用於比較
+            const normalizedSearchTerm = searchTerm.replace(/[\s\.\-]/g, '');
+
+            const filteredData = antibioticData.filter((row, index) => {
+                if (index === 0) return false;
+        
+                const genericName = row[0]?.toString().toLowerCase() || '';
+                const brandName = row[1]?.toString().toLowerCase() || '';
+        
+                // 移除資料中的空白和標點符號進行比較
+                const normalizedGenericName = genericName.replace(/[\s\.\-]/g, '');
+                const normalizedBrandName = brandName.replace(/[\s\.\-]/g, '');
+        
+                return genericName.includes(searchTerm) || 
+                       brandName.includes(searchTerm) ||
+                       normalizedGenericName.includes(normalizedSearchTerm) ||
+                       normalizedBrandName.includes(normalizedSearchTerm);
+            });
+
+            displayAntibioticData([antibioticHeaders, ...filteredData]);
+        }
+
+        function displayAntibioticData(data) {
+            if (!data || data.length <= 1) {
+                document.getElementById('antibioticResults').innerHTML = '<p>找不到符合的藥物</p>';
+                document.getElementById('antibioticCountInfo').textContent = '找到 0 筆符合的資料';
+                return;
+            }
+
+            let table = '<table><thead><tr>';
+    
+            data[0].forEach(header => {
+                table += `<th>${header}</th>`;
+            });
+    
+            table += '</tr></thead><tbody>';
+
+            const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
+            for (let i = 1; i < data.length; i++) {
+                table += '<tr>';
+                data[i].forEach((cell, cellIndex) => {
+                    const cellContent = cell || '';
+                    const cellStr = cellContent.toString();
+            
+                    // 對藥物名稱欄位(前兩欄)做高亮顯示
+                    if (cellIndex < 2 && searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
+                        const highlightedContent = cellStr.replace(
+                            new RegExp(searchTerm, 'gi'),
+                            match => `<mark>${match}</mark>`
+                        );
+                        table += `<td>${highlightedContent}</td>`;
+                    } else {
+                        // 劑量欄位使用較小字體並保持換行
+                        if (cellIndex >= 2) {
+                            table += `<td style="font-size: 12px; white-space: pre-wrap;">${cellStr}</td>`;
+                        } else {
+                            table += `<td>${cellStr}</td>`;
+                        }
+                    }
+                });
+                table += '</tr>';
+            }
+
+            table += '</tbody></table>';
+            document.getElementById('antibioticResults').innerHTML = table;
+            document.getElementById('antibioticCountInfo').textContent = 
+                `找到 ${data.length - 1} 筆符合的藥物資料`;
         }
 
         // 自動填入診斷證明書的日期
