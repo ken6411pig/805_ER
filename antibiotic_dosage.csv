@@ -1,24 +1,24 @@
 學名,商品名,正常劑量,CCr 30-50,CCr 10-30,CCr <10,Hemodialysis
 Penicillin G,Penicillin G,3mu Q6H,3mu Q8H,3mu Q8H,2mu Q8H,2mu Q8H + 2mu Q8H AD
-Oxacillin,Prostaphlin,1000mg Q4-6H/2000mg Q4H,No adjustment,No adjustment,No adjustment,No adjustment
-Ampicillin,Ampolin,1000mg Q4-6H/2000mg Q4H,1-2g Q6-8H,1-2g Q8-12H,1-2g Q12H,1-2g Q12H + 1-2g AD
+Oxacillin,Prostaphlin,1g Q4-6H/2g Q4H,No adjustment,No adjustment,No adjustment,No adjustment
+Ampicillin,Ampolin,1g Q4-6H/2g Q4H,1-2g Q6-8H,1-2g Q8-12H,1-2g Q12H,1-2g Q12H + 1-2g AD
 Amoxicillin,Amoxicillin,-,-,-,-,-
-Ampi+Salbactum,Unasyn,1500mg Q6-8H/3000mg Q6-8H,1500mg Q12H/3000mg Q12H,1500mg Q12H/3000mg Q12H,1500mg Q24H/3000mg Q24H,3000mg QN
-Amo+Clavulanate,Augmentin,1200mg Q8H,1200mg Q8H,600mg Q12H,600mg QD,600mg QN
-Piperacillin+Tazobactam,Tazocin,4500mg Q8H/4500mg Q6H,3375mg Q6H,3375mg Q6H,2250mg Q6H/2250mg Q8H + 750mg AD,MIC<16: 3375mg Q6H / MIC>16: 4500mg Q8H
+Ampi+Salbactum,Unasyn,1.5g Q6-8H/3g Q6-8H,1.5g Q12H/3g Q12H,1.5g Q12H/3g Q12H,1.5g Q24H/3g Q24H,3g QN
+Amo+Clavulanate,Augmentin,1.2g Q8H,1.2g Q8H,600mg Q12H,600mg QD,600mg QN
+Piperacillin+Tazobactam,Tazocin,4.5g Q8H/4.5g Q6H,3.375g Q6H,3.375g Q6H,2.25g Q6H/2.25g Q8H + 750mg AD,MIC<16: 3.375g Q6H / MIC>16: 4.5g Q8H
 Cefazolin,Cefa,1-2g Q8H,1-2g Q12H,1-2g Q12H,1-2g QD,1-2g QN
 Cefuroxime,Furoxime,0.75-1.5g Q8H,0.75-1.5g Q8-12H,0.75-1.5g Q8-12H,0.75-1.5g QD,0.75-1.5g QD (AD)
-Cefmetazole,Cetazone,2000mg Q12H,2000mg QD,2000mg QD,1000mg QD,1g QN
-Flomoxef,Flumarin,1000mg Q8-12H,1000mg QD,1000mg QD,1000mg QOD,1000mg QOD
-Ceftriaxone,Rocephin,1g Q12H/2g QD/2000mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
-Cefotaxime,Loforan/Claforan,2000mg Q8-12H,2000mg Q12-24H,2000mg Q12-24H,2000mg QD,2000mg QN
-Ceftazidime,Fortum,2000mg Q8-12H,2000mg Q12-24H,2000mg Q12-24H,2000mg Q24-48H,2000mg Q24-48H + 1000mg AD
-CPZ+Sulbactam,Brosym,2000mg Q12H/4000mg Q12H,2000mg Q12H/4000mg Q12H,2000mg Q12H,1000mg Q12H,-
-Cefepime,Maxipime,2000mg Q8H,2000mg Q12H,2000mg QD,1000mg QD,1000mg QN
+Cefmetazole,Cetazone,2g Q12H,2g QD,2g QD,1g QD,1g QN
+Flomoxef,Flumarin,1g Q8-12H,1g QD,1g QD,1g QOD,1g QOD
+Ceftriaxone,Rocephin,1g Q12H/2g QD/2g Q12H,No adjustment,No adjustment,No adjustment,No adjustment
+Cefotaxime,Loforan/Claforan,2g Q8-12H,2g Q12-24H,2g Q12-24H,2g QD,2g QN
+Ceftazidime,Fortum,2g Q8-12H,2g Q12-24H,2g Q12-24H,2g Q24-48H,2g Q24-48H + 1g AD
+CPZ+Sulbactam,Brosym,2g Q12H/4g Q12H,2g Q12H/4g Q12H,2g Q12H,1g Q12H,-
+Cefepime,Maxipime,2g Q8H,2g Q12H,2g QD,1g QD,1g QN
 Gentamicin,Gentamicin,80mg Q12H/160mg QD,80mg QD,80mg QD,80mg QOD,1.7-2 mg/kg QOD + 50% dosage AD
 Amikacin,Amikin,7.5mg/kg Q12H,7.5mg/kg QD,7.5mg/kg QD,7.5mg/kg QOD,7.5mg/kg QOD + 50% dosage AD
-Ertapenem,Invanz,1000mg QD,1000mg QD,500mg QD,500mg QD,500mg QN
-Meropenem,Mepem,1000mg Q8H,1000mg Q12H,500mg Q12H,500mg QD,500mg QN
+Ertapenem,Invanz,1g QD,1g QD,500mg QD,500mg QD,500mg QN
+Meropenem,Mepem,1g Q8H,1g Q12H,500mg Q12H,500mg QD,500mg QN
 Ciprofloxacin,Ciproxin,400mg Q12H,400mg QD,400mg QD,400mg QD,400mg QN
 Levofloxacin,Cravit,750mg QD,750mg QOD,750mg once then 500mg QOD,750mg once then 500mg QOD,750mg once then 500mg QOD
 Moxifloxacin,Avelox,400mg QD,No adjustment,No adjustment,No adjustment,No adjustment
@@ -28,7 +28,7 @@ Vancomycin,Vancomycin,500mg Q8H/1000mg Q12H,500mg Q12H,500mg Q12H,500mg QD,500mg
 Teicoplanin,Targocid,L/D:400mg Q12H*3 then 400mg QD / L/D:800mg Q12H*3 then 800mg QD,L/D:400mg Q12H*3 then 400mg QOD / L/D:800mg Q12H*3 then 800mg QOD,L/D:400mg Q12H*3 then 400mg QOD / L/D:800mg Q12H*3 then 800mg QOD,L/D:400mg Q12H*3 then 400mg Q3D / L/D:800mg Q12H*3 then 800mg Q3D,L/D:400mg Q12H*3 then 400mg Q3D / L/D:800mg Q12H*3 then 800mg Q3D
 Daptomycin,Cubicin,4-6mg/kg QD,4-6mg/kg QD,6mg/kg QOD,6mg/kg QOD,6mg/kg QOD
 Linezolid,Zyvox,600mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
-Fosfomycin,Fosfomycin,2000mg Q8H,2000mg Q12H,2000mg Q12H,2000mg QD,2000mg QOD
+Fosfomycin,Fosfomycin,2g Q8H,2g Q12H,2g Q12H,2g QD,2g QOD
 Tigecycline,Tygacil,100mg then 50mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
 Colistin,Colimycin,2MU Q12H,2MU QD,2MU QD,見熱病,見熱病
 TMP+SMX,Baktar/Sevatrim,5-20mg/kg/day divided Q6-12H,5-20mg/kg/day divided Q6-12H,5-10mg/kg/day divided Q12H,Not recommended/if use 5-10 mg/kg QD,Not recommended/if use 5-10 mg/kg QD
