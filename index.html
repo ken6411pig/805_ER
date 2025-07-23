@@ -128,23 +128,43 @@
         }
     
         /* Surgery ICD table styles */
+        .surgery-table-container {
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            overflow-x: auto;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+
         .surgery-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
             font-size: 18px;
-            table-layout: auto; /* Allows columns to auto-size based on content */
+            table-layout: auto;
         }
 
-        .surgery-table td, .surgery-table th {
+        .surgery-table thead td {
+            position: sticky;
+            top: 0;
+            background-color: #f4f4f4;
+            z-index: 10;
             padding: 10px;
             border: 1px solid #ccc;
-            word-break: break-word; /* Still useful for extremely long single words */
+            text-align: left;
+            white-space: nowrap;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+            vertical-align: top;
+            font-weight: bold;
+        }
+
+        .surgery-table tbody td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            word-break: break-word;
             vertical-align: top;
             text-align: left;
-            white-space: nowrap; /* Ensures text stays on a single line */
-        }
-        
+            white-space: nowrap;
+        }        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -441,7 +461,6 @@
     <div data-page="PE">🩺 PE</div>
     <div data-page="ICD_code">🔍 ICD Code</div>
     <div data-page="Plan">📝 Plan</div>
-    <div data-page="Diagnosis">📄 Certificate</div>
     <div data-page="Surgery_ICD">📖 外傷ICD 代碼速查</div>
     <div data-page="Trauma_System">👤 外傷圖譜系統</div>
     <div data-page="Antibiotic_Dosage">💊 抗生素劑量查詢</div>
@@ -594,29 +613,29 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
 <p>
 <table border="1">
 <tr>
-<td><b>R50.9</b> Fever, unspecified</td>
-<td><b>R06.00</b> Dyspnea, unspecified</td>
-<td><b>R07.9</b> Chest pain, unspecified</td>
+<td><button onclick="copyIcdCode('R50.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R50.9</button> Fever, unspecified</td>
+<td><button onclick="copyIcdCode('R06.00', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R06.00</button> Dyspnea, unspecified</td>
+<td><button onclick="copyIcdCode('R07.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R07.9</button> Chest pain, unspecified</td>
 </tr>
 <tr>
-<td><b>R11.10</b> Vomiting, unspecified</td>
-<td><b>R10.9</b> Unspecified abdominal pain</td>
-<td><b>R19.7</b> Diarrhea, unspecified</td>
+<td><button onclick="copyIcdCode('R11.10', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R11.10</button> Vomiting, unspecified</td>
+<td><button onclick="copyIcdCode('R10.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R10.9</button> Unspecified abdominal pain</td>
+<td><button onclick="copyIcdCode('R19.7', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R19.7</button> Diarrhea, unspecified</td>
 </tr>
 <tr>
-<td><b>R42</b> Dizziness and giddiness</td>
-<td><b>R51.9</b> Headache, unspecified</td>
-<td><b>R05.9</b> Cough, unspecified</td>
+<td><button onclick="copyIcdCode('R42', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R42</button> Dizziness and giddiness</td>
+<td><button onclick="copyIcdCode('R51.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R51.9</button> Headache, unspecified</td>
+<td><button onclick="copyIcdCode('R05.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R05.9</button> Cough, unspecified</td>
 </tr>
 <tr>
-<td><b>R53.1</b> Weakness</td>
-<td><b>K92.2</b> Gastrointestinal hemorrhage, unspecified</td>
-<td><b>T78.40XA</b> Allergy, unspecified, initial encounter</td>
+<td><button onclick="copyIcdCode('R53.1', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R53.1</button> Weakness</td>
+<td><button onclick="copyIcdCode('K92.2', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">K92.2</button> Gastrointestinal hemorrhage, unspecified</td>
+<td><button onclick="copyIcdCode('T78.40XA', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">T78.40XA</button> Allergy, unspecified, initial encounter</td>
 </tr>
 <tr>
-<td><b>T65.92XA</b> Toxic effect of unspecified substance, intentional self-harm, initial encounter</td>
-<td><b>R57.9</b> Shock, unspecified</td>
-<td><b>I46.9</b> Cardiac arrest, cause unspecified</td>
+<td><button onclick="copyIcdCode('T65.92XA', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">T65.92XA</button> Toxic effect of unspecified substance, intentional self-harm, initial encounter</td>
+<td><button onclick="copyIcdCode('R57.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R57.9</button> Shock, unspecified</td>
+<td><button onclick="copyIcdCode('I46.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">I46.9</button> Cardiac arrest, cause unspecified</td>
 </tr>
 </table>
 </p>
@@ -630,11 +649,22 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
 </div>
 <div class="content hidden" id="Plan">
 <h3>出院指示</h3>
-<p>已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</p>
-<p>已詳細向病人與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</p>
-<p>After treatment, the patient was discharged with improved condition. OPD follow up was suggested. Inform of toxic signs.</p>
-<p>We suggested that further hospitalization is necessary, but patient was discharged against medical advice (under his families requested)</p>
-<p>Due to the patient's personal reason, the patient asked for AAD. After well informing the possibility of sepsis and toxic signs, AAD was arranged. Keep OPD follow up.</p>
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd; margin-bottom: 20px;">
+        <p>已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</p>
+        <p>已詳細向病人與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</p>
+        <p>After treatment, the patient was discharged with improved condition. OPD follow up was suggested. Inform of toxic signs.</p>
+        <p>We suggested that further hospitalization is necessary, but patient was discharged against medical advice (under his families requested)</p>
+        <p>Due to the patient's personal reason, the patient asked for AAD. After well informing the possibility of sepsis and toxic signs, AAD was arranged. Keep OPD follow up.</p>
+    </div>
+<hr style="margin: 30px 0; border: 1px solid #ddd;">
+<h3>診斷證明書</h3>
+<div>
+<p id="certificateText" style="white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd;">
+            病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br/>
+            病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
+</p>
+</div>
+<hr style="margin: 30px 0; border: 1px solid #ddd;">
 <h3>輕度頭部外傷病人接受電腦斷層檢查準則 (CT Rules for MTBI)</h3>
 
 <h4>指引（Guideline）：</h4>
@@ -701,16 +731,9 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
 <u> Reference: Tintinalli's Emergency Medicine(9th) </u> 
 </p> 
 </div>
-<div class="content hidden" id="Diagnosis">
-<div>
-<h2>診斷證明書</h2>
-<p id="certificateText" style="white-space: pre-line;">
-                    病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。 <br/>
-                    病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
-                </p>
-</div>
-</div><div class="content hidden" id="Surgery_ICD">
-<h3> 急診醫學外傷部位 ICD-10 代碼速查表 </h3>
+<div class="content hidden" id="Surgery_ICD">
+<h3> 急診外傷部位 ICD-10 代碼速查表 </h3>
+    <div class="surgery-table-container">
     <table border="0" cellpadding="0" cellspacing="0" class="surgery-table">
         <colgroup>
             <col/>
@@ -1194,6 +1217,7 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             </tr>
         </tbody>
     </table>
+    </div> 
 </div>
 <div class="content hidden" id="Note">
     <h2>備忘錄</h2>
@@ -1964,7 +1988,7 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             document.getElementById(targetPage).classList.remove('hidden');
             
             // 如果切換到 Certificate 頁面，重新載入時間
-            if (targetPage === 'Diagnosis') {
+            if (targetPage === 'Plan') {
                 updateCertificateDate();
             }
         });
@@ -2439,7 +2463,6 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
                 button.style.border = originalBorder;
             }, 2000);
         }
-
     </script>
 </body>
 </html>
