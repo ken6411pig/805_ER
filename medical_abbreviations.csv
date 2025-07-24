@@ -2,15 +2,15 @@ abbreviation,full_terms
 copd,chronic obstructive pulmonary disease
 dka,diabetic ketoacidosis
 ami,acute myocardial infarction
-cva,cerebrovascular accident,stroke
+cva,cerebrovascular accident
 dvt,deep vein thrombosis
 pe,pulmonary embolism
 uti,urinary tract infection
-chf,congestive heart failure,heart failure
+chf,congestive heart failure
 afib,atrial fibrillation
 gerd,gastroesophageal reflux
 ibs,irritable bowel syndrome
-htn,hypertension,hypertensive
+htn,hypertension
 dm,diabetes mellitus
 cad,coronary artery disease
 ckd,chronic kidney disease
@@ -19,7 +19,7 @@ cabg,coronary artery bypass
 ptca,percutaneous transluminal coronary angioplasty
 tia,transient ischemic attack
 gi,gastrointestinal
-sob,shortness of breath,dyspnea
+sob,shortness of breath
 cp,chest pain
 nv,nausea,vomiting
 abd,abdominal
