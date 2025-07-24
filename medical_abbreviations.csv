@@ -19,14 +19,11 @@ cad,Atherosclerotic heart disease
 ckd,chronic kidney disease
 esrd,end stage renal disease
 cabg,coronary artery bypass
-ptca,percutaneous transluminal coronary angioplasty
-tia,transient ischemic attack
+tia,transient cerebral ischemic attack
 gi,gastrointestinal
 sob,shortness of breath
-cp,chest pain
 nv,nausea
 abd,abdominal
-ha,headache
 loc,loss of consciousness
 sz,seizure
 mi,myocardial infarction
@@ -34,3 +31,20 @@ stemi,st elevation myocardial infarction
 nstemi,non st elevation myocardial infarction
 hd,hemodialysis
 PAOD,atherosclerosis of native arteries of extremities
+vt,ventricular tachycardia
+vf,Ventricular Fibrillation
+sss,sick sinus syndrome
+tb,tuberculosis
+psvt,supraventricular tachycardia
+hivd,intervertebral disc disorders
+dic,disseminated intravascular coagulation
+ards,acute respiratory distress syndrome
+ie,infective endocarditis
+oa,osteoarthritis
+di,diabetes insipidus
+sle,systemic lupus erythematosus
+gu,gastric ulcer
+du,duodenal Ulcer
+bph,benign prostatic hyperplasia
+hcc,liver cell carcinoma
+pid,pelvic inflammatory disease 
