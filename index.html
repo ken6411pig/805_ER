@@ -2085,7 +2085,8 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             searchTimeout = setTimeout(searchData, 300);
         }
         function searchData() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const originalSearchTerm = document.getElementById('searchInput').value;
+            const searchTerm = originalSearchTerm.toLowerCase();
     
             document.getElementById('results').innerHTML = '';
             document.getElementById('countInfo').textContent = '';
@@ -2099,8 +2100,11 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
 
             // 建立搜尋詞列表（包括原始詞和縮寫展開的詞）
             let searchTerms = [searchTerm];
-            if (abbreviationData[searchTerm]) {
+    
+            // 只有當輸入的是大寫時才啟動字典搜尋
+            if (originalSearchTerm === originalSearchTerm.toUpperCase() && abbreviationData[searchTerm]) {
                 searchTerms = searchTerms.concat(abbreviationData[searchTerm]);
+                console.log('啟動縮寫搜尋:', originalSearchTerm, '→', abbreviationData[searchTerm]);
             }
 
             const normalizedSearchTerms = searchTerms.map(term => term.replace(/[\s\.\-]/g, ''));
