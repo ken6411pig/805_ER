@@ -1,760 +1,513 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>急診外傷檢圖及外傷嚴重度(ISS)評估表 - 電子標記系統</title>
-   <style>
-       body {
-           font-family: 'Microsoft JhengHei', Arial, sans-serif;
-           margin: 10px;
-           background-color: white;
-           font-size: 12px;
-       }
-       
-       .container {
-           max-width: 210mm;
-           margin: 0 auto;
-           background: white;
-           padding: 15px;
-       }
-       
-       .header {
-           text-align: center;
-           margin-bottom: 15px;
-           border-bottom: 2px solid #333;
-           padding-bottom: 10px;
-       }
-       
-       .header h1 {
-           margin: 0 0 10px 0;
-           font-size: 18px;
-       }
-       
-       .main-content {
-           display: block;
-       }
-       
-       .left-panel {
-           width: 100%;
-           margin-bottom: 15px;
-       }
-       
-       .right-panel {
-           width: 100%;
-       }
-       
-       .form-section {
-           margin-bottom: 15px;
-       }
-       
-       .form-section h3 {
-           margin: 0 0 8px 0;
-           font-size: 14px;
-           border-bottom: 1px solid #ddd;
-           padding-bottom: 3px;
-       }
-       
-       .form-row {
-           display: flex;
-           gap: 10px;
-           margin-bottom: 8px;
-           flex-wrap: wrap;
-       }
-       
-       .form-group {
-           flex: 1;
-           min-width: 120px;
-       }
-       
-       .two-column {
-           display: flex;
-           gap: 20px;
-       }
-       
-       .two-column > div {
-           flex: 1;
-       }
-       
-       label {
-           display: block;
-           font-weight: bold;
-           margin-bottom: 3px;
-           color: #333;
-           font-size: 11px;
-       }
-       
-       input, select, textarea {
-           width: 100%;
-           padding: 4px;
-           border: 1px solid #ddd;
-           border-radius: 2px;
-           font-size: 11px;
-       }
-       
-       textarea {
-           resize: vertical;
-       }
-       
-       .body-chart-section {
-           text-align: center;
-       }
-       
-       .canvas-container {
-           position: relative;
-           display: inline-block;
-           border: 1px solid #333;
-           border-radius: 4px;
-           background: white;
-       }
-       
-       #bodyCanvas {
-           cursor: crosshair;
-           display: block;
-           max-width: 400px;
-           max-height: 500px;
-           margin: 0 auto;
-       }
-       
-       .tools {
-           margin: 10px 0;
-           padding: 8px;
-           background: #f8f9fa;
-           border-radius: 4px;
-           text-align: center;
-       }
-       
-       .tool-group {
-           display: inline-block;
-           margin: 0 8px;
-           vertical-align: top;
-       }
-       
-       .tool-group label {
-           margin-right: 5px;
-           font-weight: normal;
-           font-size: 10px;
-       }
-       
-       .tool-group select {
-           font-size: 10px;
-           padding: 2px;
-       }
-       
-       button {
-           background: #007bff;
-           color: white;
-           border: none;
-           padding: 4px 8px;
-           border-radius: 2px;
-           cursor: pointer;
-           margin: 2px;
-           font-size: 10px;
-       }
-       
-       button:hover {
-           background: #0056b3;
-       }
-       
-       .danger-btn {
-           background: #dc3545;
-       }
-       
-       .danger-btn:hover {
-           background: #c82333;
-       }
-       
-       .injury-list {
-           margin-top: 10px;
-           padding: 8px;
-           background: #f8f9fa;
-           border-radius: 4px;
-       }
-       
-       .injury-list h3 {
-           margin: 0 0 8px 0;
-           font-size: 12px;
-       }
-       
-       .injury-item {
-           background: white;
-           padding: 5px;
-           margin: 3px 0;
-           border-left: 3px solid #007bff;
-           border-radius: 2px;
-           font-size: 10px;
-       }
-       
-       .chart-instructions {
-           font-size: 10px;
-           color: #666;
-           margin-top: 5px;
-       }
-       
-       @media print {
-           body { 
-               background: white;
-               margin: 0;
-               font-size: 11px;
-           }
-           .tools { display: none; }
-           .container { 
-               box-shadow: none;
-               max-width: none;
-               margin: 0;
-               padding: 10px;
-           }
-           button { display: none; }
-           .chart-instructions { display: none; }
-           
-           .main-content { page-break-inside: avoid; }
-           .body-chart-section { page-break-inside: avoid; }
-       }
-   </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>急診外傷檢圖及外傷嚴重度（ISS）評估表</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            font-size: 16px;
+            margin: 20px;
+            background-color: white;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 210mm;
+            margin: 0 auto;
+            background-color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .header h2 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 5px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 3px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 14px;
+        }
+        tr[style*="text-align: center"] td {
+            text-align: center !important;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 2px;
+            transform: scale(1.2);
+        }
+
+        .text-input {
+            border: none;
+            border-bottom: 1px solid black;
+            background: transparent;
+            font-size: 14px;
+            padding: 1px;
+        }
+
+        .number-input {
+            border: 1px solid black;
+            width: 40px;
+            text-align: center;
+            font-size: 11px;
+            padding: 2px;
+        }
+
+        .wound-legend {
+            font-size: 10px;
+            margin: 5px 0;
+        }
+
+        .wound-legend td {
+            padding: 2px 5px;
+        }
+
+        .body-diagram {
+            height: 450px;
+            border: 1px solid black;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            font-size: 11px;
+            padding: 5px;
+        }
+
+        .footer {
+            text-align: right;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+
+        .auto-date-btn:hover {
+            background-color: #45a049;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                font-size: 11px;
+            }
+            
+            .form-container {
+                max-width: none;
+            }
+            
+            .auto-date-btn {
+                display: none;
+            }
+            
+            @page {
+                margin: 15mm;
+                size: A4;
+            }
+        }
+    </style>
 </head>
 <body>
-   <div class="container">
-       <div class="header">
-           <h1>急診外傷檢圖及外傷嚴重度(ISS)評估表</h1>
-           <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-               <div>日期：<span id="currentDate"></span></div>
-               <div style="text-align: right;">
-                   <div>姓名：________________</div>
-                   <div>病歷號：________________</div>
-                   <div>年齡：________________</div>
-               </div>
-           </div>
-       </div>
-       <div class="main-content">
-           <div class="left-panel">
-               <div class="two-column">
-                   <div>
-                       <div class="form-section">
-                           <h3>資料來源</h3>
-                           <div style="font-size: 10px; display: flex; flex-wrap: wrap; gap: 15px;">
-                               <label><input type="checkbox"> 病人</label>
-                               <label><input type="checkbox"> 家屬</label>
-                               <label><input type="checkbox"> 他人</label>
-                               <label><input type="checkbox"> 警察</label>
-                               <label><input type="checkbox"> 路人</label>
-                               <label><input type="checkbox"> EMT</label>
-                               <label><input type="checkbox"> 其他</label>
-                           </div>
-                           <div style="margin-top: 8px; font-size: 10px; display: flex; flex-wrap: wrap; gap: 15px;">
-                               <label><input type="checkbox"> 車禍</label>
-                               <label><input type="checkbox"> 機車</label>
-                               <label><input type="checkbox"> 汽車</label>
-                               <label><input type="checkbox"> 腳踏車</label>
-                               <label><input type="checkbox"> 行人</label>
-                               <label><input type="checkbox"> 跌倒</label>
-                               <label><input type="checkbox"> 高處墜落</label>
-                               <label><input type="checkbox"> 攻擊</label>
-                           </div>
-                           <div style="margin-top: 8px; font-size: 10px; display: flex; flex-wrap: wrap; gap: 15px;">
-                               <label><input type="checkbox"> 其他</label>
-                               <label><input type="checkbox"> 意外毆打</label>
-                               <label><input type="checkbox"> 自殺</label>
-                               <label><input type="checkbox"> 他殺</label>
-                               <label><input type="checkbox"> 燒傷</label>
-                               <label><input type="checkbox"> 動物咬傷</label>
-                               <label><input type="checkbox"> 運動</label>
-                               <label><input type="checkbox"> 產傷</label>
-                           </div>
-                       </div>
-                       <div class="form-section">
-                           <h3>事故原因</h3>
-                           <div style="font-size: 10px; display: flex; flex-wrap: wrap; gap: 15px;">
-                               <label><input type="checkbox"> 緊急煞車</label>
-                               <label><input type="checkbox"> 自撞</label>
-                               <label><input type="checkbox"> 自摔</label>
-                           </div>
-                           <div style="margin-top: 8px;">
-                               <label style="font-size: 10px;">切割傷：</label>
-                               <div style="margin-top: 4px; font-size: 10px; display: flex; flex-wrap: wrap; gap: 15px;">
-                                   <label><input type="checkbox"> 銳刀</label>
-                                   <label><input type="checkbox"> 美工刀</label>
-                                   <label><input type="checkbox"> 機器</label>
-                                   <label><input type="checkbox"> 其他</label>
-                               </div>
-                           </div>
-                       </div>
-                       <div class="form-section">
-                           <h3>外傷機轉</h3>
-                           <div style="font-size: 10px; display: flex; flex-wrap: wrap; gap: 15px;">
-                               <label><input type="checkbox"> 挫傷(blunt)</label>
-                               <label><input type="checkbox"> 壓碎傷(crush)</label>
-                               <label><input type="checkbox"> 扭傷(sprain)</label>
-                               <label><input type="checkbox"> 穿刺傷(penetrating)</label>
-                           </div>
-                       </div>
-                       <div class="form-section">
-                           <h3>傷口特徵代碼</h3>
-                           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 10px;">
-                               <div>
-                                   <div><strong>A/F</strong> - Abrasion wound</div>
-                                   <div><strong>Ecc</strong> - Ecchymosis</div>
-                                   <div><strong>L/F</strong> - Laceration wound</div>
-                                   <div><strong>O</strong> - Puncture/Stab</div>
-                               </div>
-                               <div>
-                                   <div><strong>Fr</strong> - Fracture</div>
-                                   <div><strong>P</strong> - Pain</div>
-                                   <div><strong>T</strong> - Tenderness</div>
-                                   <div><strong>Avn</strong> - Avulsion</div>
-                               </div>
-                           </div>
-                           <div style="margin-top: 8px; font-size: 10px;">
-                               <label><input type="checkbox"> Suture x ____ stitches</label>
-                               <label><input type="checkbox" style="margin-left: 15px;"> Not suture</label>
-                               <span style="margin-left: 15px;">時間: ___年___月___日</span>
-                           </div>
-                       </div>
-                   </div>
-                   <div>
-                       <div class="form-section">
-                           <h3>外傷嚴重度 Injury Severity Score, ISS 評分表</h3>
-                           <table style="width: 100%; border-collapse: collapse; font-size: 10px; margin-bottom: 10px;">
-                               <thead>
-                                   <tr style="background: #f0f0f0;">
-                                       <th style="border: 1px solid #ddd; padding: 4px;">部位</th>
-                                       <th style="border: 1px solid #ddd; padding: 4px;">項目</th>
-                                       <th style="border: 1px solid #ddd; padding: 4px;">顏面</th>
-                                       <th style="border: 1px solid #ddd; padding: 4px;">胸部</th>
-                                       <th style="border: 1px solid #ddd; padding: 4px;">腹部</th>
-                                       <th style="border: 1px solid #ddd; padding: 4px;">肢體</th>
-                                       <th style="border: 1px solid #ddd; padding: 4px;">外觀軟組織</th>
-                                       <th style="border: 1px solid #ddd; padding: 4px;">ISS 分數</th>
-                                   </tr>
-                               </thead>
-                               <tbody>
-                                   <tr>
-                                       <td style="border: 1px solid #ddd; padding: 4px;">AIS 分數</td>
-                                       <td style="border: 1px solid #ddd; padding: 4px;"></td>
-                                       <td style="border: 1px solid #ddd; padding: 4px;"></td>
-                                       <td style="border: 1px solid #ddd; padding: 4px;"></td>
-                                       <td style="border: 1px solid #ddd; padding: 4px;"></td>
-                                       <td style="border: 1px solid #ddd; padding: 4px;"></td>
-                                       <td style="border: 1px solid #ddd; padding: 4px;"></td>
-                                       <td style="border: 1px solid #ddd; padding: 4px;"></td>
-                                   </tr>
-                               </tbody>
-                           </table>
-                       </div>
-                       <div class="injury-list">
-                           <h3>傷口清單</h3>
-                           <div id="injuryListContent">
-                               <p style="color: #666; font-size: 10px;">尚未標記任何傷口</p>
-                           </div>
-                       </div>
-                       <div class="form-section">
-                           <h3>其他註記</h3>
-                           <div class="form-row">
-                               <div class="form-group">
-                                   <label>備註：</label>
-                                   <textarea id="additionalNotes" rows="3" placeholder="其他重要資訊..."></textarea>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="right-panel">
-               <div class="body-chart-section">
-                   <h3>傷口部位圖示</h3>
-                   <div class="tools">
-                       <div class="tool-group">
-                           <label>標記：</label>
-                           <select id="markType">
-                               <option value="dot">圓點</option>
-                               <option value="cross">十字</option>
-                               <option value="arrow">箭頭</option>
-                           </select>
-                       </div>
-                       <div class="tool-group">
-                           <label>類型：</label>
-                           <select id="injuryType">
-                               <option value="laceration">撕裂傷(L)</option>
-                               <option value="contusion">挫傷(C)</option>
-                               <option value="burn">燒傷(B)</option>
-                               <option value="abrasion">擦傷(A)</option>
-                               <option value="puncture">穿刺傷(P)</option>
-                               <option value="fracture">骨折(F)</option>
-                           </select>
-                       </div>
-                       <button onclick="clearAllMarks()" class="danger-btn">清除</button>
-                       <button onclick="undoLastMark()">復原</button>
-                   </div>
-                   
-                   <div class="canvas-container">
-                       <canvas id="bodyCanvas" width="400" height="500"></canvas>
-                   </div>
-                   
-                   <p class="chart-instructions">
-                       點擊人體圖上的位置來標記傷口
-                   </p>
-               </div>
-           </div>
-       </div>
-       <div style="text-align: center; margin-top: 20px;">
-           <button onclick="window.print()" style="background: #28a745; font-size: 14px; padding: 8px 20px;">
-               列印報告
-           </button>
-       </div>
-       <div style="text-align: center; margin-top: 10px; font-size: 10px; color: #666;">
-       </div>
-   </div>
-   <script>
-       // 初始化
-       document.getElementById('currentDate').textContent = new Date().toLocaleDateString('zh-TW');
-       
-       const canvas = document.getElementById('bodyCanvas');
-       const ctx = canvas.getContext('2d');
-       let marks = [];
-       let markCounter = 1;
-       let bodyImage = null;
-       let imageLoaded = false;
-       
-       // 傷口類型對應顏色
-       const injuryColors = {
-           'laceration': '#FF0000',  // 紅色 - 撕裂傷
-           'contusion': '#0000FF',   // 藍色 - 挫傷  
-           'burn': '#FF8800',        // 橙色 - 燒傷
-           'abrasion': '#00AA00',    // 綠色 - 擦傷
-           'puncture': '#800080',    // 紫色 - 穿刺傷
-           'fracture': '#8B4513'     // 棕色 - 骨折
-       };
-       
-       // 載入人體圖片
-       async function loadBodyImage() {
-           const possibleFiles = ['body.jpg', 'body.png', 'image.jpg', 'image.png', 'chart.jpg', 'diagram.png'];
-           
-           for (const filename of possibleFiles) {
-               try {
-                   const fileData = await window.fs.readFile(filename);
-                   console.log(`找到圖片: ${filename}`);
-                   
-                   const blob = new Blob([fileData], { 
-                       type: filename.includes('jpg') || filename.includes('jpeg') ? 'image/jpeg' : 'image/png' 
-                   });
-                   const imageUrl = URL.createObjectURL(blob);
-                   
-                   bodyImage = new Image();
-                   bodyImage.onload = function() {
-                       const maxWidth = 400;
-                       const maxHeight = 500;
-                       
-                       let ratio = Math.min(maxWidth / bodyImage.width, maxHeight / bodyImage.height);
-                       canvas.width = Math.floor(bodyImage.width * ratio);
-                       canvas.height = Math.floor(bodyImage.height * ratio);
-                       
-                       imageLoaded = true;
-                       drawBodyChart();
-                       
-                       console.log(`圖片載入成功: ${canvas.width}x${canvas.height} (原圖: ${bodyImage.width}x${bodyImage.height})`);
-                       
-                       document.querySelector('.chart-instructions').innerHTML = 
-                           `點擊人體圖上的位置來標記傷口 <span style="color: green;">(已載入您的圖片)</span>`;
-                   };
-                   
-                   bodyImage.onerror = function() {
-                       console.log('圖片載入失敗');
-                       useDefaultChart();
-                   };
-                   
-                   bodyImage.src = imageUrl;
-                   return;
-                   
-               } catch (e) {
-                   console.log(`${filename} 不存在`);
-               }
-           }
-           
-           console.log('找不到上傳的圖片，使用預設人體圖');
-           useDefaultChart();
-       }
-              // 載入人體圖片
-       async function loadBodyImage() {
-           const possibleFiles = ['body.jpg', 'body.png', 'image.jpg', 'image.png', 'chart.jpg', 'diagram.png'];
-           
-           for (const filename of possibleFiles) {
-               try {
-                   const fileData = await window.fs.readFile(filename);
-                   console.log(`找到圖片: ${filename}`);
-                   
-                   const blob = new Blob([fileData], { 
-                       type: filename.includes('jpg') || filename.includes('jpeg') ? 'image/jpeg' : 'image/png' 
-                   });
-                   const imageUrl = URL.createObjectURL(blob);
-                   
-                   bodyImage = new Image();
-                   bodyImage.onload = function() {
-                       const maxWidth = 400;
-                       const maxHeight = 500;
-                       
-                       let ratio = Math.min(maxWidth / bodyImage.width, maxHeight / bodyImage.height);
-                       canvas.width = Math.floor(bodyImage.width * ratio);
-                       canvas.height = Math.floor(bodyImage.height * ratio);
-                       
-                       imageLoaded = true;
-                       drawBodyChart();
-                       
-                       console.log(`圖片載入成功: ${canvas.width}x${canvas.height} (原圖: ${bodyImage.width}x${bodyImage.height})`);
-                       
-                       document.querySelector('.chart-instructions').innerHTML = 
-                           `點擊人體圖上的位置來標記傷口 <span style="color: green;">(已載入您的圖片)</span>`;
-                   };
-                   
-                   bodyImage.onerror = function() {
-                       console.log('圖片載入失敗');
-                       useDefaultChart();
-                   };
-                   
-                   bodyImage.src = imageUrl;
-                   return;
-                   
-               } catch (e) {
-                   console.log(`${filename} 不存在`);
-               }
-           }
-           
-           console.log('找不到上傳的圖片，使用預設人體圖');
-           useDefaultChart();
-       }
-       
-       function useDefaultChart() {
-           imageLoaded = false;
-           canvas.width = 400;
-           canvas.height = 500;
-           drawBodyChart();
-           
-           const instructions = document.querySelector('.chart-instructions');
-           instructions.innerHTML = `
-               點擊人體圖上的位置來標記傷口 <span style="color: orange;">(使用預設圖形)</span><br>
-               <button onclick="manualImageLoad()" style="margin-top: 5px; padding: 4px 8px; background: #17a2b8; color: white; border: none; border-radius: 2px; cursor: pointer; font-size: 10px;">
-                   手動載入圖片
-               </button>
-           `;
-       }
-       
-ype = 'file';
-           input.accept = 'image/*';
-           input.onchange = function(e) {
-               const file = e.target.files[0];
-               if (file) {
-                   const reader = new FileReader();
-                   reader.onload = function(e) {
-                       bodyImage = new Image();
-                       bodyImage.onload = function() {
-                           const maxWidth = 400;
-                           const maxHeight = 500;
-                           let ratio = Math.min(maxWidth / bodyImage.width, maxHeight / bodyImage.height);
-                           canvas.width = Math.floor(bodyImage.width * ratio);
-                           canvas.height = Math.floor(bodyImage.height * ratio);
-                           
-                           imageLoaded = true;
-                           drawBodyChart();
-                           
-                           document.querySelector('.chart-instructions').innerHTML = 
-                               `點擊人體圖上的位置來標記傷口 <span style="color: green;">(已載入您的圖片)</span>`;
-                       };
-                       bodyImage.src = e.target.result;
-                   };
-                   reader.readAsDataURL(file);
-               }
-           };
-           input.click();
-       };
-       
-       // 繪製人體圖
-       function drawBodyChart() {
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
-           
-           if (imageLoaded && bodyImage) {
-               ctx.drawImage(bodyImage, 0, 0, canvas.width, canvas.height);
-           } else {
-               ctx.fillStyle = '#f0f0f0';
-               ctx.fillRect(0, 0, canvas.width, canvas.height);
-               
-               ctx.strokeStyle = '#333';
-               ctx.lineWidth = 2;
-               
-               drawFrontBody(canvas.width * 0.25, 40);
-               drawBackBody(canvas.width * 0.75, 40);
-               
-               ctx.fillStyle = '#333';
-               ctx.font = '14px Arial';
-               ctx.textAlign = 'center';
-               ctx.fillText('正面', canvas.width * 0.25, 25);
-               ctx.fillText('背面', canvas.width * 0.75, 25);
-           }
-           
-           marks.forEach(mark => {
-               drawMark(mark.x, mark.y, mark.type, mark.color, mark.id);
-           });
-       }
-       
-       function drawFrontBody(startX, startY) {
-           ctx.beginPath();
-           const scale = 0.8;
-           
-           ctx.arc(startX, startY + 35 * scale, 22 * scale, 0, 2 * Math.PI);
-           ctx.moveTo(startX, startY + 57 * scale);
-           ctx.lineTo(startX, startY + 260 * scale);
-           ctx.moveTo(startX - 50 * scale, startY + 85 * scale);
-           ctx.lineTo(startX + 50 * scale, startY + 85 * scale);
-           ctx.moveTo(startX - 50 * scale, startY + 85 * scale);
-           ctx.lineTo(startX - 65 * scale, startY + 160 * scale);
-           ctx.lineTo(startX - 60 * scale, startY + 220 * scale);
-           ctx.moveTo(startX + 50 * scale, startY + 85 * scale);
-           ctx.lineTo(startX + 65 * scale, startY + 160 * scale);
-           ctx.lineTo(startX + 60 * scale, startY + 220 * scale);
-           ctx.moveTo(startX - 35 * scale, startY + 180 * scale);
-           ctx.lineTo(startX + 35 * scale, startY + 180 * scale);
-           ctx.moveTo(startX - 18 * scale, startY + 260 * scale);
-           ctx.lineTo(startX - 22 * scale, startY + 380 * scale);
-           ctx.lineTo(startX - 25 * scale, startY + 450 * scale);
-           ctx.moveTo(startX + 18 * scale, startY + 260 * scale);
-           ctx.lineTo(startX + 22 * scale, startY + 380 * scale);
-           ctx.lineTo(startX + 25 * scale, startY + 450 * scale);
-           ctx.stroke();
-       }
-       
-       function drawBackBody(startX, startY) {
-           ctx.beginPath();
-           const scale = 0.8;
-           
-           ctx.arc(startX, startY + 35 * scale, 22 * scale, 0, 2 * Math.PI);
-           ctx.moveTo(startX, startY + 57 * scale);
-           ctx.lineTo(startX, startY + 260 * scale);
-           ctx.moveTo(startX - 50 * scale, startY + 85 * scale);
-           ctx.lineTo(startX + 50 * scale, startY + 85 * scale);
-           ctx.moveTo(startX - 50 * scale, startY + 85 * scale);
-           ctx.lineTo(startX - 65 * scale, startY + 160 * scale);
-           ctx.lineTo(startX - 60 * scale, startY + 220 * scale);
-           ctx.moveTo(startX + 50 * scale, startY + 85 * scale);
-           ctx.lineTo(startX + 65 * scale, startY + 160 * scale);
-           ctx.lineTo(startX + 60 * scale, startY + 220 * scale);
-           ctx.moveTo(startX - 35 * scale, startY + 180 * scale);
-           ctx.lineTo(startX + 35 * scale, startY + 180 * scale);
-           ctx.moveTo(startX - 18 * scale, startY + 260 * scale);
-           ctx.lineTo(startX - 22 * scale, startY + 380 * scale);
-           ctx.lineTo(startX - 25 * scale, startY + 450 * scale);
-           ctx.moveTo(startX + 18 * scale, startY + 260 * scale);
-           ctx.lineTo(startX + 22 * scale, startY + 380 * scale);
-           ctx.lineTo(startX + 25 * scale, startY + 450 * scale);
-           ctx.stroke();
-       }
-       
-       function drawMark(x, y, type, color, id) {
-           ctx.fillStyle = color;
-           ctx.strokeStyle = color;
-           ctx.lineWidth = 2;
-           
-           switch(type) {
-               case 'dot':
-                   ctx.beginPath();
-                   ctx.arc(x, y, 8, 0, 2 * Math.PI);
-                   ctx.fill();
-                   break;
-                   
-               case 'cross':
-                   ctx.beginPath();
-                   ctx.moveTo(x - 8, y - 8);
-                   ctx.lineTo(x + 8, y + 8);
-                   ctx.moveTo(x + 8, y - 8);
-                   ctx.lineTo(x - 8, y + 8);
-                   ctx.stroke();
-                   break;
-                   
-               case 'arrow':
-                   ctx.beginPath();
-                   ctx.moveTo(x, y - 10);
-                   ctx.lineTo(x, y + 5);
-                   ctx.moveTo(x, y - 10);
-                   ctx.lineTo(x - 5, y - 5);
-                   ctx.moveTo(x, y - 10);
-                   ctx.lineTo(x + 5, y - 5);
-                   ctx.stroke();
-                   break;
-           }
-           
-           ctx.fillStyle = '#333';
-           ctx.font = '12px Arial';
-           ctx.textAlign = 'center';
-           ctx.fillText(id.toString(), x, y + 25);
-       }
-       
-       // 點擊事件
-       canvas.addEventListener('click', function(e) {
-           const rect = canvas.getBoundingClientRect();
-           const x = e.clientX - rect.left;
-           const y = e.clientY - rect.top;
-           
-           const markType = document.getElementById('markType').value;
-           const injuryType = document.getElementById('injuryType').value;
-           const color = injuryColors[injuryType];
-           
-           const mark = {
-               id: markCounter++,
-               x: x,
-               y: y,
-               type: markType,
-               color: color,
-               injuryType: injuryType,
-               timestamp: new Date().toLocaleString('zh-TW')
-           };
-           
-           marks.push(mark);
-           drawBodyChart();
-           updateInjuryList();
-       });
-       
-       function updateInjuryList() {
-           const listContent = document.getElementById('injuryListContent');
-           
-           if (marks.length === 0) {
-               listContent.innerHTML = '<p style="color: #666; font-size: 10px;">尚未標記任何傷口</p>';
-               return;
-           }
-           
-           const injuryTypeNames = {
-               'laceration': '撕裂傷(L)',
-               'contusion': '挫傷(C)', 
-               'burn': '燒傷(B)',
-               'abrasion': '擦傷(A)',
-               'puncture': '穿刺傷(P)',
-               'fracture': '骨折(F)'
-           };
-           
-           listContent.innerHTML = marks.map(mark => `
-               <div class="injury-item">
-                   <strong>標記 ${mark.id}</strong> - 
-                   ${injuryTypeNames[mark.injuryType]} 
-                   <span style="color: ${mark.color};">●</span>
-                   <small style="color: #666;">(${mark.timestamp})</small>
-               </div>
-           `).join('');
-       }
-       
-       function clearAllMarks() {
-           if (confirm('確定要清除所有標記嗎？')) {
-               marks = [];
-               markCounter = 1;
-               drawBodyChart();
-               updateInjuryList();
-           }
-       }
-       
-       function undoLastMark() {
-           if (marks.length > 0) {
-               marks.pop();
-               drawBodyChart();
-               updateInjuryList();
-           }
-       }
-       
-       // 初始化
-       loadBodyImage();
-   </script>
+    <div class="form-container">
+        <div class="header">
+            <h1>國軍花蓮總醫院</h1>
+            <h2>急診外傷檢圖及外傷嚴重度（ISS）評估表</h2>
+        </div>
+
+        <table>
+            <tr>
+                <td colspan="3" style="width: 15%; font-weight: bold;">資料來源</td>
+                <td colspan="13">
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="source-patient">
+                            <label for="source-patient">病人</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="source-family">
+                            <label for="source-family">家屬</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="source-delivery">
+                            <label for="source-delivery">送達人員</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="source-police">
+                            <label for="source-police">警察</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="source-bystander">
+                            <label for="source-bystander">旁人</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="source-emt">
+                            <label for="source-emt">EMT</label>
+                        </div>
+                        <div class="checkbox-item">
+                            其他：<input type="text" class="text-input" style="width: 100px;">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" rowspan="3" style="font-weight: bold; vertical-align: top;">事故原因</td>
+                <td colspan="6">
+                    <div class="checkbox-row">
+                        車禍:
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="accident-motorcycle">
+                            <label for="accident-motorcycle">機車</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="accident-car">
+                            <label for="accident-car">汽車</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="accident-bicycle">
+                            <label for="accident-bicycle">腳踏車</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="accident-pedestrian">
+                            <label for="accident-pedestrian">行人</label>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="3">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cause-fall">
+                        <label for="cause-fall">跌倒</label>
+                    </div>
+                    <br>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cause-explosion">
+                        <label for="cause-explosion">爆炸傷</label>
+                    </div>
+                </td>
+                <td colspan="3">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cause-height-fall">
+                        <label for="cause-height-fall">高處墜落</label>
+                    </div>
+                    <br>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cause-falling-object">
+                        <label for="cause-falling-object">墜落物</label>
+                    </div>
+                </td>
+                <td style="width: 60px;">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cause-assault">
+                        <label for="cause-assault">被毆</label>
+                    </div>
+                    <br>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cause-fight">
+                        <label for="cause-fight">互毆</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="violence-domestic">
+                            <label for="violence-domestic">家庭暴力</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="violence-self-harm">
+                            <label for="violence-self-harm">自傷</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="violence-suicide">
+                            <label for="violence-suicide">自殺</label>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="3">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="weapon-knife">
+                        <label for="weapon-knife">刀傷</label>
+                    </div>
+                </td>
+                <td colspan="3">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="weapon-blunt">
+                        <label for="weapon-blunt">鈍器棍棒</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="weapon-gun">
+                        <label for="weapon-gun">槍傷</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    切割傷:<br>
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cut-kitchen-knife">
+                            <label for="cut-kitchen-knife">菜刀</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cut-utility-knife">
+                            <label for="cut-utility-knife">美工刀</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cut-machine">
+                            <label for="cut-machine">機器</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cut-other">
+                            <label for="cut-other"> 其他：<input type="text" class="text-input" style="width: 40px;"></label>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="6">
+                    咬傷：
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bite-human">
+                            <label for="bite-human">人</label>
+                        </div>
+                        動物：
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bite-cat">
+                            <label for="bite-cat">貓</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bite-dog">
+                            <label for="bite-dog">狗</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bite-snake">
+                            <label for="bite-snake">蛇</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bite-insect">
+                            <label for="bite-insect">昆蟲</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bite-bee">
+                            <label for="bite-bee">蜜蜂</label>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="burn">
+                        <label for="burn">燙傷</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="font-weight: bold;">外傷機轉</td>
+                <td colspan="13">
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="mechanism-blunt">
+                            <label for="mechanism-blunt">鈍傷（blunt）</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="mechanism-crush">
+                            <label for="mechanism-crush">壓砸傷（crush）</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="mechanism-sprain">
+                            <label for="mechanism-sprain">扭傷（sprain）</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="mechanism-penetrating">
+                            <label for="mechanism-penetrating">貫穿傷（penetrating）</label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table class="wound-legend">
+            <tr>
+                <td rowspan="5" style="font-weight: bold; vertical-align: middle;">傷口長度種類</td>
+                <td style="font-weight: bold;">A/W</td>
+                <td>Abrasion wound</td>
+                <td style="font-weight: bold;">Fr</td>
+                <td>Fracture</td>
+                <td rowspan="4" style="font-weight: bold; vertical-align: middle; width: 60px;">值班醫師</td>
+                <td rowspan="4" style="width: 120px;"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Ecc</td>
+                <td>Ecchymosis</td>
+                <td style="font-weight: bold;">P</td>
+                <td>Pain</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">L/W</td>
+                <td>Laceration wound</td>
+                <td style="font-weight: bold;">T</td>
+                <td>Tenderness</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">O</td>
+                <td>Puncture/Stab</td>
+                <td style="font-weight: bold;">Avn</td>
+                <td>Avulsion</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Treatment</td>
+                <td colspan="3">
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="treatment-suture">
+                            <label for="treatment-suture">Suture ×</label>
+                        </div>
+                        <input type="text" class="text-input" style="width: 30px;"> stitches
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="treatment-no-suture">
+                            <label for="treatment-no-suture">Not suture</label>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="2">
+                    西元 <input type="text" class="text-input" id="date-year" style="width: 40px;"> 年 
+                    <input type="text" class="text-input" id="date-month" style="width: 25px;"> 月 
+                    <input type="text" class="text-input" id="date-day" style="width: 25px;"> 日
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="8" style="text-align: center; font-weight: bold; background-color: #f0f0f0;">外傷嚴重度Injury Severity Score,ISS 評分表</td>
+            </tr>
+            <tr style="text-align: center;">
+                <td style="font-weight: bold;">部位</td>
+                <td>頭頸</td>
+                <td>顏面</td>
+                <td>胸部</td>
+                <td>腹部</td>
+                <td>肢體</td>
+                <td>外觀軟組織</td>
+                <td style="font-weight: bold;">ISS分數</td>
+            </tr>
+            <tr style="text-align: center;">
+                <td style="font-weight: bold;">AIS分數</td>
+                <td><input type="number" class="number-input" min="0" max="6" id="ais-head"></td>
+                <td><input type="number" class="number-input" min="0" max="6" id="ais-face"></td>
+                <td><input type="number" class="number-input" min="0" max="6" id="ais-chest"></td>
+                <td><input type="number" class="number-input" min="0" max="6" id="ais-abdomen"></td>
+                <td><input type="number" class="number-input" min="0" max="6" id="ais-limb"></td>
+                <td><input type="number" class="number-input" min="0" max="6" id="ais-external"></td>
+                <td style="width: 60px; text-align: center; font-weight: bold; font-size: 16px;" id="iss-score">--</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 80px; font-weight: bold; vertical-align: middle; text-align: center;">傷<br>口<br>部<br>位<br>圖<br>示</td>
+                <td>
+                    <div class="body-diagram">
+                        <img src="body.jpeg" alt="人體圖示" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="footer">
+            2024.05.27 病歷管理委員會決議通過
+        </div>
+    </div>
+
+    <script>
+        // 自動填入今天日期的函數
+        function fillCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // 月份從0開始，所以需要+1，並補0
+            const day = String(today.getDate()).padStart(2, '0');
+            
+            document.getElementById('date-year').value = year;
+            document.getElementById('date-month').value = month;
+            document.getElementById('date-day').value = day;
+        }
+
+        // ISS分數自動計算功能
+        function calculateISS() {
+            const aisInputs = [
+                document.getElementById('ais-head'),
+                document.getElementById('ais-face'),
+                document.getElementById('ais-chest'),
+                document.getElementById('ais-abdomen'),
+                document.getElementById('ais-limb'),
+                document.getElementById('ais-external')
+            ];
+            
+            const scores = aisInputs.map(input => {
+                const value = parseInt(input.value);
+                return isNaN(value) ? 0 : value;
+            });
+            
+            // 取最高的三個分數
+            const sortedScores = scores.sort((a, b) => b - a);
+            const topThree = sortedScores.slice(0, 3);
+            
+            // ISS = 最高三個AIS分數的平方和
+            const iss = topThree.reduce((sum, score) => sum + (score * score), 0);
+            
+            document.getElementById('iss-score').textContent = iss > 0 ? iss : '--';
+        }
+
+        // 為所有AIS分數輸入框添加事件監聽器
+        document.addEventListener('DOMContentLoaded', function() {
+            const aisInputs = document.querySelectorAll('[id^="ais-"]');
+            aisInputs.forEach(input => {
+                input.addEventListener('input', calculateISS);
+            });
+            
+            // 頁面載入時自動填入今天日期
+            fillCurrentDate();
+        });
+    </script>
 </body>
 </html>
