@@ -2098,13 +2098,17 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
                 return;
             }
 
-            // 建立搜尋詞列表（包括原始詞和縮寫展開的詞）
-            let searchTerms = [searchTerm];
+            // 建立搜尋詞列表
+            let searchTerms = [];
     
-            // 只有當輸入的是大寫時才啟動字典搜尋
+            // 只有當輸入的是大寫且在字典中找到時，才用字典搜尋
             if (originalSearchTerm === originalSearchTerm.toUpperCase() && abbreviationData[searchTerm]) {
-                searchTerms = searchTerms.concat(abbreviationData[searchTerm]);
+                // 只用字典中的全名搜尋，不包含原始縮寫
+                searchTerms = abbreviationData[searchTerm];
                 console.log('啟動縮寫搜尋:', originalSearchTerm, '→', abbreviationData[searchTerm]);
+            } else {
+                // 一般搜尋，使用原始輸入
+                searchTerms = [searchTerm];
             }
 
             const normalizedSearchTerms = searchTerms.map(term => term.replace(/[\s\.\-]/g, ''));
@@ -2120,7 +2124,7 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
                 const normalizedIcdName = icdName.replace(/[\s\.\-]/g, '');
                 const normalizedIcdNameCh = icdNameCh.replace(/[\s\.\-]/g, '');
         
-                // 檢查所有搜尋詞（包括原始詞和縮寫展開的詞）
+                // 檢查所有搜尋詞
                 return searchTerms.some(term => 
                     icdCode.includes(term) || 
                     icdName.includes(term) || 
@@ -2134,6 +2138,7 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
 
             displayData([headers, ...filteredData]);
         }
+            
             
 
 
