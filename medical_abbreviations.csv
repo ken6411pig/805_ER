@@ -32,3 +32,5 @@ sz,seizure
 mi,myocardial infarction
 stemi,st elevation myocardial infarction
 nstemi,non st elevation myocardial infarction
+hd,hemodialysis
+PAOD,atherosclerosis of native arteries of extremities
