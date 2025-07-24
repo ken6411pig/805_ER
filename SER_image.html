@@ -6,7 +6,7 @@
     <title>急診外傷檢圖及外傷嚴重度（ISS）評估表</title>
     <style>
         body {
-            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
             font-size: 16px;
             margin: 20px;
             background-color: white;
@@ -94,10 +94,11 @@
         }
 
         .number-input {
-            border: 1px solid black;
+            border: none;
+            background: transparent; 
             width: 40px;
             text-align: center;
-            font-size: 11px;
+            font-size: 14px;
             padding: 2px;
         }
 
@@ -112,7 +113,7 @@
             vertical-align: middle;
         }
         .body-diagram {
-            height: 450px;
+            height: 500px;
             border: 1px solid black;
             text-align: center;
             display: flex;
@@ -338,6 +339,7 @@
                             <label for="source-emt">EMT</label>
                         </div>
                         <div class="checkbox-item">
+                            <input type="checkbox" id="source-other">
                             其他：<input type="text" class="text-input" style="width: 100px;">
                         </div>
                     </div>
@@ -347,7 +349,10 @@
                 <td colspan="3" rowspan="3" style="font-weight: bold; vertical-align: top;" class="center-text">事故原因</td>
                 <td colspan="8" style="width: 50%;">
                     <div class="checkbox-row">
+                        <div class="checkbox-item">
+                        <input type="checkbox" id="accident-traffic">
                         車禍:
+                        </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="accident-motorcycle">
                             <label for="accident-motorcycle">機車</label>
