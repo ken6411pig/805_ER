@@ -1,12 +1,15 @@
 abbreviation,full_terms
+acs,acute ischemic heart disease
+age,gastroenteritis
+apn,acute pyelonephritis
 copd,chronic obstructive pulmonary disease
 dka,ketoacidosis
 ami,acute myocardial infarction
-cva,cerebral infarction,cerebral ischemia
+cva,cerebral infarction
 dvt,deep vein
 pe,pulmonary embolism,pulmonary edema
 uti,urinary tract infection
-hf,heart failure
+chf,(congestive) heart failure
 afib,atrial fibrillation
 gerd,gastroesophageal reflux
 ibs,irritable bowel syndrome
