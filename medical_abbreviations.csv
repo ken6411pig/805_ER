@@ -1,12 +1,12 @@
 abbreviation,full_terms
 copd,chronic obstructive pulmonary disease
-dka,Type 2 diabetes mellitus with ketoacidosis
+dka,ketoacidosis
 ami,acute myocardial infarction
-cva,cerebrovascular accident, stroke
-dvt,deep vein thrombosis
-pe,pulmonary embolism
+cva,cerebral infarction,cerebral ischemia
+dvt,deep vein
+pe,pulmonary embolism,pulmonary edema
 uti,urinary tract infection
-chf,(congestive) heart failure
+hf,heart failure
 afib,atrial fibrillation
 gerd,gastroesophageal reflux
 ibs,irritable bowel syndrome
