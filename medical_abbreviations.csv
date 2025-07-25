@@ -1,51 +1,105 @@
 abbreviation,full_terms
-acs,acute ischemic heart disease
-age,gastroenteritis
-apn,acute pyelonephritis
-copd,chronic obstructive pulmonary disease
-dka,ketoacidosis
-ami,acute myocardial infarction
-cva,cerebral infarction
-dvt,deep vein
-pe,pulmonary embolism
-uti,urinary tract infection
-chf,(congestive) heart failure
-afib,atrial fibrillation
-gerd,gastroesophageal reflux
-ibs,irritable bowel syndrome
-htn,hypertension
-dm,diabetes mellitus
-cad,Atherosclerotic heart disease
-ckd,chronic kidney disease
-esrd,end stage renal disease
-cabg,coronary artery bypass
-tia,transient cerebral ischemic attack
-gi,gastrointestinal
-sob,shortness of breath
-nv,nausea
-abd,abdominal
-loc,loss of consciousness
-sz,seizure
-mi,myocardial infarction
-stemi,st elevation myocardial infarction
-nstemi,non st elevation myocardial infarction
-hd,hemodialysis
-PAOD,atherosclerosis of native arteries of extremities
-vt,ventricular tachycardia
-vf,Ventricular Fibrillation
-sss,sick sinus syndrome
-tb,tuberculosis
-psvt,supraventricular tachycardia
-hivd,intervertebral disc disorders
-dic,disseminated intravascular coagulation
-ards,acute respiratory distress syndrome
-ie,infective endocarditis
-oa,osteoarthritis
-di,diabetes insipidus
-sle,systemic lupus erythematosus
-gu,gastric ulcer
-du,duodenal Ulcer
-bph,benign prostatic hyperplasia
-hcc,liver cell carcinoma
-pid,pelvic inflammatory disease 
-ra,rheumatoid arthritis
+AAA,Abdominal aortic aneurysm
+ACS,Acute Ischemic Heart Disease
+AD,Alzheimer's disease
+ADHD,Attention-deficit hyperactivity disorder
+AFib,Atrial Fibrillation
+AGE,Gastroenteritis
+AH,Auditory hallucinations
+AIDP,Inflammatory polyneuropathy
+AIDS,B20
+AIS,Adolescent idiopathic scoliosis
+AKI,Acute Kidney Failure
+ALL,Acute Lymphoblastic Leukemia
+AMI,Acute Myocardial Infarction
+AML,Acute Myeloid Leukemia
+AOM,Acute serous otitis media
+APN,Acute Pyelonephritis
+AR,aortic insufficiency
+ARDS,Acute Respiratory Distress Syndrome
+ARF,Acute kidney failure
+AS,aortic stenosis
+ASD,Atrial septal defect
+AUB,Abnormal uterine and vaginal bleeding
+AUR,Retention of urine
+AVB,I44
+BA,Atresia of bile ducts
+BPH,Benign Prostatic Hyperplasia
+BPPV,Benign paroxysmal vertigo
+CABG,Coronary Artery Bypass
+CAD,Atherosclerotic Heart Disease
+CBD,Calculus of bile duct
+CD,Crohn's disease
+CDI,Clostridium difficile
+CF,Cystic fibrosis
+CHD,Congenital malformation of heart
+CHF,(Congestive) Heart Failure
+CKD,Chronic Kidney Disease
+CO,carbon monoxide
+COPD,Chronic Obstructive Pulmonary Disease
+CSR,spondylosis with radiculopathy
+CVA,Cerebral Infarction
+DCM,Dilated cardiomyopathy
+DI,Diabetes Insipidus
+DIC,Disseminated Intravascular Coagulation
+DKA,Ketoacidosis
+DM,Type 2 Diabetes Mellitus
+DU,Duodenal Ulcer
+DVT,Deep Vein
+EBV,B27
+ESRD,End Stage Renal Disease
+GB,Gall bladder
+GBS,G61.0
+GERD,Gastroesophageal Reflux
+GI,Gastrointestinal
+GN,Glomerulonephritis
+GU,Gastric Ulcer
+HBV,hepatitis B
+HCC,Liver Cell Carcinoma
+HCOM,hypertrophic cardiomyopathy
+HCV,hepatitis C
+HD,Dependence on renal dialysis
+HHS,NKHHC
+HIVD,Intervertebral Disc Disorders
+HTN,(Primary) Hypertension
+IBS,Irritable Bowel Syndrome
+ICH,intracerebral hemorrhage
+IE,Infective Endocarditis
+ild,J84
+MI,Myocardial Infarction
+MR,mitral insufficiency
+MS,Multiple Sclerosis
+NHL,Non-Hodgkin Lymphoma
+OA,Osteoarthritis
+PAH,pulmonary hypertension
+PAOD,Atherosclerosis of Native Arteries of Extremities
+PD,Parkinson's Disease
+PE,Pulmonary Embolism
+PID,Pelvic Inflammatory Disease
+PJP,Pneumocystosis
+PSVT,Supraventricular Tachycardia
+PUD,Peptic Ulcer
+RA,Rheumatoid Arthritis
+RHD,Rheumatic heart disease
+SAH,subarachnoid hemorrhage
+SBP,Spontaneous bacterial peritonitis
+SDH,Subdural hemorrhage
+SIADH,Syndrome of inappropriate secretion of antidiuretic hormone
+SIH,Intracranial hypotension
+SLE,Systemic Lupus Erythematosus
+SOB,Shortness of Breath
+SSS,Sick Sinus Syndrome
+STD,Sexually transmitted disease
+STEMI,ST Elevation (STEMI) Myocardial Infarction
+Stroke,Cerebral Infarction
+TAA,Thoracic aortic aneurysm
+TB,Tuberculosis
+TIA,Transient Cerebral Ischemic Attack
+TR,tricuspid insufficiency
+UC,Ulcerative colitis
+URI,Upper Respiratory Infection
+UTI,Urinary Tract Infection
+VF,Ventricular Fibrillation
+VHD,valve disorders
+VSD,Ventricular septal defect
+VT,Ventricular Tachycardia
