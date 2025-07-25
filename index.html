@@ -2084,62 +2084,84 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(searchData, 300);
         }
-        function searchData() {
-            const originalSearchTerm = document.getElementById('searchInput').value;
-            const searchTerm = originalSearchTerm.toLowerCase();
-    
-            document.getElementById('results').innerHTML = '';
-            document.getElementById('countInfo').textContent = '';
-            document.getElementById('minLengthNotice').textContent = '';
+function searchData() {
+    const originalSearchTerm = document.getElementById('searchInput').value;
+    const searchTerm = originalSearchTerm.toLowerCase();
 
-            if (searchTerm.length < 2) {
-                document.getElementById('minLengthNotice').textContent = 
-                    '請輸入至少2個字元開始搜尋';
-                return;
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('countInfo').textContent = '';
+    document.getElementById('minLengthNotice').textContent = '';
+
+    if (searchTerm.length < 2) {
+        document.getElementById('minLengthNotice').textContent = 
+            '請輸入至少2個字元開始搜尋';
+        return;
+    }
+
+    // 建立搜尋詞列表
+    let searchTerms = [];
+
+    // 只有當輸入的是大寫且在字典中找到時，才用字典搜尋
+    if (originalSearchTerm === originalSearchTerm.toUpperCase() && abbreviationData[searchTerm]) {
+        // 只用字典中的全名搜尋，不包含原始縮寫
+        searchTerms = abbreviationData[searchTerm];
+        console.log('啟動縮寫搜尋:', originalSearchTerm, '→', abbreviationData[searchTerm]);
+    } else {
+        // 一般搜尋，使用原始輸入
+        searchTerms = [searchTerm];
+    }
+
+    const filteredData = csvData.filter((row, index) => {
+        if (index === 0) return false;
+
+        const icdCode = row[0]?.toString().toLowerCase() || '';
+        const icdName = row[1]?.toString().toLowerCase() || '';
+        const icdNameCh = row[2]?.toString().toLowerCase() || '';
+
+        // 對每個搜尋詞進行匹配
+        return searchTerms.some(term => {
+            // 1. 精確匹配（保持原有功能）
+            if (icdCode.includes(term) || icdName.includes(term) || icdNameCh.includes(term)) {
+                return true;
             }
 
-            // 建立搜尋詞列表
-            let searchTerms = [];
-    
-            // 只有當輸入的是大寫且在字典中找到時，才用字典搜尋
-            if (originalSearchTerm === originalSearchTerm.toUpperCase() && abbreviationData[searchTerm]) {
-                // 只用字典中的全名搜尋，不包含原始縮寫
-                searchTerms = abbreviationData[searchTerm];
-                console.log('啟動縮寫搜尋:', originalSearchTerm, '→', abbreviationData[searchTerm]);
-            } else {
-                // 一般搜尋，使用原始輸入
-                searchTerms = [searchTerm];
+            // 2. 標準化匹配（移除標點符號和空格）
+            const normalizedTerm = term.replace(/[\s\.\-'',]/g, '');
+            const normalizedIcdCode = icdCode.replace(/[\s\.\-'',]/g, '');
+            const normalizedIcdName = icdName.replace(/[\s\.\-'',]/g, '');
+            const normalizedIcdNameCh = icdNameCh.replace(/[\s\.\-'',]/g, '');
+            
+            if (normalizedIcdCode.includes(normalizedTerm) ||
+                normalizedIcdName.includes(normalizedTerm) ||
+                normalizedIcdNameCh.includes(normalizedTerm)) {
+                return true;
             }
 
-            const normalizedSearchTerms = searchTerms.map(term => term.replace(/[\s\.\-]/g, ''));
+            // 3. 關鍵詞分割匹配（針對多詞搜尋如 "Crohn disease unspecified"）
+            const keywords = term.trim().split(/\s+/);
+            if (keywords.length > 1) {
+                // 檢查所有關鍵詞是否都存在於某個欄位中
+                const matchesAllKeywords = (text) => {
+                    const normalizedText = text.replace(/[,\.\-''""\s]/g, ' ').toLowerCase();
+                    return keywords.every(keyword => {
+                        const normalizedKeyword = keyword.replace(/[,\.\-''""\s]/g, '');
+                        return normalizedText.includes(keyword) || 
+                               normalizedText.includes(normalizedKeyword) ||
+                               text.includes(keyword);
+                    });
+                };
 
-            const filteredData = csvData.filter((row, index) => {
-                if (index === 0) return false;
-        
-                const icdCode = row[0]?.toString().toLowerCase() || '';
-                const icdName = row[1]?.toString().toLowerCase() || '';
-                const icdNameCh = row[2]?.toString().toLowerCase() || '';
-        
-                const normalizedIcdCode = icdCode.replace(/[\s\.\-]/g, '');
-                const normalizedIcdName = icdName.replace(/[\s\.\-]/g, '');
-                const normalizedIcdNameCh = icdNameCh.replace(/[\s\.\-]/g, '');
-        
-                // 檢查所有搜尋詞
-                return searchTerms.some(term => 
-                    icdCode.includes(term) || 
-                    icdName.includes(term) || 
-                    icdNameCh.includes(term)
-                ) || normalizedSearchTerms.some(term =>
-                    normalizedIcdCode.includes(term) ||
-                    normalizedIcdName.includes(term) ||
-                    normalizedIcdNameCh.includes(term)
-                );
-            });
+                if (matchesAllKeywords(icdName) || matchesAllKeywords(icdNameCh)) {
+                    return true;
+                }
+            }
 
-            displayData([headers, ...filteredData]);
-        }
-            
-            
+            return false;
+        });
+    });
+
+    displayData([headers, ...filteredData]);
+}            
 
 
         function displayData(data) {
