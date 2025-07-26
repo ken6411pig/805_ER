@@ -438,13 +438,6 @@
                     <label>員工人數</label>
                     <input type="number" id="staffCount" min="8" max="12" value="10">
                 </div>
-                <div class="control-group">
-                    <label>排班模式</label>
-                    <select id="scheduleMode">
-                        <option value="continuous">連續排班模式</option>
-                        <option value="balanced">平衡分散模式</option>
-                    </select>
-                </div>
                 <button onclick="generateStaffList()">更新員工清單</button>
                 <button onclick="generateSchedule()">🎯 自動排班</button>
                 <button onclick="exportSchedule()">📋 匯出排班表</button>
@@ -687,7 +680,7 @@
                 for (let day = 1; day <= this.daysInMonth; day++) {
                     const count = leaveCounts[day];
                     const dayName = this.getDayOfWeek(day);
-                    const dayInfo = `${day}日(${dayName})`;
+                    const dayInfo = `${day}(${dayName})`;
                     
                     if (count >= 3) {
                         highLeaveDays.push({ day: dayInfo, count });
@@ -747,7 +740,7 @@
                     
                     card.className = `day-requirement ${isWeekendDay ? 'weekend' : ''}`;
                     card.innerHTML = `
-                        <strong>${day}日 (${dayName})</strong>
+                        <strong>${day} (${dayName})</strong>
                         ${leaveCount > 0 ? `<div style="color: #dc3545; font-size: 11px; margin: 2px 0;">${leaveCount}人請假</div>` : ''}
                         <div style="margin: 8px 0;">
                             <label>白班</label>
@@ -1482,13 +1475,13 @@
                             content = '假';
                         } else if (schedule.dayShift && schedule.nightShift) {
                             cellClass += ' shift-both';
-                            content = '日夜';
+                            content = 'O+N';
                         } else if (schedule.dayShift) {
                             cellClass += ' shift-day';
-                            content = '日';
+                            content = 'O';
                         } else if (schedule.nightShift) {
                             cellClass += ' shift-night';
-                            content = '夜';
+                            content = 'N';
                         }
                         
                         // 檢查是否有違規情況
@@ -1666,9 +1659,9 @@
                 let csv = '員工姓名';
                 for (let day = 1; day <= this.daysInMonth; day++) {
                     const dayName = this.getDayOfWeek(day);
-                    csv += `,${day}日(${dayName})`;
+                    csv += `,${day}(${dayName})`;
                 }
-                csv += ',總工時,日班次數,夜班次數\n';
+                csv += ',總工時,白班次數,夜班次數\n';
                 
                 this.staff.forEach(staff => {
                     csv += staff.name;
@@ -1683,16 +1676,16 @@
                         if (schedule.leave) {
                             cellValue = '請假';
                         } else if (schedule.dayShift && schedule.nightShift) {
-                            cellValue = '日夜班';
+                            cellValue = 'O+N';
                             totalHours += 24;
                             dayCount++;
                             nightCount++;
                         } else if (schedule.dayShift) {
-                            cellValue = '日班';
+                            cellValue = 'O';
                             totalHours += 12;
                             dayCount++;
                         } else if (schedule.nightShift) {
-                            cellValue = '夜班';
+                            cellValue = 'N';
                             totalHours += 12;
                             nightCount++;
                         }
