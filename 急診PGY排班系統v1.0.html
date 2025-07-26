@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>急診排班系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .controls {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        input, select, button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .staff-section {
+            background: white;
+            padding: 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .section-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .section-header:hover {
+            background: #e9ecef;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .collapse-icon {
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+
+        .collapse-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: 20px;
+            display: block;
+        }
+
+        .section-content.collapsed {
+            display: none;
+        }
+
+        .requirements-section {
+            background: white;
+            padding: 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .staff-header {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .staff-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .staff-card h4 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .leave-dates {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .leave-tag {
+            background: #fff3cd;
+            color: #856404;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            border: 1px solid #ffeaa7;
+        }
+
+        .schedule-container {
+            padding: 20px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            gap: 1px;
+            background: #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .grid-header, .grid-cell {
+            background: white;
+            padding: 6px 4px;
+            text-align: center;
+            font-size: 12px;
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .grid-header {
+            background: #495057;
+            color: white;
+            font-weight: 600;
+        }
+
+        .day-header {
+            background: #6c757d !important;
+            color: white;
+            font-weight: 600;
+            min-height: 50px !important;
+        }
+
+        .day-header.weekend {
+            background: #dc3545 !important;
+            color: white;
+        }
+
+        .day-number {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .day-name {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+
+        .staff-name {
+            background: #495057 !important;
+            color: white;
+            font-weight: 600;
+            justify-content: flex-start;
+            padding-left: 8px;
+        }
+
+        .shift-day {
+            background: #cce7ff;
+            color: #004085;
+            font-weight: 600;
+        }
+
+        .shift-night {
+            background: #d4edda;
+            color: #155724;
+            font-weight: 600;
+        }
+
+        .shift-both {
+            background: #ffeaa7;
+            color: #856404;
+            font-weight: 600;
+        }
+
+        .leave-day {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .conflict {
+            background: #f8d7da !important;
+            color: #721c24;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+        .summary-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .leave-analysis {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .leave-analysis h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .high-leave-days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .leave-day-tag {
+            background: #dc3545;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .leave-day-tag.medium {
+            background: #fd7e14;
+        }
+
+        .leave-day-tag.low {
+            background: #28a745;
+        }
+
+        .stat-card {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .day-requirement {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+        .day-requirement.weekend {
+            background: #fff5f5;
+            border-color: #fed7d7;
+        }
+
+        .conflict-list {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .conflict-item {
+            color: #721c24;
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .schedule-grid {
+                font-size: 10px;
+                grid-template-columns: 60px repeat(31, 1fr);
+            }
+            
+            .grid-cell {
+                min-height: 30px;
+                padding: 4px 2px;
+            }
+            
+            .day-header {
+                min-height: 40px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 急診排班系統</h1>
+            <p>智能排班 • 約束管理 • 公平分配</p>
+            <p style="font-size: 14px; margin-top: 8px; opacity: 0.9;">
+                規則：連續工作天數=平均夜班數 • 夜班後不能接白班 • 預假前一天不排夜班 • 每月最後一天夜班0人 • 目標夜班數平均分配
+            </p>
+        </div>
+
+        <div class="controls">
+            <div class="control-row">
+                <div class="control-group">
+                    <label>年月</label>
+                    <input type="month" id="monthSelect" value="2025-08">
+                </div>
+                <div class="control-group">
+                    <label>員工人數</label>
+                    <input type="number" id="staffCount" min="8" max="12" value="10">
+                </div>
+                <div class="control-group">
+                    <label>排班模式</label>
+                    <select id="scheduleMode">
+                        <option value="continuous">連續排班模式</option>
+                        <option value="balanced">平衡分散模式</option>
+                    </select>
+                </div>
+                <button onclick="generateStaffList()">更新員工清單</button>
+                <button onclick="generateSchedule()">🎯 自動排班</button>
+                <button onclick="exportSchedule()">📋 匯出排班表</button>
+            </div>
+        </div>
+
+        <div class="staff-section">
+            <div class="section-header" onclick="window.toggleSection('staff')">
+                <h3>👥 員工管理</h3>
+                <span class="collapse-icon" id="staff-icon">▼</span>
+            </div>
+            <div class="section-content" id="staff-content">
+                <div id="staffGrid" class="staff-grid"></div>
+            </div>
+        </div>
+
+        <div class="requirements-section">
+            <div class="section-header" onclick="window.toggleSection('requirements')">
+                <h3>📅 每日人力需求設定</h3>
+                <span class="collapse-icon" id="requirements-icon">▼</span>
+            </div>
+            <div class="section-content" id="requirements-content">
+                <div class="stats-summary" id="requirementsSummary"></div>
+                <div id="leaveAnalysis"></div>
+                <div id="requirementsGrid" class="requirements-grid"></div>
+            </div>
+        </div>
+
+        <div class="schedule-container">
+            <h3>📋 排班表</h3>
+            <div id="conflictList"></div>
+            <div id="scheduleGrid" class="schedule-grid"></div>
+            
+            <div class="stats" id="stats"></div>
+        </div>
+    </div>
+
+    <script>
+        class EmergencyScheduler {
+            constructor() {
+                this.staff = [];
+                this.schedule = {};
+                this.requirements = {};
+                this.currentMonth = '';
+                this.daysInMonth = 0;
+                this.conflicts = [];
+            }
+
+            init() {
+                this.updateMonth();
+                this.generateStaffList();
+                this.generateRequirements();
+                this.initializeEmptySchedule();
+                this.renderAll();
+            }
+
+            updateMonth() {
+                const monthInput = document.getElementById('monthSelect');
+                this.currentMonth = monthInput.value;
+                const date = new Date(this.currentMonth + '-01');
+                this.daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+            }
+
+            // 獲取星期名稱
+            getDayOfWeek(day) {
+                const date = new Date(this.currentMonth + '-' + day.toString().padStart(2, '0'));
+                const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
+                return dayNames[date.getDay()];
+            }
+
+            // 判斷是否為週末
+            isWeekend(day) {
+                const date = new Date(this.currentMonth + '-' + day.toString().padStart(2, '0'));
+                const dayOfWeek = date.getDay();
+                return dayOfWeek === 0 || dayOfWeek === 6; // 0=週日, 6=週六
+            }
+
+            generateStaffList() {
+                this.updateMonth();
+                const count = parseInt(document.getElementById('staffCount').value);
+                
+                // 保留現有員工的姓名和請假資料
+                const existingStaff = {};
+                this.staff.forEach(s => {
+                    existingStaff[s.id] = {
+                        name: s.name,
+                        leaveRequests: s.leaveRequests || []
+                    };
+                });
+
+                this.staff = [];
+                const defaultNames = ['王醫師', '李醫師', '張醫師', '陳醫師', '林醫師', '黃醫師', 
+                              '吳醫師', '劉醫師', '蔡醫師', '許醫師', '鄭醫師', '謝醫師'];
+                
+                for (let i = 0; i < count; i++) {
+                    // 如果之前已有這個ID的員工，保留其資料
+                    if (existingStaff[i]) {
+                        this.staff.push({
+                            id: i,
+                            name: existingStaff[i].name,
+                            leaveRequests: existingStaff[i].leaveRequests
+                        });
+                    } else {
+                        // 新增員工使用預設名稱
+                        const defaultName = defaultNames[i] || `醫師${i+1}`;
+                        this.staff.push({
+                            id: i,
+                            name: defaultName,
+                            leaveRequests: []
+                        });
+                    }
+                }
+                
+                this.renderStaffGrid();
+                this.generateRequirements();
+            }
+
+            generateRequirements() {
+                this.requirements = {};
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    this.requirements[day] = {
+                        dayShift: 2,
+                        nightShift: day === this.daysInMonth ? 0 : 2
+                    };
+                }
+                this.renderRequirements();
+            }
+
+            initializeEmptySchedule() {
+                this.schedule = {};
+                this.staff.forEach(staff => {
+                    this.schedule[staff.id] = {};
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        this.schedule[staff.id][day] = {
+                            dayShift: false,
+                            nightShift: false,
+                            leave: staff.leaveRequests.includes(day)
+                        };
+                    }
+                });
+            }
+
+            renderStaffGrid() {
+                const grid = document.getElementById('staffGrid');
+                grid.innerHTML = '';
+                
+                this.staff.forEach(staff => {
+                    const card = document.createElement('div');
+                    card.className = 'staff-card';
+                    card.innerHTML = `
+                        <div class="staff-header">
+                            <div class="control-group" style="margin-bottom: 10px;">
+                                <label>員工姓名</label>
+                                <input type="text" 
+                                       value="${staff.name}"
+                                       onchange="scheduler.updateStaffName(${staff.id}, this.value)"
+                                       placeholder="請輸入員工姓名"
+                                       style="font-weight: 600; background: #fff; border: 2px solid #dee2e6;">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>請假日期 (以逗號分隔，如: 5,12,20)</label>
+                            <input type="text" 
+                                   value="${staff.leaveRequests.join(',')}"
+                                   onchange="scheduler.updateLeave(${staff.id}, this.value)"
+                                   placeholder="請輸入請假日期">
+                        </div>
+                        <div class="leave-dates">
+                            ${staff.leaveRequests.map(date => 
+                                `<span class="leave-tag">${date}日</span>`
+                            ).join('')}
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            renderRequirements() {
+                this.renderRequirementsSummary();
+                this.renderLeaveAnalysis();
+                this.renderRequirementsGrid();
+            }
+
+            renderRequirementsSummary() {
+                const summary = document.getElementById('requirementsSummary');
+                
+                let totalDayShifts = 0;
+                let totalNightShifts = 0;
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    totalDayShifts += this.requirements[day].dayShift;
+                    totalNightShifts += this.requirements[day].nightShift;
+                }
+                
+                const avgDayShifts = (totalDayShifts / this.staff.length).toFixed(1);
+                const avgNightShifts = (totalNightShifts / this.staff.length).toFixed(1);
+                
+                summary.innerHTML = `
+                    <div class="summary-card">
+                        <div class="summary-value">${totalDayShifts}</div>
+                        <div class="summary-label">總白班需求</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">${totalNightShifts}</div>
+                        <div class="summary-label">總夜班需求</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">${avgDayShifts}</div>
+                        <div class="summary-label">平均白班/人</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value">${avgNightShifts}</div>
+                        <div class="summary-label">平均夜班/人</div>
+                    </div>
+                `;
+            }
+
+            renderLeaveAnalysis() {
+                const analysis = document.getElementById('leaveAnalysis');
+                
+                // 計算每天的請假人數
+                const leaveCounts = {};
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    leaveCounts[day] = 0;
+                }
+                
+                this.staff.forEach(staff => {
+                    staff.leaveRequests.forEach(day => {
+                        if (day >= 1 && day <= this.daysInMonth) {
+                            leaveCounts[day]++;
+                        }
+                    });
+                });
+                
+                // 找出請假人數較多的日期
+                const highLeaveDays = [];
+                const mediumLeaveDays = [];
+                const lowLeaveDays = [];
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const count = leaveCounts[day];
+                    const dayName = this.getDayOfWeek(day);
+                    const dayInfo = `${day}日(${dayName})`;
+                    
+                    if (count >= 3) {
+                        highLeaveDays.push({ day: dayInfo, count });
+                    } else if (count === 2) {
+                        mediumLeaveDays.push({ day: dayInfo, count });
+                    } else if (count === 1) {
+                        lowLeaveDays.push({ day: dayInfo, count });
+                    }
+                }
+                
+                if (highLeaveDays.length === 0 && mediumLeaveDays.length === 0 && lowLeaveDays.length === 0) {
+                    analysis.innerHTML = `
+                        <div class="leave-analysis">
+                            <h4>📊 請假分析</h4>
+                            <p style="color: #28a745; margin: 0;">目前沒有員工請假，人力充足！</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                analysis.innerHTML = `
+                    <div class="leave-analysis">
+                        <h4>📊 請假分析 - 建議調整人力需求</h4>
+                        <div class="high-leave-days">
+                            ${highLeaveDays.map(item => 
+                                `<span class="leave-day-tag">${item.day}: ${item.count}人請假</span>`
+                            ).join('')}
+                            ${mediumLeaveDays.map(item => 
+                                `<span class="leave-day-tag medium">${item.day}: ${item.count}人請假</span>`
+                            ).join('')}
+                            ${lowLeaveDays.map(item => 
+                                `<span class="leave-day-tag low">${item.day}: ${item.count}人請假</span>`
+                            ).join('')}
+                        </div>
+                        ${highLeaveDays.length > 0 ? 
+                            `<p style="margin-top: 10px; color: #856404; font-size: 14px;">
+                                ⚠️ 紅色標記的日期請假人數較多，建議適當降低當天的人力需求以提高排班成功率
+                            </p>` : ''
+                        }
+                    </div>
+                `;
+            }
+
+            renderRequirementsGrid() {
+                const grid = document.getElementById('requirementsGrid');
+                grid.innerHTML = '';
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const card = document.createElement('div');
+                    const isWeekendDay = this.isWeekend(day);
+                    const dayName = this.getDayOfWeek(day);
+                    
+                    // 計算當天請假人數
+                    const leaveCount = this.staff.filter(staff => 
+                        staff.leaveRequests.includes(day)
+                    ).length;
+                    
+                    card.className = `day-requirement ${isWeekendDay ? 'weekend' : ''}`;
+                    card.innerHTML = `
+                        <strong>${day}日 (${dayName})</strong>
+                        ${leaveCount > 0 ? `<div style="color: #dc3545; font-size: 11px; margin: 2px 0;">${leaveCount}人請假</div>` : ''}
+                        <div style="margin: 8px 0;">
+                            <label>白班</label>
+                            <input type="number" min="1" max="3" 
+                                   value="${this.requirements[day].dayShift}"
+                                   onchange="scheduler.updateRequirement(${day}, 'dayShift', this.value)"
+                                   style="width: 50px; margin-left: 5px;">
+                        </div>
+                        <div>
+                            <label>夜班</label>
+                            <input type="number" min="0" max="3" 
+                                   value="${this.requirements[day].nightShift}"
+                                   onchange="scheduler.updateRequirement(${day}, 'nightShift', this.value)"
+                                   style="width: 50px; margin-left: 5px;"
+                                   ${day === this.daysInMonth ? 'disabled' : ''}>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            }
+
+            updateLeave(staffId, leaveStr) {
+                const leaves = leaveStr.split(',')
+                    .map(s => parseInt(s.trim()))
+                    .filter(n => !isNaN(n) && n >= 1 && n <= this.daysInMonth);
+                
+                this.staff[staffId].leaveRequests = leaves;
+                this.renderStaffGrid();
+                
+                // 重新渲染請假分析和需求網格
+                this.renderLeaveAnalysis();
+                this.renderRequirementsGrid();
+                
+                // 如果已經有排班表，需要更新排班表中的請假狀態
+                if (this.schedule && Object.keys(this.schedule).length > 0) {
+                    this.initializeEmptySchedule();
+                    this.renderSchedule();
+                }
+            }
+
+            updateStaffName(staffId, newName) {
+                if (newName && newName.trim()) {
+                    this.staff[staffId].name = newName.trim();
+                    
+                    // 如果已經有排班表，需要重新渲染以顯示新名字
+                    if (this.schedule && Object.keys(this.schedule).length > 0) {
+                        this.renderSchedule();
+                        this.renderStats();
+                    }
+                }
+            }
+
+            updateRequirement(day, shift, value) {
+                this.requirements[day][shift] = parseInt(value);
+                // 更新需求後重新渲染統計
+                this.renderRequirementsSummary();
+            }
+
+            generateSchedule() {
+                console.log('=== 開始完整排班流程 ===');
+                
+                // 清空之前的排班結果
+                this.schedule = {};
+                this.conflicts = [];
+                
+                // 初始化排班表
+                this.staff.forEach(staff => {
+                    this.schedule[staff.id] = {};
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        this.schedule[staff.id][day] = {
+                            dayShift: false,
+                            nightShift: false,
+                            leave: staff.leaveRequests.includes(day)
+                        };
+                    }
+                });
+
+                // 1. 先排夜班
+                const nightShiftSuccess = this.scheduleNightShifts();
+                
+                if (!nightShiftSuccess) {
+                    console.log('❌ 夜班排班失敗，無法產生有效排班表');
+                    this.renderAll();
+                    return;
+                }
+
+                console.log('✅ 夜班排班完成，開始排白班');
+                
+                // 2. 再排白班
+                const dayShiftSuccess = this.scheduleDayShifts();
+                
+                if (!dayShiftSuccess) {
+                    console.log('❌ 白班排班失敗，但夜班已完成');
+                } else {
+                    console.log('✅ 白班排班完成');
+                }
+                
+                this.renderAll();
+            }
+
+            scheduleNightShifts() {
+                console.log('=== 開始夜班排班 ===');
+                
+                let maxAttempts = 1000;
+                let bestSchedule = null;
+                let bestBalance = Infinity;
+                let perfectBalanceCount = 0;
+                
+                // 計算總夜班需求
+                const totalNightShiftsNeeded = Object.values(this.requirements)
+                    .reduce((sum, req) => sum + req.nightShift, 0);
+                const targetNightShiftsPerPerson = Math.floor(totalNightShiftsNeeded / this.staff.length);
+                
+                console.log(`總夜班需求: ${totalNightShiftsNeeded}班`);
+                console.log(`目標每人夜班數: ${targetNightShiftsPerPerson}班`);
+                console.log(`開始進行最多${maxAttempts}次夜班排班嘗試，目標：每個人${targetNightShiftsPerPerson}班`);
+                
+                for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                    this.clearNightShifts();
+                    
+                    // 重置夜班計數
+                    this.staff.forEach(staff => {
+                        staff.currentNightShifts = 0;
+                    });
+                    
+                    // 逐日安排夜班
+                    for (let day = 1; day <= this.daysInMonth - 1; day++) {
+                        const needed = this.requirements[day].nightShift;
+                        if (needed === 0) continue;
+                        
+                        const selectedStaff = this.selectStaffForNightShift(day, needed, targetNightShiftsPerPerson);
+                        
+                        selectedStaff.forEach(staff => {
+                            this.schedule[staff.id][day].nightShift = true;
+                            staff.currentNightShifts++;
+                        });
+                    }
+                    
+                    const balance = this.calculateNightShiftBalance();
+                    
+                    if (attempt % 50 === 0 || balance === 0) {
+                        console.log(`第${attempt}次夜班嘗試 - 最大差距: ${balance}班`);
+                    }
+                    
+                    if (balance < bestBalance) {
+                        bestBalance = balance;
+                        bestSchedule = this.copyCurrentSchedule();
+                        console.log(`🎯 發現更佳夜班方案！最大差距: ${balance}班 (第${attempt}次嘗試)`);
+                    }
+                    
+                    if (balance === 0) {
+                        perfectBalanceCount++;
+                        if (perfectBalanceCount >= 3) {
+                            console.log(`🎉 連續找到${perfectBalanceCount}次完全平衡夜班方案！每人${targetNightShiftsPerPerson}班`);
+                            break;
+                        }
+                    }
+                    
+                    if (bestBalance <= 1 && attempt >= 200) {
+                        console.log(`✅ 已找到差距${bestBalance}班的良好夜班方案`);
+                        break;
+                    }
+                }
+                
+                if (bestSchedule && bestBalance === 0) {
+                    this.restoreSchedule(bestSchedule);
+                    console.log(`🏆 採用完全平衡夜班方案 - 差距: ${bestBalance}班，每人${targetNightShiftsPerPerson}班`);
+                    return true;
+                } else {
+                    console.log('❌ 未找到完全平衡夜班方案');
+                    return false;
+                }
+            }
+
+            scheduleDayShifts() {
+                console.log('=== 開始白班排班 ===');
+                
+                let maxAttempts = 1000;
+                let bestSchedule = null;
+                let bestBalance = Infinity;
+                let bestFulfillment = 0;
+                let bestAverageCount = 0;
+                
+                // 計算總白班數和平均值
+                const totalDayShiftsNeeded = Object.values(this.requirements)
+                    .reduce((sum, req) => sum + req.dayShift, 0);
+                const averageDayShifts = Math.round(totalDayShiftsNeeded / this.staff.length);
+                const targetPeopleCount = this.staff.length - 3; // N-3個人達到平均
+                
+                console.log(`開始進行最多${maxAttempts}次白班排班嘗試`);
+                console.log(`目標：${targetPeopleCount}人達到平均${averageDayShifts}班即為最佳解`);
+                
+                for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                    // 只清空白班，保留夜班
+                    this.clearDayShifts();
+                    
+                    // 重置白班計數
+                    this.staff.forEach(staff => {
+                        staff.currentDayShifts = 0;
+                    });
+                    
+                    // 使用平衡優先的排班策略
+                    this.assignDayShiftsBalanced();
+                    
+                    const balance = this.calculateDayShiftBalance();
+                    const fulfillment = this.calculateDayShiftFulfillment();
+                    const averageAchievers = this.countPeopleAtAverageDayShifts(averageDayShifts);
+                    
+                    if (attempt % 50 === 0 || averageAchievers >= targetPeopleCount || attempt <= 3) {
+                        console.log(`第${attempt}次白班嘗試 - 差距: ${balance}班, 滿足: ${fulfillment.toFixed(1)}%, 達平均人數: ${averageAchievers}/${this.staff.length}`);
+                    }
+                    
+                    // 優先考慮達到平均的人數，其次考慮平衡性，最後考慮需求滿足度
+                    const isBetter = averageAchievers > bestAverageCount || 
+                                   (averageAchievers === bestAverageCount && balance < bestBalance) ||
+                                   (averageAchievers === bestAverageCount && balance === bestBalance && fulfillment > bestFulfillment);
+                    
+                    if (isBetter) {
+                        bestBalance = balance;
+                        bestFulfillment = fulfillment;
+                        bestAverageCount = averageAchievers;
+                        bestSchedule = this.copyCurrentDaySchedule();
+                        if (attempt <= 10 || averageAchievers >= targetPeopleCount) {
+                            console.log(`🎯 發現更佳白班方案！達平均: ${averageAchievers}人, 差距: ${balance}班, 滿足: ${fulfillment.toFixed(1)}%`);
+                        }
+                    }
+                    
+                    // 如果達到目標人數，提前結束
+                    if (averageAchievers >= targetPeopleCount) {
+                        console.log(`🎉 達成目標！${averageAchievers}人達到平均${averageDayShifts}班`);
+                        break;
+                    }
+                    
+                    // 如果找到了很好的方案且嘗試超過500次，也可以考慮提前結束
+                    if (averageAchievers >= targetPeopleCount - 1 && balance <= 2 && attempt >= 500) {
+                        console.log(`✅ 找到接近目標的方案 - 達平均: ${averageAchievers}人, 差距: ${balance}班`);
+                        break;
+                    }
+                }
+                
+                if (bestSchedule) {
+                    this.restoreDaySchedule(bestSchedule);
+                    console.log(`🏆 採用最佳白班方案 - 達平均: ${bestAverageCount}人, 差距: ${bestBalance}班, 滿足: ${bestFulfillment.toFixed(1)}%`);
+                    this.reportDayShiftDistribution(averageDayShifts);
+                    this.checkConflicts();
+                    this.renderStats();
+                    return true;
+                } else {
+                    console.log('❌ 未找到可行白班方案');
+                    return false;
+                }
+            }
+
+            assignDayShiftsBalanced() {
+                // 計算目標夜班數，用於決定連續工作天數限制
+                const totalNightShiftsNeeded = Object.values(this.requirements)
+                    .reduce((sum, req) => sum + req.nightShift, 0);
+                const targetNightShifts = Math.floor(totalNightShiftsNeeded / this.staff.length);
+                const maxConsecutiveDays = targetNightShifts; // 根據夜班平均數設定連續工作限制
+                
+                console.log(`白班排班 - 目標夜班數: ${targetNightShifts}班，連續工作限制: ${maxConsecutiveDays}天`);
+                
+                // 逐日安排白班，使用平衡策略
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const needed = this.requirements[day].dayShift;
+                    if (needed === 0) continue;
+                    
+                    // 獲取可工作人員並按白班數排序（少的優先）
+                    const availableStaff = this.getAvailableStaffForDay(day, maxConsecutiveDays);
+                    
+                    if (availableStaff.length === 0) {
+                        continue; // 沒有可用人員
+                    }
+                    
+                    // 按當前白班數排序，班數少的優先
+                    availableStaff.sort((a, b) => {
+                        const aDayShifts = a.currentDayShifts || 0;
+                        const bDayShifts = b.currentDayShifts || 0;
+                        if (aDayShifts !== bDayShifts) {
+                            return aDayShifts - bDayShifts; // 班數少的優先
+                        }
+                        // 如果班數相同，隨機排序
+                        return Math.random() - 0.5;
+                    });
+                    
+                    // 選擇前N名
+                    const selectedCount = Math.min(needed, availableStaff.length);
+                    const selectedStaff = availableStaff.slice(0, selectedCount);
+                    
+                    // 分配白班
+                    selectedStaff.forEach(staff => {
+                        this.schedule[staff.id][day].dayShift = true;
+                        staff.currentDayShifts = (staff.currentDayShifts || 0) + 1;
+                    });
+                }
+            }
+
+            getAvailableStaffForDay(day, maxConsecutiveDays = 6) {
+                const availableStaff = [];
+                
+                this.staff.forEach(staff => {
+                    // 檢查基本可工作條件
+                    const isOnLeave = this.schedule[staff.id][day].leave;
+                    const alreadyDayShift = this.schedule[staff.id][day].dayShift;
+                    const hasNightToday = this.schedule[staff.id][day].nightShift;
+                    const hadNightYesterday = day > 1 && this.schedule[staff.id][day-1].nightShift;
+                    
+                    // 絕對不能違反的條件
+                    if (isOnLeave) return;           // 請假
+                    if (alreadyDayShift) return;     // 已有白班
+                    if (hasNightToday) return;       // 當天夜班
+                    if (hadNightYesterday) return;   // 前一日夜班
+                    
+                    // 檢查連續工作天數（動態限制）
+                    const consecutiveDays = this.getConsecutiveDays(staff.id, day);
+                    if (consecutiveDays >= maxConsecutiveDays) return;
+                    
+                    // 通過檢查的人員
+                    availableStaff.push(staff);
+                });
+                
+                return availableStaff;
+            }
+
+            countPeopleAtAverageDayShifts(averageDayShifts) {
+                return this.staff.filter(staff => 
+                    (staff.currentDayShifts || 0) === averageDayShifts
+                ).length;
+            }
+
+            reportDayShiftDistribution(averageDayShifts) {
+                console.log('\n=== 白班分配結果 ===');
+                
+                // 按班數分組顯示
+                const countGroups = {};
+                this.staff.forEach(staff => {
+                    const count = staff.currentDayShifts || 0;
+                    if (!countGroups[count]) countGroups[count] = [];
+                    countGroups[count].push(staff.name);
+                });
+                
+                const dayCounts = this.staff.map(staff => staff.currentDayShifts || 0);
+                const minDays = Math.min(...dayCounts);
+                const maxDays = Math.max(...dayCounts);
+                const totalDays = dayCounts.reduce((sum, count) => sum + count, 0);
+                const avgDays = totalDays / this.staff.length;
+                
+                console.log(`總白班數: ${totalDays}班`);
+                console.log(`平均班數: ${avgDays.toFixed(1)}班`);
+                console.log(`班數範圍: ${minDays} - ${maxDays}班`);
+                console.log(`最大差距: ${maxDays - minDays}班`);
+                
+                console.log('\n班數分布:');
+                for (let count = minDays; count <= maxDays; count++) {
+                    if (countGroups[count]) {
+                        const isAverage = count === averageDayShifts;
+                        const marker = isAverage ? '⭐' : '  ';
+                        console.log(`${marker}${count}班: ${countGroups[count].join(', ')} (${countGroups[count].length}人)`);
+                    }
+                }
+                
+                const averageAchievers = this.countPeopleAtAverageDayShifts(averageDayShifts);
+                const targetPeopleCount = this.staff.length - 3;
+                
+                console.log(`\n⭐ 達到平均${averageDayShifts}班的人數: ${averageAchievers}/${this.staff.length}`);
+                console.log(`🎯 目標人數: ${targetPeopleCount}人`);
+                
+                if (averageAchievers >= targetPeopleCount) {
+                    console.log('🎉 達成目標！大部分人都達到平均班數');
+                } else if (averageAchievers >= targetPeopleCount - 1) {
+                    console.log('🌟 接近目標！分配相當均勻');
+                } else {
+                    console.log('⚠️ 未達目標，但已是當前最佳方案');
+                }
+            }
+
+            selectStaffForNightShift(day, needed, targetNightShifts = 5) {
+                const groups = this.groupStaffByNightPriority(day, targetNightShifts);
+                
+                const selectedStaff = [];
+                
+                // 優先從高優先級選擇
+                if (groups.high.length > 0) {
+                    const highPicks = Math.min(needed, groups.high.length);
+                    const shuffled = this.shuffleArray([...groups.high]);
+                    selectedStaff.push(...shuffled.slice(0, highPicks));
+                }
+                
+                // 如果還需要人，從中優先級選擇
+                if (selectedStaff.length < needed && groups.medium.length > 0) {
+                    const mediumNeeded = needed - selectedStaff.length;
+                    const mediumPicks = Math.min(mediumNeeded, groups.medium.length);
+                    const shuffled = this.shuffleArray([...groups.medium]);
+                    selectedStaff.push(...shuffled.slice(0, mediumPicks));
+                }
+                
+                // 最後從低優先級選擇
+                if (selectedStaff.length < needed && groups.low.length > 0) {
+                    const lowNeeded = needed - selectedStaff.length;
+                    const lowPicks = Math.min(lowNeeded, groups.low.length);
+                    const shuffled = this.shuffleArray([...groups.low]);
+                    selectedStaff.push(...shuffled.slice(0, lowPicks));
+                }
+                
+                return selectedStaff;
+            }
+
+            groupStaffByNightPriority(day, targetNightShifts = 5) {
+                const groups = { high: [], medium: [], low: [] };
+                
+                this.staff.forEach(staff => {
+                    if (!this.canWorkNightShift(staff.id, day)) {
+                        return;
+                    }
+                    
+                    const nightShifts = staff.currentNightShifts;
+                    const hadNightYesterday = day > 1 && this.schedule[staff.id][day-1].nightShift;
+                    
+                    // 高優先級：夜班數少於目標且前一天也是夜班（連續夜班）
+                    if (nightShifts < targetNightShifts && hadNightYesterday) {
+                        groups.high.push(staff);
+                    }
+                    // 中優先級：夜班數少於目標
+                    else if (nightShifts < targetNightShifts) {
+                        groups.medium.push(staff);
+                    }
+                    // 低優先級：已達到或超過目標夜班數
+                    else {
+                        groups.low.push(staff);
+                    }
+                });
+                
+                return groups;
+            }
+
+            canWorkNightShift(staffId, day) {
+                if (this.schedule[staffId][day].leave) return false;
+                if (this.schedule[staffId][day].nightShift) return false;
+                if (day === this.daysInMonth) return false;
+                
+                const staff = this.staff.find(s => s.id === staffId);
+                if (staff && staff.leaveRequests.includes(day + 1)) return false;
+                
+                return true;
+            }
+
+            canWorkDayShift(staffId, day) {
+                if (this.schedule[staffId][day].leave) return false;
+                if (this.schedule[staffId][day].dayShift) return false;
+                
+                // 夜班後不能接白班（至少間隔12小時）
+                if (day > 1 && this.schedule[staffId][day-1].nightShift) return false;
+                
+                // 動態計算連續工作天數限制
+                const totalNightShiftsNeeded = Object.values(this.requirements)
+                    .reduce((sum, req) => sum + req.nightShift, 0);
+                const targetNightShifts = Math.floor(totalNightShiftsNeeded / this.staff.length);
+                const maxConsecutiveDays = targetNightShifts; // 根據夜班平均數設定
+                
+                // 檢查連續工作天數
+                const consecutiveDays = this.getConsecutiveDays(staffId, day);
+                if (consecutiveDays >= maxConsecutiveDays) return false;
+                
+                return true;
+            }
+
+            getConsecutiveDays(staffId, currentDay) {
+                let consecutiveDays = 0;
+                
+                // 往前查看連續工作天數
+                for (let day = currentDay - 1; day >= 1; day--) {
+                    const hasWork = this.schedule[staffId][day].dayShift || this.schedule[staffId][day].nightShift;
+                    if (hasWork) {
+                        consecutiveDays++;
+                    } else {
+                        break;
+                    }
+                }
+                
+                return consecutiveDays;
+            }
+
+            clearNightShifts() {
+                this.staff.forEach(staff => {
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        if (this.schedule[staff.id] && this.schedule[staff.id][day]) {
+                            this.schedule[staff.id][day].nightShift = false;
+                        }
+                    }
+                });
+            }
+
+            clearDayShifts() {
+                this.staff.forEach(staff => {
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        if (this.schedule[staff.id] && this.schedule[staff.id][day]) {
+                            this.schedule[staff.id][day].dayShift = false;
+                        }
+                    }
+                });
+            }
+
+            calculateNightShiftBalance() {
+                const nightCounts = this.staff.map(staff => staff.currentNightShifts);
+                const maxNights = Math.max(...nightCounts);
+                const minNights = Math.min(...nightCounts);
+                return maxNights - minNights;
+            }
+
+            calculateDayShiftBalance() {
+                const dayCounts = this.staff.map(staff => staff.currentDayShifts || 0);
+                const maxDays = Math.max(...dayCounts);
+                const minDays = Math.min(...dayCounts);
+                return maxDays - minDays;
+            }
+
+            calculateDayShiftFulfillment() {
+                let totalRequired = 0;
+                let totalAssigned = 0;
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const required = this.requirements[day].dayShift;
+                    const assigned = this.staff.filter(staff => 
+                        this.schedule[staff.id][day].dayShift).length;
+                    
+                    totalRequired += required;
+                    totalAssigned += assigned;
+                }
+                
+                return totalRequired > 0 ? (totalAssigned / totalRequired) * 100 : 100;
+            }
+
+            shuffleArray(array) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            }
+
+            copyCurrentSchedule() {
+                const copy = {};
+                this.staff.forEach(staff => {
+                    copy[staff.id] = {};
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        copy[staff.id][day] = {
+                            ...this.schedule[staff.id][day]
+                        };
+                    }
+                });
+                
+                const staffCounts = {};
+                this.staff.forEach(staff => {
+                    staffCounts[staff.id] = {
+                        nightShifts: staff.currentNightShifts,
+                        dayShifts: staff.currentDayShifts || 0
+                    };
+                });
+                
+                return { schedule: copy, counts: staffCounts };
+            }
+
+            copyCurrentDaySchedule() {
+                const copy = {};
+                this.staff.forEach(staff => {
+                    copy[staff.id] = {};
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        copy[staff.id][day] = {
+                            dayShift: this.schedule[staff.id][day].dayShift,
+                            nightShift: this.schedule[staff.id][day].nightShift,
+                            leave: this.schedule[staff.id][day].leave
+                        };
+                    }
+                });
+                
+                const staffCounts = {};
+                this.staff.forEach(staff => {
+                    staffCounts[staff.id] = staff.currentDayShifts || 0;
+                });
+                
+                return { schedule: copy, counts: staffCounts };
+            }
+
+            restoreSchedule(saved) {
+                this.schedule = saved.schedule;
+                
+                this.staff.forEach(staff => {
+                    staff.currentNightShifts = saved.counts[staff.id].nightShifts;
+                    staff.currentDayShifts = saved.counts[staff.id].dayShifts;
+                });
+            }
+
+            restoreDaySchedule(saved) {
+                // 只恢復白班部分，保留夜班
+                this.staff.forEach(staff => {
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        this.schedule[staff.id][day].dayShift = saved.schedule[staff.id][day].dayShift;
+                    }
+                    staff.currentDayShifts = saved.counts[staff.id];
+                });
+            }
+
+            checkConflicts() {
+                this.conflicts = [];
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const dayShiftCount = this.staff.filter(staff => 
+                        this.schedule[staff.id][day].dayShift).length;
+                    const nightShiftCount = this.staff.filter(staff => 
+                        this.schedule[staff.id][day].nightShift).length;
+                    
+                    if (dayShiftCount < this.requirements[day].dayShift) {
+                        this.conflicts.push({
+                            type: 'understaffed',
+                            day: day,
+                            shift: 'day',
+                            needed: this.requirements[day].dayShift,
+                            actual: dayShiftCount
+                        });
+                    }
+                    
+                    if (nightShiftCount < this.requirements[day].nightShift) {
+                        this.conflicts.push({
+                            type: 'understaffed',
+                            day: day,
+                            shift: 'night',
+                            needed: this.requirements[day].nightShift,
+                            actual: nightShiftCount
+                        });
+                    }
+                    
+                    // 檢查違反規則的情況
+                    this.staff.forEach(staff => {
+                        const schedule = this.schedule[staff.id][day];
+                        
+                        // 檢查夜班後接白班
+                        if (day > 1 && this.schedule[staff.id][day-1].nightShift && schedule.dayShift) {
+                            this.conflicts.push({
+                                type: 'rule_violation',
+                                day: day,
+                                staff: staff.name,
+                                rule: '夜班後不能接白班'
+                            });
+                        }
+                        
+                        // 檢查同一天日夜班
+                        if (schedule.dayShift && schedule.nightShift) {
+                            this.conflicts.push({
+                                type: 'rule_violation',
+                                day: day,
+                                staff: staff.name,
+                                rule: '同一天不能既上日班又上夜班'
+                            });
+                        }
+                    });
+                }
+                
+                this.renderConflicts();
+            }
+
+            renderConflicts() {
+                const conflictList = document.getElementById('conflictList');
+                
+                if (this.conflicts.length === 0) {
+                    conflictList.innerHTML = '';
+                    return;
+                }
+                
+                conflictList.innerHTML = `
+                    <div class="conflict-list">
+                        <h4>⚠️ 排班問題</h4>
+                        ${this.conflicts.map(conflict => {
+                            if (conflict.type === 'understaffed') {
+                                const shiftName = conflict.shift === 'day' ? '白班' : '夜班';
+                                return `<div class="conflict-item">
+                                    ${conflict.day}日 ${shiftName} 人力不足：需要${conflict.needed}人，實際${conflict.actual}人
+                                </div>`;
+                            } else if (conflict.type === 'rule_violation') {
+                                return `<div class="conflict-item">
+                                    ${conflict.day}日 ${conflict.staff} 違反規則：${conflict.rule}
+                                </div>`;
+                            }
+                            return '';
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            renderSchedule() {
+                const grid = document.getElementById('scheduleGrid');
+                grid.innerHTML = '';
+                
+                if (!this.schedule || Object.keys(this.schedule).length === 0) {
+                    grid.innerHTML = '<div class="grid-cell">請先點擊「自動排班」生成排班表</div>';
+                    return;
+                }
+                
+                // 動態設定網格列數：1列員工名稱 + N列日期
+                grid.style.gridTemplateColumns = `80px repeat(${this.daysInMonth}, 1fr)`;
+                
+                // 表頭
+                grid.appendChild(this.createCell('', 'grid-header'));
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const dayName = this.getDayOfWeek(day);
+                    const isWeekendDay = this.isWeekend(day);
+                    const headerClass = `day-header ${isWeekendDay ? 'weekend' : ''}`;
+                    
+                    const cell = document.createElement('div');
+                    cell.className = headerClass;
+                    cell.innerHTML = `
+                        <div class="day-number">${day}</div>
+                        <div class="day-name">${dayName}</div>
+                    `;
+                    grid.appendChild(cell);
+                }
+                
+                // 員工排班
+                this.staff.forEach(staff => {
+                    grid.appendChild(this.createCell(staff.name, 'staff-name'));
+                    
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        const schedule = this.schedule[staff.id] && this.schedule[staff.id][day] ? 
+                            this.schedule[staff.id][day] : 
+                            { dayShift: false, nightShift: false, leave: staff.leaveRequests.includes(day) };
+                        
+                        let cellClass = 'grid-cell';
+                        let content = '';
+                        
+                        if (schedule.leave) {
+                            cellClass += ' leave-day';
+                            content = '假';
+                        } else if (schedule.dayShift && schedule.nightShift) {
+                            cellClass += ' shift-both';
+                            content = '日夜';
+                        } else if (schedule.dayShift) {
+                            cellClass += ' shift-day';
+                            content = '日';
+                        } else if (schedule.nightShift) {
+                            cellClass += ' shift-night';
+                            content = '夜';
+                        }
+                        
+                        // 檢查是否有違規情況
+                        const hasViolation = this.conflicts.some(c => 
+                            c.type === 'rule_violation' && 
+                            c.day === day && 
+                            c.staff === staff.name
+                        );
+                        
+                        if (hasViolation) {
+                            cellClass += ' conflict';
+                        }
+                        
+                        grid.appendChild(this.createCell(content, cellClass));
+                    }
+                });
+            }
+
+            createCell(content, className) {
+                const cell = document.createElement('div');
+                cell.className = className;
+                cell.textContent = content;
+                return cell;
+            }
+
+            renderStats() {
+                const stats = document.getElementById('stats');
+                
+                if (!this.schedule || Object.keys(this.schedule).length === 0) {
+                    stats.innerHTML = `
+                        <div class="stat-card">
+                            <div class="stat-value">${this.staff.length}</div>
+                            <div>總員工數</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">0</div>
+                            <div>總班次數</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">0</div>
+                            <div>平均班次</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">0</div>
+                            <div>工時差異</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">0</div>
+                            <div>問題數量</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const workloadDetails = this.staff.map(staff => {
+                    const workload = this.getWorkload(staff.id);
+                    const dayShifts = this.getDayShiftCount(staff.id);
+                    const nightShifts = this.getNightShiftCount(staff.id);
+                    const totalShifts = dayShifts + nightShifts;
+                    return {
+                        name: staff.name,
+                        workload: workload,
+                        dayShifts: dayShifts,
+                        nightShifts: nightShifts,
+                        totalShifts: totalShifts
+                    };
+                });
+                
+                const totalShifts = workloadDetails.reduce((sum, w) => sum + w.totalShifts, 0);
+                const avgShifts = totalShifts / this.staff.length;
+                const workloads = workloadDetails.map(w => w.workload);
+                const maxWorkload = Math.max(...workloads);
+                const minWorkload = Math.min(...workloads);
+                
+                const workloadTable = workloadDetails
+                    .sort((a, b) => b.totalShifts - a.totalShifts)
+                    .map(w => `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: ${w.totalShifts > avgShifts + 2 ? '#ffebee' : w.totalShifts < avgShifts - 2 ? '#e8f5e8' : '#f8f9fa'}; margin: 3px 0; border-radius: 6px; border: 1px solid #dee2e6;">
+                        <span style="font-weight: 500; color: #212529;">${w.name}</span>
+                        <span style="font-weight: 600; color: #495057;">${w.totalShifts}班 (日:${w.dayShifts} 夜:${w.nightShifts})</span>
+                    </div>`).join('');
+                
+                // 計算需求滿足率
+                const dayShiftFulfillment = this.calculateDayShiftFulfillment();
+                const nightShiftFulfillment = this.calculateNightShiftFulfillment();
+                
+                stats.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-value">${this.staff.length}</div>
+                        <div>總員工數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${totalShifts}</div>
+                        <div>總班次數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${avgShifts.toFixed(1)}</div>
+                        <div>平均班次</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${((maxWorkload - minWorkload)/12).toFixed(1)}</div>
+                        <div>班次差異</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${this.conflicts.length}</div>
+                        <div>問題數量</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${dayShiftFulfillment.toFixed(1)}%</div>
+                        <div>白班滿足率</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${nightShiftFulfillment.toFixed(1)}%</div>
+                        <div>夜班滿足率</div>
+                    </div>
+                    <div class="stat-card" style="grid-column: 1/-1;">
+                        <h4 style="margin-bottom: 10px;">個人工作負荷</h4>
+                        ${workloadTable}
+                    </div>
+                `;
+            }
+
+            calculateNightShiftFulfillment() {
+                let totalRequired = 0;
+                let totalAssigned = 0;
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const required = this.requirements[day].nightShift;
+                    const assigned = this.staff.filter(staff => 
+                        this.schedule[staff.id][day].nightShift).length;
+                    
+                    totalRequired += required;
+                    totalAssigned += assigned;
+                }
+                
+                return totalRequired > 0 ? (totalAssigned / totalRequired) * 100 : 100;
+            }
+
+            getDayShiftCount(staffId) {
+                let count = 0;
+                if (!this.schedule || !this.schedule[staffId]) return 0;
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const schedule = this.schedule[staffId][day];
+                    if (schedule && schedule.dayShift) count++;
+                }
+                return count;
+            }
+
+            getNightShiftCount(staffId) {
+                let count = 0;
+                if (!this.schedule || !this.schedule[staffId]) return 0;
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const schedule = this.schedule[staffId][day];
+                    if (schedule && schedule.nightShift) count++;
+                }
+                return count;
+            }
+
+            getWorkload(staffId) {
+                let workload = 0;
+                if (!this.schedule || !this.schedule[staffId]) return 0;
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const schedule = this.schedule[staffId][day];
+                    if (!schedule) continue;
+                    
+                    if (schedule.dayShift) workload += 12;
+                    if (schedule.nightShift) workload += 12;
+                }
+                return workload;
+            }
+
+            exportSchedule() {
+                let csv = '員工姓名';
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    const dayName = this.getDayOfWeek(day);
+                    csv += `,${day}日(${dayName})`;
+                }
+                csv += ',總工時,日班次數,夜班次數\n';
+                
+                this.staff.forEach(staff => {
+                    csv += staff.name;
+                    let totalHours = 0;
+                    let dayCount = 0;
+                    let nightCount = 0;
+                    
+                    for (let day = 1; day <= this.daysInMonth; day++) {
+                        const schedule = this.schedule[staff.id][day];
+                        let cellValue = '';
+                        
+                        if (schedule.leave) {
+                            cellValue = '請假';
+                        } else if (schedule.dayShift && schedule.nightShift) {
+                            cellValue = '日夜班';
+                            totalHours += 24;
+                            dayCount++;
+                            nightCount++;
+                        } else if (schedule.dayShift) {
+                            cellValue = '日班';
+                            totalHours += 12;
+                            dayCount++;
+                        } else if (schedule.nightShift) {
+                            cellValue = '夜班';
+                            totalHours += 12;
+                            nightCount++;
+                        }
+                        
+                        csv += `,${cellValue}`;
+                    }
+                    
+                    csv += `,${totalHours}小時,${dayCount},${nightCount}\n`;
+                });
+                
+                const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `急診排班表_${this.currentMonth}.csv`;
+                link.click();
+            }
+
+            renderAll() {
+                this.renderStaffGrid();
+                this.renderRequirements();
+                this.renderSchedule();
+                this.renderStats();
+                this.renderConflicts();
+            }
+        }
+
+        // 全域函數
+        const scheduler = new EmergencyScheduler();
+
+        function generateStaffList() {
+            scheduler.generateStaffList();
+        }
+
+        function generateSchedule() {
+            scheduler.generateSchedule();
+        }
+
+        function exportSchedule() {
+            scheduler.exportSchedule();
+        }
+
+        // 摺疊功能
+        window.toggleSection = function(sectionName) {
+            const content = document.getElementById(sectionName + '-content');
+            const icon = document.getElementById(sectionName + '-icon');
+            
+            if (content && icon) {
+                if (content.classList.contains('collapsed')) {
+                    content.classList.remove('collapsed');
+                    icon.classList.remove('collapsed');
+                    icon.textContent = '▼';
+                } else {
+                    content.classList.add('collapsed');
+                    icon.classList.add('collapsed');
+                    icon.textContent = '▶';
+                }
+            }
+        };
+
+        // 頁面載入時初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            scheduler.init();
+        });
+
+        // 月份變更時更新
+        document.getElementById('monthSelect').addEventListener('change', () => {
+            scheduler.init();
+        });
+    </script>
+</body>
+</html>
