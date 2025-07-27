@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>急診排班系統 - 完整整合版</title>
+    <title>急診排班系統</title>
     <style>
         * {
             margin: 0;
@@ -355,7 +355,7 @@
         .shift-night, .shift-N { background: #d4edda !important; color: #155724; font-weight: 600; }
         .shift-both { background: #ffeaa7 !important; color: #856404; font-weight: 600; }
         .shift-R { background: #fff3cd !important; color: #856404; font-weight: 600; }
-        .shift-C { background: #f8d7da !important; color: #721c24; font-weight: 600; }
+        .shift-C { background: #e7e3ff !important; color: #5a3d99; font-weight: 600; }
         .shift-S { background: #e2e3e5 !important; color: #383d41; font-weight: 600; }
         .leave-day, .leave { background: #fff3cd !important; color: #856404; }
         .conflict { background: #f8d7da !important; color: #721c24; }
@@ -582,8 +582,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏥 急診排班系統 - 完整整合版</h1>
-            <p>自動智能排班 • 手動精細調整 • 多班別支援 • 工時平衡</p>
+            <h1>🏥 急診排班系統</h1>
+            <p>智能排班 • 手動調整  • 工時平衡</p>
             <p style="font-size: 14px; margin-top: 8px; opacity: 0.9;">
                 規則：整體連續工作≤6天 • 白班連續≤3天 • 夜班後不能接白班 • 預假前一天不排夜班 • 每月最後一天夜班0人
             </p>
@@ -727,7 +727,7 @@
                         </div>
                         <div class="legend-item">
                             <div class="legend-color" style="background: #fff3cd;"></div>
-                            <span><strong>假</strong> - 請假</span>
+                            <span><strong>假</strong> - 預假</span>
                         </div>
                     </div>
                 </div>
@@ -1583,7 +1583,39 @@
                     this.schedule[staffId][day] = { shift: value, leave: false };
                 }
                 
+                // 每次更新後重新檢查衝突（不顯示彈窗）
+                this.checkConflictsSilently();
+                
+                // 重新渲染編輯模式
                 this.renderEditMode();
+            }
+
+            // 靜默檢查衝突（不顯示彈窗）
+            checkConflictsSilently() {
+                this.conflicts = [];
+                
+                const checkedConsecutive = new Set();
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    this.checkDailyShiftLimits(day);
+                    
+                    if (this.currentMode === 'auto') {
+                        this.checkStaffingRequirements(day);
+                    }
+                    
+                    this.staff.forEach(staff => {
+                        if (this.currentMode === 'auto') {
+                            this.checkAutoModeRuleViolations(staff, day);
+                        } else {
+                            this.checkManualModeRuleViolations(staff, day);
+                        }
+                        
+                        if (!checkedConsecutive.has(staff.id)) {
+                            this.checkStaffConsecutiveWorkDays(staff);
+                            checkedConsecutive.add(staff.id);
+                        }
+                    });
+                }
             }
 
             calculateWorkload(staffId) {
@@ -1626,64 +1658,303 @@
             checkConflicts() {
                 this.conflicts = [];
                 
+                // 避免重複檢查連續工作天數，使用Set記錄已檢查的員工
+                const checkedConsecutive = new Set();
+                
                 for (let day = 1; day <= this.daysInMonth; day++) {
+                    // 檢查每日班別人數限制
+                    this.checkDailyShiftLimits(day);
+                    
+                    // 檢查人力需求（僅適用於自動排班模式）
+                    if (this.currentMode === 'auto') {
+                        this.checkStaffingRequirements(day);
+                    }
+                    
+                    // 檢查規則違反
                     this.staff.forEach(staff => {
+                        // 檢查班別銜接規則
                         if (this.currentMode === 'auto') {
-                            const schedule = this.schedule[staff.id][day];
-                            
-                            if (day > 1 && this.schedule[staff.id][day-1].nightShift && schedule.dayShift) {
-                                this.conflicts.push({
-                                    type: 'rule_violation',
-                                    day: day,
-                                    staff: staff.name,
-                                    rule: '夜班後不能接白班'
-                                });
-                            }
-                            
-                            if (schedule.dayShift && schedule.nightShift) {
-                                this.conflicts.push({
-                                    type: 'rule_violation',
-                                    day: day,
-                                    staff: staff.name,
-                                    rule: '同一天不能既上日班又上夜班'
-                                });
-                            }
+                            this.checkAutoModeRuleViolations(staff, day);
                         } else {
-                            const today = this.schedule[staff.id][day];
-                            
-                            if (day > 1) {
-                                const yesterday = this.schedule[staff.id][day - 1];
-                                if (yesterday.shift === 'N' && (today.shift === 'O' || today.shift === 'R')) {
-                                    this.conflicts.push({
-                                        type: 'rule_violation',
-                                        staff: staff.name,
-                                        day: day,
-                                        message: `${staff.name} 在${day-1}日夜班後，${day}日不應排白班或急救室`
-                                    });
-                                }
-                            }
+                            this.checkManualModeRuleViolations(staff, day);
+                        }
+                        
+                        // 檢查連續工作天數（每個員工只檢查一次）
+                        if (!checkedConsecutive.has(staff.id)) {
+                            this.checkStaffConsecutiveWorkDays(staff);
+                            checkedConsecutive.add(staff.id);
                         }
                     });
                 }
                 
                 if (this.conflicts.length === 0) {
-                    this.showAlert('沒有發現排班衝突！', 'success');
+                    this.showAlert('✅ 沒有發現排班衝突！所有規則都符合要求', 'success');
                 } else {
-                    let alertMessage = `發現 ${this.conflicts.length} 個衝突：\n`;
-                    this.conflicts.slice(0, 5).forEach(c => {
-                        if (c.message) {
-                            alertMessage += `• ${c.message}\n`;
-                        } else {
-                            alertMessage += `• ${c.day}日 ${c.staff} 違反規則：${c.rule}\n`;
-                        }
-                    });
-                    if (this.conflicts.length > 5) {
-                        alertMessage += `... 還有 ${this.conflicts.length - 5} 個衝突`;
+                    // 修正統計各類衝突數量
+                    const conflictTypes = {
+                        consecutive: this.conflicts.filter(c => c.type === 'consecutive_work_violation').length,
+                        shiftLimit: this.conflicts.filter(c => c.type === 'shift_limit_violation').length,
+                        ruleViolation: this.conflicts.filter(c => 
+                            c.type === 'rule_violation' || 
+                            (c.message && !c.type.includes('consecutive') && !c.type.includes('shift_limit'))
+                        ).length,
+                        staffing: this.conflicts.filter(c => c.type === 'understaffed').length
+                    };
+                    
+                    let summary = `發現 ${this.conflicts.length} 個排班問題：`;
+                    const summaryParts = [];
+                    if (conflictTypes.consecutive > 0) summaryParts.push(`連續工作${conflictTypes.consecutive}個`);
+                    if (conflictTypes.shiftLimit > 0) summaryParts.push(`人數超限${conflictTypes.shiftLimit}個`);  
+                    if (conflictTypes.ruleViolation > 0) summaryParts.push(`班別銜接${conflictTypes.ruleViolation}個`);
+                    if (conflictTypes.staffing > 0) summaryParts.push(`人力不足${conflictTypes.staffing}個`);
+                    
+                    if (summaryParts.length > 0) {
+                        summary += ' ' + summaryParts.join(' ');
                     }
-                    this.showAlert(alertMessage, 'error');
+                    
+                    this.showAlert(summary, 'error');
                 }
                 
                 this.renderConflicts();
+            }
+
+            checkStaffConsecutiveWorkDays(staff) {
+                let currentStreak = 0;
+                let streakStart = 0;
+                
+                for (let day = 1; day <= this.daysInMonth; day++) {
+                    if (this.isWorkDay(staff.id, day)) {
+                        if (currentStreak === 0) {
+                            streakStart = day;
+                        }
+                        currentStreak++;
+                        
+                        // 如果連續工作天數超過6天，記錄衝突
+                        if (currentStreak > 6) {
+                            // 只在第7天記錄一次衝突，避免重複
+                            if (currentStreak === 7) {
+                                this.conflicts.push({
+                                    type: 'consecutive_work_violation',
+                                    staff: staff.name,
+                                    consecutiveDays: currentStreak,
+                                    startDay: streakStart,
+                                    currentDay: day,
+                                    message: `${staff.name} 從${streakStart}日開始連續工作已達${currentStreak}天，超過6天限制`
+                                });
+                            }
+                            // 如果連續天數持續增加，更新衝突記錄
+                            else if (currentStreak > 7) {
+                                // 找到並更新現有的衝突記錄
+                                const existingConflict = this.conflicts.find(c => 
+                                    c.type === 'consecutive_work_violation' && 
+                                    c.staff === staff.name && 
+                                    c.startDay === streakStart
+                                );
+                                if (existingConflict) {
+                                    existingConflict.consecutiveDays = currentStreak;
+                                    existingConflict.currentDay = day;
+                                    existingConflict.message = `${staff.name} 從${streakStart}日開始連續工作已達${currentStreak}天，超過6天限制`;
+                                }
+                            }
+                        }
+                    } else {
+                        currentStreak = 0;
+                    }
+                }
+            }
+
+            checkDailyShiftLimits(day) {
+                // 統計當天各班別人數
+                const shiftCounts = { R: 0, C: 0, S: 0 };
+                const shiftStaff = { R: [], C: [], S: [] };
+                
+                this.staff.forEach(staff => {
+                    if (this.currentMode === 'auto') {
+                        // 自動排班模式暫不檢查R,C,S（這些是手動編輯模式的班別）
+                        return;
+                    } else {
+                        const schedule = this.schedule[staff.id][day];
+                        if (schedule && !schedule.leave && schedule.shift) {
+                            if (['R', 'C', 'S'].includes(schedule.shift)) {
+                                shiftCounts[schedule.shift]++;
+                                shiftStaff[schedule.shift].push(staff.name);
+                            }
+                        }
+                    }
+                });
+                
+                // 檢查R, C, S班別是否超過1人
+                ['R', 'C', 'S'].forEach(shift => {
+                    if (shiftCounts[shift] > 1) {
+                        const shiftNames = {
+                            'R': '急救室',
+                            'C': '看診班', 
+                            'S': '外傷小夜'
+                        };
+                        this.conflicts.push({
+                            type: 'shift_limit_violation',
+                            day: day,
+                            shift: shift,
+                            message: `${day}日 ${shiftNames[shift]} 超過人數限制：最多1人，實際${shiftCounts[shift]}人 (${shiftStaff[shift].join(', ')})`
+                        });
+                    }
+                });
+            }
+
+            checkStaffingRequirements(day) {
+                const dayShiftCount = this.staff.filter(staff => 
+                    this.schedule[staff.id][day].dayShift).length;
+                const nightShiftCount = this.staff.filter(staff => 
+                    this.schedule[staff.id][day].nightShift).length;
+                
+                if (dayShiftCount < this.requirements[day].dayShift) {
+                    this.conflicts.push({
+                        type: 'understaffed',
+                        day: day,
+                        shift: 'day',
+                        needed: this.requirements[day].dayShift,
+                        actual: dayShiftCount
+                    });
+                }
+                
+                if (nightShiftCount < this.requirements[day].nightShift) {
+                    this.conflicts.push({
+                        type: 'understaffed',
+                        day: day,
+                        shift: 'night',
+                        needed: this.requirements[day].nightShift,
+                        actual: nightShiftCount
+                    });
+                }
+            }
+
+            checkStaffRuleViolations(staff, day) {
+                if (this.currentMode === 'auto') {
+                    this.checkAutoModeRuleViolations(staff, day);
+                } else {
+                    this.checkManualModeRuleViolations(staff, day);
+                }
+                
+                // 檢查連續工作班次（兩種模式都適用）
+                this.checkConsecutiveWorkDays(staff, day);
+            }
+
+            checkConsecutiveWorkDays(staff, day) {
+                // 計算包含當天在內的連續工作天數
+                let consecutiveDays = 0;
+                let startDay = day;
+                
+                // 往前計算連續工作天數
+                for (let checkDay = day; checkDay >= 1; checkDay--) {
+                    if (this.isWorkDay(staff.id, checkDay)) {
+                        consecutiveDays++;
+                        startDay = checkDay;
+                    } else {
+                        break;
+                    }
+                }
+                
+                // 往後計算連續工作天數
+                for (let checkDay = day + 1; checkDay <= this.daysInMonth; checkDay++) {
+                    if (this.isWorkDay(staff.id, checkDay)) {
+                        consecutiveDays++;
+                    } else {
+                        break;
+                    }
+                }
+                
+                // 如果連續工作超過6天，記錄衝突
+                if (consecutiveDays > 6) {
+                    const endDay = startDay + consecutiveDays - 1;
+                    this.conflicts.push({
+                        type: 'consecutive_work_violation',
+                        staff: staff.name,
+                        day: day,
+                        consecutiveDays: consecutiveDays,
+                        startDay: startDay,
+                        endDay: Math.min(endDay, this.daysInMonth),
+                        message: `${staff.name} 連續工作${consecutiveDays}天 (${startDay}日-${Math.min(endDay, this.daysInMonth)}日)，超過6天限制`
+                    });
+                }
+            }
+
+            isWorkDay(staffId, day) {
+                if (day < 1 || day > this.daysInMonth) return false;
+                
+                const schedule = this.schedule[staffId][day];
+                if (!schedule || schedule.leave) return false;
+                
+                if (this.currentMode === 'auto') {
+                    // 自動排班模式：檢查dayShift或nightShift
+                    return schedule.dayShift || schedule.nightShift;
+                } else {
+                    // 手動編輯模式：檢查shift是否有值
+                    return schedule.shift && schedule.shift !== '';
+                }
+            }
+
+            checkAutoModeRuleViolations(staff, day) {
+                const schedule = this.schedule[staff.id][day];
+                
+                // 檢查夜班後接白班
+                if (day > 1 && this.schedule[staff.id][day-1].nightShift && schedule.dayShift) {
+                    this.conflicts.push({
+                        type: 'rule_violation',
+                        day: day,
+                        staff: staff.name,
+                        rule: '夜班後不能接白班'
+                    });
+                }
+                
+                // 檢查同一天既上日班又上夜班
+                if (schedule.dayShift && schedule.nightShift) {
+                    this.conflicts.push({
+                        type: 'rule_violation',
+                        day: day,
+                        staff: staff.name,
+                        rule: '同一天不能既上日班又上夜班'
+                    });
+                }
+            }
+
+            checkManualModeRuleViolations(staff, day) {
+                const today = this.schedule[staff.id][day];
+                
+                if (day > 1) {
+                    const yesterday = this.schedule[staff.id][day - 1];
+                    
+                    // 檢查夜班後接白班或急救室
+                    if (yesterday.shift === 'N' && (today.shift === 'O' || today.shift === 'R')) {
+                        this.conflicts.push({
+                            type: 'rule_violation',
+                            staff: staff.name,
+                            day: day,
+                            message: `${day}日 ${staff.name} 在${day-1}日夜班後，不應排白班或急救室`
+                        });
+                    }
+                    
+                    // 檢查看診班(C)後接白班或急救室
+                    if (yesterday.shift === 'C' && (today.shift === 'O' || today.shift === 'R')) {
+                        const nextShiftName = today.shift === 'O' ? '白班' : '急救室';
+                        this.conflicts.push({
+                            type: 'rule_violation',
+                            staff: staff.name,
+                            day: day,
+                            message: `${day}日 ${staff.name} 在${day-1}日看診班後，不應排${nextShiftName}`
+                        });
+                    }
+                    
+                    // 檢查外傷小夜(S)後接白班或急救室
+                    if (yesterday.shift === 'S' && (today.shift === 'O' || today.shift === 'R')) {
+                        const nextShiftName = today.shift === 'O' ? '白班' : '急救室';
+                        this.conflicts.push({
+                            type: 'rule_violation',
+                            staff: staff.name,
+                            day: day,
+                            message: `${day}日 ${staff.name} 在${day-1}日外傷小夜後，不應排${nextShiftName}`
+                        });
+                    }
+                }
             }
 
             renderConflicts() {
@@ -1694,24 +1965,110 @@
                     return;
                 }
                 
+                // 按類型分組衝突
+                const groupedConflicts = {
+                    consecutive: [],
+                    shiftLimit: [],
+                    ruleViolation: [],
+                    staffing: []
+                };
+                
+                this.conflicts.forEach(conflict => {
+                    switch(conflict.type) {
+                        case 'consecutive_work_violation':
+                            groupedConflicts.consecutive.push(conflict);
+                            break;
+                        case 'shift_limit_violation':
+                            groupedConflicts.shiftLimit.push(conflict);
+                            break;
+                        case 'rule_violation':
+                            groupedConflicts.ruleViolation.push(conflict);
+                            break;
+                        case 'understaffed':
+                            groupedConflicts.staffing.push(conflict);
+                            break;
+                    }
+                });
+                
+                let conflictHTML = '';
+                
+                // 連續工作天數超限
+                if (groupedConflicts.consecutive.length > 0) {
+                    conflictHTML += `
+                        <div style="margin-bottom: 12px;">
+                            <h5 style="color: #dc3545; margin-bottom: 6px;">🔴 連續工作天數超限 (${groupedConflicts.consecutive.length}個)</h5>
+                            ${groupedConflicts.consecutive.map(c => 
+                                `<div class="conflict-item" style="background: #f8d7da; margin: 3px 0; padding: 6px; border-radius: 3px;">
+                                    <strong>${c.message}</strong>
+                                </div>`
+                            ).join('')}
+                        </div>
+                    `;
+                }
+                
+                // 班別人數超限
+                if (groupedConflicts.shiftLimit.length > 0) {
+                    conflictHTML += `
+                        <div style="margin-bottom: 12px;">
+                            <h5 style="color: #fd7e14; margin-bottom: 6px;">🟠 班別人數超限 (${groupedConflicts.shiftLimit.length}個)</h5>
+                            ${groupedConflicts.shiftLimit.map(c => 
+                                `<div class="conflict-item" style="background: #fff3cd; margin: 3px 0; padding: 6px; border-radius: 3px;">
+                                    ${c.message}
+                                </div>`
+                            ).join('')}
+                        </div>
+                    `;
+                }
+                
+                // 規則違反
+                if (groupedConflicts.ruleViolation.length > 0) {
+                    conflictHTML += `
+                        <div style="margin-bottom: 12px;">
+                            <h5 style="color: #e83e8c; margin-bottom: 6px;">🟣 班別銜接違規 (${groupedConflicts.ruleViolation.length}個)</h5>
+                            ${groupedConflicts.ruleViolation.map(c => {
+                                if (c.message) {
+                                    return `<div class="conflict-item" style="background: #f8d7da; margin: 3px 0; padding: 6px; border-radius: 3px;">
+                                        ${c.message}
+                                    </div>`;
+                                } else {
+                                    return `<div class="conflict-item" style="background: #f8d7da; margin: 3px 0; padding: 6px; border-radius: 3px;">
+                                        ${c.day}日 ${c.staff} 違反規則：${c.rule}
+                                    </div>`;
+                                }
+                            }).join('')}
+                        </div>
+                    `;
+                }
+                
+                // 人力不足
+                if (groupedConflicts.staffing.length > 0) {
+                    conflictHTML += `
+                        <div style="margin-bottom: 12px;">
+                            <h5 style="color: #6f42c1; margin-bottom: 6px;">🟡 人力配置問題 (${groupedConflicts.staffing.length}個)</h5>
+                            ${groupedConflicts.staffing.map(c => {
+                                const shiftName = c.shift === 'day' ? '白班' : '夜班';
+                                return `<div class="conflict-item" style="background: #e2e3e5; margin: 3px 0; padding: 6px; border-radius: 3px;">
+                                    ${c.day}日 ${shiftName} 人力不足：需要${c.needed}人，實際${c.actual}人
+                                </div>`;
+                            }).join('')}
+                        </div>
+                    `;
+                }
+                
                 conflictList.innerHTML = `
                     <div class="conflict-list">
-                        <h4>⚠️ 排班問題</h4>
-                        ${this.conflicts.map(conflict => {
-                            if (conflict.type === 'understaffed') {
-                                const shiftName = conflict.shift === 'day' ? '白班' : '夜班';
-                                return `<div class="conflict-item">
-                                    ${conflict.day}日 ${shiftName} 人力不足：需要${conflict.needed}人，實際${conflict.actual}人
-                                </div>`;
-                            } else if (conflict.type === 'rule_violation') {
-                                return `<div class="conflict-item">
-                                    ${conflict.day}日 ${conflict.staff} 違反規則：${conflict.rule}
-                                </div>`;
-                            } else if (conflict.message) {
-                                return `<div class="conflict-item">${conflict.message}</div>`;
-                            }
-                            return '';
-                        }).join('')}
+                        <h4>⚠️ 排班問題檢查結果 (共${this.conflicts.length}個問題)</h4>
+                        ${conflictHTML}
+                        <div style="margin-top: 15px; padding: 12px; background: #e8f4f8; border-radius: 6px; font-size: 13px; color: #0c5460; border-left: 4px solid #17a2b8;">
+                            💡 <strong>完整排班規則：</strong><br>
+                            🔴 <strong>連續工作限制：</strong>最多連續工作6天<br>
+                            🟠 <strong>班別人數限制：</strong>急救室(R)、看診班(C)、外傷小夜(S) 每天最多各1人<br>
+                            🟣 <strong>班別銜接規則：</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;• 夜班(N)後不能接白班(O)或急救室(R)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;• 看診班(C)後不能接白班(O)或急救室(R)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;• 外傷小夜(S)後不能接白班(O)或急救室(R)<br>
+                            🟡 <strong>人力配置：</strong>確保每日白班/夜班人數符合需求
+                        </div>
                     </div>
                 `;
             }
@@ -1957,11 +2314,8 @@
                             }
                         }
                         
-                        const hasViolation = this.conflicts.some(c => 
-                            c.type === 'rule_violation' && 
-                            c.day === day && 
-                            c.staff === staff.name
-                        );
+                        // 檢查當前格子是否有衝突（實時檢查）
+                        const hasViolation = this.checkCurrentCellConflict(staff.id, day);
                         
                         if (hasViolation) {
                             cellClass += ' conflict';
@@ -1969,6 +2323,37 @@
                         
                         grid.appendChild(this.createCell(content, cellClass));
                     }
+                });
+            }
+
+            // 檢查特定格子是否有衝突
+            checkCurrentCellConflict(staffId, day) {
+                if (!this.conflicts || this.conflicts.length === 0) return false;
+                
+                const staff = this.staff.find(s => s.id === staffId);
+                if (!staff) return false;
+                
+                // 檢查是否有涉及此員工和此日期的衝突
+                return this.conflicts.some(conflict => {
+                    // 檢查規則違反類型的衝突
+                    if (conflict.type === 'rule_violation' && conflict.staff === staff.name && conflict.day === day) {
+                        return true;
+                    }
+                    
+                    // 檢查包含message的衝突（班別銜接違規）
+                    if (conflict.message && conflict.staff === staff.name && conflict.day === day) {
+                        return true;
+                    }
+                    
+                    // 檢查連續工作違規
+                    if (conflict.type === 'consecutive_work_violation' && conflict.staff === staff.name) {
+                        // 檢查當前日期是否在連續工作範圍內
+                        const startDay = conflict.startDay;
+                        const endDay = conflict.currentDay || (startDay + conflict.consecutiveDays - 1);
+                        return day >= startDay && day <= endDay;
+                    }
+                    
+                    return false;
                 });
             }
 
