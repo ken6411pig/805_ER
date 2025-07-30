@@ -988,7 +988,18 @@ function printForm() {
     // 確保所有繪圖都已完成渲染
     redrawCanvas();
     
-    // 獲取表單容器的HTML內容
+    // ✅ 加這段：同步 checkbox 狀態
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        if (cb.checked) {
+            cb.setAttribute('checked', 'checked');
+        } else {
+            cb.removeAttribute('checked');
+        }
+    });
+    document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+        input.setAttribute('value', input.value);
+    });
+
     const formContainer = document.querySelector('.form-container');
     const formHTML = formContainer.outerHTML;
     
