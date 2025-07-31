@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家庭暴力事件驗傷診斷書系統</title>
+    <style>
+        body {
+            font-family: 'DFKai-SB', '標楷體', serif;
+            font-size: 16px;
+            margin: 20px;
+            background-color: white;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 210mm;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            padding: 10px;
+            border: 2px solid black;
+        }
+
+        .form-section {
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        table, th, td {
+            border: 2px solid black;
+        }
+
+        th, td {
+            padding: 2px;
+            text-align: left;
+            vertical-align: middle;
+            font-size: 16px;
+            height: 30px;
+        }
+
+        .label-cell {
+            text-align: center;
+            vertical-align: middle;
+            width: 80px;
+            background-color: white;
+        }
+
+        .input-field {
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 2px;
+            width: 100%;
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: inline-flex;
+            margin-right: 5px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+            transform: scale(1.3);
+        }
+
+        .date-input {
+            border: none;
+            background: transparent;
+            width: 25px;
+            text-align: center;
+            font-size: 14px;
+            padding: 5x;
+            margin:-5px;
+        }
+
+        .body-diagram-section {
+            border: 2px solid black;
+            padding: 15px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .body-diagram {
+            height: 600px;
+            position: relative;
+            background-color: white;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('DV_body.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        #body-canvas {
+            cursor: crosshair;
+            max-width: calc(100% - 20px);
+            max-height: calc(100% - 20px);
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+        }
+
+        .drawing-tools {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .tool-group {
+            display: inline-block;
+            margin-right: 15px;
+            vertical-align: top;
+        }
+
+        .tool-btn {
+            padding: 8px 15px;
+            margin: 3px;
+            border: 1px solid #666;
+            background-color: white;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .tool-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .injury-btn {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            padding: 6px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 3px;
+            margin: 2px;
+            min-width: 60px;
+        }
+
+        .injury-btn:hover {
+            background-color: #ffeaa7;
+            border-color: #facea8;
+        }
+
+        .text-label {
+            position: absolute;
+            background-color: transparent;
+            border: none;
+            padding: 2px 4px;
+            font-size: 16px;
+            font-weight: bold;
+            color: red;
+            cursor: move;
+            user-select: none;
+            z-index: 10;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+        }
+
+        /* 新增圓圈標記樣式 */
+        .circle-marker {
+            position: absolute;
+            border: 3px solid red;
+            border-radius: 50%;
+            cursor: move;
+            z-index: 8;
+        }
+        
+        .circle-small { width: 20px; height: 20px; }
+        .circle-medium { width: 40px; height: 40px; }
+        .circle-large { width: 60px; height: 60px; }
+
+        .signature-section {
+            margin-top: -16px;
+            font-size: 16px;
+            border: 2px solid black;
+            padding: 15px;
+        }
+
+        .signature-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .signature-field {
+            text-align: center;
+            padding: 10px;
+            border: 0px;
+            margin: 0 10px;
+            flex: 1;
+        }
+
+        .control-panel {
+            display: none;
+        }
+
+        .textarea-field {
+            width: 95%;
+            padding: 5px;
+            font-family: inherit;
+            font-size: 16px;
+            resize: none;
+            min-height: 16px;
+            border: none;
+        }
+
+        .injury-legend,
+        .drawing-tools {
+            display: none;
+        }
+        .signature-date-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .signature-date-line .date-input {
+            flex-shrink: 0;
+            width: 50px;
+            margin: 0 2px;
+        }
+
+        .signature-date-line span {
+            white-space: nowrap;
+            padding: 0 2px;
+        }
+
+        /* 新增的文字輸入工具樣式 */
+        .text-input-tools {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+        }
+
+        .text-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .text-input-field {
+            padding: 5px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .add-text-btn {
+            padding: 5px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .add-text-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .quick-text-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .quick-text-btn {
+            padding: 4px 8px;
+            background-color: #e9ecef;
+            color: #495057;
+            border: 1px solid #ced4da;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .quick-text-btn:hover {
+            background-color: #dee2e6;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                background-color: white;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .control-panel {
+                display: none !important;
+            }
+            
+            .drawing-tools,
+            .text-input-tools {
+                display: none !important;
+            }
+            
+            .form-container {
+                box-shadow: none;
+                padding: 10px;
+                max-width: 180mm;
+            }
+            
+            .body-diagram {
+                height: 500px;
+                page-break-inside: avoid;
+                print-color-adjust: exact;
+                position: relative !important;
+            }
+            
+            /* 確保文字標籤在列印時保持位置 */
+            .text-label {
+                position: absolute !important;
+                background-color: transparent !important;
+                border: none !important;
+                color: red !important;
+                font-size: 12px !important;
+                font-weight: bold !important;
+                text-shadow: none !important;
+                z-index: 10 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* 確保圓圈標記在列印時保持位置和顏色 */
+            .circle-marker {
+                position: absolute !important;
+                border: 2px solid red !important;
+                border-radius: 50% !important;
+                background-color: transparent !important;
+                z-index: 8 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .circle-small { 
+                width: 18px !important; 
+                height: 18px !important; 
+            }
+            .circle-medium { 
+                width: 36px !important; 
+                height: 36px !important; 
+            }
+            .circle-large { 
+                width: 54px !important; 
+                height: 54px !important; 
+            }
+            
+            .tool-btn,
+            .injury-btn {
+                background: none !important;
+                border: none !important;
+                color: black !important;
+                font-weight: bold !important;
+            }
+            
+            @page {
+                margin: 15mm;
+                size: A4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="control-panel">
+        </div>
+
+    <div class="form-container">
+        <div class="header">
+            <h1>國軍花蓮總醫院 受理家庭暴力事件驗傷診斷書</h1>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; border: 2px solid black;margin-top: -22px;">
+            <tr style="height: 40px;">
+                <td class="label-cell" style="width: 60px;">姓名</td>
+                <td style="width: calc((100% - 60px * 3) / 3); text-align: left;"><input type="text" class="input-field" id="patient-name"></td>
+                <td class="label-cell" style="width: 60px;">性別</td>
+                <td style="width: calc((100% - 60px * 3) / 3); text-align: center;">
+                    <label class="checkbox-group"><input type="checkbox" name="gender" value="female" id="gender-female">女</label>
+                    <label class="checkbox-group"><input type="checkbox" name="gender" value="male" id="gender-male">男</label>
+                </td>
+                <td class="label-cell" style="width: 60px;">出生</td>
+                <td style="width: calc((100% - 60px * 3) / 3);white-space: nowrap;">
+                    民國 <input type="text" class="date-input" id="birth-year"> 年 <input type="text" class="date-input" id="birth-month"> 月 <input type="text" class="date-input" id="birth-day"> 日
+                </td>
+            </tr>
+            <tr style="height: 40px;">
+                <td class="label-cell">職業</td>
+                <td><input type="text" class="input-field" id="patient-occupation"></td>
+                <td class="label-cell">身分證<br>字號</td>
+                <td><input type="text" class="input-field" id="id-number"></td>
+                <td class="label-cell">病歷號碼</td>
+                <td><input type="text" class="input-field" id="medical-record-number"></td>
+            </tr>
+            <tr style="height: 40px;">
+                <td class="label-cell">住址</td>
+                <td colspan="3"><input type="text" class="input-field" id="patient-address" ></td>
+                <td class="label-cell">電話</td>
+                <td><input type="text" class="input-field" id="patient-phone"></td>
+            </tr>
+            <tr style="height: 50px;">
+                <td class="label-cell">驗傷時間</td>
+                <td colspan="5" style="text-align: center;">
+                    民國&nbsp;&nbsp; <input type="text" class="date-input" id="exam-year"> &nbsp;年&nbsp; <input type="text" class="date-input" id="exam-month"> &nbsp;月&nbsp; <input type="text" class="date-input" id="exam-day"> &nbsp;日&nbsp; <input type="text" class="date-input" id="exam-hour"> &nbsp;時&nbsp; <input type="text" class="date-input" id="exam-minute"> &nbsp;分
+                </td>
+            </tr>
+        </table>
+
+
+<table style="width: 100%; table-layout: auto; border-collapse: collapse; border-left: 2px solid black; border-right: 2px solid black; border-bottom: 2px solid black; border-top: none; margin-top: -17px;">
+    <tr>
+        <td class="label-cell" rowspan="3" style="vertical-align: middle; writing-mode: vertical-rl; text-orientation: upright; width: 80px; min-width: 80px; max-width: 80px;">受&nbsp;&nbsp;害&nbsp;&nbsp;人&nbsp;&nbsp;主&nbsp;&nbsp;訴</td>
+        <td class="label-cell" style="width: 120px;">事件發生時間</td>
+        <td colspan="4" style="text-align: center;">
+            民國&nbsp; <input type="text" class="date-input" id="event-year"> &nbsp;年&nbsp; <input type="text" class="date-input" id="event-month"> &nbsp;月&nbsp; <input type="text" class="date-input" id="event-day"> &nbsp;日&nbsp; <input type="text" class="date-input" id="event-hour"> &nbsp;時&nbsp; <input type="text" class="date-input" id="event-minute"> &nbsp;分&nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell">身體傷害描述</td>
+        <td colspan="4" style="align-items: center;">
+            <textarea class="textarea-field" id="injury-description" rows="3" placeholder="請描述身體傷害情況...">
+
+疼痛。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell" style="font-size: 16px;">依受害者主訴，以何種外力造成之傷害(徒手、工具或不詳)</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="force-description" rows="5" placeholder="徒手、工具或不詳...">
+
+
+被徒手毆打。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell" rowspan="7" style="vertical-align: middle; writing-mode: vertical-rl; text-orientation: upright; width: 80px; min-width: 80px; max-width: 80px;">
+<span style="font-size: 12px;">(受傷之部位形狀程度)<br></span> 
+    檢&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;結&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;果
+    </td>
+        <td class="label-cell">頭面部</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="head-face" rows="3" placeholder="描述頭面部傷勢...">
+
+無明顯外傷。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell">頸肩部</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="neck-shoulder" rows="3" placeholder="描述頸肩部傷勢...">
+
+無明顯外傷。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell">胸腹部</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="chest-abdomen" rows="3" placeholder="描述胸腹部傷勢...">
+
+無明顯外傷。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell">背臀部</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="back-buttocks" rows="3" placeholder="描述背臀部傷勢...">
+
+無明顯外傷。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell">四肢部</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="limbs" rows="3" placeholder="描述四肢傷勢...">
+
+無明顯外傷。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell">陰部</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="genital" rows="3" placeholder="描述陰部傷勢...">
+
+無明顯外傷。(以下空白)
+</textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label-cell">其他部位</td>
+        <td colspan="4">
+            <textarea class="textarea-field" id="other-parts" rows="3" placeholder="描述其他部位傷勢...">
+
+無明顯外傷。(以下空白)
+</textarea>
+        </td>
+    </tr>
+</table>
+        <table style="table-layout: fixed; width: 100%;">
+            <tr>
+                <td class="label-cell" style="width: 40px; min-width: 40px; max-width: 40px; writing-mode: vertical-rl; text-orientation: upright; vertical-align: middle; font-size: 20px; padding: 5px;"><span style="font-size: 12px;">(請以紅筆正楷註記損傷位置及程度等)<br></span> 驗&nbsp;&nbsp;&nbsp;&nbsp;傷&nbsp;&nbsp;&nbsp;&nbsp;解&nbsp;&nbsp;&nbsp;&nbsp;析&nbsp;&nbsp;&nbsp;&nbsp;圖</td>
+                <td style="width: calc(100% - 40px);">
+                    <!-- 新增的文字輸入工具 -->
+                    <div class="text-input-tools">
+                        <div class="text-input-group">
+                            <label for="injury-text-input">傷情：</label>
+                            <input type="text" id="injury-text-input" class="text-input-field" placeholder="如：右膝擦傷、瘀血、腫脹等">
+                            <button class="add-text-btn" onclick="addCustomTextLabel()">添加到圖上</button>
+                        </div>
+                        <div class="text-input-group">
+                            <label>標記圓圈：</label>
+                            <button class="add-text-btn" onclick="addCircleMarker('center', 'small')" style="background-color: #28a745;">小圈</button>
+                            <button class="add-text-btn" onclick="addCircleMarker('center', 'medium')" style="background-color: #ffc107; color: black;">中圈</button>
+                            <button class="add-text-btn" onclick="addCircleMarker('center', 'large')" style="background-color: #dc3545;">大圈</button>
+                        </div>
+                        <div class="quick-text-buttons">
+                            <button class="quick-text-btn" onclick="addTextLabel('擦傷')">擦傷</button>
+                            <button class="quick-text-btn" onclick="addTextLabel('瘀血')">瘀血</button>
+                            <button class="quick-text-btn" onclick="addTextLabel('腫脹')">腫脹</button>
+                            <button class="quick-text-btn" onclick="addTextLabel('撕裂傷')">撕裂傷</button>
+                            <button class="quick-text-btn" onclick="addTextLabel('刺傷')">刺傷</button>
+                            <button class="quick-text-btn" onclick="addTextLabel('壓痕')">壓痕</button>
+                            <button class="quick-text-btn" onclick="addTextLabel('紅腫')">紅腫</button>
+                            <button class="quick-text-btn" onclick="addTextLabel('瘀青')">瘀青</button>
+                            <button class="quick-text-btn" onclick="clearAllCircles()">清除圈圈</button>
+                            <button class="quick-text-btn" onclick="clearAllTextLabels()">清除全部文字</button>
+                            <button class="quick-text-btn" onclick="printForm()" style="background-color: #007bff; color: white; font-weight: bold;">🖨️ 列印表單</button>
+                        </div>
+                    </div>
+
+                    <div class="body-diagram" id="body-diagram-container">
+                        <canvas id="body-canvas" width="800" height="600"></canvas>
+                        </div>
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="signature-section">
+            <div class="signature-date-line"> <span>中</span> <span>華</span> <span>民</span> <span>國</span>
+                <input type="text" class="date-input" id="signature-year"> <span>年</span>
+                <input type="text" class="date-input" id="signature-month"> <span>月</span>
+                <input type="text" class="date-input" id="signature-day"> <span>日</span>
+            </div>
+            
+            <div class="signature-row">
+                <div class="signature-field">
+                    <div style="margin-bottom: 10px;text-align: left;font-size: 14px">院長<br>(負責醫師)</div>
+                <div style="text-align: right;font-size: 12px">(簽章)</div>
+                </div>
+                <div class="signature-field">
+                    <div style="margin-bottom: 10px;text-align: left;font-size: 14px">科主任<br>(主治醫師)</div>
+                <div style="text-align: right;font-size: 12px">(簽章)</div>
+                </div>
+                <div class="signature-field">
+                    <div style="margin-bottom: 10px;text-align: left;font-size: 14px">檢診<br>醫師</div>
+                    <div style="text-align: right;font-size: 12px">(簽章)</div>
+                </div>
+            </div>
+            
+                <div style="margin-bottom: 10px;font-size: 14px">
+                    醫院(診所)地址：花蓮縣花蓮市中正路163號<br><br><br><br><br><br><br>
+                </div>
+                <div style="text-align: right; font-size: 12px; margin-top: 10px;"> (加蓋關防或印信)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全域變數
+        let textLabels = [];
+        let circleMarkers = [];
+        let draggedLabel = null;
+        let dragOffset = { x: 0, y: 0 };
+
+        // 頁面載入完成後初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCheckboxes();
+            autoFillDate();
+        });
+
+        // 添加圓圈標記 - 新邏輯：直接添加到中央，與文字標籤一致
+        function addCircleMarker(position, size) {
+            const container = document.getElementById('body-diagram-container');
+            if (!container) return;
+            
+            const circle = document.createElement('div');
+            circle.className = `circle-marker circle-${size}`;
+            
+            // 計算圓圈尺寸
+            const circleSize = size === 'small' ? 20 : size === 'medium' ? 40 : 60;
+            
+            // 設定初始位置在畫布中央（與文字標籤邏輯一致）
+            circle.style.left = '50%';
+            circle.style.top = '50%';
+            circle.style.transform = 'translate(-50%, -50%)';
+            
+            // 調整為像素位置
+            setTimeout(() => {
+                const rect = circle.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                
+                const pixelLeft = (containerRect.width / 2) - (circleSize / 2);
+                const pixelTop = (containerRect.height / 2) - (circleSize / 2);
+                
+                circle.style.left = pixelLeft + 'px';
+                circle.style.top = pixelTop + 'px';
+                circle.style.transform = 'none';
+            }, 10);
+            
+            // 添加拖拽和雙擊刪除功能
+            circle.addEventListener('mousedown', startDragCircle);
+            circle.addEventListener('dblclick', function(e) {
+                e.stopPropagation(); // 防止觸發背景點擊事件
+                const index = circleMarkers.indexOf(circle);
+                if (index > -1) {
+                    circleMarkers.splice(index, 1);
+                    circle.remove();
+                    console.log('移除圓圈標記');
+                }
+            });
+            
+            container.appendChild(circle);
+            circleMarkers.push(circle);
+            
+            console.log(`新增${size}圓圈標記`);
+        }
+
+        // 開始拖拽圓圈
+        function startDragCircle(e) {
+            e.preventDefault();
+            e.stopPropagation(); // 防止觸發背景點擊事件
+            
+            const draggedCircle = e.target;
+            const rect = draggedCircle.getBoundingClientRect();
+            const containerRect = document.getElementById('body-diagram-container').getBoundingClientRect();
+            
+            const dragOffset = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            
+            function dragCircle(e) {
+                const container = document.getElementById('body-diagram-container');
+                const containerRect = container.getBoundingClientRect();
+                
+                let newX = e.clientX - containerRect.left - dragOffset.x;
+                let newY = e.clientY - containerRect.top - dragOffset.y;
+                
+                // 限制在容器範圍內
+                newX = Math.max(0, Math.min(newX, containerRect.width - draggedCircle.offsetWidth));
+                newY = Math.max(0, Math.min(newY, containerRect.height - draggedCircle.offsetHeight));
+                
+                draggedCircle.style.left = newX + 'px';
+                draggedCircle.style.top = newY + 'px';
+            }
+            
+            function stopDragCircle() {
+                document.removeEventListener('mousemove', dragCircle);
+                document.removeEventListener('mouseup', stopDragCircle);
+            }
+            
+            document.addEventListener('mousemove', dragCircle);
+            document.addEventListener('mouseup', stopDragCircle);
+            
+            draggedCircle.style.zIndex = '20';
+            setTimeout(() => {
+                draggedCircle.style.zIndex = '8';
+            }, 100);
+        }
+
+        // 清除所有圓圈標記
+        function clearAllCircles() {
+            circleMarkers.forEach(circle => circle.remove());
+            circleMarkers = [];
+            console.log('已清除所有圓圈標記');
+        }
+
+        // 初始化checkbox行為
+        function initializeCheckboxes() {
+            // 性別選擇互斥
+            const femaleCheckbox = document.getElementById('gender-female');
+            const maleCheckbox = document.getElementById('gender-male');
+            
+            if (femaleCheckbox && maleCheckbox) {
+                femaleCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        maleCheckbox.checked = false;
+                    }
+                });
+                
+                maleCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        femaleCheckbox.checked = false;
+                    }
+                });
+            }
+        }
+
+        // 自動填入日期
+        function autoFillDate() {
+            const now = new Date();
+            const year = now.getFullYear() - 1911; // 民國年
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minute = String(now.getMinutes()).padStart(2, '0');
+            
+            // 填入驗傷時間
+            const examYear = document.getElementById('exam-year');
+            const examMonth = document.getElementById('exam-month');
+            const examDay = document.getElementById('exam-day');
+            const examHour = document.getElementById('exam-hour');
+            const examMinute = document.getElementById('exam-minute');
+            
+            if (examYear) examYear.value = year;
+            if (examMonth) examMonth.value = month;
+            if (examDay) examDay.value = day;
+            if (examHour) examHour.value = hour;
+            if (examMinute) examMinute.value = minute;
+
+            // 填入事件發生時間
+            const eventYear = document.getElementById('event-year');
+            const eventMonth = document.getElementById('event-month');
+            const eventDay = document.getElementById('event-day');
+            const eventHour = document.getElementById('event-hour');
+            const eventMinute = document.getElementById('event-minute');
+            
+            if (eventYear) eventYear.value = year;
+            if (eventMonth) eventMonth.value = month;
+            if (eventDay) eventDay.value = day;
+            if (eventHour) eventHour.value = hour;
+            if (eventMinute) eventMinute.value = minute;
+            
+            // 填入簽名日期
+            const sigYear = document.getElementById('signature-year');
+            const sigMonth = document.getElementById('signature-month');
+            const sigDay = document.getElementById('signature-day');
+            
+            if (sigYear) sigYear.value = year;
+            if (sigMonth) sigMonth.value = month;
+            if (sigDay) sigDay.value = day;
+        }
+
+        // 從輸入框添加自訂文字標籤
+        function addCustomTextLabel() {
+            const input = document.getElementById('injury-text-input');
+            if (!input) return;
+            
+            const text = input.value.trim();
+            
+            if (text === '') {
+                alert('請輸入受傷部位描述');
+                return;
+            }
+            
+            addTextLabel(text);
+            input.value = ''; // 清空輸入框
+        }
+
+        // 添加文字標籤到圖上
+        function addTextLabel(text) {
+            const container = document.getElementById('body-diagram-container');
+            if (!container) return;
+            
+            const label = document.createElement('div');
+            label.className = 'text-label';
+            label.textContent = text;
+            label.id = 'label-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+            
+            // 設定初始位置在畫布中央
+            label.style.left = '50%';
+            label.style.top = '50%';
+            label.style.transform = 'translate(-50%, -50%)';
+            
+            // 調整為像素位置
+            setTimeout(() => {
+                const rect = label.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                
+                const pixelLeft = (containerRect.width / 2) - (rect.width / 2);
+                const pixelTop = (containerRect.height / 2) - (rect.height / 2);
+                
+                label.style.left = pixelLeft + 'px';
+                label.style.top = pixelTop + 'px';
+                label.style.transform = 'none';
+            }, 10);
+            
+            // 添加事件監聽器
+            label.addEventListener('mousedown', startDragLabel);
+            label.addEventListener('dblclick', removeLabelOnDoubleClick);
+            
+            container.appendChild(label);
+            textLabels.push(label);
+            
+            console.log('新增文字標籤:', text);
+        }
+
+        // 開始拖拽標籤
+        function startDragLabel(e) {
+            e.preventDefault();
+            e.stopPropagation(); // 防止觸發背景點擊事件
+            draggedLabel = e.target;
+            
+            const rect = draggedLabel.getBoundingClientRect();
+            const containerRect = document.getElementById('body-diagram-container').getBoundingClientRect();
+            
+            dragOffset.x = e.clientX - rect.left;
+            dragOffset.y = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', dragLabel);
+            document.addEventListener('mouseup', stopDragLabel);
+            
+            draggedLabel.style.zIndex = '20';
+        }
+
+        // 拖拽標籤
+        function dragLabel(e) {
+            if (!draggedLabel) return;
+            
+            const container = document.getElementById('body-diagram-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            let newX = e.clientX - containerRect.left - dragOffset.x;
+            let newY = e.clientY - containerRect.top - dragOffset.y;
+            
+            // 限制在容器範圍內
+            newX = Math.max(0, Math.min(newX, containerRect.width - draggedLabel.offsetWidth));
+            newY = Math.max(0, Math.min(newY, containerRect.height - draggedLabel.offsetHeight));
+            
+            draggedLabel.style.left = newX + 'px';
+            draggedLabel.style.top = newY + 'px';
+        }
+
+        // 停止拖拽標籤
+        function stopDragLabel() {
+            if (draggedLabel) {
+                draggedLabel.style.zIndex = '10';
+                draggedLabel = null;
+            }
+            
+            document.removeEventListener('mousemove', dragLabel);
+            document.removeEventListener('mouseup', stopDragLabel);
+        }
+
+        // 雙擊移除標籤
+        function removeLabelOnDoubleClick(e) {
+            e.stopPropagation(); // 防止觸發背景點擊事件
+            const label = e.target;
+            const index = textLabels.indexOf(label);
+            
+            if (index > -1) {
+                textLabels.splice(index, 1);
+                label.remove();
+                console.log('移除文字標籤');
+            }
+        }
+
+        // 清除所有文字標籤
+        function clearAllTextLabels() {
+            textLabels.forEach(label => label.remove());
+            textLabels = [];
+            console.log('已清除所有文字標籤');
+        }
+
+        // 支援 Enter 鍵快速添加
+        document.addEventListener('DOMContentLoaded', function() {
+            const textInput = document.getElementById('injury-text-input');
+            if (textInput) {
+                textInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addCustomTextLabel();
+                    }
+                });
+            }
+        });
+
+        // 列印功能
+        function printForm() {
+            // 列印前調整標記位置，防止跑掉
+            adjustMarksForPrint();
+            
+            // 延遲一點時間讓調整生效，然後列印
+            setTimeout(() => {
+                window.print();
+                
+                // 列印後恢復標記位置
+                setTimeout(() => {
+                    restoreMarksAfterPrint();
+                }, 100);
+            }, 100);
+        }
+
+        // 列印前調整標記位置
+        function adjustMarksForPrint() {
+            const container = document.getElementById('body-diagram-container');
+            if (!container) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            
+            // 調整文字標籤
+            textLabels.forEach(label => {
+                // 保存原始位置
+                label.dataset.originalLeft = label.style.left;
+                label.dataset.originalTop = label.style.top;
+                
+                // 計算相對位置百分比
+                const currentLeft = parseFloat(label.style.left) || 0;
+                const currentTop = parseFloat(label.style.top) || 0;
+                
+                const percentLeft = (currentLeft / containerRect.width) * 100;
+                const percentTop = (currentTop / containerRect.height) * 100;
+                
+                // 設定為百分比定位，列印時更穩定
+                label.style.left = Math.max(0, Math.min(95, percentLeft)) + '%';
+                label.style.top = Math.max(0, Math.min(95, percentTop)) + '%';
+            });
+            
+            // 調整圓圈標記
+            circleMarkers.forEach(circle => {
+                // 保存原始位置
+                circle.dataset.originalLeft = circle.style.left;
+                circle.dataset.originalTop = circle.style.top;
+                
+                // 計算相對位置百分比
+                const currentLeft = parseFloat(circle.style.left) || 0;
+                const currentTop = parseFloat(circle.style.top) || 0;
+                
+                const percentLeft = (currentLeft / containerRect.width) * 100;
+                const percentTop = (currentTop / containerRect.height) * 100;
+                
+                // 設定為百分比定位，列印時更穩定
+                circle.style.left = Math.max(0, Math.min(95, percentLeft)) + '%';
+                circle.style.top = Math.max(0, Math.min(95, percentTop)) + '%';
+            });
+        }
+
+        // 列印後恢復標記位置
+        function restoreMarksAfterPrint() {
+            // 恢復文字標籤位置
+            textLabels.forEach(label => {
+                if (label.dataset.originalLeft && label.dataset.originalTop) {
+                    label.style.left = label.dataset.originalLeft;
+                    label.style.top = label.dataset.originalTop;
+                }
+            });
+            
+            // 恢復圓圈標記位置
+            circleMarkers.forEach(circle => {
+                if (circle.dataset.originalLeft && circle.dataset.originalTop) {
+                    circle.style.left = circle.dataset.originalLeft;
+                    circle.style.top = circle.dataset.originalTop;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
