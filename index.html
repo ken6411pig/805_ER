@@ -73,6 +73,11 @@
             height: calc(100vh - 40px); /* 減去 padding */
             border: none;
         }
+        #DV_Image iframe {
+            width: 100%;
+            height: calc(100vh - 40px); /* 減去 padding */
+            border: none;
+        }
 
         /* ICD Search Styles */
         .search-container {
@@ -469,6 +474,7 @@
     <div data-page="Surgery_ICD">📖 外傷代碼速查</div>
     <div data-page="Trauma_System">👤 外傷圖譜系統</div>
     <div data-page="SER_Image">🖼️ 電子外傷圖</div> 
+    <div data-page="DV_Image">📷 家暴診斷書</div>
     <div data-page="Antibiotic_Dosage">💊 抗生素劑量查詢</div>
     <div data-page="Note">📓 備忘錄</div>
 </div>
@@ -618,6 +624,15 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             frameborder="0"
             style="border: none;">
         <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="SER_image.html">SER_image.html</a></p>
+    </iframe>
+</div>
+<div class="content hidden" id="DV_Image">
+    <iframe src="DV_image.html" 
+            width="100%" 
+            height="800px" 
+            frameborder="0"
+            style="border: none;">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="DV_image.html">DV_image.html</a></p>
     </iframe>
 </div>
 <div class="content hidden" id="ICD_code">
@@ -1249,7 +1264,6 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
     <div class="count-info" id="antibioticCountInfo"></div>
     <div class="min-length-notice" id="antibioticMinLengthNotice"></div>
     <div id="antibioticResults"></div>
-<p>劑量資訊僅供參考，使用者請自行確認正確性</p>
 </div>
 <div class="content hidden" id="Trauma_System">
     <div class="container">
