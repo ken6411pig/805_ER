@@ -26,11 +26,11 @@
         }
 
         .header h1 {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             margin: 0;
             padding: 10px;
-            border: 2px solid black;
+            border: 1px solid black;
         }
 
         .form-section {
@@ -44,14 +44,14 @@
         }
 
         table, th, td {
-            border: 2px solid black;
+            border: 1px solid black;
         }
 
         th, td {
             padding: 2px;
             text-align: left;
             vertical-align: middle;
-            font-size: 16px;
+            font-size: 18px;
             height: 30px;
         }
 
@@ -65,7 +65,7 @@
         .input-field {
             border: none;
             background: transparent;
-            font-size: 16px;
+            font-size: 18px;
             padding: 2px;
             width: 100%;
             outline: none;
@@ -91,8 +91,29 @@
             margin:-5px;
         }
 
+        /* 修改垂直文字樣式，支援括號旋轉 */
+        .vertical-text-with-brackets {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            width: 70px;
+            min-width: 70px;
+            max-width: 70px;
+            vertical-align: middle;
+            text-align: center;
+            padding: 5px;
+            font-size: 20px;
+        }
+
+        .vertical-text-with-brackets .bracket-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 14px;
+            display: block;
+            margin: 2px 0;
+        }
+
         .body-diagram-section {
-            border: 2px solid black;
+            border: 1px solid black;
             padding: 15px;
             margin: 20px 0;
             background-color: white;
@@ -110,13 +131,16 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+            /* 移除淺灰色框 */
+            border: none;
         }
 
         #body-canvas {
             cursor: crosshair;
             max-width: calc(100% - 20px);
             max-height: calc(100% - 20px);
-            border: 1px solid #ddd;
+            /* 移除淺灰色框 */
+            border: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -203,7 +227,7 @@
         .signature-section {
             margin-top: -16px;
             font-size: 16px;
-            border: 2px solid black;
+            border: 1px solid black;
             padding: 15px;
         }
 
@@ -228,9 +252,9 @@
 
         .textarea-field {
             width: 95%;
-            padding: 5px;
+            padding: 1px;
             font-family: inherit;
-            font-size: 16px;
+            font-size: 18px;
             resize: none;
             min-height: 16px;
             border: none;
@@ -353,7 +377,7 @@
                 background-color: transparent !important;
                 border: none !important;
                 color: red !important;
-                font-size: 12px !important;
+                font-size: 16px !important;
                 font-weight: bold !important;
                 text-shadow: none !important;
                 z-index: 10 !important;
@@ -394,7 +418,7 @@
             }
             
             @page {
-                margin: 15mm;
+                margin: 10mm;
                 size: A4;
             }
         }
@@ -406,25 +430,25 @@
 
     <div class="form-container">
         <div class="header">
-            <h1>國軍花蓮總醫院 受理家庭暴力事件驗傷診斷書</h1>
+            <h1>國軍花蓮總醫院受理家庭暴力事件驗傷診斷書</h1>
         </div>
 
-        <table style="width: 100%; border-collapse: collapse; border: 2px solid black;margin-top: -22px;">
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;margin-top: -21px;">
             <tr style="height: 40px;">
-                <td class="label-cell" style="width: 60px;">姓名</td>
+                <td class="label-cell" style="width: 60px;">姓 名</td>
                 <td style="width: calc((100% - 60px * 3) / 3); text-align: left;"><input type="text" class="input-field" id="patient-name"></td>
-                <td class="label-cell" style="width: 60px;">性別</td>
+                <td class="label-cell" style="width: 60px;">性 別</td>
                 <td style="width: calc((100% - 60px * 3) / 3); text-align: center;">
                     <label class="checkbox-group"><input type="checkbox" name="gender" value="female" id="gender-female">女</label>
                     <label class="checkbox-group"><input type="checkbox" name="gender" value="male" id="gender-male">男</label>
                 </td>
-                <td class="label-cell" style="width: 60px;">出生</td>
+                <td class="label-cell" style="width: 60px;">出 生</td>
                 <td style="width: calc((100% - 60px * 3) / 3);white-space: nowrap;">
                     民國 <input type="text" class="date-input" id="birth-year"> 年 <input type="text" class="date-input" id="birth-month"> 月 <input type="text" class="date-input" id="birth-day"> 日
                 </td>
             </tr>
             <tr style="height: 40px;">
-                <td class="label-cell">職業</td>
+                <td class="label-cell">職 業</td>
                 <td><input type="text" class="input-field" id="patient-occupation"></td>
                 <td class="label-cell">身分證<br>字號</td>
                 <td><input type="text" class="input-field" id="id-number"></td>
@@ -432,25 +456,25 @@
                 <td><input type="text" class="input-field" id="medical-record-number"></td>
             </tr>
             <tr style="height: 40px;">
-                <td class="label-cell">住址</td>
+                <td class="label-cell">住 址</td>
                 <td colspan="3"><input type="text" class="input-field" id="patient-address" ></td>
-                <td class="label-cell">電話</td>
+                <td class="label-cell">電 話</td>
                 <td><input type="text" class="input-field" id="patient-phone"></td>
             </tr>
-            <tr style="height: 50px;">
+            <tr style="height: 30px;">
                 <td class="label-cell">驗傷時間</td>
-                <td colspan="5" style="text-align: center;">
-                    民國&nbsp;&nbsp; <input type="text" class="date-input" id="exam-year"> &nbsp;年&nbsp; <input type="text" class="date-input" id="exam-month"> &nbsp;月&nbsp; <input type="text" class="date-input" id="exam-day"> &nbsp;日&nbsp; <input type="text" class="date-input" id="exam-hour"> &nbsp;時&nbsp; <input type="text" class="date-input" id="exam-minute"> &nbsp;分
+                <td colspan="5" style="text-align: left;">
+                    民國 <input type="text" class="date-input" id="exam-year"> 年 <input type="text" class="date-input" id="exam-month"> 月 <input type="text" class="date-input" id="exam-day"> 日 <input type="text" class="date-input" id="exam-hour"> 時 <input type="text" class="date-input" id="exam-minute"> 分
                 </td>
             </tr>
         </table>
 
 
-<table style="width: 100%; table-layout: auto; border-collapse: collapse; border-left: 2px solid black; border-right: 2px solid black; border-bottom: 2px solid black; border-top: none; margin-top: -17px;">
+<table style="width: 100%; table-layout: auto; border-collapse: collapse; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; border-top: none; margin-top: -16px;">
     <tr>
-        <td class="label-cell" rowspan="3" style="vertical-align: middle; writing-mode: vertical-rl; text-orientation: upright; width: 80px; min-width: 80px; max-width: 80px;">受&nbsp;&nbsp;害&nbsp;&nbsp;人&nbsp;&nbsp;主&nbsp;&nbsp;訴</td>
+        <td class="label-cell" rowspan="3" style="vertical-align: middle; writing-mode: vertical-rl; text-orientation: upright; width: 80px; min-width: 80px; max-width: 80px;">受&nbsp;害&nbsp;人&nbsp;主&nbsp;訴</td>
         <td class="label-cell" style="width: 120px;">事件發生時間</td>
-        <td colspan="4" style="text-align: center;">
+        <td colspan="4" style="text-align: left;">
             民國&nbsp; <input type="text" class="date-input" id="event-year"> &nbsp;年&nbsp; <input type="text" class="date-input" id="event-month"> &nbsp;月&nbsp; <input type="text" class="date-input" id="event-day"> &nbsp;日&nbsp; <input type="text" class="date-input" id="event-hour"> &nbsp;時&nbsp; <input type="text" class="date-input" id="event-minute"> &nbsp;分&nbsp;
         </td>
     </tr>
@@ -466,23 +490,25 @@
     <tr>
         <td class="label-cell" style="font-size: 16px;">依受害者主訴，以何種外力造成之傷害(徒手、工具或不詳)</td>
         <td colspan="4">
-            <textarea class="textarea-field" id="force-description" rows="5" placeholder="徒手、工具或不詳...">
-
+            <textarea class="textarea-field" id="force-description" rows="3" placeholder="徒手、工具或不詳...">
 
 被徒手毆打。(以下空白)
 </textarea>
         </td>
     </tr>
     <tr>
-        <td class="label-cell" rowspan="7" style="vertical-align: middle; writing-mode: vertical-rl; text-orientation: upright; width: 80px; min-width: 80px; max-width: 80px;">
-<span style="font-size: 12px;">(受傷之部位形狀程度)<br></span> 
-    檢&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;結&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;果
-    </td>
+        <td class="label-cell vertical-text-with-brackets" rowspan="7">
+            <span class="bracket-text">〈受傷之部位形狀程度〉</span>
+            <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">檢&nbsp;&nbsp;</span>
+            <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">查&nbsp;&nbsp;</span>
+            <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">結&nbsp;&nbsp;</span>
+            <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">果</span>
+        </td>
         <td class="label-cell">頭面部</td>
         <td colspan="4">
             <textarea class="textarea-field" id="head-face" rows="3" placeholder="描述頭面部傷勢...">
 
-無明顯外傷。(以下空白)
+以下空白。
 </textarea>
         </td>
     </tr>
@@ -491,7 +517,7 @@
         <td colspan="4">
             <textarea class="textarea-field" id="neck-shoulder" rows="3" placeholder="描述頸肩部傷勢...">
 
-無明顯外傷。(以下空白)
+以下空白。
 </textarea>
         </td>
     </tr>
@@ -500,7 +526,7 @@
         <td colspan="4">
             <textarea class="textarea-field" id="chest-abdomen" rows="3" placeholder="描述胸腹部傷勢...">
 
-無明顯外傷。(以下空白)
+以下空白。
 </textarea>
         </td>
     </tr>
@@ -509,7 +535,7 @@
         <td colspan="4">
             <textarea class="textarea-field" id="back-buttocks" rows="3" placeholder="描述背臀部傷勢...">
 
-無明顯外傷。(以下空白)
+以下空白。
 </textarea>
         </td>
     </tr>
@@ -518,7 +544,7 @@
         <td colspan="4">
             <textarea class="textarea-field" id="limbs" rows="3" placeholder="描述四肢傷勢...">
 
-無明顯外傷。(以下空白)
+以下空白。
 </textarea>
         </td>
     </tr>
@@ -527,7 +553,7 @@
         <td colspan="4">
             <textarea class="textarea-field" id="genital" rows="3" placeholder="描述陰部傷勢...">
 
-無明顯外傷。(以下空白)
+以下空白。
 </textarea>
         </td>
     </tr>
@@ -536,14 +562,23 @@
         <td colspan="4">
             <textarea class="textarea-field" id="other-parts" rows="3" placeholder="描述其他部位傷勢...">
 
-無明顯外傷。(以下空白)
+以下空白。
 </textarea>
         </td>
     </tr>
 </table>
+<p>身分證字號欄：若無身分證則可填居留證號碼或護照號碼</p>
+
         <table style="table-layout: fixed; width: 100%;">
             <tr>
-                <td class="label-cell" style="width: 40px; min-width: 40px; max-width: 40px; writing-mode: vertical-rl; text-orientation: upright; vertical-align: middle; font-size: 20px; padding: 5px;"><span style="font-size: 12px;">(請以紅筆正楷註記損傷位置及程度等)<br></span> 驗&nbsp;&nbsp;&nbsp;&nbsp;傷&nbsp;&nbsp;&nbsp;&nbsp;解&nbsp;&nbsp;&nbsp;&nbsp;析&nbsp;&nbsp;&nbsp;&nbsp;圖</td>
+                <td class="label-cell vertical-text-with-brackets" style="width: 40px; min-width: 40px; max-width: 40px; padding: 5px;">
+                    <span class="bracket-text">〈請以紅筆正楷註記損傷位置及程度等〉</span>
+                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">驗</span>
+                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">傷</span>
+                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">解</span>
+                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">析</span>
+                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">圖</span>
+                </td>
                 <td style="width: calc(100% - 40px);">
                     <!-- 新增的文字輸入工具 -->
                     <div class="text-input-tools">
@@ -582,31 +617,37 @@
         </table>
 
         <div class="signature-section">
-            <div class="signature-date-line"> <span>中</span> <span>華</span> <span>民</span> <span>國</span>
-                <input type="text" class="date-input" id="signature-year"> <span>年</span>
-                <input type="text" class="date-input" id="signature-month"> <span>月</span>
-                <input type="text" class="date-input" id="signature-day"> <span>日</span>
+            <div class="signature-date-line">
+                <div style="font-size: 18px"><span>中&nbsp;&nbsp;&nbsp;&nbsp;</span><span>華&nbsp;&nbsp;&nbsp;&nbsp;</span><span>民&nbsp;&nbsp;&nbsp;&nbsp;</span><span>國</span></div>
+                <span id="signature-year-chinese" style="font-size: 20px;"></span>
+<div style="font-size: 18px"><span>年</span></div>
+                <span id="signature-month-chinese" style="font-size: 20px;"></span>
+<div style="font-size: 18px"><span>月</span></div>
+                <span id="signature-day-chinese" style="font-size: 20px;"></span>
+<div style="font-size: 18px"><span>日</span></div>
             </div>
             
             <div class="signature-row">
                 <div class="signature-field">
-                    <div style="margin-bottom: 10px;text-align: left;font-size: 14px">院長<br>(負責醫師)</div>
-                <div style="text-align: right;font-size: 12px">(簽章)</div>
+                    <div style="margin-bottom: 10px;text-align: left;font-size: 16px">院長</div>
+<div style="text-align: left;font-size: 14px">(負責醫師)</div>
+<div style="text-align: right;font-size: 14px">(簽章)</div>
                 </div>
                 <div class="signature-field">
-                    <div style="margin-bottom: 10px;text-align: left;font-size: 14px">科主任<br>(主治醫師)</div>
-                <div style="text-align: right;font-size: 12px">(簽章)</div>
+                    <div style="margin-bottom: 10px;text-align: left;font-size: 16px">科主任</div>
+<div style="text-align: left;font-size: 14px">(主治醫師)</div>
+                <div style="text-align: right;font-size: 14px">(簽章)</div>
                 </div>
                 <div class="signature-field">
-                    <div style="margin-bottom: 10px;text-align: left;font-size: 14px">檢診<br>醫師</div>
-                    <div style="text-align: right;font-size: 12px">(簽章)</div>
+                    <div style="margin-bottom: 10px;text-align: left;font-size: 16px">檢診<br>醫師</div>
+                    <div style="text-align: right;font-size: 16px">醫師</div>
                 </div>
             </div>
             
-                <div style="margin-bottom: 10px;font-size: 14px">
-                    醫院(診所)地址：花蓮縣花蓮市中正路163號<br><br><br><br><br><br><br>
+                <div style="margin-bottom: 10px;font-size: 16px">
+                    醫院地址：971花蓮縣新城鄉嘉里村嘉里路163號<br><br><br><br><br><br><br><br><br><br><br>
                 </div>
-                <div style="text-align: right; font-size: 12px; margin-top: 10px;"> (加蓋關防或印信)
+                <div style="text-align: right; font-size: 14px; margin-top: 10px;"> (加蓋關防或印信)
                 </div>
             </div>
         </div>
@@ -618,6 +659,17 @@
         let circleMarkers = [];
         let draggedLabel = null;
         let dragOffset = { x: 0, y: 0 };
+
+        // 數字轉中文的對應表
+        const numberToChinese = {
+            '0': '○', '1': '一', '2': '二', '3': '三', '4': '四',
+            '5': '五', '6': '六', '7': '七', '8': '八', '9': '九'
+        };
+
+        // 將阿拉伯數字轉換為中文數字
+        function convertNumberToChinese(num) {
+            return num.toString().split('').map(digit => numberToChinese[digit] || digit).join('&nbsp;&nbsp;&nbsp;&nbsp;');
+        }
 
         // 頁面載入完成後初始化
         document.addEventListener('DOMContentLoaded', function() {
@@ -743,16 +795,16 @@
             }
         }
 
-        // 自動填入日期
+        // 自動填入日期（修改為顯示中文數字）
         function autoFillDate() {
             const now = new Date();
             const year = now.getFullYear() - 1911; // 民國年
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hour = String(now.getHours()).padStart(2, '0');
-            const minute = String(now.getMinutes()).padStart(2, '0');
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
             
-            // 填入驗傷時間
+            // 填入驗傷時間（阿拉伯數字）
             const examYear = document.getElementById('exam-year');
             const examMonth = document.getElementById('exam-month');
             const examDay = document.getElementById('exam-day');
@@ -760,12 +812,12 @@
             const examMinute = document.getElementById('exam-minute');
             
             if (examYear) examYear.value = year;
-            if (examMonth) examMonth.value = month;
-            if (examDay) examDay.value = day;
-            if (examHour) examHour.value = hour;
-            if (examMinute) examMinute.value = minute;
+            if (examMonth) examMonth.value = String(month).padStart(2, '0');
+            if (examDay) examDay.value = String(day).padStart(2, '0');
+            if (examHour) examHour.value = String(hour).padStart(2, '0');
+            if (examMinute) examMinute.value = String(minute).padStart(2, '0');
 
-            // 填入事件發生時間
+            // 填入事件發生時間（阿拉伯數字）
             const eventYear = document.getElementById('event-year');
             const eventMonth = document.getElementById('event-month');
             const eventDay = document.getElementById('event-day');
@@ -773,19 +825,19 @@
             const eventMinute = document.getElementById('event-minute');
             
             if (eventYear) eventYear.value = year;
-            if (eventMonth) eventMonth.value = month;
-            if (eventDay) eventDay.value = day;
-            if (eventHour) eventHour.value = hour;
-            if (eventMinute) eventMinute.value = minute;
+            if (eventMonth) eventMonth.value = String(month).padStart(2, '0');
+            if (eventDay) eventDay.value = String(day).padStart(2, '0');
+            if (eventHour) eventHour.value = String(hour).padStart(2, '0');
+            if (eventMinute) eventMinute.value = String(minute).padStart(2, '0');
             
-            // 填入簽名日期
-            const sigYear = document.getElementById('signature-year');
-            const sigMonth = document.getElementById('signature-month');
-            const sigDay = document.getElementById('signature-day');
+            // 填入簽名日期（中文數字）
+            const sigYear = document.getElementById('signature-year-chinese');
+            const sigMonth = document.getElementById('signature-month-chinese');
+            const sigDay = document.getElementById('signature-day-chinese');
             
-            if (sigYear) sigYear.value = year;
-            if (sigMonth) sigMonth.value = month;
-            if (sigDay) sigDay.value = day;
+            if (sigYear) sigYear.innerHTML = convertNumberToChinese(year);
+            if (sigMonth) sigMonth.innerHTML = convertNumberToChinese(month);
+            if (sigDay) sigDay.innerHTML = convertNumberToChinese(day);
         }
 
         // 從輸入框添加自訂文字標籤
