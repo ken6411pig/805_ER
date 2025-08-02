@@ -351,7 +351,9 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            
+           .title-selector {
+               display: none !important;
+           }
             .control-panel {
                 display: none !important;
             }
@@ -430,12 +432,14 @@
 <body>
     <div class="control-panel">
         </div>
-
     <div class="form-container">
+        <div class="title-selector">
+     <label><input type="radio" name="form-type" value="domestic" checked onchange="switchFormType()"> 家庭暴力事件</label>
+    <label><input type="radio" name="form-type" value="child" onchange="switchFormType()"> 兒少保護事件</label>
+        </div>
         <div class="header">
             <h1>國軍花蓮總醫院受理家庭暴力事件驗傷診斷書</h1>
-        </div>
-
+</div>
         <table style="width: 100%; border-collapse: collapse; border: 1px solid black;margin-top: -21px;">
             <tr style="height: 40px;">
                 <td class="label-cell" style="width: 60px;">姓 名</td>
@@ -725,6 +729,16 @@
             circleMarkers.push(circle);
             
             console.log(`新增${size}圓圈標記`);
+        }
+        function switchFormType() {
+            const selectedType = document.querySelector('input[name="form-type"]:checked').value;
+            const titleElement = document.querySelector('.header h1');
+    
+            if (selectedType === 'domestic') {
+                titleElement.textContent = '國軍花蓮總醫院受理家庭暴力事件驗傷診斷書';
+            } else {
+                titleElement.textContent = '國軍花蓮總醫院受理兒少保護事件驗傷診斷書';
+            }
         }
 
         // 開始拖拽圓圈
