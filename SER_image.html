@@ -3,38 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>急診外傷檢圖及外傷嚴重度（ISS）評估表</title>
+    <title>急診外傷檢圖及外傷嚴重度(ISS)評估表</title>
     <style>
         body {
             font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
             font-size: 16px;
-            margin: 20px;
+            margin: 0 auto;
             background-color: white;
+            width: 40%;
         }
 
         .form-container {
             width: 100%;
-            max-width: 210mm;
             margin: 0 auto;
             background-color: white;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             margin-top: 10px;
         }
 
         .header h1 {
             font-size: 26px;
-            font-weight: bold;
-            margin: 0;
+            font-weight: normal;
+            margin: 10px 0;
         }
 
         .header h2 {
-            font-size: 22px;
-            font-weight: bold;
-            margin: 5px 0;
+            font-size: 24px;
+            font-weight: normal;
+            margin: 0px 0;
             border: 1px solid black;
             padding: 0px 0px;
             display: inline-block;
@@ -81,12 +81,12 @@
         }
 
         .checkbox-item input[type="checkbox"] {
-            margin-right: 2px;
+            margin-right: 1px;
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
             border: 1px solid #333;
             background-color: white;
             border-radius: 2px;
@@ -110,10 +110,10 @@
 
         .text-input {
             border: none;
-            border-bottom: 1px solid black;
             background: transparent;
-            font-size: 14px;
+            font-size: 15px;
             padding: 1px;
+font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
         }
 
         .number-input {
@@ -122,7 +122,7 @@
             width: 40px;
             text-align: center;
             font-size: 14px;
-            padding: 2px;
+            padding: 1px;
         }
 
         .wound-legend {
@@ -290,6 +290,7 @@
 
         @media print {
             body {
+                width: auto;
                 margin: 0;
                 font-size: 11px;
             }
@@ -297,7 +298,6 @@
             .form-container {
                 max-width: none;
             }
-            
             .drawing-tools,
             div.drawing-tools {
                 display: none !important;
@@ -364,23 +364,41 @@
             }
             
             @page {
-                margin: 13mm;
+                margin: 5mm 8mm 5mm 15mm; /* 上 右 下 左 */
                 size: A4;
             }
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <div class="header">
-            <h1>國軍花蓮總醫院</h1>
-            <h2>急診外傷檢圖及外傷嚴重度（ISS）評估表</h2>
+<div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="text-align: center; flex: 1;margin-top: 20px;margin-right: -60px">
+        <h1>國軍花蓮總醫院</h1>
+        <h2>急診外傷檢圖及外傷嚴重度（ISS）評估表</h2>
+    </div>
+    <div style="margin-top: -20px;margin-right: 10px;text-align: left; width: 140px;border: 1px dotted black; padding: 8px; font-weight: bold;font-size: 14px;">
+        <div>
+            姓 名：
         </div>
+        <div>
+            性 別：
+        </div>
+        <div>
+            身分證號：
+        </div>
+        <div>
+            年 齡：
+        </div>
+        <div>
+            病房/床號：
+        </div>
+    </div>
+</div>
 
         <table>
             <tr>
-                <td colspan="3" style="width: 15%; font-weight: bold;" class="center-text">資料來源</td>
-                <td colspan="14">
+                <td colspan="4" style="width: 17.5%;" class="center-text">資料來源</td>
+                <td colspan="12">
                     <div class="checkbox-row">
                         <div class="checkbox-item">
                             <input type="checkbox" id="source-patient">
@@ -414,8 +432,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3" rowspan="3" style="font-weight: bold; vertical-align: top;" class="center-text">事故原因</td>
-                <td colspan="8" style="width: 50%;">
+                <td colspan="4" rowspan="3" style="vertical-align: middle; text-align: center;" class="center-text">事故原因</td>
+                <td colspan="6" style="width: 50%;">
                     <div class="checkbox-row">
                         <div class="checkbox-item">
                         <input type="checkbox" id="accident-traffic">
@@ -467,17 +485,17 @@
                     <div class="checkbox-row">
                     <div class="checkbox-item">
                         <input type="checkbox" id="cause-assault">
-                        <label for="cause-assault">被毆</label>
+                        <label for="cause-assault">被毆&nbsp;</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="cause-fight">
-                        <label for="cause-fight">互毆</label>
+                        <label for="cause-fight">互毆&nbsp;</label>
                     </div>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td colspan="8" style="width: 50%;">
+                <td colspan="6" style="width: 50%;">
                     <div class="checkbox-row">
                         <div class="checkbox-item">
                             <input type="checkbox" id="violence-domestic">
@@ -513,9 +531,9 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="8" style="width: 50%;">
-                    <div class="checkbox-row">
-                    <div class="checkbox-item">
+                <td colspan="6" style="width: 50%;">
+                    <div class="checkbox-row" style="flex-wrap: wrap;">
+                    <div class="checkbox-item" style="flex-basis: 100%;">
                         <input type="checkbox" id="cutting-wound">
                         <label for="cutting-wound">切割傷:</label>
                     </div>
@@ -533,7 +551,7 @@
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="cut-other">
-                            <label for="cut-other">其他：<input type="text" class="text-input" style="width: 100px;"></label>
+                            <label for="cut-other">其他：<input type="text" class="text-input" style="width: 58px;"></label>
                         </div>
                     </div>
                 </td>
@@ -549,11 +567,12 @@
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="bite-animal">
-                            <label for="bite-human">動物： 貓、狗、蛇、昆蟲、蜜蜂</label>
+                            <label for="bite-animal">動物：</label>
                         </div>
+                            <label>&nbsp;貓、狗、蛇、昆蟲、蜜蜂</label>
                     </div>
                 </td>
-                <td colspan="1" style="width: 20%;">
+                <td colspan="2" style="width: 20%;">
                     <div class="checkbox-item">
                         <input type="checkbox" id="burn">
                         <label for="burn">燙傷</label>
@@ -561,8 +580,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="font-weight: bold;" class="center-text">外傷機轉</td>
-                <td colspan="14">
+                <td colspan="4" class="center-text">外傷機轉</td>
+                <td colspan="12">
                     <div class="checkbox-row">
                         <div class="checkbox-item">
                             <input type="checkbox" id="mechanism-blunt">
@@ -587,13 +606,13 @@
 
 <table class="wound-legend">
     <tr>
-        <td rowspan="5" style="font-weight: bold; vertical-align: middle;" class="vertical-text">傷口長度種類</td>
+        <td rowspan="5" style="vertical-align: middle;" class="vertical-text">傷口長度種類</td>
         <td><button class="wound-btn" onclick="addTextLabel('A/W')">A/W</button></td>
         <td>Abrasion wound</td>
         <td><button class="wound-btn" onclick="addTextLabel('Fr')">Fr</button></td>
         <td>Fracture</td>
-        <td rowspan="4" style="font-weight: bold; vertical-align: middle; width: 60px;" class="vertical-text">值 班 醫 師</td>
-        <td rowspan="4" style="width: 160px;"></td>
+        <td rowspan="4" style="vertical-align: middle; width: 40px;" class="vertical-text">值 班 醫 師</td>
+        <td rowspan="4" style="width: 213px;"></td>
     </tr>
     <tr>
         <td><button class="wound-btn" onclick="addTextLabel('Ecc')">Ecc</button></td>
@@ -619,52 +638,52 @@
                     <div class="checkbox-row">
                         <div class="checkbox-item">
                             <input type="checkbox" id="treatment-suture">
-                            <label for="treatment-suture">Suture ×</label>
+                            <label for="treatment-suture">&nbsp;Suture x</label>
                         </div>
-                        <input type="text" class="text-input" style="width: 20px;"> stitches
+                        <input type="text" class="text-input" style="text-align: center;width: 30px; border-bottom: 1px solid black;"> stitches
                         <div class="checkbox-item">
                             <input type="checkbox" id="treatment-no-suture">
-                            <label for="treatment-no-suture">Not suture</label>
+                            <label for="treatment-no-suture">&nbsp;Not suture</label>
                         </div>
                     </div>
                 </td>
                 <td colspan="2">
-                    西元 <input type="text" class="text-input" id="date-year" style="width: 40px;"> 年 
-                    <input type="text" class="text-input" id="date-month" style="width: 25px;"> 月 
-                    <input type="text" class="text-input" id="date-day" style="width: 25px;"> 日
+                    西元&nbsp;&nbsp;&nbsp;<input type="text" class="text-input" id="date-year" style="width: 40px;">&nbsp;年&nbsp; 
+                    <input type="text" class="text-input" id="date-month" style="width: 25px;">&nbsp;月&nbsp; 
+                    <input type="text" class="text-input" id="date-day" style="width: 25px;">&nbsp;日
                 </td>
             </tr>
         </table>
 
         <table>
             <tr>
-                <td colspan="8" style="text-align: center; font-weight: bold; background-color: #f0f0f0;">外傷嚴重度Injury Severity Score,ISS 評分表</td>
+                <td colspan="8" style="text-align: center; background-color: #f0f0f0;">外傷嚴重度 <strong>Injury Severity Score,ISS</strong> 評分表</td>
             </tr>
             <tr style="text-align: center;">
-                <td style="font-weight: bold;">部位</td>
+                <td>部位</td>
                 <td>頭頸</td>
                 <td>顏面</td>
                 <td>胸部</td>
                 <td>腹部</td>
                 <td>肢體</td>
                 <td>外觀軟組織</td>
-                <td style="font-weight: bold;">ISS分數</td>
+                <td>ISS 分數</td>
             </tr>
             <tr style="text-align: center;">
-                <td style="font-weight: bold;">AIS分數</td>
-                <td><input type="number" class="number-input" min="0" max="6" id="ais-head"></td>
+                <td>AIS 分數</td>
+                <td><input type="number" class="number-input" min=" 0" max="6" id="ais-head"></td>
                 <td><input type="number" class="number-input" min="0" max="6" id="ais-face"></td>
                 <td><input type="number" class="number-input" min="0" max="6" id="ais-chest"></td>
                 <td><input type="number" class="number-input" min="0" max="6" id="ais-abdomen"></td>
                 <td><input type="number" class="number-input" min="0" max="6" id="ais-limb"></td>
                 <td><input type="number" class="number-input" min="0" max="6" id="ais-external"></td>
-                <td style="width: 60px; text-align: center; font-weight: bold; font-size: 16px;" id="iss-score">--</td>
+                <td style="width: 100px; text-align: center; font-size: 16px;" id="iss-score"></td>
             </tr>
         </table>
 
         <table>
             <tr>
-                <td style="width: 60px; font-weight: bold; vertical-align: middle; font-size: 20px; text-align: center;" class="vertical-text">傷 口 部 位 圖 示</td>
+                <td style="width: 40px; vertical-align: middle; font-size: 24px; text-align: center;" class="vertical-text">傷 口 部 位 圖 示</td>
                 <td>
                     <div class="drawing-tools">
                         <div class="tool-group">
@@ -681,10 +700,9 @@
                 </td>
             </tr>
         </table>
-        <div class="footer">
-            2024.05.27 病歷管理委員會決議通過
+        <div class="footer" style="font-size: 12px;">
+            <br>2024.05.27 病歷管理委員會決議通過
         </div>
-    </div>
 
     <script>
 // 文字標籤相關變數
