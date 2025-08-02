@@ -44,7 +44,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 5px;
+            margin-bottom: -1px;
         }
 
         table, th, td {
@@ -104,7 +104,7 @@
 
         .wound-legend {
             font-size: 14px;
-            margin: 5px 0;
+            margin: -1px 0;
         }
 
         .wound-legend td {
@@ -112,9 +112,11 @@
             text-align: center;
             vertical-align: middle;
         }
+
         .body-diagram {
-            height: 500px;
-            border: 1px solid black;
+            width: 620px !important;
+            height: 488px !important;
+            border: none;
             text-align: center;
             display: flex;
             align-items: center;
@@ -124,6 +126,7 @@
             padding: 10px;
             position: relative;
             box-sizing: border-box;
+            margin: 0 auto;
         }
 
         .footer {
@@ -132,15 +135,13 @@
             margin-top: 10px;
         }
 
-        .auto-date-btn:hover {
-            background-color: #45a049;
-        }
-
         #body-canvas {
+            width: 600px !important;
+            height: 468px !important;
             cursor: crosshair;
-            max-width: calc(100% - 20px);
-            max-height: calc(100% - 20px);
-            border: 1px solid #ddd;
+            border: none;
+            display: block;
+            margin: 0 auto;
         }
 
         .drawing-tools {
@@ -148,6 +149,7 @@
             padding: 10px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
+            text-align: left;
         }
 
         .tool-group {
@@ -157,16 +159,21 @@
         }
 
         .tool-btn {
-            padding: 5px 10px;
+            padding: 6px 12px;
             margin: 2px;
             border: 1px solid #666;
             background-color: white;
             cursor: pointer;
             font-size: 12px;
+            border-radius: 3px;
         }
 
         .tool-btn:hover {
             background-color: #f0f0f0;
+        }
+
+        .tool-btn:active {
+            background-color: #e0e0e0;
         }
 
         .wound-btn {
@@ -209,19 +216,6 @@
             z-index: 10;
         }
 
-        .text-label.print-mode {
-            position: absolute !important;
-            transform: none !important;
-            zoom: 1 !important;
-            font-size: 11px !important;
-            padding: 1px 3px !important;
-            border: 1px solid #000 !important;
-            background-color: rgba(255, 255, 0, 0.9) !important;
-            color: black !important;
-            font-weight: bold !important;
-            border-radius: 2px !important;
-            white-space: nowrap !important;
-        }
         .vertical-text {
             writing-mode: vertical-rl;
             text-orientation: upright;
@@ -234,6 +228,43 @@
             vertical-align: middle;
         }
 
+        /* 響應式設計：小螢幕適配 */
+        @media screen and (max-width: 768px) {
+            .body-diagram {
+                width: 496px !important;
+                height: 376px !important;
+                padding: 8px !important;
+            }
+            
+            #body-canvas {
+                width: 480px !important;
+                height: 360px !important;
+            }
+            
+            .text-label {
+                font-size: 10px !important;
+                padding: 1px 2px !important;
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .body-diagram {
+                width: 372px !important;
+                height: 282px !important;
+                padding: 6px !important;
+            }
+            
+            #body-canvas {
+                width: 360px !important;
+                height: 270px !important;
+            }
+            
+            .text-label {
+                font-size: 9px !important;
+                padding: 1px 2px !important;
+            }
+        }
+
         @media print {
             body {
                 margin: 0;
@@ -242,10 +273,6 @@
             
             .form-container {
                 max-width: none;
-            }
-            
-            .auto-date-btn {
-                display: none;
             }
             
             .drawing-tools,
@@ -272,26 +299,45 @@
                 border: none !important;
             }
             
+            /* 列印時精確控制位置 */
             .body-diagram {
-                position: relative !important;
-                height: 450px !important;
-                width: 100% !important;
-                display: block !important;
-                flex: none !important;
+                width: 620px !important;
+                height: 488px !important;
+                padding: 10px !important;
+                margin: 10px auto !important;
                 page-break-inside: avoid !important;
-                border: 2px solid black !important;
-                padding: 8px !important;
+                border: none !important;
                 box-sizing: border-box !important;
+                display: block !important;
+                position: relative !important;
             }
 
             #body-canvas {
-                max-width: calc(100% - 16px) !important;
-                max-height: calc(100% - 16px) !important;
-                width: auto !important;
-                height: auto !important;
+                width: 600px !important;
+                height: 468px !important;
                 display: block !important;
                 margin: 0 auto !important;
                 border: none !important;
+                position: static !important;
+            }
+            
+            /* 列印時文字標籤使用相對定位避免偏移 */
+            .text-label {
+                position: absolute !important;
+                background-color: rgba(255, 255, 0, 0.9) !important;
+                border: 1px solid #000 !important;
+                padding: 2px 4px !important;
+                font-size: 12px !important;
+                font-weight: bold !important;
+                color: black !important;
+                border-radius: 3px !important;
+                white-space: nowrap !important;
+                z-index: 10 !important;
+                /* 關鍵：使用固定的transform-origin避免偏移 */
+                transform-origin: top left !important;
+                /* 避免瀏覽器列印時的位置調整 */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             
             @page {
@@ -299,8 +345,7 @@
                 size: A4;
             }
         }
-
-</style>
+    </style>
 </head>
 <body>
     <div class="form-container">
@@ -465,7 +510,7 @@
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="cut-other">
-                            <label for="cut-other">其他：<input type="text" class="text-input" style="width: 50px;"></label>
+                            <label for="cut-other">其他：<input type="text" class="text-input" style="width: 100px;"></label>
                         </div>
                     </div>
                 </td>
@@ -608,7 +653,7 @@
                     </div>
 
                     <div class="body-diagram" id="body-diagram-container">
-                        <canvas id="body-canvas" width="800" height="600"></canvas>
+                        <canvas id="body-canvas"></canvas>
                     </div>
                 </td>
             </tr>
@@ -619,7 +664,6 @@
     </div>
 
     <script>
-
 // 文字標籤相關變數
 let textLabels = [];
 let draggedLabel = null;
@@ -633,8 +677,11 @@ let drawingPaths = [];
 let currentPath = [];
 let imageLoaded = false;
 
+// 操作歷史系統
+let operationHistory = [];
+const maxOperations = 15;
 
-// 自動填入今天日期的函數
+// 自動填入今天日期
 function fillCurrentDate() {
     const today = new Date();
     const year = today.getFullYear();
@@ -646,7 +693,7 @@ function fillCurrentDate() {
     document.getElementById('date-day').value = day;
 }
 
-// ISS分數自動計算功能
+// ISS分數自動計算
 function calculateISS() {
     const aisInputs = [
         document.getElementById('ais-head'),
@@ -669,51 +716,52 @@ function calculateISS() {
     document.getElementById('iss-score').textContent = iss > 0 ? iss : '--';
 }
 
-// 繪圖功能初始化
+// Canvas初始化
 function initCanvas() {
     canvas = document.getElementById('body-canvas');
     ctx = canvas.getContext('2d');
     
-    resizeCanvas();
+    // 設定Canvas尺寸（與實際圖片相同）
+    canvas.width = 795;
+    canvas.height = 596;
+    
+    // 設定顯示尺寸
+    canvas.style.width = '600px';
+    canvas.style.height = '468px';
+    
     loadBodyImage();
     
+    // 滑鼠事件
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseout', stopDrawing);
     
+    // 觸控事件
     canvas.addEventListener('touchstart', handleTouch);
     canvas.addEventListener('touchmove', handleTouch);
     canvas.addEventListener('touchend', stopDrawing);
 }
 
-function resizeCanvas() {
-    const container = canvas.parentElement;
-    const containerRect = container.getBoundingClientRect();
-    const maxWidth = containerRect.width - 40;
-    const maxHeight = containerRect.height - 40;
-    
-    const aspectRatio = 800 / 600;
-    let newWidth = maxWidth;
-    let newHeight = newWidth / aspectRatio;
-    
-    if (newHeight > maxHeight) {
-        newHeight = maxHeight;
-        newWidth = newHeight * aspectRatio;
-    }
-    
-    canvas.style.width = newWidth + 'px';
-    canvas.style.height = newHeight + 'px';
-}
-
+// 載入人體圖片
 function loadBodyImage() {
     bodyImage.onload = function() {
         redrawCanvas();
         imageLoaded = true;
     };
+    bodyImage.onerror = function() {
+        console.error('圖片載入失敗');
+        ctx.fillStyle = '#f0f0f0';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#666';
+        ctx.font = '20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('圖片載入中...', canvas.width/2, canvas.height/2);
+    };
     bodyImage.src = 'body.jpeg';
 }
 
+// 重繪Canvas
 function redrawCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -738,10 +786,11 @@ function redrawCanvas() {
     });
 }
 
+// 獲取滑鼠位置
 function getMousePos(e) {
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
+    const scaleX = canvas.width / rect.width;   
+    const scaleY = canvas.height / rect.height; 
     
     return {
         x: (e.clientX - rect.left) * scaleX,
@@ -749,6 +798,7 @@ function getMousePos(e) {
     };
 }
 
+// 開始繪圖
 function startDrawing(e) {
     if (!imageLoaded && !bodyImage.complete) return;
     
@@ -766,6 +816,7 @@ function startDrawing(e) {
     ctx.moveTo(pos.x, pos.y);
 }
 
+// 繪圖中
 function draw(e) {
     if (!isDrawing) return;
     
@@ -779,6 +830,7 @@ function draw(e) {
     ctx.moveTo(pos.x, pos.y);
 }
 
+// 停止繪圖
 function stopDrawing() {
     if (isDrawing && currentPath.length > 0) {
         if (currentPath.length > 5) {
@@ -793,11 +845,10 @@ function stopDrawing() {
         if (drawingPaths.length > 20) {
             drawingPaths.shift();
         }
-        
-        console.log('完成繪圖，總路徑數:', drawingPaths.length);
     }
 }
 
+// 觸控事件處理
 function handleTouch(e) {
     e.preventDefault();
     const touch = e.touches[0];
@@ -809,10 +860,7 @@ function handleTouch(e) {
     canvas.dispatchEvent(mouseEvent);
 }
 
-// 操作歷史系統
-let operationHistory = [];
-const maxOperations = 15;
-
+// 保存當前狀態
 function saveCurrentState() {
     const state = {
         drawingPaths: drawingPaths.map(path => [...path]),
@@ -830,10 +878,9 @@ function saveCurrentState() {
     if (operationHistory.length > maxOperations) {
         operationHistory.shift();
     }
-    
-    console.log('保存狀態，歷史記錄數:', operationHistory.length);
 }
 
+// 恢復狀態
 function restoreState(state) {
     drawingPaths = [];
     clearAllTextLabels();
@@ -856,22 +903,19 @@ function restoreState(state) {
         container.appendChild(label);
         textLabels.push(label);
     });
-    
-    console.log('狀態已恢復');
 }
 
+// 復原上一步操作
 function undoLastAction() {
     if (operationHistory.length === 0) {
-        console.log('沒有可復原的操作');
         return;
     }
     
     const lastState = operationHistory.pop();
     restoreState(lastState);
-    
-    console.log('復原完成，剩餘歷史記錄:', operationHistory.length);
 }
 
+// 清除畫布
 function clearCanvas() {
     if (drawingPaths.length > 0 || textLabels.length > 0) {
         saveCurrentState();
@@ -881,10 +925,9 @@ function clearCanvas() {
     
     clearAllTextLabels();
     redrawCanvas();
-    
-    console.log('已清除所有繪圖和文字標籤');
 }
 
+// 添加文字標籤
 function addTextLabel(text) {
     saveCurrentState();
     const container = document.getElementById('body-diagram-container');
@@ -893,6 +936,7 @@ function addTextLabel(text) {
     label.textContent = text;
     label.id = 'label-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
     
+    // 初始位置設在中心
     label.style.left = '50%';
     label.style.top = '50%';
     label.style.transform = 'translate(-50%, -50%)';
@@ -914,10 +958,9 @@ function addTextLabel(text) {
     
     container.appendChild(label);
     textLabels.push(label);
-    
-    console.log('新增文字標籤:', text);
 }
 
+// 開始拖曳標籤
 function startDragLabel(e) {
     e.preventDefault();
     draggedLabel = e.target;
@@ -934,6 +977,7 @@ function startDragLabel(e) {
     draggedLabel.style.zIndex = '20';
 }
 
+// 拖曳標籤
 function dragLabel(e) {
     if (!draggedLabel) return;
     
@@ -950,6 +994,7 @@ function dragLabel(e) {
     draggedLabel.style.top = newY + 'px';
 }
 
+// 停止拖曳標籤
 function stopDragLabel() {
     if (draggedLabel) {
         draggedLabel.style.zIndex = '10';
@@ -960,6 +1005,7 @@ function stopDragLabel() {
     document.removeEventListener('mouseup', stopDragLabel);
 }
 
+// 雙擊移除標籤
 function removeLabelOnDoubleClick(e) {
     saveCurrentState();
     const label = e.target;
@@ -968,27 +1014,20 @@ function removeLabelOnDoubleClick(e) {
     if (index > -1) {
         textLabels.splice(index, 1);
         label.remove();
-        console.log('移除文字標籤');
     }
 }
 
+// 清除所有文字標籤
 function clearAllTextLabels() {
     textLabels.forEach(label => label.remove());
     textLabels = [];
 }
 
-function initializeUndoSystem() {
-    setTimeout(() => {
-        saveCurrentState();
-        console.log('復原系統已初始化');
-    }, 100);
-}
-// 列印功能 - 只列印表單內容
+// 列印表單 - 優化版本減少偏移
 function printForm() {
-    // 確保所有繪圖都已完成渲染
     redrawCanvas();
     
-    // ✅ 加這段：同步 checkbox 狀態
+    // 同步表單狀態
     document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         if (cb.checked) {
             cb.setAttribute('checked', 'checked');
@@ -1000,291 +1039,56 @@ function printForm() {
         input.setAttribute('value', input.value);
     });
 
-    const formContainer = document.querySelector('.form-container');
-    const formHTML = formContainer.outerHTML;
+    // 列印前微調文字標籤位置以減少偏移
+    const labels = document.querySelectorAll('.text-label');
+    const originalPositions = [];
     
-    // 創建新窗口用於列印
-    const printWindow = window.open('', '_blank', 'width=800,height=600');
-    
-    // 寫入完整的HTML文檔
-    printWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="zh-TW">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>急診外傷檢圖及外傷嚴重度（ISS）評估表</title>
-            <style>
-                body {
-                    font-family: 'Microsoft JhengHei', Arial, sans-serif;
-                    font-size: 11px;
-                    margin: 0;
-                    background-color: white;
-                }
-                .form-container {
-                    width: 100%;
-                    max-width: none;
-                    margin: 0;
-                    background-color: white;
-                }
-                .header {
-                    text-align: center;
-                    margin-bottom: 10px;
-                }
-                .header h1 {
-                    font-size: 26px;
-                    font-weight: bold;
-                    margin: 0;
-                }
-                .header h2 {
-                    font-size: 22px;
-                    font-weight: bold;
-                    margin: 5px 0;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 5px;
-                }
-                table, th, td {
-                    border: 1px solid black;
-                }
-                th, td {
-                    padding: 3px;
-                    text-align: left;
-                    vertical-align: top;
-                    font-size: 14px;
-                }
-                tr[style*="text-align: center"] td {
-                    text-align: center !important;
-                }
-                th {
-                    background-color: #f0f0f0;
-                    font-weight: bold;
-                    text-align: center;
-                }
-                .checkbox-row {
-                    display: flex;
-                    flex-wrap: wrap;
-                    align-items: center;
-                    gap: 15px;
-                }
-                .checkbox-item {
-                    display: flex;
-                    align-items: center;
-                    white-space: nowrap;
-                }
-                .checkbox-item input[type="checkbox"] {
-                    margin-right: 2px;
-                    transform: scale(1.2);
-                }
-                .text-input {
-                    border: none;
-                    border-bottom: 1px solid black;
-                    background: transparent;
-                    font-size: 14px;
-                    padding: 1px;
-                }
-                .number-input {
-                    border: 1px solid black;
-                    width: 40px;
-                    text-align: center;
-                    font-size: 11px;
-                    padding: 2px;
-                }
-                .wound-legend {
-                    font-size: 14px;
-                    margin: 5px 0;
-                }
-                .wound-legend td {
-                    padding: 2px 5px;
-                    text-align: center;
-                    vertical-align: middle;
-                }
-                .body-diagram {
-                    height: 400px;
-                    border: 2px solid black;
-                    text-align: center;
-                    display: block;
-                    background-color: white;
-                    font-size: 11px;
-                    padding: 8px;
-                    position: relative;
-                    box-sizing: border-box;
-                    page-break-inside: avoid;
-                }
-                .footer {
-                    text-align: right;
-                    font-size: 10px;
-                    margin-top: 10px;
-                }
-                #body-canvas {
-                    max-width: calc(100% - 16px);
-                    max-height: calc(100% - 16px);
-                    width: auto;
-                    height: auto;
-                    display: block;
-                    margin: 0 auto;
-                }
-                .text-label {
-                    position: absolute;
-                    background-color: rgba(255, 255, 0, 0.9);
-                    border: 1px solid #000;
-                    padding: 1px 3px;
-                    font-size: 11px;
-                    font-weight: bold;
-                    color: black;
-                    border-radius: 2px;
-                    white-space: nowrap;
-                }
-                .wound-btn {
-                    background: none;
-                    border: none;
-                    color: black;
-                    padding: 0;
-                    font-weight: bold;
-                    cursor: default;
-                    display: inline;
-                }
-                .vertical-text {
-                    writing-mode: vertical-rl;
-                    text-orientation: upright;
-                    text-align: center;
-                    vertical-align: middle;
-                }
-                .center-text {
-                    text-align: center;
-                    vertical-align: middle;
-                }
-                .drawing-tools {
-                    display: none !important;
-                }
-                @page {
-                    margin: 15mm;
-                    size: A4;
-                }
-            </style>
-        </head>
-        <body>
-            ${formHTML}
-        </body>
-        </html>
-    `);
-    
-    printWindow.document.close();
-    
-    // 等待內容載入完成後列印
-// 等待內容載入完成後列印
-printWindow.onload = function() {
-    // 複製canvas內容到新窗口
-    const originalCanvas = document.getElementById('body-canvas');
-    const newCanvas = printWindow.document.getElementById('body-canvas');
-    
-    if (originalCanvas && newCanvas) {
-        const newCtx = newCanvas.getContext('2d');
-        newCtx.drawImage(originalCanvas, 0, 0);
-    }
-    
-    // 調整新窗口中文字標籤的位置
-    const originalContainer = document.getElementById('body-diagram-container');
-    const newContainer = printWindow.document.getElementById('body-diagram-container');
-    const originalLabels = document.querySelectorAll('.text-label');
-    const newLabels = printWindow.document.querySelectorAll('.text-label');
-    
-    if (originalContainer && newContainer && originalLabels.length > 0) {
-        const originalRect = originalContainer.getBoundingClientRect();
+    labels.forEach((label, index) => {
+        const left = parseFloat(label.style.left) || 0;
+        const top = parseFloat(label.style.top) || 0;
         
-        // 等待新窗口完全載入後調整位置
+        originalPositions[index] = { left, top };
+        
+        // 輕微向左上調整以補償列印偏移
+        label.style.left = (left + 0.) + 'px';
+        label.style.top = (top + 1) + 'px';
+    });
+    
+    setTimeout(() => {
+        window.print();
+        
+        // 列印後恢復原始位置
         setTimeout(() => {
-            const newRect = newContainer.getBoundingClientRect();
-            
-            originalLabels.forEach((originalLabel, index) => {
-                if (newLabels[index]) {
-                    const originalLeft = parseFloat(originalLabel.style.left) || 0;
-                    const originalTop = parseFloat(originalLabel.style.top) || 0;
-                    
-                    // 計算相對於容器的百分比位置
-                    const percentLeft = (originalLeft / originalRect.width) * 100;
-                    const percentTop = (originalTop / originalRect.height) * 100;
-                    
-                    // 在新窗口中設定百分比位置
-                    newLabels[index].style.left = percentLeft + '%';
-                    newLabels[index].style.top = percentTop + '%';
-                    newLabels[index].style.position = 'absolute';
+            labels.forEach((label, index) => {
+                if (originalPositions[index]) {
+                    label.style.left = originalPositions[index].left + 'px';
+                    label.style.top = originalPositions[index].top + 'px';
                 }
             });
-            
-            // 調整位置後再列印
-            setTimeout(() => {
-                printWindow.print();
-                setTimeout(() => {
-                    printWindow.close();
-                }, 100);
-            }, 100);
-        }, 100);
-    } else {
-        // 如果沒有文字標籤，直接列印
-        setTimeout(() => {
-            printWindow.print();
-            setTimeout(() => {
-                printWindow.close();
-            }, 100);
-        }, 200);
-    }
-};
+        }, 500);
+    }, 100);
 }
 
-
-
-function adjustLabelsForPrint() {
-    window.addEventListener('beforeprint', function() {
-        const container = document.getElementById('body-diagram-container');
-        const containerRect = container.getBoundingClientRect();
-        
-        textLabels.forEach(label => {
-            label.dataset.originalLeft = label.style.left;
-            label.dataset.originalTop = label.style.top;
-            
-            const currentLeft = parseFloat(label.style.left) || 0;
-            const currentTop = parseFloat(label.style.top) || 0;
-            
-            const percentLeft = (currentLeft / containerRect.width) * 100;
-            const percentTop = (currentTop / containerRect.height) * 100;
-            
-            label.style.left = percentLeft + '%';
-            label.style.top = percentTop + '%';
-            
-            label.classList.add('print-mode');
-        });
-    });
-    
-    window.addEventListener('afterprint', function() {
-        textLabels.forEach(label => {
-            if (label.dataset.originalLeft) {
-                label.style.left = label.dataset.originalLeft;
-                label.style.top = label.dataset.originalTop;
-            }
-            
-            label.classList.remove('print-mode');
-        });
-    });
+// 初始化復原系統
+function initializeUndoSystem() {
+    setTimeout(() => {
+        saveCurrentState();
+    }, 100);
 }
 
 // 頁面載入完成後初始化
 document.addEventListener('DOMContentLoaded', function() {
+    // ISS計算器事件綁定
     const aisInputs = document.querySelectorAll('[id^="ais-"]');
     aisInputs.forEach(input => {
         input.addEventListener('input', calculateISS);
     });
     
+    // 初始化各項功能
     fillCurrentDate();
     initCanvas();
     initializeUndoSystem();
-    adjustLabelsForPrint();
-    
-    window.addEventListener('resize', resizeCanvas);
 });
-
     </script>
 </body>
 </html>
