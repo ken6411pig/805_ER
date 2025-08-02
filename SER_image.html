@@ -82,7 +82,30 @@
 
         .checkbox-item input[type="checkbox"] {
             margin-right: 2px;
-            transform: scale(1.2);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #333;
+            background-color: white;
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked {
+            background-color: white;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            left: 1px;
+            top: -4px;
+            color: black;
+            font-size: 18px;
+            line-height: 1;
         }
 
         .text-input {
