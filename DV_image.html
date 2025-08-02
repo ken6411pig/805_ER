@@ -71,6 +71,12 @@
             outline: none;
             font-family: 'DFKai-SB', '標楷體', 'KaiTi', serif;
         }
+        .checkbox-group {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px; /* ← 控制女/男間距，可依需求調整 */
+        }
+
 
         .checkbox-group input[type="checkbox"] {
             margin-right: 2px;
@@ -84,6 +90,7 @@
             border-radius: 2px;
             position: relative;
             cursor: pointer;
+            vertical-align: middle;
         }
 
         .checkbox-group input[type="checkbox"]:checked {
