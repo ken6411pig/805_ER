@@ -752,13 +752,31 @@ function calculateISS() {
         return isNaN(value) ? 0 : value;
     });
     
+    // 檢查是否有任何區域的 AIS 分數為 6 分
+    if (scores.some(score => score === 6)) {
+        document.getElementById('iss-score').textContent = '75';
+        return;
+    }
+    
+    // 檢查是否有 3 個或以上區域的 AIS 分數為 5 分
+    const fiveScoreCount = scores.filter(score => score === 5).length;
+    if (fiveScoreCount >= 3) {
+        document.getElementById('iss-score').textContent = '75';
+        return;
+    }
+    
+    // 正常計算：取最高的三個分數平方相加
     const sortedScores = scores.sort((a, b) => b - a);
     const topThree = sortedScores.slice(0, 3);
     const iss = topThree.reduce((sum, score) => sum + (score * score), 0);
     
-    document.getElementById('iss-score').textContent = iss > 0 ? iss : '--';
+    // 顯示結果，最低 0 分，最高 75 分
+    if (iss > 75) {
+        document.getElementById('iss-score').textContent = '75';
+    } else {
+        document.getElementById('iss-score').textContent = iss > 0 ? iss : '0';
+    }
 }
-
 // Canvas初始化
 function initCanvas() {
     canvas = document.getElementById('body-canvas');
