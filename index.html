@@ -44,6 +44,28 @@
             display: none;
         }
 
+        /* History & PE section styles */
+        .history-pe-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .history-section, .pe-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .history-section h2, .pe-section h2 {
+            margin-top: 0;
+            color: #495057;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
         /* PE tabs */
         .pe-tabs {
             margin-bottom: 20px;
@@ -54,10 +76,16 @@
             margin-right: 10px;
             cursor: pointer;
             background-color: #f0f0f0;
+            border-radius: 4px;
         }
 
         .pe-tabs span:hover {
             background-color: #e0e0e0;
+        }
+
+        .pe-tabs span.active {
+            background-color: #007bff;
+            color: white;
         }
 
         .pe-content {
@@ -208,12 +236,31 @@
         }
 
         /* 外部連結樣式 - 移除不需要的CSS */
+
+        /* 響應式設計 */
+        @media screen and (max-width: 1024px) {
+            .history-pe-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* History區塊樣式 */
+        .history-section p, .history-section ul, .history-section li {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .history-section h3 {
+            color: #007bff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
 </style>
 </head>
 <body>
 <div class="sidebar">
-    <div data-page="History">📋 History</div>
-    <div data-page="PE">🩺 PE</div>
+    <div data-page="History_PE">📋 History & PE</div>
     <div data-page="ICD_code">🔍 ICD Code</div>
     <div data-page="Plan">📝 Plan</div>
     <div data-page="Surgery_ICD">📖 外傷代碼速查</div>
@@ -224,144 +271,167 @@
     <div data-page="Note">📓 備忘錄</div>
 </div>
 <div class="main-content">
-<div class="content" id="History">
-<div class="section">
-<p class="mb-2">
+
+<!-- 合併的 History & PE 頁面 -->
+<div class="content" id="History_PE">
+    <h1>History & Physical Examination</h1>
+    
+    <div class="history-pe-container">
+        <!-- History 區塊 -->
+        <div class="history-section">
+            <h2>📋 History</h2>
+            
+            <div class="section">
+                <p class="mb-2">
                     The patient who denied systemic disease before. NKA. No op history.
                 </p>
-<h3>Negative findings:</h3>
-<p>
+                <h3>Negative findings:</h3>
+                <p>
                     chills(-), fever(-), cough(-), sputum(-), hemoptysis(-), chest tightness(-), chest pain(-), refer pain(-), cold sweating(-), SOB(-), DOE(-), PND(-), orthopnea(-), abdominal pain(-), anorexia(-), dysphagia(-), nausea(-), vomiting(-), constipation(-), diarrhea(-),hematemesis(-), tarry stools(-), hematochezia(-), urgency(-), burning sensation(-), frequency(-), dysuria(-), hematuria(-), oligouria(-), body weight loss(-)
                 </p>
-</div>
-<div class="section">
-<h3>TOCC history:</h3>
-<ul style="padding-left: 20px;">
-<li>Occupation:</li>
-<li>Cluster/contact history: Nil</li>
-<li>Traveling history: Nil</li>
-</ul>
-</div>
-<div class="section">
-<h3>CAD risk factors:</h3>
-<p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
-                Old age (-) Male (-) Post menopause (-)</p>
-<h3>SER</h3>
-<p>
-This year-old woman denied any systemic disease.<br/>
-She suffered from TA (自摔) with helmet. ILOC(-), no head, chest, abdomen injury.<br/>
-There was no nausea/vomiting, limitation ROMo f extremities.<br/>
-<p>
-<h3>PER</h3>
-<p>
-Fever up to C for days.<br/>
-No fever, cough, rhinorrhea, SOB, abdominal discomfort, N/V, diarrhea, dysuria or skin rash.<br/>
-Fair activity, appetite and urine output.<br/>
-TOCC histories: denied; <br/>
-Vaccination hx: <br/>
-Allergy: denied; <br/>
-PMH: denied, no G6PD deficiency<br/>
-Last anti-pyretic medication:<br/>
-FHx: denied<br/>
-Last meal:<br/>
-LMP on<br/>
-<p>
-</div>
-</div>
-<div class="content hidden" id="PE">
-<div class="pe-tabs">
-<span data-tab="內科" onclick="showPETab('內科')">🫀 MER</span>
-<span data-tab="外科" onclick="showPETab('外科')">🔪 SER</span>
-<span data-tab="OHCA" onclick="showPETab('OHCA')">💔 OHCA</span>
-<span data-tab="NE" onclick="showPETab('NE')">🧠 NE</span>
-<span data-tab="外傷FAST" onclick="showPETab('外傷FAST')">🩸 外傷FAST</span>
-<span data-tab="POCUS" onclick="showPETab('POCUS')">🎯 POCUS</span>
-
-</div>
-<div class="pe-content" id="內科">
-<div class="pe-content-wrapper">
-<p>
-                    Consciousness: Clear, GCS: E4M6V5<br/>
-                    Skin: Normal skin turgor<br/>
-                    HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br/>
-                    Neck: Supple. No JVE noted.<br/>
-                    Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br/>
-                    Heart: Regular heart beat<br/>
-                    Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br/>
-                    Extremities: no skin rash. no edema.<br/>
-                    MP: 5, all limbs.
+            </div>
+            
+            <div class="section">
+                <h3>TOCC history:</h3>
+                <ul style="padding-left: 20px;">
+                    <li>Occupation:</li>
+                    <li>Cluster/contact history: Nil</li>
+                    <li>Traveling history: Nil</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>CAD risk factors:</h3>
+                <p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
+                    Old age (-) Male (-) Post menopause (-)</p>
+                    
+                <h3>SER</h3>
+                <p>
+                    This year-old woman denied any systemic disease.<br/>
+                    She suffered from TA (自摔) with helmet. ILOC(-), no head, chest, abdomen injury.<br/>
+                    There was no nausea/vomiting, limitation ROMo f extremities.<br/>
                 </p>
-<button class="copy-button" onclick="copyPEContent('內科')">複製</button>
-</div>
-</div>
-<div class="pe-content hidden" id="外科">
-<div class="pe-content-wrapper">
-<p>
-                    Consciousness: Clear <br/>
-                    GCS: E4M6V5, pupil: 2+/2+<br/>
-                    Neck: Supple.<br/>
-                    Chest: Symmetrical expension.Wheezing(-)<br/>
-                    Heart: Regular heart beat<br/>
-                    Abdomen: Soft. No tenderness.<br/>
-                    Extremities: Free of ROM. <br/>
-                    MP: 5, all limbs.
+                
+                <h3>PER</h3>
+                <p>
+                    Fever up to C for days.<br/>
+                    No fever, cough, rhinorrhea, SOB, abdominal discomfort, N/V, diarrhea, dysuria or skin rash.<br/>
+                    Fair activity, appetite and urine output.<br/>
+                    TOCC histories: denied; <br/>
+                    Vaccination hx: <br/>
+                    Allergy: denied; <br/>
+                    PMH: denied, no G6PD deficiency<br/>
+                    Last anti-pyretic medication:<br/>
+                    FHx: denied<br/>
+                    Last meal:<br/>
+                    LMP on<br/>
                 </p>
-<button class="copy-button" onclick="copyPEContent('外科')">複製</button>
-</div>
-</div>
-<div class="pe-content hidden" id="OHCA">
-<div class="pe-content-wrapper">
-<p>
-                    Consciousness: Coma GCS: E1M1V1<br/>
-                    Skin:Normal skin turgor, no skin rash<br/>
-                    Neck: Supple.no palpable pulsation.<br/>
-                    Chest: No breath sound.<br/>
-                    Heart: No heart beat.<br/>
-                    Abdomen: Soft and ovoid.<br/>
-                    Extremities: No obvious wound over four limbs.<br/>
-</p>
-<button class="copy-button" onclick="copyPEContent('OHCA')">複製</button>
-</div>
-</div>
-<div class="pe-content hidden" id="NE">
-<div class="pe-content-wrapper">
-<p>
-                    GCS: E4V5M6, poor attention<br/>
-                    CNs: pupil: 3/3, LR: +/+, VF: intact by threatening test, <br/>
-                    EOM: full, right eye ptosis(+), no diplopia/nystagmus, (+)left central facial palsy, normal shoulder shrug<br/>
-                    MP: UE: proximal 5/5, distal 5/4+, LE: proximal 5/5, distal 5/5<br/>
-                    DTR: UE: ++/++, LE: knee: ++/++, ankle: ++/++<br/>
-                    Plantar reflex: downgoing bilaterally<br/>
-                    Sensation: symmetric by pinprick, left hemi-necglect(+)<br/>
-                    FNF: (+)righgt mild dysmetria/no dysmetria<br/>
-                    HKS: no zigzag/no zigzag<br/>
-                    Romberg test/Gait/Tandem gait: Cannot cooperate<br/>
+            </div>
+        </div>
 
-</p>
-<button class="copy-button" onclick="copyPEContent('NE')">複製</button>
-</div>
-</div>
-<div class="pe-content hidden" id="外傷FAST">
-<div class="pe-content-wrapper">
-<p>
-No pericardial effusion, bilateral lung sliding present, no pleural effusion, no ascites
-</p>
-</div>
-<button class="copy-button" onclick="copyPEContent('外傷FAST')">複製</button>
+        <!-- PE 區塊 -->
+        <div class="pe-section">
+            <h2>🩺 Physical Examination</h2>
+            
+            <div class="pe-tabs">
+                <span data-tab="內科" onclick="showPETab('內科')" class="active">🫀 MER</span>
+                <span data-tab="外科" onclick="showPETab('外科')">🔪 SER</span>
+                <span data-tab="OHCA" onclick="showPETab('OHCA')">💔 OHCA</span>
+                <span data-tab="NE" onclick="showPETab('NE')">🧠 NE</span>
+                <span data-tab="外傷FAST" onclick="showPETab('外傷FAST')">🩸 外傷FAST</span>
+                <span data-tab="POCUS" onclick="showPETab('POCUS')">🎯 POCUS</span>
+            </div>
+            
+            <div class="pe-content" id="內科">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Clear, GCS: E4M6V5<br/>
+                        Skin: Normal skin turgor<br/>
+                        HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br/>
+                        Neck: Supple. No JVE noted.<br/>
+                        Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br/>
+                        Heart: Regular heart beat<br/>
+                        Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br/>
+                        Extremities: no skin rash. no edema.<br/>
+                        MP: 5, all limbs.
+                    </p>
+                    <button class="copy-button" onclick="copyPEContent('內科')">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="外科">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Clear <br/>
+                        GCS: E4M6V5, pupil: 2+/2+<br/>
+                        Neck: Supple.<br/>
+                        Chest: Symmetrical expension.Wheezing(-)<br/>
+                        Heart: Regular heart beat<br/>
+                        Abdomen: Soft. No tenderness.<br/>
+                        Extremities: Free of ROM. <br/>
+                        MP: 5, all limbs.
+                    </p>
+                    <button class="copy-button" onclick="copyPEContent('外科')">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="OHCA">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Coma GCS: E1M1V1<br/>
+                        Skin:Normal skin turgor, no skin rash<br/>
+                        Neck: Supple.no palpable pulsation.<br/>
+                        Chest: No breath sound.<br/>
+                        Heart: No heart beat.<br/>
+                        Abdomen: Soft and ovoid.<br/>
+                        Extremities: No obvious wound over four limbs.<br/>
+                    </p>
+                    <button class="copy-button" onclick="copyPEContent('OHCA')">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="NE">
+                <div class="pe-content-wrapper">
+                    <p>
+                        GCS: E4V5M6, poor attention<br/>
+                        CNs: pupil: 3/3, LR: +/+, VF: intact by threatening test, <br/>
+                        EOM: full, right eye ptosis(+), no diplopia/nystagmus, (+)left central facial palsy, normal shoulder shrug<br/>
+                        MP: UE: proximal 5/5, distal 5/4+, LE: proximal 5/5, distal 5/5<br/>
+                        DTR: UE: ++/++, LE: knee: ++/++, ankle: ++/++<br/>
+                        Plantar reflex: downgoing bilaterally<br/>
+                        Sensation: symmetric by pinprick, left hemi-necglect(+)<br/>
+                        FNF: (+)righgt mild dysmetria/no dysmetria<br/>
+                        HKS: no zigzag/no zigzag<br/>
+                        Romberg test/Gait/Tandem gait: Cannot cooperate<br/>
+                    </p>
+                    <button class="copy-button" onclick="copyPEContent('NE')">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="外傷FAST">
+                <div class="pe-content-wrapper">
+                    <p>
+                        No pericardial effusion, bilateral lung sliding present, no pleural effusion, no ascites
+                    </p>
+                    <button class="copy-button" onclick="copyPEContent('外傷FAST')">複製</button>
+                </div>
+            </div>
+
+            <div class="pe-content hidden" id="POCUS">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Cardiac: no pericardial effusion, normal global wall motion, no regional wall motion abnormalities, normal RV size, IVC normal caliber with >50% respiratory variation<br/>
+                        Thoracic: bilateral lung sliding present, B-lines <3 per intercostal space, no pleural effusion<br/>
+                        Abdominal: no ascites, no hydronephrosis, no IHD dilatation, no CBD dilatation or GB wall thickening, no echo Murphy sign<br/>
+                        DVT: femoral and popliteal veins compressible bilaterally<br/>
+                    </p>
+                    <button class="copy-button" onclick="copyPEContent('POCUS')">複製</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="pe-content hidden" id="POCUS">
-<div class="pe-content-wrapper">
-<p>
-Cardiac: no pericardial effusion, normal global wall motion, no regional wall motion abnormalities, normal RV size, IVC normal caliber with >50% respiratory variation<br/>
-Thoracic: bilateral lung sliding present, B-lines <3 per intercostal space, no pleural effusion<br/>
-Abdominal: no ascites, no hydronephrosis, no IHD dilatation, no CBD dilatation or GB wall thickening, no echo Murphy sign<br/>
-DVT: femoral and popliteal veins compressible bilaterally<br/>
-</p>
-<button class="copy-button" onclick="copyPEContent('POCUS')">複製</button>
-</div>
-</div>
-</div>
 <div class="content hidden" id="Surgery_ICD">
     <iframe src="Surgery_ICD.html" 
             width="100%" 
@@ -576,17 +646,22 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
             }
         });
 
-        // PE分頁切換功能
-        document.querySelector('.pe-tabs')?.addEventListener('click', function(e) {
-            const targetTab = e.target.getAttribute('data-tab');
-            if (!targetTab) return;
-            
+        // PE分頁切換功能 - 修改為適應新的結構
+        function showPETab(tabName) {
+            // 隱藏所有PE內容
             document.querySelectorAll('.pe-content').forEach(content => {
                 content.classList.add('hidden');
             });
+    
+            // 顯示選中的PE內容
+            document.getElementById(tabName).classList.remove('hidden');
             
-            document.getElementById(targetTab).classList.remove('hidden');
-        });
+            // 更新tab樣式
+            document.querySelectorAll('.pe-tabs span').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
 
         // ICD搜尋功能
         let csvData = [];
@@ -902,7 +977,7 @@ function searchData() {
         }
 
         // 初始顯示第一個分頁
-        document.getElementById('History').classList.remove('hidden');
+        document.getElementById('History_PE').classList.remove('hidden');
         
         // 頁面載入時執行日期填入
         updateCertificateDate();
@@ -972,15 +1047,7 @@ function searchData() {
                 button.classList.remove('success');
             }, 2000);
         }
-        function showPETab(tabName) {
-            // 隱藏所有PE內容
-            document.querySelectorAll('.pe-content').forEach(content => {
-                content.classList.add('hidden');
-            });
-    
-            // 顯示選中的PE內容
-            document.getElementById(tabName).classList.remove('hidden');
-        }
+        
 // 備忘錄功能
         function copyNote() {
             const noteText = document.getElementById('noteText').value;
