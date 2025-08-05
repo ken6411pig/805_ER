@@ -1253,8 +1253,22 @@ DVT: femoral and popliteal veins compressible bilaterally<br/>
     <textarea id="noteText" placeholder="在此輸入備忘內容..." style="width: 50%; height: 300px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical;"></textarea>
     <div style="margin-top: 15px;">
         <button class="copy-button" onclick="copyNote()" style="margin-right: 10px;">複製</button>
-        <button class="copy-button" onclick="clearNote()" style="background: #dc3545;">清除</button>
+        <button class="copy-button" onclick="clearNote()" style="background: #dc3545; margin-right: 10px;">清除</button>
+        <button class="copy-button" onclick="toggleChatbot()" id="toggleChatbotBtn" style="background: #28a745;">顯示助手</button>
     </div>
+    <div id="chatbotContainer" style="flex: 1; min-width: 400px; margin-top: 20px; display: none;">
+        <h3>病歷/藥歷助手</h3>
+<p>病歷助手:根據關鍵字生成完整英文病歷</p>
+<p>藥歷助手:根據雲端健保藥歷的截圖整理成適合貼在病歷的格式(截圖請截開立地點到時間)</p>
+        <iframe 
+            src="https://udify.app/chatbot/3s6sWBWnalSAUEKH" 
+            style="width: 50%; height: 400px; border: 1px solid #ddd; border-radius: 4px;"
+            frameborder="0">
+        </iframe>
+    </div>
+</div>
+
+
 </div>
 <div class="content hidden" id="Antibiotic_Dosage">
     <h1>抗生素腎功能劑量調整查詢系統</h1>
@@ -2492,11 +2506,27 @@ function searchData() {
             }, 2000);
         }
 
-        function clearNote() {
-            if (confirm('確定要清除所有備忘內容嗎？')) {
-                document.getElementById('noteText').value = '';
-            }
-        }
+function clearNote() {
+    if (confirm('確定要清除所有備忘內容嗎？')) {
+        document.getElementById('noteText').value = '';
+    }
+}
+
+// 控制病歷整理助手顯示/隱藏
+function toggleChatbot() {
+    const container = document.getElementById('chatbotContainer');
+    const button = document.getElementById('toggleChatbotBtn');
+    
+    if (container.style.display === 'none' || container.style.display === '') {
+        container.style.display = 'block';
+        button.textContent = '隱藏助手';
+        button.style.background = '#6c757d';
+    } else {
+        container.style.display = 'none';
+        button.textContent = '顯示助手';
+        button.style.background = '#28a745';
+    }
+}
 // ICD碼複製功能
         function copyIcdCode(icdCode, buttonElement) {
             if (!icdCode.trim()) {
