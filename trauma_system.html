@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外傷圖譜系統</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .trauma-main-content {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 30px;
+        }
+        
+        .view-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .view-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .view-button.active {
+            background: #007bff;
+        }
+        
+        .view-button:hover {
+            background: #495057;
+        }
+        
+        .view-button.active:hover {
+            background: #0056b3;
+        }
+        
+        .body-diagram {
+            position: relative;
+            width: 300px;
+            height: 600px;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 0 auto;
+        }
+        
+        .body-part {
+            position: absolute;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            background: rgba(0, 123, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .body-part:hover {
+            background: rgba(0, 123, 255, 0.2);
+            border-color: #007bff;
+        }
+        
+        .body-part.selected {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: #dc3545;
+        }
+        
+        /* 正面視圖 */
+        .front-view .head { top: 20px; left: 100px; width: 100px; height: 100px; border-radius: 50%; }
+        .front-view .neck { top: 115px; left: 130px; width: 40px; height: 30px; }
+        .front-view .chest { top: 140px; left: 80px; width: 140px; height: 100px; }
+        .front-view .abdomen { top: 240px; left: 90px; width: 120px; height: 80px; }
+        .front-view .pelvis { top: 320px; left: 100px; width: 100px; height: 60px; }
+        .front-view .left-arm { top: 160px; right: 30px; width: 40px; height: 150px; }
+        .front-view .right-arm { top: 160px; left: 35px; width: 40px; height: 150px; }
+        .front-view .left-leg { top: 380px; right: 90px; width: 50px; height: 180px; }
+        .front-view .right-leg { top: 380px; left: 90px; width: 50px; height: 180px; }
+        
+        /* 背面視圖 */
+        .back-view .head { top: 20px; left: 100px; width: 100px; height: 100px; border-radius: 50%; }
+        .back-view .neck { top: 115px; left: 130px; width: 40px; height: 30px; }
+        .back-view .upper-back { top: 140px; left: 80px; width: 140px; height: 100px; }
+        .back-view .lower-back { top: 240px; left: 90px; width: 120px; height: 80px; }
+        .back-view .spine { top: 110px; left: 140px; width: 20px; height: 230px; }
+        .back-view .buttocks { top: 320px; left: 100px; width: 100px; height: 60px; }
+        .back-view .left-arm { top: 160px; left: 35px; width: 40px; height: 150px; }
+        .back-view .right-arm { top: 160px; right: 30px; width: 40px; height: 150px; }
+        .back-view .left-leg { top: 380px; left: 90px; width: 50px; height: 180px; }
+        .back-view .right-leg { top: 380px; right: 90px; width: 50px; height: 180px; }
+        
+        .diagram-container {
+            display: none;
+        }
+        
+        .diagram-container.active {
+            display: block;
+        }
+        
+        .sub-part-selector {
+            background: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .sub-part-selector.active {
+            display: block;
+        }
+        
+        .sub-parts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .sub-part {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .sub-part:hover {
+            background: #495057;
+        }
+        
+        .injury-selector {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .injury-selector.active {
+            display: block;
+        }
+        
+        .injury-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .injury-type {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .injury-type:hover {
+            background: #0056b3;
+        }
+        
+        .selected-injuries {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: white;
+        }
+        
+        .injury-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .injury-details {
+            font-family: monospace;
+            font-size: 13px;
+        }
+        
+        .remove-injury {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+        
+        .generate-report {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .clear-report {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .clear-report:hover {
+            background: #c82333;
+        }
+        
+        .report-output {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            display: none;
+        }
+        
+        .report-output.active {
+            display: block;
+        }
+        
+        .back-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .back-button:hover {
+            background: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>外傷圖譜系統</h1>
+        
+        <div class="trauma-main-content">
+            <div>
+                <h3>身體部位選擇</h3>
+                
+                <div class="view-selector">
+                    <button class="view-button active" onclick="switchView('front')">👤 正面</button>
+                    <button class="view-button" onclick="switchView('back')">🔄 背面</button>
+                </div>
+                
+                <!-- 正面視圖 -->
+                <div class="diagram-container front-view active" id="front-diagram">
+                    <div class="body-diagram">
+                        <div class="body-part head" data-part="頭部" data-english="head">頭部</div>
+                        <div class="body-part neck" data-part="頸部" data-english="neck">頸部</div>
+                        <div class="body-part chest" data-part="胸部" data-english="chest">胸部</div>
+                        <div class="body-part abdomen" data-part="腹部" data-english="abdomen">腹部</div>
+                        <div class="body-part pelvis" data-part="會陰部" data-english="perineum">會陰部</div>
+                        <div class="body-part left-arm" data-part="左上肢" data-english="left upper limb">左上肢</div>
+                        <div class="body-part right-arm" data-part="右上肢" data-english="right upper limb">右上肢</div>
+                        <div class="body-part left-leg" data-part="左下肢" data-english="left lower limb">左下肢</div>
+                        <div class="body-part right-leg" data-part="右下肢" data-english="right lower limb">右下肢</div>
+                    </div>
+                </div>
+                
+                <!-- 背面視圖 -->
+                <div class="diagram-container back-view" id="back-diagram">
+                    <div class="body-diagram">
+                        <div class="body-part head" data-part="頭部" data-english="head">頭部</div>
+                        <div class="body-part neck" data-part="頸部" data-english="neck">頸部</div>
+                        <div class="body-part upper-back" data-part="上背部" data-english="upper back">上背部</div>
+                        <div class="body-part lower-back" data-part="下背部" data-english="lower back">下背部</div>
+                        <div class="body-part spine" data-part="脊椎" data-english="spine">脊椎</div>
+                        <div class="body-part buttocks" data-part="臀部" data-english="buttocks">臀部</div>
+                        <div class="body-part left-arm" data-part="左上肢" data-english="left upper limb">左上肢</div>
+                        <div class="body-part right-arm" data-part="右上肢" data-english="right upper limb">右上肢</div>
+                        <div class="body-part left-leg" data-part="左下肢" data-english="left lower limb">左下肢</div>
+                        <div class="body-part right-leg" data-part="右下肢" data-english="right lower limb">右下肢</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="sub-part-selector" id="sub-part-selector">
+                    <button class="back-button" onclick="hideSubParts()">← 返回</button>
+                    <h3 id="selected-main-part-title">選擇細部位置</h3>
+                    <div class="sub-parts" id="sub-parts"></div>
+                </div>
+                
+                <div class="injury-selector" id="injury-selector">
+                    <button class="back-button" onclick="backToSubParts()">← 返回</button>
+                    <h3 id="selected-part-title">選擇外傷類型</h3>
+                    <div class="injury-types" id="injury-types"></div>
+                </div>
+                
+                <div class="selected-injuries">
+                    <h3>已登記外傷：</h3>
+                    <div id="injury-list">
+                        <p>尚未選擇任何外傷</p>
+                    </div>
+                </div>
+                
+                <button class="generate-report" onclick="generateReport()">產生診斷</button>
+                <button class="clear-report" onclick="clearReport()">清除</button>
+
+                <div class="report-output" id="report-output"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const subPartDatabase = {
+            '頭部': [
+                { part: '頭部', english: 'head' },
+                { part: '臉部', english: 'face' },
+                { part: '眼部', english: 'eye' },
+                { part: '鼻部', english: 'nose' },
+                { part: '耳部', english: 'ear' },
+                { part: '臉頰', english: 'cheek' },
+                { part: '口部', english: 'mouth' },
+                { part: '下顎', english: 'jaw' },
+                { part: '下巴', english: 'chin' }
+            ],
+            '左上肢': [
+                { part: '左肩', english: 'left shoulder' },
+                { part: '左上臂', english: 'left upper arm' },
+                { part: '左肘部', english: 'left elbow' },
+                { part: '左前臂', english: 'left forearm' },
+                { part: '左手腕', english: 'left wrist' },
+                { part: '左手掌', english: 'left hand' },
+                { part: '左手指', english: 'left fingers' }
+            ],
+            '右上肢': [
+                { part: '右肩', english: 'right shoulder' },
+                { part: '右上臂', english: 'right upper arm' },
+                { part: '右肘部', english: 'right elbow' },
+                { part: '右前臂', english: 'right forearm' },
+                { part: '右手腕', english: 'right wrist' },
+                { part: '右手掌', english: 'right hand' },
+                { part: '右手指', english: 'right fingers' }
+            ],
+            '左下肢': [
+                { part: '左髖部', english: 'left hip' },
+                { part: '左大腿', english: 'left thigh' },
+                { part: '左膝', english: 'left knee' },
+                { part: '左小腿', english: 'left lower leg' },
+                { part: '左踝', english: 'left ankle' },
+                { part: '左足部', english: 'left foot' },
+                { part: '左腳趾', english: 'left toes' }
+            ],
+            '右下肢': [
+                { part: '右髖部', english: 'right hip' },
+                { part: '右大腿', english: 'right thigh' },
+                { part: '右膝', english: 'right knee' },
+                { part: '右小腿', english: 'right lower leg' },
+                { part: '右踝', english: 'right ankle' },
+                { part: '右足部', english: 'right foot' },
+                { part: '右腳趾', english: 'right toes' }
+            ],
+            '脊椎': [
+                { part: '頸椎', english: 'cervical spine' },
+                { part: '胸椎', english: 'thoracic spine' },
+                { part: '腰椎', english: 'lumbar spine' },
+                { part: '薦椎', english: 'sacral spine' },
+                { part: '尾椎', english: 'coccyx' }
+            ]
+        };
+
+
+        const injuryDatabase = {
+            '頸部': [
+                { type: 'A/W', icd: 'S10.11XA', english: 'abrasion/wound of neck', chinese: '頸部擦傷' },
+                { type: 'L/W', icd: 'S11.90XA', english: 'laceration/wound of neck', chinese: '頸部撕裂傷' },
+                { type: 'Contusion', icd: 'S10.93', english: 'contusion of neck', chinese: '頸部挫傷' },
+                { type: 'Strain', icd: 'S16.1XXA', english: 'strain of neck', chinese: '頸部拉傷' }
+            ],
+            '胸部': [
+                { type: 'A/W', icd: 'S20419A', english: 'abrasion/wound of chest', chinese: '胸部擦傷' },
+                { type: 'L/W', icd: 'S21119A', english: 'laceration/wound of chest', chinese: '胸部撕裂傷' },
+                { type: 'Contusion', icd: 'S20219A', english: 'contusion of chest', chinese: '胸部挫傷' },
+                { type: 'Fracture', icd: '一肋S2239XA/多肋S2249XA/胸S22.20XA', english: 'fracture of rib/sternum', chinese: '肋骨/胸骨骨折' },
+                { type: 'Crush', icd: 'S280XXA', english: 'crushing injury of chest', chinese: '胸部壓砸傷' },
+                { type: 'Burn', icd: 'T2101XA', english: 'burn of trunk', chinese: '軀幹燒傷' },
+                { type: 'Strain', icd: 'S29011A', english: 'strain of chest', chinese: '胸部肌肉拉傷' }
+            ],
+            '腹部': [
+                { type: 'A/W', icd: 'S30811A', english: 'abrasion/wound of abdomen', chinese: '腹部擦傷' },
+                { type: 'L/W', icd: 'S31119A', english: 'laceration/wound of abdomen', chinese: '腹部撕裂傷' },
+                { type: 'Contusion', icd: 'S301XXA', english: 'contusion of abdomen', chinese: '腹部挫傷' },
+                { type: 'Crush', icd: 'S381XXA', english: 'crushing injury of abdomen', chinese: '腹部壓砸傷' },
+                { type: 'Burn', icd: 'T2102XA', english: 'burn of abdomen', chinese: '腹部燒傷' },
+                { type: 'Strain', icd: 'S39011A', english: 'strain of abdomen', chinese: '腹部肌肉拉傷' },
+            ],
+            '會陰部': [
+                { type: 'A/W', icd: 'S30812A', english: 'abrasion/wound of perineum', chinese: '會陰部擦傷' },
+                { type: 'L/W', icd: '男S3121XA/囊S3131XA/女S3141XA', english: 'laceration/wound of perineum', chinese: '會陰部撕裂傷' },
+                { type: 'Contusion', icd: 'S3021XA', english: 'contusion of perineum', chinese: '會陰部挫傷' },
+                { type: 'Burn', icd: '男T2106XA/女T2107XA', english: 'burn of perineum', chinese: '會陰部燒傷' },
+                { type: 'Fracture', icd: '穩定骨盆S32810A/不穩定S32811A', english: 'fracture of pelvis(iliac/ischial/pubic bone/acetabular)', chinese: '骨盆骨折(髂骨/坐骨/恥骨/髖臼)' },
+            ],
+            '上背部': [
+                { type: 'A/W', icd: 'S20419A', english: 'abrasion/wound of upper back', chinese: '上背部擦傷' },
+                { type: 'L/W', icd: 'S21219A', english: 'laceration/wound of upper back', chinese: '上背部撕裂傷' },
+                { type: 'Contusion', icd: 'S20229A', english: 'contusion of upper back', chinese: '上背部挫傷' },
+                { type: 'Burn', icd: 'T2103XA', english: 'burn of upper back', chinese: '上背部燒傷' },
+                { type: 'Crush', icd: 'S280XXA', english: 'crush injury of upper back', chinese: '上背部壓砸傷' },
+                { type: 'Strain', icd: 'S29012A', english: 'strain of upper back muscles', chinese: '上背部肌肉拉傷' },
+                { type: 'Sprain', icd: 'S239XXA', english: 'sprain of upper back ligaments', chinese: '上背部韌帶扭傷' }
+            ],
+            '下背部': [
+                { type: 'A/W', icd: 'S30810A', english: 'abrasion/wound of lower back', chinese: '下背部擦傷' },
+                { type: 'L/W', icd: 'S31010A', english: 'laceration/wound of lower back', chinese: '下背部撕裂傷' },
+                { type: 'Contusion', icd: 'S300XXA', english: 'contusion of lower back', chinese: '下背部挫傷' },
+                { type: 'Burn', icd: 'T2104XA', english: 'burn of lower back', chinese: '下背部燒傷' },
+                { type: 'Crush', icd: 'S381XXA', english: 'crush injury of lower back', chinese: '下背部壓砸傷' },
+                { type: 'Strain', icd: 'M545', english: 'strain of lower back muscles', chinese: '下背部肌肉拉傷' },
+                { type: 'Sprain', icd: 'S39012A', english: 'sprain of lower back ligaments', chinese: '下背部韌帶扭傷' }
+            ],
+            '臀部': [
+                { type: 'A/W', icd: 'S30.810A', english: 'abrasion/wound of buttock', chinese: '臀部擦傷' },
+                { type: 'L/W', icd: 'S31.801A', english: 'laceration/wound of buttock', chinese: '臀部撕裂傷' },
+                { type: 'Contusion', icd: 'S30.0XXA', english: 'contusion of buttock', chinese: '臀部挫傷' },
+                { type: 'Burn', icd: 'T21.05XA', english: 'burn of buttock', chinese: '臀部燒傷' },
+                { type: 'Fracture', icd: '穩定骨盆S32810A/不穩定S32811A', english: 'fracture of pelvis(iliac/ischial/pubic bone/acetabular)', chinese: '骨盆骨折(髂骨/坐骨/恥骨/髖臼)' },
+            ],
+            '頸椎': [
+                { type: 'Fracture', icd: 'S12.9XXA', english: 'fracture of cervical vertebra', chinese: '頸椎骨折' },
+            ],
+            '胸椎': [
+                { type: 'Fracture', icd: 'S22.000A', english: 'fracture of thoracic vertebra', chinese: '胸椎骨折' },
+            ],
+            '腰椎': [
+                { type: 'Fracture', icd: 'S32.000A', english: 'fracture of lumbar vertebra', chinese: '腰椎骨折' },
+            ],
+            '薦椎': [
+                { type: 'Fracture', icd: 'S32.10XA', english: 'fracture of sacrum', chinese: '薦椎骨折' },
+            ],
+            '尾椎': [
+                { type: 'Fracture', icd: 'S32.2XXA', english: 'fracture of coccyx', chinese: '尾椎骨折' },
+                { type: 'Burn', icd: 'T21.05XA', english: 'burn of coccyx', chinese: '尾椎燒傷' },
+                { type: 'Dislocation', icd: 'S33.2XXA', english: 'dislocation of coccyx', chinese: '尾椎脫位' }
+            ],
+            '肩胛骨': [
+                { type: 'Fracture', icd: 'S42.109A', english: 'fracture of scapula', chinese: '肩胛骨骨折' },
+            ],
+            '頭部': [
+                { type: 'A/W', icd: 'S0001XA', english: 'abrasion/wound of head', chinese: '頭部擦傷' },
+                { type: 'Fracture', icd: 'S0291XA', english: 'fracture of skull', chinese: '顱骨骨折' },
+                { type: 'L/W', icd: 'S0101XA', english: 'laceration/wound of head', chinese: '頭部撕裂傷' },
+                { type: 'Contusion', icd: 'S0093XA', english: 'contusion of head', chinese: '頭部挫傷' },
+                { type: 'Burn', icd: 'T2009XA', english: 'burn of head', chinese: '頭部燒傷' }, 
+                { type: 'Concussion', icd: 'S060X9A', english: 'concussion', chinese: '腦震盪' }, 
+                { type: 'ICH', icd: 'S06369A', english: 'ICH of frontal/parietal/temporal/occipital lobe/basal ganglia/thalamus/internal capsule/brainstem/cerebellum', chinese: '腦內出血' }, 
+                { type: 'SDH', icd: 'S065X9A', english: 'SDH of frontal/parietal/temporal/occipital lobe', chinese: '硬腦膜下出血' }, 
+                { type: 'SAH', icd: 'S066X9A', english: 'SAH', chinese: '蜘蛛膜下腔出血' }, 
+                { type: 'EDH', icd: 'S064X9A', english: 'EDH of frontal/parietal/temporal/occipital lobe', chinese: '硬腦膜外出血' }, 
+            ],
+            '臉部': [
+                { type: 'A/W', icd: 'S0081XA', english: 'abrasion/wound of face', chinese: '臉部擦傷' },
+                { type: 'L/W', icd: 'S01419A', english: 'laceration/wound of face', chinese: '臉部撕裂傷' },
+                { type: 'Contusion', icd: 'S0993XA', english: 'contusion of face', chinese: '臉部挫傷' },
+                { type: 'Fracture', icd: 'S0292XA', english: 'fracture of facial bones', chinese: '顏面骨骨折' },
+                { type: 'Crush', icd: 'S070XXA', english: 'crush injury of face', chinese: '臉部壓砸傷' },
+                { type: 'Burn', icd: 'T2009XA', english: 'burn of face', chinese: '臉部燒傷' },
+            ],
+            '眼部': [
+                { type: 'A/W', icd: 'S00.211A', english: 'abrasion/wound of eyelid', chinese: '眼瞼擦傷' },
+                { type: 'L/W', icd: 'S01.112A', english: 'laceration/wound of eyelid', chinese: '眼瞼撕裂傷' },
+                { type: 'Contusion', icd: 'S00.10XA', english: 'contusion of eyelid', chinese: '眼瞼挫傷' },
+                { type: 'Fracture', icd: 'S02.85XA', english: 'orbital fracture', chinese: '眼眶骨折' }
+            ],
+            '鼻部': [
+                { type: 'A/W', icd: 'S0031XA', english: 'abrasion/wound of nose', chinese: '鼻部擦傷' },
+                { type: 'L/W', icd: 'S0121XA', english: 'laceration/wound of nose', chinese: '鼻部撕裂傷' },
+                { type: 'Contusion', icd: 'S0033XA', english: 'contusion of nose', chinese: '鼻部挫傷' },
+                { type: 'Fracture', icd: 'S022XA', english: 'fracture of nasal bones', chinese: '鼻骨骨折' },
+                { type: 'Burn', icd: 'T2004XA', english: 'burn of nose', chinese: '鼻部燒傷' }
+            ],
+            '耳部': [
+                { type: 'A/W', icd: 'S00149A', english: 'abrasion/wound of ear', chinese: '耳部擦傷' },
+                { type: 'L/W', icd: 'S00149A', english: 'laceration/wound of ear', chinese: '耳部撕裂傷' },
+                { type: 'Contusion', icd: 'S00439A', english: 'contusion of ear', chinese: '耳部挫傷' },
+                { type: 'Burn', icd: 'T20019A', english: 'burn of ear', chinese: '耳部燒傷' },
+            ],
+            '口部': [
+                { type: 'A/W', icd: 'S00512A', english: 'abrasion/wound of lip', chinese: '唇部擦傷' },
+                { type: 'L/W', icd: 'S01511A', english: 'laceration/wound of lip', chinese: '唇部撕裂傷' },
+                { type: 'Contusion', icd: 'S00532A', english: 'contusion of lip', chinese: '唇部挫傷' },
+                { type: 'Burn', icd: 'T280XXA', english: 'burn of lip', chinese: '唇部燒傷' },
+            ],
+            '臉頰': [
+                { type: 'A/W', icd: 'S0081XA', english: 'abrasion/wound of cheek', chinese: '臉頰擦傷' },
+                { type: 'L/W', icd: 'S01419A', english: 'laceration/wound of cheek', chinese: '臉頰撕裂傷' },
+                { type: 'Contusion', icd: 'S0993XA', english: 'contusion of cheek', chinese: '臉頰挫傷' },
+                { type: 'Fracture', icd: 'S02.4', english: 'fracture of zygomatic bone', chinese: '顴骨骨折' },
+                { type: 'Burn', icd: 'T2009XA', english: 'burn of cheek', chinese: '臉頰燒傷' }
+            ],
+            '下顎': [
+                { type: 'A/W', icd: 'S0081XA', english: 'abrasion/wound of jaw', chinese: '下顎擦傷' },
+                { type: 'L/W', icd: 'S01419A', english: 'laceration/wound of jaw', chinese: '下顎撕裂傷' },
+                { type: 'Contusion', icd: 'S0993XA', english: 'contusion of jaw', chinese: '下顎挫傷' },
+                { type: 'Fracture', icd: 'S02.6', english: 'fracture of mandible', chinese: '下顎骨骨折' },
+                { type: 'Dislocation', icd: 'S03.0', english: 'dislocation of jaw', chinese: '下顎脫位' },
+                { type: 'Burn', icd: 'T2009XA', english: 'burn of jaw', chinese: '下顎燒傷' }
+            ],
+            '下巴': [
+                { type: 'A/W', icd: 'S0081XA', english: 'abrasion/wound of chin', chinese: '下巴擦傷' },
+                { type: 'L/W', icd: 'S01419A', english: 'laceration/wound of chin', chinese: '下巴撕裂傷' },
+                { type: 'Contusion', icd: 'S0993XA', english: 'contusion of chin', chinese: '下巴挫傷' },
+                { type: 'Burn', icd: 'T2009XA', english: 'burn of chin', chinese: '下巴燒傷' }
+            ],
+            '左肩': [
+                { type: 'A/W', icd: 'S40219A', english: 'abrasion/wound of left shoulder', chinese: '左肩擦傷' },
+                { type: 'L/W', icd: 'S41019A', english: 'laceration/wound of left shoulder', chinese: '左肩撕裂傷' },
+                { type: 'Contusion', icd: 'S40019A', english: 'contusion of left shoulder', chinese: '左肩挫傷' },
+                { type: 'Fracture', icd: 'S42009A', english: 'fracture of left clavicle', chinese: '左鎖骨骨折' },
+                { type: 'Dislocation', icd: 'S43006A', english: 'dislocation of left shoulder', chinese: '左肩脫位' },
+                { type: 'Sprain', icd: 'S43409A', english: 'sprain of left shoulder', chinese: '左肩扭傷' },
+                { type: 'Strain', icd: 'S46019A', english: 'strain of left shoulder', chinese: '左肩拉傷' }
+            ],
+            '右肩': [
+                { type: 'A/W', icd: 'S40219A', english: 'abrasion/wound of right shoulder', chinese: '右肩擦傷' },
+                { type: 'L/W', icd: 'S41019A', english: 'laceration/wound of right shoulder', chinese: '右肩撕裂傷' },
+                { type: 'Contusion', icd: 'S40019A', english: 'contusion of right shoulder', chinese: '右肩挫傷' },
+                { type: 'Fracture', icd: 'S42009A', english: 'fracture of right clavicle', chinese: '右鎖骨骨折' },
+                { type: 'Dislocation', icd: 'S43006A', english: 'dislocation of right shoulder', chinese: '右肩脫位' },
+                { type: 'Sprain', icd: 'S43409A', english: 'sprain of right shoulder', chinese: '右肩扭傷' },
+                { type: 'Strain', icd: 'S46019A', english: 'strain of right shoulder', chinese: '右肩拉傷' }
+            ],
+            '左上臂': [
+                { type: 'A/W', icd: 'S40819A', english: 'abrasion/wound of left upper arm', chinese: '左上臂擦傷' },
+                { type: 'L/W', icd: 'S41109A', english: 'laceration/wound of left upper arm', chinese: '左上臂撕裂傷' },
+                { type: 'Contusion', icd: 'S40029A', english: 'contusion of left upper arm', chinese: '左上臂挫傷' },
+                { type: 'Fracture', icd: 'S42209A', english: 'fracture of left humerus', chinese: '左肱骨骨折' },
+                { type: 'Crush', icd: 'S479XXA', english: 'crush injury of left upper arm', chinese: '左上臂壓砸傷' },
+                { type: 'Burn', icd: 'T22039A', english: 'burn of left upper arm', chinese: '左上臂燒傷' },
+                { type: 'Strain', icd: 'S46919A', english: 'strain of left upper arm', chinese: '左上臂拉傷' },
+            ],
+            '右上臂': [
+                { type: 'A/W', icd: 'S40819A', english: 'abrasion/wound of right upper arm', chinese: '右上臂擦傷' },
+                { type: 'L/W', icd: 'S41109A', english: 'laceration/wound of right upper arm', chinese: '右上臂撕裂傷' },
+                { type: 'Contusion', icd: 'S40029A', english: 'contusion of right upper arm', chinese: '右上臂挫傷' },
+                { type: 'Fracture', icd: 'S42209A', english: 'fracture of right humerus', chinese: '右肱骨骨折' },
+                { type: 'Crush', icd: 'S479XXA', english: 'crush injury of right upper arm', chinese: '右上臂壓砸傷' },
+                { type: 'Burn', icd: 'T22039A', english: 'burn of right upper arm', chinese: '右上臂燒傷' },
+                { type: 'Strain', icd: 'S46919A', english: 'strain of right upper arm', chinese: '右上臂拉傷' },
+            ],
+            '左肘部': [
+                { type: 'A/W', icd: 'S50319A', english: 'abrasion/wound of left elbow', chinese: '左肘擦傷' },
+                { type: 'L/W', icd: 'S51019A', english: 'laceration/wound of left elbow', chinese: '左肘撕裂傷' },
+                { type: 'Contusion', icd: 'S5000XA', english: 'contusion of left elbow', chinese: '左肘挫傷' },
+                { type: 'Crush', icd: 'S5700XA', english: 'crush injury of left elbow', chinese: '左肘壓砸傷' },
+                { type: 'Burn', icd: 'T22029A', english: 'burn of left elbow', chinese: '左肘部燒傷' },
+                { type: 'Fracture', icd: '橈S52109A/尺S52009A', english: 'fracture of left radius/ulna', chinese: '左橈骨/尺骨骨折' },
+                { type: 'Dislocation', icd: 'S53006A', english: 'dislocation of left elbow', chinese: '左肘脫位' },
+                { type: 'Sprain', icd: 'S53409A', english: 'sprain of left elbow', chinese: '左肘扭傷' }
+            ],
+            '右肘部': [
+                { type: 'A/W', icd: 'S50319A', english: 'abrasion/wound of right elbow', chinese: '右肘擦傷' },
+                { type: 'L/W', icd: 'S51019A', english: 'laceration/wound of right elbow', chinese: '右肘撕裂傷' },
+                { type: 'Contusion', icd: 'S5000XA', english: 'contusion of right elbow', chinese: '右肘挫傷' },
+                { type: 'Crush', icd: 'S5700XA', english: 'crush injury of right elbow', chinese: '右肘壓砸傷' },
+                { type: 'Burn', icd: 'T22029A', english: 'burn of right elbow', chinese: '右肘燒傷' },
+                { type: 'Fracture', icd: '橈S52109A/尺S52009A', english: 'fracture of right radius/ulna', chinese: '右橈骨/尺骨骨折' },
+                { type: 'Dislocation', icd: 'S53006A', english: 'dislocation of right elbow', chinese: '右肘脫位' },
+                { type: 'Sprain', icd: 'S53409A', english: 'sprain of right elbow', chinese: '右肘扭傷' }            
+            ],
+            '左前臂': [
+                { type: 'A/W', icd: 'S50819A', english: 'abrasion/wound of left forearm', chinese: '左前臂擦傷' },
+                { type: 'L/W', icd: 'S51819A', english: 'laceration/wound of left forearm', chinese: '左前臂撕裂傷' },
+                { type: 'Contusion', icd: 'S5010XA', english: 'contusion of left forearm', chinese: '左前臂挫傷' },
+                { type: 'Fracture', icd: '橈S52509A/尺S52609A', english: 'fracture of left distal radius/ulna', chinese: '左遠端橈骨/尺骨骨折' },
+                { type: 'Crush', icd: 'S5780XA', english: 'crush injury of left forearm', chinese: '左前臂壓砸傷' },
+                { type: 'Burn', icd: 'T22019A', english: 'burn of left forearm', chinese: '左前臂燒傷' },
+                { type: 'Strain', icd: 'S56919A', english: 'strain of left forearm', chinese: '左前臂拉傷' },
+            ],
+            '右前臂': [
+                { type: 'A/W', icd: 'S50819A', english: 'abrasion/wound of right forearm', chinese: '右前臂擦傷' },
+                { type: 'L/W', icd: 'S51819A', english: 'laceration/wound of right forearm', chinese: '右前臂撕裂傷' },
+                { type: 'Contusion', icd: 'S5010XA', english: 'contusion of right forearm', chinese: '右前臂挫傷' },
+                { type: 'Fracture', icd: '橈S52509A/尺S52609A', english: 'fracture of right distal radius/ulna', chinese: '右遠端橈骨/尺骨骨折' },
+                { type: 'Crush', icd: 'S5780XA', english: 'crush injury of right forearm', chinese: '右前臂壓砸傷' },
+                { type: 'Burn', icd: 'T22019A', english: 'burn of right forearm', chinese: '右前臂燒傷' },
+                { type: 'Strain', icd: 'S56919A', english: 'strain of right forearm', chinese: '右前臂拉傷' },
+            ],
+            '左手腕': [
+                { type: 'A/W', icd: 'S60819A', english: 'abrasion/wound of left wrist', chinese: '左手腕擦傷' },
+                { type: 'L/W', icd: 'S61519A', english: 'laceration/wound of left wrist', chinese: '左手腕撕裂傷' },
+                { type: 'Contusion', icd: 'S60219A', english: 'contusion of left wrist', chinese: '左手腕挫傷' },
+                { type: 'Fracture', icd: 'S62109A', english: 'fracture of left wrist', chinese: '左手腕骨折' },
+                { type: 'Sprain', icd: 'S63509A', english: 'sprain of left wrist', chinese: '左手腕扭傷' },
+                { type: 'Crush', icd: 'S6730XA', english: 'crush injury of left wrist', chinese: '左手腕壓砸傷' },
+                { type: 'Burn', icd: 'T23079A', english: 'burn of left wrist', chinese: '左手腕燒傷' },
+                { type: 'Dislocation', icd: 'S63006A', english: 'dislocation of left wrist', chinese: '左手腕脫位' }
+            ],
+            '右手腕': [
+                { type: 'A/W', icd: 'S60819A', english: 'abrasion/wound of right wrist', chinese: '右手腕擦傷' },
+                { type: 'L/W', icd: 'S61519A', english: 'laceration/wound of right wrist', chinese: '右手腕撕裂傷' },
+                { type: 'Contusion', icd: 'S60219A', english: 'contusion of right wrist', chinese: '右手腕挫傷' },
+                { type: 'Fracture', icd: 'S62109A', english: 'fracture of right wrist', chinese: '右手腕骨折' },
+                { type: 'Sprain', icd: 'S63509A', english: 'sprain of right wrist', chinese: '右手腕扭傷' },
+                { type: 'Crush', icd: 'S6730XA', english: 'crush injury of right wrist', chinese: '右手腕壓砸傷' },
+                { type: 'Burn', icd: 'T23079A', english: 'burn of right wrist', chinese: '右手腕燒傷' },
+                { type: 'Dislocation', icd: 'S63006A', english: 'dislocation of right wrist', chinese: '右手腕脫位' }
+            ],
+            '左手掌': [
+                { type: 'A/W', icd: 'S60519A', english: 'abrasion/wound of left hand', chinese: '左手掌擦傷' },
+                { type: 'L/W', icd: 'S61419A', english: 'laceration/wound of left hand', chinese: '左手掌撕裂傷' },
+                { type: 'Contusion', icd: 'S60229A', english: 'contusion of left hand', chinese: '左手掌挫傷' },
+                { type: 'Crush', icd: 'S6720XA', english: 'crush injury of left hand', chinese: '左手掌壓砸傷' },
+                { type: 'Fracture', icd: 'S62399A', english: 'fracture of left metacarpal bone fracture', chinese: '左掌骨骨折' },
+                { type: 'Burn', icd: 'T23009A', english: 'burn of left hand', chinese: '左手掌燒傷' },
+                { type: 'Sprain', icd: 'S638X9A', english: 'sprain of left hand', chinese: '左手掌扭傷' },
+                { type: 'Strain', icd: 'S66919A', english: 'strain of left hand', chinese: '左手掌拉傷' }
+            ],
+            '右手掌': [
+                { type: 'A/W', icd: 'S60519A', english: 'abrasion/wound of right hand', chinese: '右手掌擦傷' },
+                { type: 'L/W', icd: 'S61419A', english: 'laceration/wound of right hand', chinese: '右手掌撕裂傷' },
+                { type: 'Contusion', icd: 'S60229A', english: 'contusion of right hand', chinese: '右手掌挫傷' },
+                { type: 'Crush', icd: 'S6720XA', english: 'crush injury of right hand', chinese: '右手掌壓砸傷' },
+                { type: 'Fracture', icd: 'S62399A', english: 'fracture of right metacarpal bone fracture', chinese: '右掌骨骨折' },
+                { type: 'Burn', icd: 'T23009A', english: 'burn of right hand', chinese: '右手掌燒傷' },
+                { type: 'Sprain', icd: 'S638X9A', english: 'sprain of right hand', chinese: '右手掌扭傷' },
+                { type: 'Strain', icd: 'S66919A', english: 'strain of right hand', chinese: '右手掌拉傷' }
+            ],
+            '左手指': [
+                { type: 'A/W', icd: 'S60419A', english: 'abrasion/wound of left finger', chinese: '左手指擦傷' },
+                { type: 'L/W', icd: 'S61219A', english: 'laceration/wound of left finger', chinese: '左手指撕裂傷' },
+                { type: 'Contusion', icd: 'S6000XA', english: 'contusion of left finger', chinese: '左手指挫傷' },
+                { type: 'Burn', icd: 'T23049A', english: 'burn of left finger', chinese: '左手指燒傷' },
+                { type: 'Crush', icd: 'S6720XA', english: 'crush injury of left finger', chinese: '左手指壓砸傷' },
+                { type: 'Fracture', icd: 'S62609A', english: 'fracture of left finger', chinese: '左手指骨折' },
+                { type: 'Dislocation', icd: 'S63259A', english: 'dislocation of left finger', chinese: '左手指脫位' },
+                { type: 'Sprain', icd: 'S63619A', english: 'sprain of left finger', chinese: '左手指扭傷' },
+                { type: 'Strain', icd: 'S66519A', english: 'strain of left finger', chinese: '左手指拉傷' }
+            ],
+            '右手指': [
+                { type: 'A/W', icd: 'S60419A', english: 'abrasion/wound of right finger', chinese: '右手指擦傷' },
+                { type: 'L/W', icd: 'S61219A', english: 'laceration/wound of right finger', chinese: '右手指撕裂傷' },
+                { type: 'Contusion', icd: 'S6000XA', english: 'contusion of right finger', chinese: '右手指挫傷' },
+                { type: 'Burn', icd: 'T23049A', english: 'burn of right finger', chinese: '右手指燒傷' },
+                { type: 'Crush', icd: 'S6720XA', english: 'crush injury of right finger', chinese: '右手指壓砸傷' },
+                { type: 'Fracture', icd: 'S62609A', english: 'fracture of right finger', chinese: '右手指骨折' },
+                { type: 'Dislocation', icd: 'S63259A', english: 'dislocation of right finger', chinese: '右手指脫位' },
+                { type: 'Sprain', icd: 'S63619A', english: 'sprain of right finger', chinese: '右手指扭傷' },
+                { type: 'Strain', icd: 'S66519A', english: 'strain of right finger', chinese: '右手指拉傷' }
+            ],
+            '左髖部': [
+                { type: 'A/W', icd: 'S70219A', english: 'abrasion/wound of left hip', chinese: '左髖部擦傷' },
+                { type: 'L/W', icd: 'S71019A', english: 'laceration/wound of left hip', chinese: '左髖部撕裂傷' },
+                { type: 'Contusion', icd: 'S7000XA', english: 'contusion of left hip', chinese: '左髖部挫傷' },
+                { type: 'Fracture', icd: 'M84359A', english: 'fracture of left hip(femoral neck/head/intertrochanteric/subtrochanteric)', chinese: '左髖部骨折(股骨頸/股骨頭/轉子間/轉子下)' },
+                { type: 'Crush', icd: 'S7700XA', english: 'crush injury of left hip', chinese: '左髖部壓砸傷' },
+                { type: 'Dislocation', icd: 'S73006A', english: 'dislocation of left hip', chinese: '左髖部脫位' },
+                { type: 'Sprain', icd: 'S73109A', english: 'sprain of left hip', chinese: '左髖部扭傷' },
+                { type: 'Strain', icd: 'S76019A', english: 'strain of left hip', chinese: '左髖部拉傷' }
+            ],
+            '右髖部': [
+                { type: 'A/W', icd: 'S70219A', english: 'abrasion/wound of right hip', chinese: '右髖部擦傷' },
+                { type: 'L/W', icd: 'S71019A', english: 'laceration/wound of right hip', chinese: '右髖部撕裂傷' },
+                { type: 'Contusion', icd: 'S7000XA', english: 'contusion of right hip', chinese: '右髖部挫傷' },
+                { type: 'Fracture', icd: 'M84359A', english: 'fracture of right hip(femoral neck/head/intertrochanteric/subtrochanteric)', chinese: '右髖部骨折(股骨頸/股骨頭/轉子間/轉子下)' },
+                { type: 'Crush', icd: 'S7700XA', english: 'crush injury of right hip', chinese: '右髖部壓砸傷' },
+                { type: 'Dislocation', icd: 'S73006A', english: 'dislocation of right hip', chinese: '右髖部脫位' },
+                { type: 'Sprain', icd: 'S73109A', english: 'sprain of right hip', chinese: '右髖部扭傷' },
+                { type: 'Strain', icd: 'S76019A', english: 'strain of right hip', chinese: '右髖部拉傷' }
+            ],
+            '左大腿': [
+                { type: 'A/W', icd: 'S70319A', english: 'abrasion/wound of left thigh', chinese: '左大腿擦傷' },
+                { type: 'L/W', icd: 'S71119A', english: 'laceration/wound of left thigh', chinese: '左大腿撕裂傷' },
+                { type: 'Contusion', icd: 'S7010XA', english: 'contusion of left thigh', chinese: '左大腿挫傷' },
+                { type: 'Fracture', icd: 'S7290XA', english: 'fracture of left femur', chinese: '左股骨骨折' },
+                { type: 'Crush', icd: 'S7710XA', english: 'crush injury of left thigh', chinese: '左大腿壓砸傷' },
+                { type: 'Burn', icd: 'T24019A', english: 'burn of left thigh', chinese: '左大腿燒傷' },
+                { type: 'Sprain', icd: 'S73119A', english: 'sprain of left thigh', chinese: '左大腿扭傷' },
+                { type: 'Strain', icd: 'S76219A', english: 'strain of left thigh', chinese: '左大腿拉傷' }
+            ],
+            '右大腿': [
+                { type: 'A/W', icd: 'S70319A', english: 'abrasion/wound of right thigh', chinese: '右大腿擦傷' },
+                { type: 'L/W', icd: 'S71119A', english: 'laceration/wound of right thigh', chinese: '右大腿撕裂傷' },
+                { type: 'Contusion', icd: 'S7010XA', english: 'contusion of right thigh', chinese: '右大腿挫傷' },
+                { type: 'Fracture', icd: 'S7290XA', english: 'fracture of right femur', chinese: '右股骨骨折' },
+                { type: 'Crush', icd: 'S7710XA', english: 'crush injury of right thigh', chinese: '右大腿壓砸傷' },
+                { type: 'Burn', icd: 'T24019A', english: 'burn of right thigh', chinese: '右大腿燒傷' },
+                { type: 'Sprain', icd: 'S73119A', english: 'sprain of right thigh', chinese: '右大腿扭傷' },
+                { type: 'Strain', icd: 'S76219A', english: 'strain of right thigh', chinese: '右大腿拉傷' }
+            ],
+            '左膝': [
+                { type: 'A/W', icd: 'S80219A', english: 'abrasion/wound of left knee', chinese: '左膝擦傷' },
+                { type: 'L/W', icd: 'S81019A', english: 'laceration/wound of left knee', chinese: '左膝撕裂傷' },
+                { type: 'Contusion', icd: 'S8000XA', english: 'contusion of left knee', chinese: '左膝挫傷' },
+                { type: 'Fracture', icd: '髕S82009A/上脛S82109A', english: 'fracture of left patella/proximal tibia', chinese: '左髕骨/脛骨上端骨折' },
+                { type: 'Crush', icd: 'S8700XA', english: 'crush injury of left knee', chinese: '左膝壓砸傷' },
+                { type: 'Burn', icd: 'T24029A', english: 'burn of left knee', chinese: '左膝燒傷' },
+                { type: 'Dislocation', icd: 'S83106A', english: 'dislocation of left knee', chinese: '左膝脫位' },
+                { type: 'Sprain', icd: 'S8390XA', english: 'sprain of left knee', chinese: '左膝扭傷' }
+            ],
+            '右膝': [
+                { type: 'A/W', icd: 'S80219A', english: 'abrasion/wound of right knee', chinese: '右膝擦傷/傷口' },
+                { type: 'L/W', icd: 'S81019A', english: 'laceration/wound of right knee', chinese: '右膝撕裂傷/傷口' },
+                { type: 'Contusion', icd: 'S8000XA', english: 'contusion of right knee', chinese: '右膝挫傷' },
+                { type: 'Fracture', icd: '髕S82009A/上脛S82109A', english: 'fracture of right patella/proximal tibia', chinese: '右髕骨/脛骨上端骨折' },
+                { type: 'Crush', icd: 'S8700XA', english: 'crush injury of right knee', chinese: '右膝壓砸傷' },
+                { type: 'Burn', icd: 'T24029A', english: 'burn of right knee', chinese: '右膝燒傷' },
+                { type: 'Dislocation', icd: 'S83106A', english: 'dislocation of right knee', chinese: '右膝脫位' },
+                { type: 'Sprain', icd: 'S8390XA', english: 'sprain of right knee', chinese: '右膝扭傷' }
+            ],
+            '左小腿': [
+                { type: 'A/W', icd: 'S80819A', english: 'abrasion/wound of left lower leg', chinese: '左小腿擦傷' },
+                { type: 'L/W', icd: 'S81819A', english: 'laceration/wound of left lower leg', chinese: '左小腿撕裂傷' },
+                { type: 'Contusion', icd: 'S8010XA', english: 'contusion of left lower leg', chinese: '左小腿挫傷' },
+                { type: 'Fracture', icd: '脛S82209A/腓S82409A', english: 'fracture of left tibia/fibula', chinese: '左脛骨/腓骨骨折' },
+                { type: 'Crush', icd: 'S8780XA', english: 'crush injury of left lower leg', chinese: '左小腿壓砸傷' },
+                { type: 'Burn', icd: 'T24039A', english: 'burn of left lower leg', chinese: '左小腿燒傷' },
+                { type: 'Strain', icd: 'S86919A', english: 'strain of left lower leg', chinese: '左小腿拉傷' }
+            ],
+            '右小腿': [
+                { type: 'A/W', icd: 'S80819A', english: 'abrasion/wound of right lower leg', chinese: '右小腿擦傷' },
+                { type: 'L/W', icd: 'S81819A', english: 'laceration/wound of right lower leg', chinese: '右小腿撕裂傷' },
+                { type: 'Contusion', icd: 'S8010XA', english: 'contusion of right lower leg', chinese: '右小腿挫傷' },
+                { type: 'Fracture', icd: '脛S82209A/腓S82409A', english: 'fracture of right tibia/fibula', chinese: '右脛骨/腓骨骨折' },
+                { type: 'Crush', icd: 'S8780XA', english: 'crush injury of right lower leg', chinese: '右小腿壓砸傷' },
+                { type: 'Burn', icd: 'T24039A', english: 'burn of right lower leg', chinese: '右小腿燒傷' },
+                { type: 'Strain', icd: 'S86919A', english: 'strain of right lower leg', chinese: '右小腿拉傷' }
+
+            ],
+            '左踝': [
+                { type: 'A/W', icd: 'S90519A', english: 'abrasion/wound of left ankle', chinese: '左踝擦傷/傷口' },
+                { type: 'L/W', icd: 'S91019A', english: 'laceration/wound of left ankle', chinese: '左踝撕裂傷/傷口' },
+                { type: 'Contusion', icd: 'S9000XA', english: 'contusion of left ankle', chinese: '左踝挫傷' },
+                { type: 'Fracture', icd: '脛S82209A/腓S82409A', english: 'fracture of left distal tibia/fibula', chinese: '左遠端脛骨/腓骨骨折' },
+                { type: 'Crush', icd: 'S9700XA', english: 'crush injury of left ankle', chinese: '左踝壓砸傷' },
+                { type: 'Burn', icd: 'T25019A', english: 'burn of left ankle', chinese: '左踝燒傷' },
+                { type: 'Dislocation', icd: 'S9306XA', english: 'dislocation of left ankle', chinese: '左踝脫位' },
+                { type: 'Sprain', icd: 'S93409A', english: 'sprain of left ankle', chinese: '左踝扭傷' },
+                { type: 'Strain', icd: 'S96919A', english: 'strain of left ankle', chinese: '左踝拉傷' }
+            ],
+            '右踝': [
+                { type: 'A/W', icd: 'S90519A', english: 'abrasion/wound of right ankle', chinese: '右踝關節擦傷' },
+                { type: 'L/W', icd: 'S91019A', english: 'laceration/wound of right ankle', chinese: '右踝關節撕裂傷' },
+                { type: 'Contusion', icd: 'S9000XA', english: 'contusion of right ankle', chinese: '右踝關節挫傷' },
+                { type: 'Fracture', icd: '脛S82209A/腓S82409A', english: 'fracture of right distal tibia/fibula', chinese: '右遠端脛骨/腓骨骨折' },
+                { type: 'Crush', icd: 'S9700XA', english: 'crush injury of right ankle', chinese: '右踝關節壓砸傷' },
+                { type: 'Burn', icd: 'T25019A', english: 'burn of right ankle', chinese: '右踝關節燒傷' },
+                { type: 'Dislocation', icd: 'S9306XA', english: 'dislocation of right ankle', chinese: '右踝關節脫位' },
+                { type: 'Sprain', icd: 'S93409A', english: 'sprain of right ankle', chinese: '右踝關節扭傷' },
+                { type: 'Strain', icd: 'S96919A', english: 'strain of right ankle', chinese: '右踝關節拉傷' }
+            ],
+            '左足部': [
+                { type: 'A/W', icd: 'S90819A', english: 'abrasion/wound of left foot', chinese: '左足擦傷' },
+                { type: 'L/W', icd: 'S91319A', english: 'laceration/wound of left foot', chinese: '左足撕裂傷' },
+                { type: 'Contusion', icd: 'S9030XA', english: 'contusion of left foot', chinese: '左足挫傷' },
+                { type: 'Fracture', icd: 'S92309A', english: 'fracture of left metatarsal bone', chinese: '左蹠骨骨折' },
+                { type: 'Crush', icd: 'S9780XA', english: 'crush injury of left foot', chinese: '左足壓砸傷' },
+                { type: 'Burn', icd: 'T25029A', english: 'burn of left foot', chinese: '左足部燒傷' },
+                { type: 'Dislocation', icd: 'S93306A', english: 'dislocation of left foot', chinese: '左足脫位' },
+                { type: 'Sprain', icd: 'S93609A', english: 'sprain of left foot', chinese: '左足扭傷' },
+                { type: 'Strain', icd: 'S96919A', english: 'strain of left foot', chinese: '左足拉傷' }
+            ],
+            '右足部': [
+                { type: 'A/W', icd: 'S90819A', english: 'abrasion/wound of right foot', chinese: '右足擦傷' },
+                { type: 'L/W', icd: 'S91319A', english: 'laceration/wound of right foot', chinese: '右足撕裂傷' },
+                { type: 'Contusion', icd: 'S9030XA', english: 'contusion of right foot', chinese: '右足挫傷' },
+                { type: 'Fracture', icd: 'S92309A', english: 'fracture of right metatarsal bone', chinese: '右蹠骨骨折' },
+                { type: 'Crush', icd: 'S9780XA', english: 'crush injury of right foot', chinese: '右足壓砸傷' },
+                { type: 'Burn', icd: 'T25029A', english: 'burn of right foot', chinese: '右足燒傷' },
+                { type: 'Dislocation', icd: 'S93306A', english: 'dislocation of right foot', chinese: '右足脫位' },
+                { type: 'Sprain', icd: 'S93609A', english: 'sprain of right foot', chinese: '右足扭傷' },
+                { type: 'Strain', icd: 'S96919A', english: 'strain of right foot', chinese: '右足拉傷' }
+            ],
+            '左腳趾': [
+                { type: 'A/W', icd: '大S90413A/其他S90416A', english: 'abrasion/wound of left toe', chinese: '左腳趾擦傷' },
+                { type: 'L/W', icd: '大S91113A/其他S91216A', english: 'laceration/wound of left toe', chinese: '左腳趾撕裂傷' },
+                { type: 'Contusion', icd: '大S90119A/其他S90129A', english: 'contusion of left toe', chinese: '左腳趾挫傷' },
+                { type: 'Crush', icd: '大S97119A/其他S97129A', english: 'crush injury of left toe', chinese: '左腳趾壓砸傷' },
+                { type: 'Burn', icd: '大T25039A/其他T25039A', english: 'burn of left toe', chinese: '左腳趾燒傷' },
+                { type: 'Fracture', icd: '大S92499A/其他S92599A', english: 'fracture of left toe', chinese: '左腳趾骨折' },
+                { type: 'Sprain', icd: '大S93503A/其他S93506A', english: 'sprain of left toe', chinese: '左腳趾扭傷' },
+                { type: 'Dislocation', icd: 'S93106A', english: 'dislocation of left toe', chinese: '左腳趾脫位' }
+            ],
+            '右腳趾': [
+                { type: 'A/W', icd: '大S90413A/其他S90416A', english: 'abrasion/wound of right toe', chinese: '右腳趾擦傷' },
+                { type: 'L/W', icd: '大S91113A/其他S91216A', english: 'laceration/wound of right toe', chinese: '右腳趾撕裂傷' },
+                { type: 'Contusion', icd: '大S90119A/其他S90129A', english: 'contusion of right toe', chinese: '右腳趾挫傷' },
+                { type: 'Crush', icd: '大S97119A/其他S97129A', english: 'crush injury of right toe', chinese: '右腳趾壓砸傷' },
+                { type: 'Burn', icd: '大T25039A/其他T25039A', english: 'burn of right toe', chinese: '右腳趾燒傷' },
+                { type: 'Fracture', icd: '大S92499A/其他S92599A', english: 'fracture of right toe', chinese: '右腳趾骨折' },
+                { type: 'Sprain', icd: '大S93503A/其他S93506A', english: 'sprain of right toe', chinese: '右腳趾扭傷' },
+                { type: 'Dislocation', icd: 'S93106A', english: 'dislocation of right toe', chinese: '右腳趾脫位' }
+            ]
+        };
+        let selectedInjuries = [];
+        let currentMainPart = '';
+        let currentSubPart = '';
+        let currentView = 'front';
+
+        function switchView(view) {
+            currentView = view;
+            
+            document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.diagram-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById(view + '-diagram').classList.add('active');
+            
+            hideSubParts();
+            document.getElementById('injury-selector').classList.remove('active');
+            document.querySelectorAll('.body-part').forEach(p => p.classList.remove('selected'));
+        }
+
+        function initializeBodyParts() {
+            document.querySelectorAll('.body-part').forEach(part => {
+                part.addEventListener('click', function() {
+                    const partName = this.getAttribute('data-part');
+                    
+                    const currentDiagram = document.querySelector('.diagram-container.active');
+                    currentDiagram.querySelectorAll('.body-part').forEach(p => p.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    if (subPartDatabase[partName]) {
+                        currentMainPart = partName;
+                        showSubPartSelector(partName);
+                    } else {
+                        showInjurySelector(partName);
+                    }
+                });
+            });
+        }
+
+        function showSubPartSelector(partName) {
+            const selector = document.getElementById('sub-part-selector');
+            const title = document.getElementById('selected-main-part-title');
+            const subPartsContainer = document.getElementById('sub-parts');
+            
+            document.getElementById('injury-selector').classList.remove('active');
+            
+            title.textContent = `${partName} - 選擇細部位置`;
+            selector.classList.add('active');
+            
+            subPartsContainer.innerHTML = '';
+            
+            subPartDatabase[partName].forEach(subPart => {
+                const button = document.createElement('button');
+                button.className = 'sub-part';
+                button.textContent = subPart.part;
+                button.addEventListener('click', () => {
+                    currentSubPart = subPart.part;
+                    showInjurySelector(subPart.part);
+                });
+                subPartsContainer.appendChild(button);
+            });
+        }
+
+        function showInjurySelector(partName) {
+            const selector = document.getElementById('injury-selector');
+            const title = document.getElementById('selected-part-title');
+            const typesContainer = document.getElementById('injury-types');
+            
+            document.getElementById('sub-part-selector').classList.remove('active');
+            
+            title.textContent = `${partName} - 選擇外傷類型`;
+            selector.classList.add('active');
+            
+            typesContainer.innerHTML = '';
+            
+            if (injuryDatabase[partName]) {
+                injuryDatabase[partName].forEach(injury => {
+                    const button = document.createElement('button');
+                    button.className = 'injury-type';
+                    button.textContent = injury.type;
+                    button.addEventListener('click', () => addInjury(partName, injury));
+                    typesContainer.appendChild(button);
+                });
+            }
+        }
+
+        function addInjury(partName, injury) {
+            const newInjury = {
+                part: partName,
+                type: injury.type,
+                icd: injury.icd,
+                english: injury.english,
+                chinese: injury.chinese,
+                id: Date.now()
+            };
+            
+            selectedInjuries.push(newInjury);
+            updateInjuryList();
+        }
+
+        function removeInjury(id) {
+            selectedInjuries = selectedInjuries.filter(injury => injury.id !== id);
+            updateInjuryList();
+        }
+
+        function updateInjuryList() {
+            const listContainer = document.getElementById('injury-list');
+            
+            if (selectedInjuries.length === 0) {
+                listContainer.innerHTML = '<p>尚未選擇任何外傷</p>';
+                return;
+            }
+            
+            listContainer.innerHTML = selectedInjuries.map(injury => `
+                <div class="injury-item">
+                    <div class="injury-details">
+                        ${injury.icd} - ${injury.part} ${injury.type}<br>
+                        ${injury.english}
+                    </div>
+                    <button class="remove-injury" onclick="removeInjury(${injury.id})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function hideSubParts() {
+            document.getElementById('sub-part-selector').classList.remove('active');
+            document.querySelectorAll('.body-part').forEach(p => p.classList.remove('selected'));
+        }
+
+        function backToSubParts() {
+            if (currentMainPart && subPartDatabase[currentMainPart]) {
+                document.getElementById('injury-selector').classList.remove('active');
+                showSubPartSelector(currentMainPart);
+            } else {
+                document.getElementById('injury-selector').classList.remove('active');
+            }
+        }
+
+        function clearReport() {
+            const reportOutput = document.getElementById('report-output');
+            reportOutput.textContent = '';
+            reportOutput.classList.remove('active');
+            
+            selectedInjuries = [];
+            updateInjuryList();
+            hideSubParts();
+            document.getElementById('injury-selector').classList.remove('active');
+            document.querySelectorAll('.body-part').forEach(p => p.classList.remove('selected'));
+        }
+
+        function generateReport() {
+            const reportOutput = document.getElementById('report-output');
+    
+            if (selectedInjuries.length === 0) {
+                alert('請先選擇至少一項外傷！');
+                return;
+            }
+    
+            let icdSection = '';
+            let chineseSection = '';
+            let englishSection = '';
+    
+            selectedInjuries.forEach(injury => {
+                icdSection += `${injury.icd} - ${injury.part}${injury.type}\n`;
+                chineseSection += `*. ${injury.chinese}\n`;
+                englishSection += `*. ${injury.english}\n`;
+            });
+    
+            let report = icdSection + '\n' + chineseSection + '\n' + englishSection;
+    
+            reportOutput.textContent = report.trim();
+            reportOutput.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBodyParts();
+        });
+    </script>
+</body>
+</html>
