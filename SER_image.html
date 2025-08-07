@@ -694,6 +694,16 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
                             <button class="tool-btn" onclick="clearAllTextLabels()">清除文字</button>
                             <button class="tool-btn" onclick="printForm()" style="background-color: #4CAF50; color: white;">列印表單</button>
                         </div>
+                        <div class="tool-group" style="margin-top: 8px;">
+                            <button class="wound-btn" onclick="addTextLabel('Contusion')">Contusion</button>
+                            <button class="wound-btn" onclick="addTextLabel('Deformity')">Deformity</button>
+                            <button class="wound-btn" onclick="addTextLabel('Swelling')">Swelling</button>
+                            <button class="wound-btn" onclick="addTextLabel('Hematoma')">Hematoma</button>
+                            <button class="wound-btn" onclick="addTextLabel('Cutting')">Cutting</button>
+                            <button class="wound-btn" onclick="addTextLabel('Burn')">Burn</button>
+                            <button class="wound-btn" onclick="addSizeLabel()">長度</button>
+                            <button class="wound-btn" onclick="addCustomLabel()">自訂</button>
+                        </div>
                     </div>
 
                     <div class="body-diagram" id="body-diagram-container">
@@ -777,6 +787,7 @@ function calculateISS() {
         document.getElementById('iss-score').textContent = iss > 0 ? iss : '0';
     }
 }
+
 // Canvas初始化
 function initCanvas() {
     canvas = document.getElementById('body-canvas');
@@ -1082,6 +1093,30 @@ function removeLabelOnDoubleClick(e) {
 function clearAllTextLabels() {
     textLabels.forEach(label => label.remove());
     textLabels = [];
+}
+
+// 添加尺寸標記
+function addSizeLabel() {
+    const sizeText = prompt('請輸入公分數值：');
+    const size = parseFloat(sizeText);
+    
+    if (isNaN(size) || size <= 0 || sizeText === null || sizeText.trim() === '') {
+        if (sizeText !== null) {
+            alert('請輸入有效的公分數值');
+        }
+        return;
+    }
+    
+    const labelText = size + 'cm';
+    addTextLabel(labelText);
+}
+
+// 添加自訂文字標記
+function addCustomLabel() {
+    const customText = prompt('請輸入自訂文字：');
+    if (customText && customText.trim()) {
+        addTextLabel(customText.trim());
+    }
 }
 
 // 列印表單 - 優化版本減少偏移
