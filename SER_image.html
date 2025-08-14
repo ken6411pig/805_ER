@@ -114,7 +114,7 @@
             background: transparent;
             font-size: 15px;
             padding: 1px;
-font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
+            font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
         }
 
         .number-input {
@@ -380,16 +380,16 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
     </div>
     <div style="margin-top: -20px;margin-right: 10px;text-align: left; width: 140px;border: 1px dotted black; padding: 8px; font-weight: bold;font-size: 14px;">
         <div>
-            姓 名：
+            姓名：
         </div>
         <div>
-            性 別：
+            性別：
         </div>
         <div>
             身份證號：
         </div>
         <div>
-            年 齡：
+            年齡：
         </div>
         <div>
             病房/床號：
@@ -522,7 +522,7 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
                 <td colspan="2" style="width: 15%;">
                     <div class="checkbox-item">
                         <input type="checkbox" id="weapon-blunt">
-                        <label for="weapon-blunt">鈍器棍棒</label>
+                        <label for="weapon-blunt">鈍器棒棍</label>
                     </div>
                 </td>
                 <td colspan="2" style="width: 20%;">
@@ -553,7 +553,7 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="cut-other">
-                            <label for="cut-other">其他：<input type="text" class="text-input" style="width: 66px;"></label>
+                            <label for="cut-other">其他：<input type="text" class="text-input" style="width: 58px;"></label>
                         </div>
                     </div>
                 </td>
@@ -613,7 +613,7 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
         <td>Abrasion wound</td>
         <td><button class="wound-btn" onclick="addTextLabel('Fr')">Fr</button></td>
         <td>Fracture</td>
-        <td rowspan="4" style="vertical-align: middle; width: 40px;" class="vertical-text">值 班 醫 師</td>
+        <td rowspan="4" style="vertical-align: middle; width: 40px;" class="vertical-text">值班醫師</td>
         <td rowspan="4" style="width: 213px;"></td>
     </tr>
     <tr>
@@ -685,7 +685,7 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
 
         <table>
             <tr>
-                <td style="width: 40px; vertical-align: middle; font-size: 24px; text-align: center;" class="vertical-text">傷 口 部 位 圖 示</td>
+                <td style="width: 40px; vertical-align: middle; font-size: 24px; text-align: center;" class="vertical-text">傷口部位圖示</td>
                 <td>
                     <div class="drawing-tools">
                         <div class="tool-group">
@@ -693,6 +693,16 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
                             <button class="tool-btn" onclick="clearDrawingOnly()">清除手繪線</button>
                             <button class="tool-btn" onclick="clearEntirePage()">整個頁面清除</button>
                             <button class="tool-btn" onclick="printForm()" style="background-color: #4CAF50; color: white;">列印表單</button>
+                        </div>
+                        <div class="tool-group" style="margin-top: 8px;">
+                            <button class="wound-btn" onclick="addTextLabel('Contusion')">Contusion</button>
+                            <button class="wound-btn" onclick="addTextLabel('Deformity')">Deformity</button>
+                            <button class="wound-btn" onclick="addTextLabel('Swelling')">Swelling</button>
+                            <button class="wound-btn" onclick="addTextLabel('Hematoma')">Hematoma</button>
+                            <button class="wound-btn" onclick="addTextLabel('Cutting')">Cutting</button>
+                            <button class="wound-btn" onclick="addTextLabel('Burn')">Burn</button>
+                            <button class="wound-btn" onclick="addSizeLabel()">加入公分</button>
+                            <button class="wound-btn" onclick="addCustomLabel()">自訂文字</button>
                         </div>
                     </div>
 
@@ -705,6 +715,7 @@ font-family: 'DFKai-SB', '標楷體', 'Microsoft JhengHei', Arial, sans-serif;
         <div class="footer" style="font-size: 12px;">
             <br><br>2024.05.27 病歷管理委員會決議通過
         </div>
+
     <script>
 // 文字標籤相關變數
 let textLabels = [];
@@ -776,6 +787,7 @@ function calculateISS() {
         document.getElementById('iss-score').textContent = iss > 0 ? iss : '0';
     }
 }
+
 // Canvas初始化
 function initCanvas() {
     canvas = document.getElementById('body-canvas');
@@ -975,62 +987,53 @@ function undoLastAction() {
     restoreState(lastState);
 }
 
-// 清除手繪線條（保留文字標籤）
+// 清除畫布 - 改為只清除手繪線
 function clearDrawingOnly() {
     if (drawingPaths.length > 0) {
         saveCurrentState();
-    }
-    drawingPaths = [];
-    currentPath = [];
-    redrawCanvas();
-}
-
-// 整個頁面清除（包含手繪線、文字標籤、checkbox和輸入框）
-function clearEntirePage() {
-    if (confirm('確定要清除整個頁面的所有內容嗎？此操作無法復原。')) {
-        if (drawingPaths.length > 0 || textLabels.length > 0) {
-            saveCurrentState();
-        }
-        
-        // 清除繪圖和文字標籤
         drawingPaths = [];
         currentPath = [];
-        clearAllTextLabels();
         redrawCanvas();
-        
-        // 清除所有 checkbox
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = false;
-        });
-        
-        // 清除所有文字輸入框
-        document.querySelectorAll('input[type="text"]').forEach(input => {
-            input.value = '';
-        });
-        
-        // 清除所有數字輸入框
-        document.querySelectorAll('input[type="number"]').forEach(input => {
-            input.value = '';
-        });
-        
-        // 重新計算 ISS 分數（會變成 0）
-        calculateISS();
-        
-        // 重新填入今天的日期
-        fillCurrentDate();
     }
 }
 
-// 清除畫布（原本的功能保留，但不再使用）
-function clearCanvas() {
-    if (drawingPaths.length > 0 || textLabels.length > 0) {
-        saveCurrentState();
+// 新增：整個頁面清除功能
+function clearEntirePage() {
+    const confirmClear = confirm('確定要清除整個頁面的所有內容嗎？');
+    
+    if (!confirmClear) {
+        return;
     }
+    
+    // 保存當前狀態以便復原
+    saveCurrentState();
+    
+    // 清除繪圖內容
     drawingPaths = [];
     currentPath = [];
-    
     clearAllTextLabels();
     redrawCanvas();
+    
+    // 清除所有checkbox
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    
+    // 清除所有文字輸入欄位
+    document.querySelectorAll('input[type="text"]').forEach(input => {
+        input.value = '';
+    });
+    
+    // 清除所有數字輸入欄位
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.value = '';
+    });
+    
+    // 重新填入當天日期
+    fillCurrentDate();
+    
+    // 重新計算ISS分數（應該是0）
+    calculateISS();
 }
 
 // 添加文字標籤
@@ -1127,6 +1130,30 @@ function removeLabelOnDoubleClick(e) {
 function clearAllTextLabels() {
     textLabels.forEach(label => label.remove());
     textLabels = [];
+}
+
+// 添加尺寸標記
+function addSizeLabel() {
+    const sizeText = prompt('請輸入公分數值：');
+    const size = parseFloat(sizeText);
+    
+    if (isNaN(size) || size <= 0 || sizeText === null || sizeText.trim() === '') {
+        if (sizeText !== null) {
+            alert('請輸入有效的公分數值');
+        }
+        return;
+    }
+    
+    const labelText = size + 'cm';
+    addTextLabel(labelText);
+}
+
+// 添加自訂文字標記
+function addCustomLabel() {
+    const customText = prompt('請輸入自訂文字：');
+    if (customText && customText.trim()) {
+        addTextLabel(customText.trim());
+    }
 }
 
 // 列印表單 - 優化版本減少偏移
