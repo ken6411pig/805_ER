@@ -256,6 +256,19 @@
             margin-top: 20px;
             margin-bottom: 10px;
         }
+
+        /* 診斷證明書複製行樣式 */
+        .copy-line {
+            cursor: pointer;
+            display: block;
+            padding: 5px 0;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .copy-line:hover {
+            background-color: #e9ecef;
+        }
 </style>
 </head>
 <body>
@@ -334,12 +347,12 @@
             <h2>🩺 Physical Examination</h2>
             
             <div class="pe-tabs">
-                <span data-tab="內科" onclick="showPETab('內科')" class="active">🫀 MER</span>
-                <span data-tab="外科" onclick="showPETab('外科')">🔪 SER</span>
-                <span data-tab="OHCA" onclick="showPETab('OHCA')">💔 OHCA</span>
-                <span data-tab="NE" onclick="showPETab('NE')">🧠 NE</span>
-                <span data-tab="外傷FAST" onclick="showPETab('外傷FAST')">🩸 外傷FAST</span>
-                <span data-tab="POCUS" onclick="showPETab('POCUS')">🎯 POCUS</span>
+                <span data-tab="內科" class="active">🫀 MER</span>
+                <span data-tab="外科">🔪 SER</span>
+                <span data-tab="OHCA">💔 OHCA</span>
+                <span data-tab="NE">🧠 NE</span>
+                <span data-tab="外傷FAST">🩸 外傷FAST</span>
+                <span data-tab="POCUS">🎯 POCUS</span>
             </div>
             
             <div class="pe-content" id="內科">
@@ -355,7 +368,7 @@
                         Extremities: no skin rash. no edema.<br/>
                         MP: 5, all limbs.
                     </p>
-                    <button class="copy-button" onclick="copyPEContent('內科')">複製</button>
+                    <button class="copy-button">複製</button>
                 </div>
             </div>
             
@@ -371,7 +384,7 @@
                         Extremities: Free of ROM. <br/>
                         MP: 5, all limbs.
                     </p>
-                    <button class="copy-button" onclick="copyPEContent('外科')">複製</button>
+                    <button class="copy-button">複製</button>
                 </div>
             </div>
             
@@ -386,7 +399,7 @@
                         Abdomen: Soft and ovoid.<br/>
                         Extremities: No obvious wound over four limbs.<br/>
                     </p>
-                    <button class="copy-button" onclick="copyPEContent('OHCA')">複製</button>
+                    <button class="copy-button">複製</button>
                 </div>
             </div>
             
@@ -404,7 +417,7 @@
                         HKS: no zigzag/no zigzag<br/>
                         Romberg test/Gait/Tandem gait: Cannot cooperate<br/>
                     </p>
-                    <button class="copy-button" onclick="copyPEContent('NE')">複製</button>
+                    <button class="copy-button">複製</button>
                 </div>
             </div>
             
@@ -413,7 +426,7 @@
                     <p>
                         No pericardial effusion, bilateral lung sliding present, no pleural effusion, no ascites
                     </p>
-                    <button class="copy-button" onclick="copyPEContent('外傷FAST')">複製</button>
+                    <button class="copy-button">複製</button>
                 </div>
             </div>
 
@@ -425,7 +438,7 @@
                         Abdominal: no ascites, no hydronephrosis, no IHD dilatation, no CBD dilatation or GB wall thickening, no echo Murphy sign<br/>
                         DVT: femoral and popliteal veins compressible bilaterally<br/>
                     </p>
-                    <button class="copy-button" onclick="copyPEContent('POCUS')">複製</button>
+                    <button class="copy-button">複製</button>
                 </div>
             </div>
         </div>
@@ -500,12 +513,14 @@
 <div class="min-length-notice" id="minLengthNotice"></div>
 <div id="results"></div>
 </div>
+
 <div class="content hidden" id="Plan">
 <h3>診斷證明書</h3>
 <div>
 <p id="certificateText" style="white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd;">
-            病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br/>
-            病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。
+    <span class="copy-line" title="點擊複製此行">病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。</span>
+    <span class="copy-line" title="點擊複製此行">病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。</span>
+    <span class="copy-line" title="點擊複製此行">病人因上述疾病於民國113年 月 日 時 分至 時 分期間至本院急診就診，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於民國113年 月 日 時 分停止急救，病人死亡。</span>
 </p>
 </div>
 <hr style="margin: 30px 0; border: 1px solid #ddd;">
@@ -526,13 +541,13 @@
 顱底骨折的任何徵候（例如腦脊髓液鼻漏、耳漏等）<br/>
 局部神經學異常<br/>
 癲癇<br/>
-嚴重顏面損傷<br/>
+嚴重顏面撕傷<br/>
 </p>
 <h4>建議（Options）：</h4>
 <p>嘔吐 2 次或以上<br/>
 年齡大於 65 歲或小於 2 歲<br/>
 藥物或酒精過量<br/>
-持續嚴重瀰漫性頭痛<br/>
+持續嚴重漫性頭痛<br/>
 傷後失憶 30 分鐘以上<br/>
 危險的受傷機轉（例如行人被機動車撞擊、乘客被拋出車外、從大於 1 公尺 或 5 個階梯以上高度跌落）<br/>
 凝血異常<br/>
@@ -627,119 +642,388 @@
 
 </div>
 
-    <script>
+<script>
+// 頁面載入完成後初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化頁面
+    initializePage();
+    
+    // 綁定複製行事件
+    bindCopyLineEvents();
+    
+    // 綁定PE複製按鈕事件
+    bindPECopyEvents();
+    
+    // 自動填入日期
+    updateCertificateDate();
+});
 
-        // 頁面切換功能
-        document.querySelector('.sidebar').addEventListener('click', function(e) {
-            const targetPage = e.target.getAttribute('data-page');
-            if (!targetPage) return;
-            
-            document.querySelectorAll('.content').forEach(content => {
-                content.classList.add('hidden');
-            });
-            
-            document.getElementById(targetPage).classList.remove('hidden');
-            
-            // 如果切換到 Certificate 頁面，重新載入時間
-            if (targetPage === 'Plan') {
-                updateCertificateDate();
+// 初始化頁面
+function initializePage() {
+    // 顯示第一個分頁
+    document.getElementById('History_PE').classList.remove('hidden');
+    
+    // 綁定側邊欄點擊事件
+    document.querySelector('.sidebar').addEventListener('click', function(e) {
+        const targetPage = e.target.getAttribute('data-page');
+        if (!targetPage) return;
+        
+        document.querySelectorAll('.content').forEach(content => {
+            content.classList.add('hidden');
+        });
+        
+        document.getElementById(targetPage).classList.remove('hidden');
+        
+        // 如果切換到 Plan 頁面，重新載入時間
+        if (targetPage === 'Plan') {
+            updateCertificateDate();
+        }
+    });
+    
+    // 綁定PE標籤點擊事件
+    document.querySelectorAll('.pe-tabs span').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            showPETab(tabName);
+        });
+    });
+}
+
+// 綁定診斷證明書複製行事件
+function bindCopyLineEvents() {
+    const copyLines = document.querySelectorAll('.copy-line');
+    copyLines.forEach(line => {
+        line.addEventListener('click', function() {
+            copyText(this);
+        });
+    });
+}
+
+// 綁定PE複製按鈕事件
+function bindPECopyEvents() {
+    const copyButtons = document.querySelectorAll('.pe-content .copy-button');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const peContent = this.closest('.pe-content');
+            const tabId = peContent.id;
+            copyPEContent(tabId);
+        });
+    });
+}
+
+// 複製文字函數
+function copyText(element) {
+    const text = element.textContent.trim();
+    
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showQuickCopySuccess(element);
+        }).catch(() => {
+            fallbackCopy(text, element);
+        });
+    } else {
+        fallbackCopy(text, element);
+    }
+}
+
+function fallbackCopy(text, element) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        showQuickCopySuccess(element);
+    } catch (err) {
+        alert('複製失敗');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+function showQuickCopySuccess(element) {
+    const originalBg = element.style.backgroundColor;
+    element.style.backgroundColor = '#d4edda';
+    
+    setTimeout(() => {
+        element.style.backgroundColor = originalBg;
+    }, 1000);
+}
+
+// PE分頁切換功能
+function showPETab(tabName) {
+    // 隱藏所有PE內容
+    document.querySelectorAll('.pe-content').forEach(content => {
+        content.classList.add('hidden');
+    });
+
+    // 顯示選中的PE內容
+    document.getElementById(tabName).classList.remove('hidden');
+    
+    // 更新tab樣式
+    document.querySelectorAll('.pe-tabs span').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+}
+
+// 複製PE內容功能
+function copyPEContent(tabId) {
+    const content = document.querySelector(`#${tabId} p`).textContent;
+
+    // 保留換行，但移除每行前後的空白
+    const cleanedContent = content
+        .split('\n')                    // 按換行分割
+        .map(line => line.trim())       // 每行去除前後空白
+        .filter(line => line.length > 0) // 過濾空行
+        .join('\n');                    // 重新組合
+
+    // 使用 Clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(cleanedContent).then(() => {
+            showCopySuccess(tabId);
+        }).catch(err => {
+            console.error('複製失敗:', err);
+            fallbackCopyTextToClipboard(cleanedContent, tabId);
+        });
+    } else {
+        // 降級方案
+        fallbackCopyTextToClipboard(cleanedContent, tabId);
+    }
+}
+
+// 降級複製方案
+function fallbackCopyTextToClipboard(text, tabId) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showCopySuccess(tabId);
+        } else {
+            alert('複製失敗，請手動選擇文字複製');
+        }
+    } catch (err) {
+        console.error('複製失敗:', err);
+        alert('複製失敗，請手動選擇文字複製');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// 顯示複製成功提示
+function showCopySuccess(tabId) {
+    const button = document.querySelector(`#${tabId} .copy-button`);
+    const originalText = button.textContent;
+    
+    button.textContent = '已複製！';
+    button.classList.add('success');
+    
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('success');
+    }, 2000);
+}
+
+// 自動填入診斷證明書的日期
+function updateCertificateDate() {
+    const today = new Date();
+    const taiwanYear = today.getFullYear() - 1911; // 民國年
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const hours = today.getHours();
+    const minutes = today.getMinutes();
+    
+    // 格式化時間（補0）
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    
+    // 更新證明書文字
+    const certificateLines = [
+        `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。`,
+        `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。`,
+        `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分停止急救，病人死亡。`
+    ];
+    
+    const certificateElement = document.getElementById('certificateText');
+    if (certificateElement) {
+        certificateElement.innerHTML = certificateLines.map(line => 
+            `<span class="copy-line" title="點擊複製此行">${line}</span>`
+        ).join('');
+        
+        // 重新綁定事件
+        bindCopyLineEvents();
+    }
+}
+
+// 備忘錄功能
+function copyNote() {
+    const noteText = document.getElementById('noteText').value;
+
+    if (!noteText.trim()) {
+        alert('沒有內容可以複製！');
+        return;
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(noteText).then(() => {
+            showNoteCopySuccess();
+        }).catch(err => {
+            console.error('複製失敗:', err);
+            fallbackCopyNote(noteText);
+        });
+    } else {
+        fallbackCopyNote(noteText);
+    }
+}
+
+function fallbackCopyNote(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showNoteCopySuccess();
+        } else {
+            alert('複製失敗，請手動選擇文字複製');
+        }
+    } catch (err) {
+        alert('複製失敗，請手動選擇文字複製');
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function showNoteCopySuccess() {
+    const button = document.querySelector('#Note .copy-button');
+    const originalText = button.textContent;
+
+    button.textContent = '已複製！';
+    button.classList.add('success');
+
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('success');
+    }, 2000);
+}
+
+function clearNote() {
+    if (confirm('確定要清除所有備忘內容嗎？')) {
+        document.getElementById('noteText').value = '';
+    }
+}
+
+// 控制病歷整理助手顯示/隱藏
+function toggleChatbot() {
+    const container = document.getElementById('chatbotContainer');
+    const button = document.getElementById('toggleChatbotBtn');
+    
+    if (container.style.display === 'none' || container.style.display === '') {
+        container.style.display = 'block';
+        button.textContent = '隱藏助手';
+        button.style.background = '#6c757d';
+    } else {
+        container.style.display = 'none';
+        button.textContent = '顯示助手';
+        button.style.background = '#28a745';
+    }
+}
+
+// ICD搜尋功能
+let csvData = [];
+let headers = [];
+let searchTimeout;
+// 抗生素搜尋功能
+let antibioticData = [];
+let antibioticHeaders = [];
+let antibioticSearchTimeout;
+let abbreviationData = {};
+let abbreviationHeaders = [];
+
+// 載入 CSV 檔案
+showLoading();
+fetch('ICD_10_CM.csv')
+    .then(response => response.text())
+    .then(data => {
+        Papa.parse(data, {
+            complete: function(results) {
+                csvData = results.data;
+                headers = csvData[0];
+                hideLoading();
+                document.getElementById('minLengthNotice').textContent = 
+                    '請輸入至少2個字元開始搜尋';
             }
         });
+    });
 
-        // PE分頁切換功能 - 修改為適應新的結構
-        function showPETab(tabName) {
-            // 隱藏所有PE內容
-            document.querySelectorAll('.pe-content').forEach(content => {
-                content.classList.add('hidden');
-            });
-    
-            // 顯示選中的PE內容
-            document.getElementById(tabName).classList.remove('hidden');
-            
-            // 更新tab樣式
-            document.querySelectorAll('.pe-tabs span').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-        }
-
-        // ICD搜尋功能
-        let csvData = [];
-        let headers = [];
-        let searchTimeout;
-        // 抗生素搜尋功能
-        let antibioticData = [];
-        let antibioticHeaders = [];
-        let antibioticSearchTimeout;
-        let abbreviationData = {};
-        let abbreviationHeaders = [];
-
-        // 載入 CSV 檔案
-        showLoading();
-        fetch('ICD_10_CM.csv')
-            .then(response => response.text())
-            .then(data => {
-                Papa.parse(data, {
-                    complete: function(results) {
-                        csvData = results.data;
-                        headers = csvData[0];
-                        hideLoading();
-                        document.getElementById('minLengthNotice').textContent = 
-                            '請輸入至少2個字元開始搜尋';
+// 載入醫學縮寫字典
+fetch('medical_abbreviations.csv')
+    .then(response => response.text())
+    .then(data => {
+        Papa.parse(data, {
+            complete: function(results) {
+                const abbrevData = results.data;
+                abbreviationHeaders = abbrevData[0];
+        
+                // 建立縮寫對照表
+                for (let i = 1; i < abbrevData.length; i++) {
+                    if (abbrevData[i][0] && abbrevData[i][1]) {
+                        const abbrev = abbrevData[i][0].toLowerCase();
+                        const terms = abbrevData[i][1].split(',').map(term => term.trim().toLowerCase());
+                        abbreviationData[abbrev] = terms;
                     }
-                });
-            });
+                }
+                console.log('醫學縮寫字典載入完成:', Object.keys(abbreviationData).length, '個縮寫');
+            }
+        });
+    })
+    .catch(err => {
+        console.log('醫學縮寫字典載入失敗，使用原始搜尋功能');
+    });
 
-        // 載入醫學縮寫字典
-        fetch('medical_abbreviations.csv')
-            .then(response => response.text())
-            .then(data => {
-                Papa.parse(data, {
-                    complete: function(results) {
-                        const abbrevData = results.data;
-                        abbreviationHeaders = abbrevData[0];
-                
-                        // 建立縮寫對照表
-                        for (let i = 1; i < abbrevData.length; i++) {
-                            if (abbrevData[i][0] && abbrevData[i][1]) {
-                                const abbrev = abbrevData[i][0].toLowerCase();
-                                const terms = abbrevData[i][1].split(',').map(term => term.trim().toLowerCase());
-                                abbreviationData[abbrev] = terms;
-                            }
-                        }
-                        console.log('醫學縮寫字典載入完成:', Object.keys(abbreviationData).length, '個縮寫');
-                    }
-                });
-            })
-            .catch(err => {
-                console.log('醫學縮寫字典載入失敗，使用原始搜尋功能');
-            });
+// 載入抗生素 CSV檔案
+fetch('antibiotic_dosage.csv')
+    .then(response => response.text())
+    .then(data => {
+        Papa.parse(data, {
+            complete: function(results) {
+                antibioticData = results.data;
+                antibioticHeaders = antibioticData[0];
+            }
+        });
+    });
 
-        // 載入抗生素CSV檔案
-        fetch('antibiotic_dosage.csv')
-            .then(response => response.text())
-            .then(data => {
-                Papa.parse(data, {
-                    complete: function(results) {
-                        antibioticData = results.data;
-                        antibioticHeaders = antibioticData[0];
-                    }
-                });
-            });
+function showLoading() {
+    document.getElementById('results').innerHTML = 
+        '<div class="loading">載入中，請稍候...</div>';
+}
 
-        function showLoading() {
-            document.getElementById('results').innerHTML = 
-                '<div class="loading">載入中，請稍候...</div>';
-        }
+function hideLoading() {
+    document.getElementById('results').innerHTML = '';
+}
 
-        function hideLoading() {
-            document.getElementById('results').innerHTML = '';
-        }
-
-        function debounceSearch() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(searchData, 300);
-        }
+function debounceSearch() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(searchData, 300);
+}
 
 function searchData() {
     const originalSearchTerm = document.getElementById('searchInput').value;
@@ -820,374 +1104,205 @@ function searchData() {
     displayData([headers, ...filteredData]);
 }            
 
-        function displayData(data) {
-            if (!data || data.length <= 1) {
-                document.getElementById('results').innerHTML = '<p>找不到符合的結果</p>';
-                document.getElementById('countInfo').textContent = '找到 0 筆符合的資料';
-                return;
-            }
-
-            let table = '<table><thead><tr>';
-    
-            table += '<th> </th>'; // 操作欄放到最前面
-            data[0].forEach(header => {
-                table += `<th>${header}</th>`;
-            });
-    
-            table += '</tr></thead><tbody>';
-
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            for (let i = 1; i < data.length; i++) {
-                table += '<tr>';
-        
-                // 先添加複製按鈕欄位
-                const icdCode = data[i][0] || '';
-                table += `<td style="width: 80px; text-align: center;"><button class="copy-button" onclick="copyIcdCode('${icdCode}', this)" style="font-size: 12px; padding: 4px 8px; background-color: white; color: #495057; border: 1px solid #dee2e6;">複製ICD</button></td>`;
-        
-                // 再添加其他資料欄位
-                data[i].forEach((cell, cellIndex) => {
-                    const cellContent = cell || '';
-                    const cellStr = cellContent.toString();
-                    if (searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
-                        const highlightedContent = cellStr.replace(
-                            new RegExp(searchTerm, 'gi'),
-                            match => `<mark>${match}</mark>`
-                        );
-                        table += `<td>${highlightedContent}</td>`;
-                    } else {
-                        table += `<td>${cellStr}</td>`;
-                    }
-                });
-                table += '</tr>';
-            }
-
-            table += '</tbody></table>';
-            document.getElementById('results').innerHTML = table;
-            document.getElementById('countInfo').textContent = 
-                `找到 ${data.length - 1} 筆符合的資料`;
-        }
-
-        // 抗生素搜尋功能
-        function debounceAntibioticSearch() {
-            clearTimeout(antibioticSearchTimeout);
-            antibioticSearchTimeout = setTimeout(searchAntibioticData, 300);
-        }
-
-        function searchAntibioticData() {
-            const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
-    
-            document.getElementById('antibioticResults').innerHTML = '';
-            document.getElementById('antibioticCountInfo').textContent = '';
-            document.getElementById('antibioticMinLengthNotice').textContent = '';
-
-            if (searchTerm.length === 0) {
-                document.getElementById('antibioticMinLengthNotice').textContent = 
-                    '請輸入藥物名稱開始搜尋';
-                return;
-            }
-
-            // 移除搜尋詞中的空白和標點符號，用於比較
-            const normalizedSearchTerm = searchTerm.replace(/[\s\.\-]/g, '');
-
-            const filteredData = antibioticData.filter((row, index) => {
-                if (index === 0) return false;
-        
-                const genericName = row[0]?.toString().toLowerCase() || '';
-                const brandName = row[1]?.toString().toLowerCase() || '';
-        
-                // 移除資料中的空白和標點符號進行比較
-                const normalizedGenericName = genericName.replace(/[\s\.\-]/g, '');
-                const normalizedBrandName = brandName.replace(/[\s\.\-]/g, '');
-        
-                return genericName.includes(searchTerm) || 
-                       brandName.includes(searchTerm) ||
-                       normalizedGenericName.includes(normalizedSearchTerm) ||
-                       normalizedBrandName.includes(normalizedSearchTerm);
-            });
-
-            displayAntibioticData([antibioticHeaders, ...filteredData]);
-        }
-
-        function displayAntibioticData(data) {
-            if (!data || data.length <= 1) {
-                document.getElementById('antibioticResults').innerHTML = '<p>找不到符合的藥物</p>';
-                document.getElementById('antibioticCountInfo').textContent = '找到 0 筆符合的資料';
-                return;
-            }
-
-            let table = '<table><thead><tr>';
-    
-            data[0].forEach(header => {
-                table += `<th>${header}</th>`;
-            });
-    
-            table += '</tr></thead><tbody>';
-
-            const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
-            for (let i = 1; i < data.length; i++) {
-                table += '<tr>';
-                data[i].forEach((cell, cellIndex) => {
-                    const cellContent = cell || '';
-                    const cellStr = cellContent.toString();
-            
-                    // 對藥物名稱欄位(前兩欄)做高亮顯示
-                    if (cellIndex < 2 && searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
-                        const highlightedContent = cellStr.replace(
-                            new RegExp(searchTerm, 'gi'),
-                            match => `<mark>${match}</mark>`
-                        );
-                        table += `<td>${highlightedContent}</td>`;
-                    } else {
-                        // 劑量欄位使用較小字體並保持換行
-                        if (cellIndex >= 2) {
-                            table += `<td style="font-size: 16px; white-space: pre-wrap;">${cellStr}</td>`;
-                        } else {
-                            table += `<td>${cellStr}</td>`;
-                        }
-                    }
-                });
-                table += '</tr>';
-            }
-
-            table += '</tbody></table>';
-            document.getElementById('antibioticResults').innerHTML = table;
-            document.getElementById('antibioticCountInfo').textContent = 
-                `找到 ${data.length - 1} 筆符合的藥物資料`;
-        }
-
-        // 自動填入診斷證明書的日期
-        function updateCertificateDate() {
-            const today = new Date();
-            const taiwanYear = today.getFullYear() - 1911; // 民國年
-            const month = today.getMonth() + 1;
-            const day = today.getDate();
-            const hours = today.getHours();
-            const minutes = today.getMinutes();
-            
-            // 格式化時間（補0）
-            const formattedHours = hours.toString().padStart(2, '0');
-            const formattedMinutes = minutes.toString().padStart(2, '0');
-            
-            // 更新證明書文字
-            const certificateText = `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。<br>
-                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。<br>
-                    病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分停止急救，病人死亡。
-`;
-            document.getElementById('certificateText').innerHTML = certificateText;
-        }
-
-        // 初始顯示第一個分頁
-        document.getElementById('History_PE').classList.remove('hidden');
-        
-        // 頁面載入時執行日期填入
-        updateCertificateDate();
-        // 複製PE內容功能
-        function copyPEContent(tabId) {
-            const content = document.querySelector(`#${tabId} p`).textContent;
-    
-            // 保留換行，但移除每行前後的空白
-            const cleanedContent = content
-                .split('\n')                    // 按換行分割
-                .map(line => line.trim())       // 每行去除前後空白
-                .filter(line => line.length > 0) // 過濾空行
-                .join('\n');                    // 重新組合
-    
-            // 使用 Clipboard API
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(cleanedContent).then(() => {
-                    showCopySuccess(tabId);
-                }).catch(err => {
-                    console.error('複製失敗:', err);
-                    fallbackCopyTextToClipboard(cleanedContent, tabId);
-                });
-            } else {
-                // 降級方案
-                fallbackCopyTextToClipboard(cleanedContent, tabId);
-            }
-        }
-        
-        // 降級複製方案
-        function fallbackCopyTextToClipboard(text, tabId) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
-            textArea.style.opacity = "0";
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showCopySuccess(tabId);
-                } else {
-                    alert('複製失敗，請手動選擇文字複製');
-                }
-            } catch (err) {
-                console.error('複製失敗:', err);
-                alert('複製失敗，請手動選擇文字複製');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-        
-        // 顯示複製成功提示
-        function showCopySuccess(tabId) {
-            const button = document.querySelector(`#${tabId} .copy-button`);
-            const originalText = button.textContent;
-            
-            button.textContent = '已複製！';
-            button.classList.add('success');
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.classList.remove('success');
-            }, 2000);
-        }
-        
-// 備忘錄功能
-        function copyNote() {
-            const noteText = document.getElementById('noteText').value;
-    
-            if (!noteText.trim()) {
-                alert('沒有內容可以複製！');
-                return;
-            }
-    
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(noteText).then(() => {
-                    showNoteCopySuccess();
-                }).catch(err => {
-                    console.error('複製失敗:', err);
-                    fallbackCopyNote(noteText);
-                });
-            } else {
-                fallbackCopyNote(noteText);
-            }
-        }
-
-        function fallbackCopyNote(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.opacity = "0";
-    
-            document.body.appendChild(textArea);
-            textArea.select();
-    
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showNoteCopySuccess();
-                } else {
-                    alert('複製失敗，請手動選擇文字複製');
-                }
-            } catch (err) {
-                alert('複製失敗，請手動選擇文字複製');
-            }
-    
-            document.body.removeChild(textArea);
-        }
-
-        function showNoteCopySuccess() {
-            const button = document.querySelector('#Note .copy-button');
-            const originalText = button.textContent;
-    
-            button.textContent = '已複製！';
-            button.classList.add('success');
-    
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.classList.remove('success');
-            }, 2000);
-        }
-
-function clearNote() {
-    if (confirm('確定要清除所有備忘內容嗎？')) {
-        document.getElementById('noteText').value = '';
+function displayData(data) {
+    if (!data || data.length <= 1) {
+        document.getElementById('results').innerHTML = '<p>找不到符合的結果</p>';
+        document.getElementById('countInfo').textContent = '找到 0 筆符合的資料';
+        return;
     }
+
+    let table = '<table><thead><tr>';
+
+    table += '<th> </th>'; // 操作欄放到最前面
+    data[0].forEach(header => {
+        table += `<th>${header}</th>`;
+    });
+
+    table += '</tr></thead><tbody>';
+
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    for (let i = 1; i < data.length; i++) {
+        table += '<tr>';
+
+        // 先添加複製按鈕欄位
+        const icdCode = data[i][0] || '';
+        table += `<td style="width: 80px; text-align: center;"><button class="copy-button" onclick="copyIcdCode('${icdCode}', this)" style="font-size: 12px; padding: 4px 8px; background-color: white; color: #495057; border: 1px solid #dee2e6;">複製ICD</button></td>`;
+
+        // 再添加其他資料欄位
+        data[i].forEach((cell, cellIndex) => {
+            const cellContent = cell || '';
+            const cellStr = cellContent.toString();
+            if (searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
+                const highlightedContent = cellStr.replace(
+                    new RegExp(searchTerm, 'gi'),
+                    match => `<mark>${match}</mark>`
+                );
+                table += `<td>${highlightedContent}</td>`;
+            } else {
+                table += `<td>${cellStr}</td>`;
+            }
+        });
+        table += '</tr>';
+    }
+
+    table += '</tbody></table>';
+    document.getElementById('results').innerHTML = table;
+    document.getElementById('countInfo').textContent = 
+        `找到 ${data.length - 1} 筆符合的資料`;
 }
 
-// 控制病歷整理助手顯示/隱藏
-function toggleChatbot() {
-    const container = document.getElementById('chatbotContainer');
-    const button = document.getElementById('toggleChatbotBtn');
-    
-    if (container.style.display === 'none' || container.style.display === '') {
-        container.style.display = 'block';
-        button.textContent = '隱藏助手';
-        button.style.background = '#6c757d';
-    } else {
-        container.style.display = 'none';
-        button.textContent = '顯示助手';
-        button.style.background = '#28a745';
-    }
+// 抗生素搜尋功能
+function debounceAntibioticSearch() {
+    clearTimeout(antibioticSearchTimeout);
+    antibioticSearchTimeout = setTimeout(searchAntibioticData, 300);
 }
+
+function searchAntibioticData() {
+    const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
+
+    document.getElementById('antibioticResults').innerHTML = '';
+    document.getElementById('antibioticCountInfo').textContent = '';
+    document.getElementById('antibioticMinLengthNotice').textContent = '';
+
+    if (searchTerm.length === 0) {
+        document.getElementById('antibioticMinLengthNotice').textContent = 
+            '請輸入藥物名稱開始搜尋';
+        return;
+    }
+
+    // 移除搜尋詞中的空白和標點符號，用於比較
+    const normalizedSearchTerm = searchTerm.replace(/[\s\.\-]/g, '');
+
+    const filteredData = antibioticData.filter((row, index) => {
+        if (index === 0) return false;
+
+        const genericName = row[0]?.toString().toLowerCase() || '';
+        const brandName = row[1]?.toString().toLowerCase() || '';
+
+        // 移除資料中的空白和標點符號進行比較
+        const normalizedGenericName = genericName.replace(/[\s\.\-]/g, '');
+        const normalizedBrandName = brandName.replace(/[\s\.\-]/g, '');
+
+        return genericName.includes(searchTerm) || 
+               brandName.includes(searchTerm) ||
+               normalizedGenericName.includes(normalizedSearchTerm) ||
+               normalizedBrandName.includes(normalizedSearchTerm);
+    });
+
+    displayAntibioticData([antibioticHeaders, ...filteredData]);
+}
+
+function displayAntibioticData(data) {
+    if (!data || data.length <= 1) {
+        document.getElementById('antibioticResults').innerHTML = '<p>找不到符合的藥物</p>';
+        document.getElementById('antibioticCountInfo').textContent = '找到 0 筆符合的資料';
+        return;
+    }
+
+    let table = '<table><thead><tr>';
+
+    data[0].forEach(header => {
+        table += `<th>${header}</th>`;
+    });
+
+    table += '</tr></thead><tbody>';
+
+    const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
+    for (let i = 1; i < data.length; i++) {
+        table += '<tr>';
+        data[i].forEach((cell, cellIndex) => {
+            const cellContent = cell || '';
+            const cellStr = cellContent.toString();
+    
+            // 對藥物名稱欄位(前兩欄)做高亮顯示
+            if (cellIndex < 2 && searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
+                const highlightedContent = cellStr.replace(
+                    new RegExp(searchTerm, 'gi'),
+                    match => `<mark>${match}</mark>`
+                );
+                table += `<td>${highlightedContent}</td>`;
+            } else {
+                // 劑量欄位使用較小字體並保持換行
+                if (cellIndex >= 2) {
+                    table += `<td style="font-size: 16px; white-space: pre-wrap;">${cellStr}</td>`;
+                } else {
+                    table += `<td>${cellStr}</td>`;
+                }
+            }
+        });
+        table += '</tr>';
+    }
+
+    table += '</tbody></table>';
+    document.getElementById('antibioticResults').innerHTML = table;
+    document.getElementById('antibioticCountInfo').textContent = 
+        `找到 ${data.length - 1} 筆符合的藥物資料`;
+}
+
 // ICD碼複製功能
-        function copyIcdCode(icdCode, buttonElement) {
-            if (!icdCode.trim()) {
-                alert('沒有ICD碼可以複製！');
-                return;
-            }
+function copyIcdCode(icdCode, buttonElement) {
+    if (!icdCode.trim()) {
+        alert('沒有ICD碼可以複製！');
+        return;
+    }
 
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(icdCode).then(() => {
-                    showIcdCopySuccess(buttonElement);
-                }).catch(err => {
-                    console.error('複製失敗:', err);
-                    fallbackCopyIcd(icdCode, buttonElement);
-                });
-            } else {
-                fallbackCopyIcd(icdCode, buttonElement);
-            }
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(icdCode).then(() => {
+            showIcdCopySuccess(buttonElement);
+        }).catch(err => {
+            console.error('複製失敗:', err);
+            fallbackCopyIcd(icdCode, buttonElement);
+        });
+    } else {
+        fallbackCopyIcd(icdCode, buttonElement);
+    }
+}
+
+function fallbackCopyIcd(text, button) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showIcdCopySuccess(button);
+        } else {
+            alert('複製失敗，請手動選擇文字複製');
         }
-        function fallbackCopyIcd(text, button) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.opacity = "0";
+    } catch (err) {
+        alert('複製失敗，請手動選擇文字複製');
+    }
 
-            document.body.appendChild(textArea);
-            textArea.select();
+    document.body.removeChild(textArea);
+}
 
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showIcdCopySuccess(button);
-                } else {
-                    alert('複製失敗，請手動選擇文字複製');
-                }
-            } catch (err) {
-                alert('複製失敗，請手動選擇文字複製');
-            }
+function showIcdCopySuccess(button) {
+    if (!button) return;
 
-            document.body.removeChild(textArea);
-        }
-        function showIcdCopySuccess(button) {
-            if (!button) return;
-    
-            const originalText = button.textContent;
-    
-            // 記住原始樣式，如果沒有設定就用預設值
-            const originalBg = button.style.backgroundColor || 'white';
-            const originalColor = button.style.color || '#495057';
-            const originalBorder = button.style.border || '1px solid #dee2e6';
+    const originalText = button.textContent;
 
-            button.textContent = '已複製！';
-            button.style.backgroundColor = '#f8f9fa';
-            button.style.color = '#28a745';
-            button.style.border = '1px solid #28a745';
+    // 記住原始樣式，如果沒有設定就用預設值
+    const originalBg = button.style.backgroundColor || 'white';
+    const originalColor = button.style.color || '#495057';
+    const originalBorder = button.style.border || '1px solid #dee2e6';
 
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.backgroundColor = originalBg;
-                button.style.color = originalColor;
-                button.style.border = originalBorder;
-            }, 2000);
-        }
-    </script>
+    button.textContent = '已複製！';
+    button.style.backgroundColor = '#f8f9fa';
+    button.style.color = '#28a745';
+    button.style.border = '1px solid #28a745';
+
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.style.backgroundColor = originalBg;
+        button.style.color = originalColor;
+        button.style.border = originalBorder;
+    }, 2000);
+}
+</script>
 </body>
 </html>
