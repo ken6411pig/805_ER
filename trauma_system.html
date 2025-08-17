@@ -1060,6 +1060,7 @@
                     groupedByType[injury.type] = {
                         chineseParts: [],
                         englishParts: [],
+                        englishDescriptions: [], // 新增：儲存完整英文描述
                         icds: []
                     };
                 }
@@ -1068,6 +1069,7 @@
                 // 如果沒有 englishPart 屬性，使用 getEnglishPartName 函數取得
                 const englishPart = injury.englishPart || getEnglishPartName(injury.part);
                 groupedByType[injury.type].englishParts.push(englishPart);
+                groupedByType[injury.type].englishDescriptions.push(injury.english); // 儲存原始英文描述
                 groupedByType[injury.type].icds.push(`${injury.icd} - ${injury.part}${injury.type}`);
             });
             
@@ -1138,61 +1140,59 @@
                 
                 chineseSection += `*. ${chineseParts}${chineseType}\n`;
                 
-                // 英文部分 - 組合相同類型的部位 (使用英文部位名稱)
-                const englishParts = group.englishParts.join(', ');
-                let englishType = '';
-                
-                // 根據傷害類型設定英文描述
-                switch(type) {
-                    case 'A/W':
-                        englishType = 'abrasion/wound of';
-                        break;
-                    case 'L/W':
-                        englishType = 'laceration/wound of';
-                        break;
-                    case 'Contusion':
-                        englishType = 'contusion of';
-                        break;
-                    case 'Fracture':
-                        englishType = 'fracture of';
-                        break;
-                    case 'Crush':
-                        englishType = 'crush injury of';
-                        break;
-                    case 'Burn':
-                        englishType = 'burn of';
-                        break;
-                    case 'Dislocation':
-                        englishType = 'dislocation of';
-                        break;
-                    case 'Sprain':
-                        englishType = 'sprain of';
-                        break;
-                    case 'Strain':
-                        englishType = 'strain of';
-                        break;
-                    case 'Concussion':
-                        englishType = 'concussion';
-                        englishSection += `*. ${englishType}\n`;
-                        return; // 腦震盪特殊處理，不需要加部位
-                    case 'ICH':
-                        englishType = 'ICH of';
-                        break;
-                    case 'SDH':
-                        englishType = 'SDH of';
-                        break;
-                    case 'SAH':
-                        englishType = 'SAH';
-                        englishSection += `*. ${englishType}\n`;
-                        return; // SAH特殊處理，不需要加部位
-                    case 'EDH':
-                        englishType = 'EDH of';
-                        break;
-                    default:
-                        englishType = type.toLowerCase() + ' of';
+                // 英文部分 - 特殊處理腦部外傷
+                if (['ICH', 'SDH', 'SAH', 'EDH', 'Concussion'].includes(type)) {
+                    // 對於腦部外傷，直接使用資料庫中的英文描述
+                    if (group.englishDescriptions.length === 1) {
+                        // 只有一個時，直接使用
+                        englishSection += `*. ${group.englishDescriptions[0]}\n`;
+                    } else {
+                        // 多個相同類型時，去重複後列出
+                        const uniqueDescriptions = [...new Set(group.englishDescriptions)];
+                        uniqueDescriptions.forEach(desc => {
+                            englishSection += `*. ${desc}\n`;
+                        });
+                    }
+                } else {
+                    // 一般外傷的處理方式
+                    const englishParts = group.englishParts.join(', ');
+                    let englishType = '';
+                    
+                    // 根據傷害類型設定英文描述
+                    switch(type) {
+                        case 'A/W':
+                            englishType = 'abrasion/wound of';
+                            break;
+                        case 'L/W':
+                            englishType = 'laceration/wound of';
+                            break;
+                        case 'Contusion':
+                            englishType = 'contusion of';
+                            break;
+                        case 'Fracture':
+                            englishType = 'fracture of';
+                            break;
+                        case 'Crush':
+                            englishType = 'crush injury of';
+                            break;
+                        case 'Burn':
+                            englishType = 'burn of';
+                            break;
+                        case 'Dislocation':
+                            englishType = 'dislocation of';
+                            break;
+                        case 'Sprain':
+                            englishType = 'sprain of';
+                            break;
+                        case 'Strain':
+                            englishType = 'strain of';
+                            break;
+                        default:
+                            englishType = type.toLowerCase() + ' of';
+                    }
+                    
+                    englishSection += `*. ${englishType} ${englishParts}\n`;
                 }
-                
-                englishSection += `*. ${englishType} ${englishParts}\n`;
             });
             
             let report = icdSection + '\n' + chineseSection + '\n' + englishSection;
