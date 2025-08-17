@@ -409,7 +409,6 @@
             ]
         };
 
-
         const injuryDatabase = {
             '頸部': [
                 { type: 'A/W', icd: 'S10.11XA', english: 'abrasion/wound of neck', chinese: '頸部擦傷' },
@@ -765,7 +764,6 @@
                 { type: 'Crush', icd: 'S8780XA', english: 'crush injury of right lower leg', chinese: '右小腿壓砸傷' },
                 { type: 'Burn', icd: 'T24039A', english: 'burn of right lower leg', chinese: '右小腿燒傷' },
                 { type: 'Strain', icd: 'S86919A', english: 'strain of right lower leg', chinese: '右小腿拉傷' }
-
             ],
             '左踝': [
                 { type: 'A/W', icd: 'S90519A', english: 'abrasion/wound of left ankle', chinese: '左踝擦傷/傷口' },
@@ -832,6 +830,7 @@
                 { type: 'Dislocation', icd: 'S93106A', english: 'dislocation of right toe', chinese: '右腳趾脫位' }
             ]
         };
+        
         let selectedInjuries = [];
         let currentMainPart = '';
         let currentSubPart = '';
@@ -920,8 +919,12 @@
         }
 
         function addInjury(partName, injury) {
+            // 取得英文部位名稱
+            let englishPartName = getEnglishPartName(partName);
+            
             const newInjury = {
                 part: partName,
+                englishPart: englishPartName,
                 type: injury.type,
                 icd: injury.icd,
                 english: injury.english,
@@ -931,6 +934,63 @@
             
             selectedInjuries.push(newInjury);
             updateInjuryList();
+        }
+
+        // 新增函數：取得英文部位名稱
+        function getEnglishPartName(chinesePart) {
+            const partMapping = {
+                '頭部': 'head',
+                '臉部': 'face',
+                '眼部': 'eyelid',
+                '鼻部': 'nose',
+                '耳部': 'ear',
+                '臉頰': 'cheek',
+                '口部': 'lip',
+                '下顎': 'jaw',
+                '下巴': 'chin',
+                '頸部': 'neck',
+                '胸部': 'chest',
+                '腹部': 'abdomen',
+                '會陰部': 'perineum',
+                '上背部': 'upper back',
+                '下背部': 'lower back',
+                '臀部': 'buttock',
+                '頸椎': 'cervical vertebra',
+                '胸椎': 'thoracic vertebra',
+                '腰椎': 'lumbar vertebra',
+                '薦椎': 'sacrum',
+                '尾椎': 'coccyx',
+                '左肩': 'left shoulder',
+                '右肩': 'right shoulder',
+                '左上臂': 'left upper arm',
+                '右上臂': 'right upper arm',
+                '左肘部': 'left elbow',
+                '右肘部': 'right elbow',
+                '左前臂': 'left forearm',
+                '右前臂': 'right forearm',
+                '左手腕': 'left wrist',
+                '右手腕': 'right wrist',
+                '左手掌': 'left hand',
+                '右手掌': 'right hand',
+                '左手指': 'left finger',
+                '右手指': 'right finger',
+                '左髖部': 'left hip',
+                '右髖部': 'right hip',
+                '左大腿': 'left thigh',
+                '右大腿': 'right thigh',
+                '左膝': 'left knee',
+                '右膝': 'right knee',
+                '左小腿': 'left lower leg',
+                '右小腿': 'right lower leg',
+                '左踝': 'left ankle',
+                '右踝': 'right ankle',
+                '左足部': 'left foot',
+                '右足部': 'right foot',
+                '左腳趾': 'left toe',
+                '右腳趾': 'right toe'
+            };
+            
+            return partMapping[chinesePart] || chinesePart;
         }
 
         function removeInjury(id) {
@@ -950,7 +1010,7 @@
                 <div class="injury-item">
                     <div class="injury-details">
                         ${injury.icd} - ${injury.part} ${injury.type}<br>
-                        ${injury.english}
+                        ${injury.english} (${injury.englishPart || injury.part})
                     </div>
                     <button class="remove-injury" onclick="removeInjury(${injury.id})">×</button>
                 </div>
@@ -983,6 +1043,7 @@
             document.querySelectorAll('.body-part').forEach(p => p.classList.remove('selected'));
         }
 
+        // 新的產生報告函數 - 組合相同傷害類型
         function generateReport() {
             const reportOutput = document.getElementById('report-output');
     
@@ -990,17 +1051,150 @@
                 alert('請先選擇至少一項外傷！');
                 return;
             }
-    
+            
+            // 按傷害類型分組
+            const groupedByType = {};
+            
+            selectedInjuries.forEach(injury => {
+                if (!groupedByType[injury.type]) {
+                    groupedByType[injury.type] = {
+                        chineseParts: [],
+                        englishParts: [],
+                        icds: []
+                    };
+                }
+                
+                groupedByType[injury.type].chineseParts.push(injury.part);
+                // 如果沒有 englishPart 屬性，使用 getEnglishPartName 函數取得
+                const englishPart = injury.englishPart || getEnglishPartName(injury.part);
+                groupedByType[injury.type].englishParts.push(englishPart);
+                groupedByType[injury.type].icds.push(`${injury.icd} - ${injury.part}${injury.type}`);
+            });
+            
             let icdSection = '';
             let chineseSection = '';
             let englishSection = '';
-    
-            selectedInjuries.forEach(injury => {
-                icdSection += `${injury.icd} - ${injury.part}${injury.type}\n`;
-                chineseSection += `*. ${injury.chinese}\n`;
-                englishSection += `*. ${injury.english}\n`;
+            
+            // 生成組合後的報告
+            Object.keys(groupedByType).forEach(type => {
+                const group = groupedByType[type];
+                
+                // ICD 部分保持原樣 (每一項分別列出)
+                group.icds.forEach(icd => {
+                    icdSection += `${icd}\n`;
+                });
+                
+                // 中文部分 - 組合相同類型的部位
+                const chineseParts = group.chineseParts.join('、');
+                let chineseType = '';
+                
+                // 根據傷害類型設定中文描述
+                switch(type) {
+                    case 'A/W':
+                        chineseType = '擦傷';
+                        break;
+                    case 'L/W':
+                        chineseType = '撕裂傷';
+                        break;
+                    case 'Contusion':
+                        chineseType = '挫傷';
+                        break;
+                    case 'Fracture':
+                        chineseType = '骨折';
+                        break;
+                    case 'Crush':
+                        chineseType = '壓砸傷';
+                        break;
+                    case 'Burn':
+                        chineseType = '燒傷';
+                        break;
+                    case 'Dislocation':
+                        chineseType = '脫位';
+                        break;
+                    case 'Sprain':
+                        chineseType = '扭傷';
+                        break;
+                    case 'Strain':
+                        chineseType = '拉傷';
+                        break;
+                    case 'Concussion':
+                        chineseType = '腦震盪';
+                        break;
+                    case 'ICH':
+                        chineseType = '腦內出血';
+                        break;
+                    case 'SDH':
+                        chineseType = '硬腦膜下出血';
+                        break;
+                    case 'SAH':
+                        chineseType = '蜘蛛膜下腔出血';
+                        break;
+                    case 'EDH':
+                        chineseType = '硬腦膜外出血';
+                        break;
+                    default:
+                        chineseType = type;
+                }
+                
+                chineseSection += `*. ${chineseParts}${chineseType}\n`;
+                
+                // 英文部分 - 組合相同類型的部位 (使用英文部位名稱)
+                const englishParts = group.englishParts.join(', ');
+                let englishType = '';
+                
+                // 根據傷害類型設定英文描述
+                switch(type) {
+                    case 'A/W':
+                        englishType = 'abrasion/wound of';
+                        break;
+                    case 'L/W':
+                        englishType = 'laceration/wound of';
+                        break;
+                    case 'Contusion':
+                        englishType = 'contusion of';
+                        break;
+                    case 'Fracture':
+                        englishType = 'fracture of';
+                        break;
+                    case 'Crush':
+                        englishType = 'crush injury of';
+                        break;
+                    case 'Burn':
+                        englishType = 'burn of';
+                        break;
+                    case 'Dislocation':
+                        englishType = 'dislocation of';
+                        break;
+                    case 'Sprain':
+                        englishType = 'sprain of';
+                        break;
+                    case 'Strain':
+                        englishType = 'strain of';
+                        break;
+                    case 'Concussion':
+                        englishType = 'concussion';
+                        englishSection += `*. ${englishType}\n`;
+                        return; // 腦震盪特殊處理，不需要加部位
+                    case 'ICH':
+                        englishType = 'ICH of';
+                        break;
+                    case 'SDH':
+                        englishType = 'SDH of';
+                        break;
+                    case 'SAH':
+                        englishType = 'SAH';
+                        englishSection += `*. ${englishType}\n`;
+                        return; // SAH特殊處理，不需要加部位
+                    case 'EDH':
+                        englishType = 'EDH of';
+                        break;
+                    default:
+                        englishType = type.toLowerCase() + ' of';
+                }
+                
+                englishSection += `*. ${englishType} ${englishParts}\n`;
             });
-    
+            
             let report = icdSection + '\n' + chineseSection + '\n' + englishSection;
     
             reportOutput.textContent = report.trim();
