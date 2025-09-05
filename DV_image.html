@@ -69,6 +69,7 @@
             padding: 2px;
             width: 100%;
             outline: none;
+            font-family: 'DFKai-SB', '標楷體', serif;
         }
 
         .checkbox-group {
@@ -86,9 +87,10 @@
             background: transparent;
             width: 25px;
             text-align: center;
-            font-size: 14px;
+            font-size: 16px;
             padding: 5x;
             margin:-5px;
+            font-family: 'DFKai-SB', '標楷體', serif;
         }
 
         /* 修改垂直文字樣式，支持括號旋轉 */
@@ -307,6 +309,24 @@
             border-color: #0056b3;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
+        .title-switch-btn {
+            padding: 8px 15px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px;
+        }
+
+        .title-switch-btn:hover {
+            background-color: #495057;
+        }
+        
+        .title-switch-btn.active {
+            background-color: #007bff;
+        }
 
         @media print {
             body {
@@ -361,7 +381,9 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
+            .title-switch-btn {
+                display: none !important;
+            }
             .circle-small { 
                 width: 18px !important; 
                 height: 18px !important; 
@@ -388,7 +410,11 @@
 
     <div class="form-container">
         <div class="header">
-            <h1>國軍花蓮總醫院受理家庭暴力事件驗傷診斷書</h1>
+            <h1 id="form-title">國軍花蓮總醫院受理家庭暴力事件驗傷診斷書</h1>
+            <div style="text-align: center; margin-top: 10px;">
+                <button class="title-switch-btn active" onclick="switchTitle('domestic')">家庭暴力</button>
+                <button class="title-switch-btn" onclick="switchTitle('child')">兒少保護</button>
+            </div>
         </div>
 
         <table style="width: 100%; border-collapse: collapse; border: 1px solid black;margin-top: -21px;">
@@ -1190,6 +1216,23 @@
                     circle.style.top = circle.dataset.originalTop;
                 }
             });
+        }
+
+        // 切換標題功能
+        function switchTitle(type) {
+            const titleElement = document.getElementById('form-title');
+            const buttons = document.querySelectorAll('.title-switch-btn');
+    
+            // 移除所有按鈕的 active 類別
+            buttons.forEach(btn => btn.classList.remove('active'));
+    
+            if (type === 'domestic') {
+                titleElement.textContent = '國軍花蓮總醫院受理家庭暴力事件驗傷診斷書';
+                buttons[0].classList.add('active');
+            } else if (type === 'child') {
+                titleElement.textContent = '國軍花蓮總醫院受理兒少保護事件驗傷診斷書';
+                buttons[1].classList.add('active');
+            }
         }
     </script>
 </body>
