@@ -969,7 +969,7 @@ fetch('ICD_10_CM.csv')
                 headers = csvData[0];
                 hideLoading();
                 document.getElementById('minLengthNotice').textContent = 
-                    '請輸入至少2個字元開始搜尋';
+                    '請輸入至少3個字元開始搜尋';
             }
         });
     });
@@ -1033,9 +1033,9 @@ function searchData() {
     document.getElementById('countInfo').textContent = '';
     document.getElementById('minLengthNotice').textContent = '';
 
-    if (searchTerm.length < 2) {
+    if (searchTerm.length < 3) {
         document.getElementById('minLengthNotice').textContent = 
-            '請輸入至少2個字元開始搜尋';
+            '請輸入至少3個字元開始搜尋';
         return;
     }
 
