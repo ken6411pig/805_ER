@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>員工班表與預假系統</title>
+    <title>急診預假系統</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 500px; margin: 30px auto; padding: 20px; }
         .form-group { margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group" style="background-color: #f9fdf9;">
-            <label><b>平日預班日期：</b></label>
+            <label><b>平日預班(可上班)日期：</b></label>
             <div id="workContainer">
                 <div class="shift-row">
                     <input type="date" class="work-date">
@@ -52,7 +52,7 @@
         </div>
 
         <div class="form-group" style="background-color: #fff9f9;">
-            <label><b>假日預假日期：</b></label>
+            <label><b>假日預假(不可上班)日期：</b></label>
             <div id="leaveContainer">
                 <div class="shift-row">
                     <input type="date" class="leave-date">
@@ -68,7 +68,7 @@
 
         <button type="button" id="submitBtn" class="btn-submit" onclick="submitData()">送出資料</button>
         
-        <div id="successMessage">🎉 資料送出成功！即將為您重新整理畫面...</div>
+        <div id="successMessage">🎉 資料送出成功！</div>
     </form>
 
     <script>
