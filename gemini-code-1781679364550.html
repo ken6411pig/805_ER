@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>員工班表與預假系統</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 30px auto; padding: 20px; }
+        .form-group { margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        .shift-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+        button { cursor: pointer; padding: 8px 15px; border-radius: 4px; }
+        .btn-add { background-color: #e7e7e7; border: 1px solid #ccc; width: 100%; margin-top: 10px; }
+        .btn-submit { background-color: #4CAF50; color: white; border: none; width: 100%; padding: 12px; font-size: 16px; margin-top: 20px;}
+        .btn-remove { background-color: #f44336; color: white; border: none; padding: 5px 10px; }
+        
+        /* 新增：成功訊息的樣式 */
+        #successMessage {
+            display: none; 
+            background-color: #d4edda; 
+            color: #155724; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-top: 20px; 
+            text-align: center; 
+            border: 1px solid #c3e6cb;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>班表與預假登記</h2>
+    
+    <form id="leaveForm">
+        <div class="form-group">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" required placeholder="請輸入姓名">
+        </div>
+
+        <div class="form-group" style="background-color: #f9fdf9;">
+            <label><b>平日預班日期：</b></label>
+            <div id="workContainer">
+                <div class="shift-row">
+                    <input type="date" class="work-date">
+                    <select class="work-type">
+                        <option value="白班">白班</option>
+                        <option value="夜班">夜班</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn-add" onclick="addWorkRow()">+ 新增預班日期</button>
+        </div>
+
+        <div class="form-group" style="background-color: #fff9f9;">
+            <label><b>假日預假日期：</b></label>
+            <div id="leaveContainer">
+                <div class="shift-row">
+                    <input type="date" class="leave-date">
+                </div>
+            </div>
+            <button type="button" class="btn-add" onclick="addLeaveRow()">+ 新增預假日期</button>
+        </div>
+
+        <div class="form-group">
+            <label for="remark"><b>備註 (選填)：</b></label>
+            <textarea id="remark" rows="3" style="width: 100%; padding: 8px; box-sizing: border-box; margin-top: 8px;" placeholder="如果有特別需要說明的，請寫在這裡..."></textarea>
+        </div>
+
+        <button type="button" id="submitBtn" class="btn-submit" onclick="submitData()">送出資料</button>
+        
+        <div id="successMessage">🎉 資料送出成功！即將為您重新整理畫面...</div>
+    </form>
+
+    <script>
+        // 取得下個月第一天 (維持上一階段的邏輯)
+        function getNextMonthFirstDay() {
+            const today = new Date();
+            const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            const yyyy = nextMonth.getFullYear();
+            const mm = String(nextMonth.getMonth() + 1).padStart(2, '0');
+            const dd = String(nextMonth.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
+
+        window.onload = function() {
+            const nextMonth = getNextMonthFirstDay();
+            document.querySelector('.work-date').min = nextMonth;
+            document.querySelector('.leave-date').min = nextMonth;
+        };
+
+        function addWorkRow() {
+            const container = document.getElementById('workContainer');
+            const row = document.createElement('div');
+            const nextMonth = getNextMonthFirstDay();
+            row.className = 'shift-row';
+            row.innerHTML = `<input type="date" class="work-date" min="${nextMonth}"><select class="work-type"><option value="白班">白班</option><option value="夜班">夜班</option></select><button type="button" class="btn-remove" onclick="this.parentElement.remove()">刪除</button>`;
+            container.appendChild(row);
+        }
+
+        function addLeaveRow() {
+            const container = document.getElementById('leaveContainer');
+            const row = document.createElement('div');
+            const nextMonth = getNextMonthFirstDay();
+            row.className = 'shift-row';
+            row.innerHTML = `<input type="date" class="leave-date" min="${nextMonth}"><button type="button" class="btn-remove" onclick="this.parentElement.remove()">刪除</button>`;
+            container.appendChild(row);
+        }
+
+ async function submitData() {
+    const name = document.getElementById('name').value;
+    if (!name) return alert('請填寫姓名');
+
+    const workDates = document.querySelectorAll('.work-date');
+    const workTypes = document.querySelectorAll('.work-type');
+    const workShifts = [];
+    for (let i = 0; i < workDates.length; i++) {
+        if (workDates[i].value) workShifts.push({ date: workDates[i].value, type: workTypes[i].value });
+    }
+
+    const leaveDateInputs = document.querySelectorAll('.leave-date');
+    const leaveDates = [];
+    for (let i = 0; i < leaveDateInputs.length; i++) {
+        if (leaveDateInputs[i].value) leaveDates.push({ date: leaveDateInputs[i].value });
+    }
+
+    if (workShifts.length === 0 && leaveDates.length === 0) {
+        return alert('請至少填寫一天預班或預假日期！');
+    }
+
+    const remark = document.getElementById('remark').value;
+    const payload = { name, workShifts, leaveDates, remark };
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw32jofgKu0CNHDRl_1vSWxJPkBpfWxvzFVguNTEKxUPUGQSfXEOo_qba9-mowGxQxcFw/exec'; 
+    
+    // 防止重複點擊
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.innerText = '資料傳送中...';
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            // 基本的成功通知，不重置表單，讓使用者自行關閉頁面
+            alert('資料送出成功！您可以直接關閉此網頁。');
+            
+            // 按鈕改成已送出，且不解除禁用，防止使用者手滑重複送出
+            submitBtn.innerText = '已成功送出';
+        } else {
+            alert('送出失敗，請稍後再試');
+            // 失敗才恢復按鈕讓使用者重試
+            submitBtn.innerText = '送出資料';
+            submitBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('連線異常，請確認網路狀態');
+        // 異常才恢復按鈕讓使用者重試
+        submitBtn.innerText = '送出資料';
+        submitBtn.disabled = false;
+    }
+}
+    </script>
+</body>
+</html>
