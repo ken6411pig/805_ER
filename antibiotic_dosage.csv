@@ -3,7 +3,7 @@ Penicillin G,Penicillin G,0.5-4mu Q4H,0.5-4mu Q8H,0.5-4mu Q8H,0.5-4 mU Q12H,0.5-
 Oxacillin,Prostaphlin,0.25-2g Q4-6H,No adjustment,No adjustment,No adjustment,No adjustment
 Ampicillin,Ampolin,1-2g Q4-6H,1-2g Q6-8H,1-2g Q8-12H,1-2g Q12H,1-2g Q12H + 1-2g AD
 Amoxicillin,Amoxicillin,(po)500mg Q8H/875mg q12h,500mg Q8H/875mg q12h,250-500 mg q12h,250-500 mg q24h,250-500 mg q24h(+ extra dose AD)
-Ampi+Salbactum,Unasyn,1.5g Q6-8H/3g Q6-8H,1.5g Q12H/3g Q12H,1.5g Q12H/3g Q12H,1.5g Q24H/3g Q24H,3g QN
+Ampi+Salbactum,Unasyn,1.5-3g Q6H,1.5-3g Q8H,1.5-3g Q12H,1.5-3g QD,1.5-3g QD(+ extra dose AD)
 Amo+Clavulanate,Augmentin,1.2g Q8H,1.2g Q8H,600mg Q12H,600mg QD,600mg QN
 Piperacillin+Tazobactam,Tazocin,3.375 Q6H/4.5g Q6H,(>40)3.375 Q6H/4.5g Q6H,(20-40)2.25g Q6H/3.375g Q6H,(<20)2.25g Q8H/2.25g Q6H,2.25g Q12H/2.25g Q8H
 Cefazolin,Cefa,1-2g Q8H,1-2g Q12H,1-2g Q12H,1-2g QD,1-2g QN
