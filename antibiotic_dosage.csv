@@ -25,13 +25,13 @@ Azithromycin,Zithromax,250-500mg QD,No adjustment,No adjustment,No adjustment,No
 Clarithromycin,Klaricid,500mg Q12H,500mg Q12-24H,500mg Q12-24H,500mg QD,500mg QD (AD)
 Vancomycin,Vancomycin,30-60 mg/kg in 2-3 divided doses (50-90)15-30 mg/kg Q12H,15 mg/kg q24-96h,15 mg/kg q24-96h,7.5 mg/kg q2-3 days,Typical doses: give 15mg/kg if next dialysis is in 1 day; 25 mg/kg if in 2 days; 35 mg/kg if in 3 days
 Teicoplanin,Targocid,6 mg/kg IV q12h x3 doses (load)->then 6 mg/kg q24h, (30-80)load->then 6 mg/kg q48h, load->then 6 mg/kg Q72H, load->then 6mg/kg Q72H, Load->then 6 mg/kg Q72H. Give AD on dialysis day
-
-Daptomycin,Cubicin,4-6mg/kg QD,4-6mg/kg QD,6mg/kg QOD,6mg/kg QOD,6mg/kg QOD
-Linezolid,Zyvox,600mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
-Fosfomycin,Fosfomycin,2g Q8H,2g Q12H,2g Q12H,2g QD,2g QOD
+Daptomycin,Cubicin,4-6mg/kg QD,4-6mg/kg QD,6mg/kg QOD,6mg/kg QOD,6mg/kg QOD AD
+Linezolid,Zyvox,600mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment(give one of the dialysis day doses AD)
+Fosfomycin,Fosfomycin,12-24 gm/day(divided q8-12h),100%,30-40:70%;20-30:60%;10-20:40%,20% dose,2g QOD
 Tigecycline,Tygacil,100mg then 50mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
-Colistin,Colimycin,2MU Q12H,2MU QD,2MU QD,見熱病,見熱病
+Colistin,Colimycin,Load: 4mg x (pt wt in kg). Use lower of ideal or actual wt. Load may exceed 300 mg. Start maintenance 12 hrs later:(>90)180mg q12h,見熱病,見熱病,見熱病,見熱病
 TMP+SMX,Baktar/Sevatrim,5-20mg/kg/day divided Q6-12H,5-20mg/kg/day divided Q6-12H,5-10mg/kg/day divided Q12H,Not recommended/if use 5-10 mg/kg QD,Not recommended/if use 5-10 mg/kg QD
+
 Clindamycin,Ulecin,600mg Q8H/300mg Q6H,No adjustment,No adjustment,No adjustment,No adjustment
 Clindamycin,Clincin/Cleocin,150-450mg Q6H,No adjustment,No adjustment,No adjustment,No adjustment
 Metronidazole,Flagyl,500mg Q8H,500mg Q8H,500mg Q8H,500mg Q12H,500mg Q12H + 500mg AD
