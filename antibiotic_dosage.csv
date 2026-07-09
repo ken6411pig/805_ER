@@ -15,17 +15,17 @@ Ceftazidime,Fortum,2g Q8H (>50-90)2g Q8-Q12H,2g Q12-24H,2g Q12-24H,2g Q24-48H,2g
 CPZ+Sulbactam,Brosym,0.5g/0.5g-2g/2g Q12H,0.5g/0.5g-2g/2g Q12H,(15-30)max 1g/1g Q12H,(≦15)max 0.5g/0.5g Q12H,-
 Cefepime,Maxipime,2g Q8H (60-90)2g Q8-12H,(30-60)2g Q12H,2g QD,1g QD,1g QD+1g AD
 Gentamicin,Gentamicin,(MDD)1.7-2.0mg/kg IM/IV Q8H,1.7-2.0mg/kg Q12-24H,1.7-2.0mg/kg Q12-24H,1.7-2.0mg/kg Q48H,1.7-2 mg/kg Q48H + 50% dosage AD
-
-Amikacin,Amikin,7.5mg/kg Q12H,7.5mg/kg QD,7.5mg/kg QD,7.5mg/kg QOD,7.5mg/kg QOD + 50% dosage AD
-Ertapenem,Invanz,1g QD,1g QD,500mg QD,500mg QD,500mg QN
-Meropenem,Mepem,1g Q8H,1g Q12H,500mg Q12H,500mg QD,500mg QN
-Ciprofloxacin,Ciproxin,400mg Q12H,400mg QD,400mg QD,400mg QD,400mg QN
-Levofloxacin,Cravit,750mg QD,750mg QOD,750mg once then 500mg QOD,750mg once then 500mg QOD,750mg once then 500mg QOD
+Amikacin,Amikin,7.5mg/kg Q12H,7.5mg/kg QD,7.5mg/kg QD,7.5mg/kg Q48H,7.5mg/kg Q48H + 3.75mg/kg AD
+Ertapenem,Invanz,1g QD,1g QD,500mg QD,500mg QD,500mg 3x/week AD
+Meropenem,Mepem,1g Q8H,(25-50)1g Q12H,500mg Q12H,500mg QD,500mg QD(give dialysis day dose AD)
+Ciprofloxacin,Ciproxin,(IV)400mg Q12H,400mg QD,400mg QD,400mg QD,400mg QD(dose AD on dialysis days)
+Levofloxacin,Cravit,(IV)750mg QD,750mg Q48H,(<20)750mg once then 500mg QOD,750mg once then 500mg QOD,750mg once then 500mg QOD
 Moxifloxacin,Avelox,400mg QD,No adjustment,No adjustment,No adjustment,No adjustment
-Azithromycin,Zithromax,500mg QD,No adjustment,No adjustment,No adjustment,No adjustment
+Azithromycin,Zithromax,250-500mg QD,No adjustment,No adjustment,No adjustment,No adjustment
 Clarithromycin,Klaricid,500mg Q12H,500mg Q12-24H,500mg Q12-24H,500mg QD,500mg QD (AD)
-Vancomycin,Vancomycin,500mg Q8H/1000mg Q12H,500mg Q12H,500mg Q12H,500mg QD,500mg Q2-3D
-Teicoplanin,Targocid,L/D:400mg Q12H*3 then 400mg QD / L/D:800mg Q12H*3 then 800mg QD,L/D:400mg Q12H*3 then 400mg QOD / L/D:800mg Q12H*3 then 800mg QOD,L/D:400mg Q12H*3 then 400mg QOD / L/D:800mg Q12H*3 then 800mg QOD,L/D:400mg Q12H*3 then 400mg Q3D / L/D:800mg Q12H*3 then 800mg Q3D,L/D:400mg Q12H*3 then 400mg Q3D / L/D:800mg Q12H*3 then 800mg Q3D
+Vancomycin,Vancomycin,30-60 mg/kg in 2-3 divided doses (50-90)15-30 mg/kg Q12H,15 mg/kg q24-96h,15 mg/kg q24-96h,7.5 mg/kg q2-3 days,Typical doses: give 15mg/kg if next dialysis is in 1 day; 25 mg/kg if in 2 days; 35 mg/kg if in 3 days
+Teicoplanin,Targocid,6 mg/kg IV q12h x3 doses (load)->then 6 mg/kg q24h, (30-80)load->then 6 mg/kg q48h, load->then 6 mg/kg Q72H, load->then 6mg/kg Q72H, Load->then 6 mg/kg Q72H. Give AD on dialysis day
+
 Daptomycin,Cubicin,4-6mg/kg QD,4-6mg/kg QD,6mg/kg QOD,6mg/kg QOD,6mg/kg QOD
 Linezolid,Zyvox,600mg Q12H,No adjustment,No adjustment,No adjustment,No adjustment
 Fosfomycin,Fosfomycin,2g Q8H,2g Q12H,2g Q12H,2g QD,2g QOD
