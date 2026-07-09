@@ -36,6 +36,7 @@ Clindamycin,Clincin/Cleocin,(PO)150-300/300-450mg Q6H,No adjustment,No adjustmen
 Metronidazole,Flagyl,(IV/po)7.5 mg/kg q6h,7.5 mg/kg q6h,7.5 mg/kg q6h,7.5 mg/kg q12h,7.5 mg/kg q12h(give one of the dialysis day doses AD)
 Fluconazole,Diflucan,(po/IV)100-400mg QD,50-200mg QD,50-200mg QD,50-200mg QD,50-200mg q24h on non-dialysis days; 100-400mg (full dose) AD on dialysis day
 Anidulafungin,Eraxis,L/D:200mg; D2 and there after: 100mg QD,No adjustment,No adjustment,No adjustment,No adjustment
+Cefoxitin,Cexitin,2g Q8H,2g Q8-12H,2g Q8-12H,2g QD-QOD,2g QD-QOD(+ extra 1gm AD)
 
 Amphotericin-B,Fungizone,0.3-1 mg/kg QD,No adjustment,No adjustment,No adjustment,No adjustment
 Amphotericin-B,Ambisone,3-5mg/kg QD/6mg/kg QD,No adjustment,No adjustment,No adjustment,No adjustment
@@ -44,10 +45,8 @@ Ganciclovir,Cymevene,I/D: 5mg/kg Q12H / M/D: 2.5-5mg/kg QD,見熱病,見熱病,�
 Acyclovir,Zovirax,5-12.5mg/kg QD,5-12.5mg/kg Q12-24H,5-12.5mg/kg Q12-24H,2.5-6.25mg/kg QD,2.5-6.25mg/kg QD (AD)
 Peramivir,Rapiacta,600mg QD,200mg QD,200mg QD,100mg QD,L/D:100mg then 15mg QD
 Ticarcillin+Clavulanate,Timentin,3.1g Q4-Q6H,2g Q4H,2g Q8H,2g Q12H,2g Q12H;  3g supplement after HD
-Cefoxitin,Cexitin,2g Q6H,2g Q8H,2g q12h,1g QD,1g QD(give after HD)
 Imipenem/Cilastatin,Tienam,CCr >70 0.5g Q6H,CCr 41-70: 0.5g Q8H,CCr 21-40:0.25g Q6H/CCr 6-20 0.25g Q12H,Not recommended unless HD within 48h,0.25g Q12H(give after HD)
 Doxycycline,Doxycycline,0.1g Q12H,No adjustment,No adjustment,No adjustment,No adjustment
 Erythromycin,Erythromycin,0.5-1g Q6H,No adjustment,No adjustment,Consider reducing dose by 25-50%,No adjustment
 Ceftaroline,Zinforo,0.6g Q12H,0.4g Q12H,CCr 15-30: 0.3g Q12H,CCr <15: 0.2g Q12H,0.2g Q12H(give after HD)
 Doripenem,Finibax,0.5g Q8H,0.25g Q8H,0.25g Q12H,0.25g QD,0.25g QD(give after HD)
-
