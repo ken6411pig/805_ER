@@ -33,9 +33,9 @@ Colistin,Colimycin,Load: 4mg x (pt wt in kg). Use lower of ideal or actual wt. L
 TMP+SMX,Baktar/Sevatrim,5-20mg/kg/day divided Q6-12H,5-20mg/kg/day divided Q6-12H,5-10mg/kg/day divided Q12H,Not recommended/if use 5-10 mg/kg QD,Not recommended/if use 5-10 mg/kg QD; give dialysis day dose AD
 Clindamycin,Ulecin,(IV)600–1200mg/day in 2. 3 or 4 equal doses/1200–2700mg/day in 2. 3 or 4 equal doses,No adjustment,No adjustment,No adjustment,No adjustment
 Clindamycin,Clincin/Cleocin,(PO)150-300/300-450mg Q6H,No adjustment,No adjustment,No adjustment,No adjustment
+Metronidazole,Flagyl,(IV/po)7.5 mg/kg q6h,7.5 mg/kg q6h,7.5 mg/kg q6h,7.5 mg/kg q12h,7.5 mg/kg q12h(give one of the dialysis day doses AD)
+Fluconazole,Diflucan,(po/IV)100-400mg QD,50-200mg QD,50-200mg QD,50-200mg QD,50-200mg q24h on non-dialysis days; 100-400mg (full dose) AD on dialysis day
 
-Metronidazole,Flagyl,500mg Q8H,500mg Q8H,500mg Q8H,500mg Q12H,500mg Q12H + 500mg AD
-Fluconazole,Diflucan,400mg QD,200mg QD,200mg QD,200mg QD,400mg QN
 Anidulafungin,Eraxis,L/D:200mg then 100mg QD,No adjustment,No adjustment,No adjustment,No adjustment
 Amphotericin-B,Fungizone,0.3-1 mg/kg QD,No adjustment,No adjustment,No adjustment,No adjustment
 Amphotericin-B,Ambisone,3-5mg/kg QD/6mg/kg QD,No adjustment,No adjustment,No adjustment,No adjustment
