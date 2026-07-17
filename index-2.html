@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Medical Record System</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>🏥</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<style>
+        /* Basic layout */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .sidebar div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .sidebar div:hover {
+            background-color: #e0e0e0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            overflow-x: auto; /* Allow horizontal scrolling */
+        }
+
+        /* Content visibility */
+        .hidden {
+            display: none;
+        }
+
+        /* History & PE section styles */
+        .history-pe-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .history-section, .pe-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .history-section h2, .pe-section h2 {
+            margin-top: 0;
+            color: #495057;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        /* PE tabs */
+        .pe-tabs {
+            margin-bottom: 20px;
+        }
+
+        .pe-tabs span {
+            padding: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .pe-tabs span:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pe-tabs span.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pe-content {
+            margin-top: 20px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 20px;
+        }
+        #SER_Image iframe {
+            width: 100%;
+            height: calc(100vh - 40px); /* 減去 padding */
+            border: none;
+        }
+        #DV_Image iframe {
+            width: 100%;
+            height: calc(100vh - 40px); /* 減去 padding */
+            border: none;
+        }
+        #Surgery_ICD iframe {
+            width: 100%;
+            height: calc(100vh - 40px); /* 減去 padding */
+            border: none;
+        }
+
+        /* ICD Search Styles */
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-box {
+            padding: 10px;
+            width: 400px;
+            font-size: 16px;
+            margin-right: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-box:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .highlight {
+            background-color: #fff3cd;
+        }
+        #results {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .count-info {
+            margin-top: 10px;
+            color: #666;
+        }
+        .loading {
+            color: #666;
+            margin-top: 20px;
+        }
+        .min-length-notice {
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    
+        /* Surgery ICD table styles */
+        .surgery-table-container {
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            overflow-x: auto;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+
+        .surgery-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px;
+            table-layout: auto;
+        }
+
+        .surgery-table thead td {
+            position: sticky;
+            top: 0;
+            background-color: #f4f4f4;
+            z-index: 10;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+            white-space: nowrap;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+            vertical-align: top;
+            font-weight: bold;
+        }
+
+        .surgery-table tbody td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            word-break: break-word;
+            vertical-align: top;
+            text-align: left;
+            white-space: nowrap;
+        }        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .pe-content-wrapper {
+            position: relative;
+        }
+
+        .copy-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .copy-button:hover {
+            background: #0056b3;
+        }
+        
+        .copy-button.success {
+            background: #28a745;
+        }
+
+        /* 外部連結樣式 - 移除不需要的CSS */
+
+        /* 響應式設計 */
+        @media screen and (max-width: 1024px) {
+            .history-pe-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* History區塊樣式 */
+        .history-section p, .history-section ul, .history-section li {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .history-section h3 {
+            color: #007bff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* 診斷證明書複製行樣式 */
+        .copy-line {
+            cursor: pointer;
+            display: block;
+            padding: 5px 0;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .copy-line:hover {
+            background-color: #e9ecef;
+        }
+</style>
+</head>
+<body>
+<div class="sidebar">
+    <div data-page="History_PE">📋 History & PE</div>
+    <div data-page="ICD_code">🔍 ICD Code</div>
+    <div data-page="Plan">📝 Plan</div>
+    <div data-page="Surgery_ICD">📖 外傷代碼速查</div>
+    <div data-page="SER_Image">🖼️ 電子外傷圖</div> 
+    <div data-page="Trauma_System">👤 多處外傷圖譜系統</div>
+    <div data-page="DV_Image">📷 家暴/兒少診斷書</div>
+    <div data-page="Antibiotic_Dosage">💊 抗生素劑量查詢</div>
+    <div data-page="Note">📓 備忘錄</div>
+</div>
+<div class="main-content">
+
+<!-- 合併的 History & PE 頁面 -->
+<div class="content hidden" id="History_PE">
+    <h1>History & Physical Examination</h1>
+    
+    <div class="history-pe-container">
+        <!-- History 區塊 -->
+        <div class="history-section">
+            <h2>📋 History</h2>
+            
+            <div class="section">
+                <p class="mb-2">
+                    The patient who denied systemic disease before. NKA. No op history.
+                </p>
+                <h3>Negative findings:</h3>
+                <p>
+                    chills(-), fever(-), cough(-), sputum(-), hemoptysis(-), chest tightness(-), chest pain(-), refer pain(-), cold sweating(-), SOB(-), DOE(-), PND(-), orthopnea(-), abdominal pain(-), anorexia(-), dysphagia(-), nausea(-), vomiting(-), constipation(-), diarrhea(-),hematemesis(-), tarry stools(-), hematochezia(-), urgency(-), burning sensation(-), frequency(-), dysuria(-), hematuria(-), oligouria(-), body weight loss(-)
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>TOCC history:</h3>
+                <ul style="padding-left: 20px;">
+                    <li>Occupation:</li>
+                    <li>Cluster/contact history: Nil</li>
+                    <li>Traveling history: Nil</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>CAD risk factors:</h3>
+                <p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
+                    Old age (-) Male (-) Post menopause (-)</p>
+                    
+                <h3>SER</h3>
+                <p>
+                    This year-old woman denied any systemic disease.<br/>
+                    She suffered from TA (自摔) with helmet. ILOC(-), no head, chest, abdomen injury.<br/>
+                    There was no nausea/vomiting, limitation ROMo f extremities.<br/>
+                </p>
+                <h3>OHCA</h3>
+                <p>
+                    witnesses(-), bystander CPR(-)<br/>
+                    EMT arrived ______<br/>
+                    The initial rhythm was non-shockable.<br/>
+                    DC shock *0 time(s) were delivered in the prehospital setting.<br/>
+                    Advanced airway (LMA) was established.<br/>
+                    Epinephrine of 0 mg was given.<br/>
+                    Mechanical CPR (LUCAS) has been deployed.<br/>
+                    He was sent to our ER at ______<br/>
+                    The presenting rhythm at ER was asystole/PEA.<br/>
+                </p> 
+                <h3>PER</h3>
+                <p>
+                    Fever up to C for days.<br/>
+                    No fever, cough, rhinorrhea, SOB, abdominal discomfort, N/V, diarrhea, dysuria or skin rash.<br/>
+                    Fair activity, appetite and urine output.<br/>
+                    TOCC histories: denied; <br/>
+                    Vaccination hx: <br/>
+                    Allergy: denied; <br/>
+                    PMH: denied, no G6PD deficiency<br/>
+                    Last anti-pyretic medication:<br/>
+                    FHx: denied<br/>
+                    Last meal:<br/>
+                    LMP on<br/>
+                </p>
+            </div>
+        </div>
+
+        <!-- PE 區塊 -->
+        <div class="pe-section">
+            <h2>🩺 Physical Examination</h2>
+            
+            <div class="pe-tabs">
+                <span data-tab="內科" class="active">🫀 MER</span>
+                <span data-tab="外科">🔪 SER</span>
+                <span data-tab="OHCA">💔 OHCA</span>
+                <span data-tab="NE">🧠 NE</span>
+                <span data-tab="外傷FAST">🩸 外傷FAST</span>
+                <span data-tab="POCUS">🎯 POCUS</span>
+            </div>
+            
+            <div class="pe-content" id="內科">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Clear, GCS: E4M6V5<br/>
+                        Skin: Normal skin turgor<br/>
+                        HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br/>
+                        Neck: Supple. No JVE noted.<br/>
+                        Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br/>
+                        Heart: Regular heart beat<br/>
+                        Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br/>
+                        Extremities: no skin rash. no edema.<br/>
+                        MP: 5, all limbs.
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="外科">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Clear <br/>
+                        GCS: E4M6V5, pupil: 2+/2+<br/>
+                        Neck: Supple.<br/>
+                        Chest: Symmetrical expension.Wheezing(-)<br/>
+                        Heart: Regular heart beat<br/>
+                        Abdomen: Soft. No tenderness.<br/>
+                        Extremities: Free of ROM. <br/>
+                        MP: 5, all limbs.
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="OHCA">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Coma GCS: E1M1V1<br/>
+                        Skin:Normal skin turgor, no skin rash<br/>
+                        Neck: Supple.no palpable pulsation.<br/>
+                        Chest: No breath sound.<br/>
+                        Heart: No heart beat.<br/>
+                        Abdomen: Soft and ovoid.<br/>
+                        Extremities: No obvious wound over four limbs.<br/>
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="NE">
+                <div class="pe-content-wrapper">
+                    <p>
+                        GCS: E4V5M6, poor attention<br/>
+                        CNs: pupil: 3/3, LR: +/+, VF: intact by threatening test, <br/>
+                        EOM: full, no eye ptosis(+), no diplopia/nystagmus, no central facial palsy, normal shoulder shrug<br/>
+                        MP: UE: proximal 5/5, distal 5/5, LE: proximal 5/5, distal 5/5<br/>
+                        DTR: UE: ++/++, LE: knee: ++/++, ankle: ++/++<br/>
+                        Plantar reflex: downgoing bilaterally<br/>
+                        Sensation: symmetric by pinprick, no hemi-necglect<br/>
+                        FNF: no dysmetria/no dysmetria<br/>
+                        HKS: no zigzag/no zigzag<br/>
+                        Romberg test/Gait/Tandem gait: Cannot cooperate<br/>
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="外傷FAST">
+                <div class="pe-content-wrapper">
+                    <p>
+                        No pericardial effusion, bilateral lung sliding present, no pleural effusion, no ascites
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+
+            <div class="pe-content hidden" id="POCUS">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Cardiac: no pericardial effusion, normal global wall motion, no regional wall motion abnormalities, normal RV size, IVC normal caliber with >50% respiratory variation<br/>
+                        Thoracic: bilateral lung sliding present, B-lines <3 per intercostal space, no pleural effusion<br/>
+                        Abdominal: no ascites, no hydronephrosis, no IHD dilatation, no CBD dilatation or GB wall thickening, no echo Murphy sign<br/>
+                        DVT: femoral and popliteal veins compressible bilaterally<br/>
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content hidden" id="Surgery_ICD">
+    <iframe src="Surgery_ICD.html" 
+            width="100%" 
+            height="800px" 
+            frameborder="0"
+            style="border: none;">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="SER_image.html">SER_image.html</a></p>
+    </iframe>
+</div>
+<div class="content hidden" id="SER_Image">
+    <iframe src="SER_image.html" 
+            width="100%" 
+            height="800px" 
+            frameborder="0"
+            style="border: none;">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="SER_image.html">SER_image.html</a></p>
+    </iframe>
+</div>
+<div class="content hidden" id="DV_Image">
+    <iframe src="DV_image.html" 
+            width="100%" 
+            height="800px" 
+            frameborder="0"
+            style="border: none;">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="DV_image.html">DV_image.html</a></p>
+    </iframe>
+</div>
+<div class="content" id="ICD_code">
+<h1>ICD-10-CM 診斷碼搜尋系統</h1>
+<div class="section">
+<h3>常用症狀ICD碼:</h3>
+<p>
+<table border="1">
+<tr>
+<td><button onclick="copyIcdCode('R50.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R50.9</button> Fever, unspecified</td>
+<td><button onclick="copyIcdCode('R06.00', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R06.00</button> Dyspnea, unspecified</td>
+<td><button onclick="copyIcdCode('R07.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R07.9</button> Chest pain, unspecified</td>
+</tr>
+<tr>
+<td><button onclick="copyIcdCode('R11.10', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R11.10</button> Vomiting, unspecified</td>
+<td><button onclick="copyIcdCode('R10.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R10.9</button> Unspecified abdominal pain</td>
+<td><button onclick="copyIcdCode('R19.7', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R19.7</button> Diarrhea, unspecified</td>
+</tr>
+<tr>
+<td><button onclick="copyIcdCode('R42', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R42</button> Dizziness and giddiness</td>
+<td><button onclick="copyIcdCode('R51.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R51.9</button> Headache, unspecified</td>
+<td><button onclick="copyIcdCode('R05.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R05.9</button> Cough, unspecified</td>
+</tr>
+<tr>
+<td><button onclick="copyIcdCode('R53.1', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R53.1</button> Weakness</td>
+<td><button onclick="copyIcdCode('L03.90', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">L03.90</button> Cellulitis, unspecified</td>
+<td><button onclick="copyIcdCode('T78.40XA', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">T78.40XA</button> Allergy, unspecified, initial encounter</td>
+</tr>
+<tr>
+<td><button onclick="copyIcdCode('T65.92XA', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">T65.92XA</button> Toxic effect of unspecified substance, intentional self-harm, initial encounter</td>
+<td><button onclick="copyIcdCode('R57.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">R57.9</button> Shock, unspecified</td>
+<td><button onclick="copyIcdCode('I46.9', this)" style="background: none; border: none; color: #007bff; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px;">I46.9</button> Cardiac arrest, cause unspecified</td>
+</tr>
+</table>
+</p>
+</div>
+<div class="search-container">
+<input class="search-box" id="searchInput" oninput="debounceSearch()" placeholder="以縮寫查詢請用大寫(ex. UTI, HTN)" type="text"/>
+</div>
+<div class="count-info" id="countInfo"></div>
+<div class="min-length-notice" id="minLengthNotice"></div>
+<div id="results"></div>
+</div>
+
+<div class="content hidden" id="Plan">
+<h3>診斷證明書</h3>
+<div>
+<p id="certificateText" style="white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd;">
+    <span class="copy-line" title="點擊複製此行">病人因上述疾病於民國115年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。</span>
+    <span class="copy-line" title="點擊複製此行">病人因上述疾病於民國115年 月 日 時 分至 時 分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。</span>
+    <span class="copy-line" title="點擊複製此行">病人於民國115年 月 日 時 分至本院急診時無呼吸心跳(OHCA)，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於民國113年 月 日 時 分停止急救，病人死亡。</span>
+</p>
+</div>
+<hr style="margin: 30px 0; border: 1px solid #ddd;">
+<h3>出院指示</h3>
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd; margin-bottom: 10px; white-space: pre-line;"><span class="copy-line" title="點擊複製此行">symptoms improved, opd f/u was suggested, educated back asap if red flag sign</span><span class="copy-line" title="點擊複製此行">已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</span><span class="copy-line" title="點擊複製此行">已詳細向病人與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</span><span class="copy-line" title="點擊複製此行">影像學檢查以最終放射科報告為主，建議相關科別門診複查。</span><span class="copy-line" title="點擊複製此行">We suggested that further hospitalization is necessary, but patient was discharged against medical advice (under his families requested)</span> <span class="copy-line" title="點擊複製此行">Due to the patient's personal reason, the patient asked for AAD. After well informing the possibility of sepsis and toxic signs, AAD was arranged. Keep OPD follow up.</span></div>
+<hr style="margin: 30px 0; border: 1px solid #ddd;">
+<h3>腎功能不良打顯影劑 CT</h3>
+<p>arrange CT w/ contrast<br/>
+explain compared to the risk of contrast nephropathy, sepsis is more harmful to kidney<br/>
+CT w/ contrast is crucial for the ddx of sepsis<br/>
+pt and family agreed to CT w/ contrast<br/><br/>
+</p>
+<h3>輕度頭部外傷病人接受電腦斷層檢查準則 (CT Rules for MTBI)</h3>
+<h4>指引（Guideline）：</h4>
+<p>受傷後 2 小時，沒有恢復到 GCS score15 分<br/>
+疑似有顱骨骨折的現象<br/>
+顱底骨折的任何徵候（例如腦脊髓液鼻漏、耳漏等）<br/>
+局部神經學異常<br/>
+癲癇<br/>
+嚴重顏面撕傷<br/>
+</p>
+<h4>建議（Options）：</h4>
+<p>嘔吐 2 次或以上<br/>
+年齡大於 65 歲或小於 2 歲<br/>
+藥物或酒精過量<br/>
+持續嚴重漫性頭痛<br/>
+傷後失憶 30 分鐘以上<br/>
+危險的受傷機轉（例如行人被機動車撞擊、乘客被拋出車外、從大於 1 公尺 或 5 個階梯以上高度跌落）<br/>
+凝血異常<br/>
+多重創傷<br/>
+開顱病史
+</p>
+<u> Reference: 台灣神經外科醫學會網站</u>
+<h3>New Orleans Criteria and Canadian CT Head Rule Clinical Decision Rules </h3>
+<table border="1">
+<tr>
+<th>New Orleans Criteria—GCS 15*</th>
+<th>Canadian CT Head Rule—GCS 13-15*</th>
+</tr>
+<tr>
+<td>Headache</td>
+<td>GCS <15 at 2 h</td>
+</tr>
+<tr>
+<td>Vomiting</td>
+<td>Suspected open or depressed skull fracture</td>
+</tr>
+<tr>
+<td>Age >60 y</td>
+<td>Age ≥65 y</td>
+</tr>
+<tr>
+<td>Intoxication</td>
+<td>>1 episode of vomiting</td>
+</tr>
+<tr>
+<td>Persistent anterograde amnesia</td>
+<td>Retrograde amnesia >30 min</td>
+</tr>
+<tr>
+<td>Evidence of trauma above the clavicles</td>
+<td>Dangerous mechanism</td>
+</tr>
+<tr>
+<td>Seizure</td>
+<td>Any sign of basal skull fracture</td>
+</tr>
+<tr>
+<td><strong>100% sensitive, 5% specific</strong></td>
+<td><strong>83% sensitive, 38% specific</strong></td>
+</tr>
+</table>
+<p> *Presence of any one finding indicates need for CT scan.</p> 
+<p> Dangerous mechanism: Pedestrian struck by motor vehicle, occupant ejected from motor vehicle, or fall from >3 feet or >5 stairs.</p> 
+<u> Reference: Tintinalli's Emergency Medicine(9th) </u> 
+</p> 
+</div>
+
+<div class="content hidden" id="Note">
+    <h2>備忘錄</h2>
+    <textarea id="noteText" placeholder="在此輸入備忘內容..." style="width: 50%; height: 200px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical;"></textarea>
+    <div style="margin-top: 15px;">
+        <button class="copy-button" onclick="copyNote()" style="margin-right: 10px;">複製</button>
+        <button class="copy-button" onclick="clearNote()" style="background: #dc3545; margin-right: 10px;">清除</button>
+        <button class="copy-button" onclick="toggleChatbot()" id="toggleChatbotBtn" style="background: #28a745;">顯示助手</button>
+    </div>
+    <div id="chatbotContainer" style="flex: 1; min-width: 400px; margin-top: 20px; display: none;">
+        <h3>AI病歷/藥歷助手</h3>
+<p>病歷助手:根據關鍵字生成完整英文病歷</p>
+<p>藥歷助手:根據雲端健保藥歷的截圖整理成適合貼在病歷的格式(截圖請截開立時間到商品名)</p>
+        <iframe 
+            src="https://udify.app/chatbot/3s6sWBWnalSAUEKH" 
+            style="width: 50%; height: 400px; border: 1px solid #ddd; border-radius: 4px;"
+            frameborder="0">
+        </iframe>
+    </div>
+</div>
+
+<div class="content hidden" id="Antibiotic_Dosage">
+    <h1>抗生素腎功能劑量調整查詢系統</h1>
+    <div class="search-container">
+        <input class="search-box" id="antibioticSearchInput" oninput="debounceAntibioticSearch()" placeholder="請輸入藥物名稱進行搜尋" type="text"/>
+    </div>
+    <div class="count-info" id="antibioticCountInfo"></div>
+    <div class="min-length-notice" id="antibioticMinLengthNotice"></div>
+    <div id="antibioticResults"></div>
+</div>
+<div class="content hidden" id="Trauma_System">
+    <iframe src="trauma_system.html" 
+            width="100%" 
+            height="800px"
+            frameborder="0"
+            style="border: none;">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="trauma_system.html">trauma_system.html</a></p>
+    </iframe>
+</div>
+
+</div>
+
+<script>
+// 頁面載入完成後初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化頁面
+    initializePage();
+    
+    // 綁定複製行事件
+    bindCopyLineEvents();
+    
+    // 綁定PE複製按鈕事件
+    bindPECopyEvents();
+    
+    // 自動填入日期
+    updateCertificateDate();
+});
+
+// 初始化頁面
+function initializePage() {
+    // 顯示第一個分頁
+    document.getElementById('ICD_code').classList.remove('hidden');
+    
+    // 綁定側邊欄點擊事件
+    document.querySelector('.sidebar').addEventListener('click', function(e) {
+        const targetPage = e.target.getAttribute('data-page');
+        if (!targetPage) return;
+        
+        document.querySelectorAll('.content').forEach(content => {
+            content.classList.add('hidden');
+        });
+        
+        document.getElementById(targetPage).classList.remove('hidden');
+        
+        // 如果切換到 Plan 頁面，重新載入時間
+        if (targetPage === 'Plan') {
+            updateCertificateDate();
+        }
+    });
+    
+    // 綁定PE標籤點擊事件
+    document.querySelectorAll('.pe-tabs span').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            showPETab(tabName);
+        });
+    });
+}
+
+// 綁定診斷證明書複製行事件
+function bindCopyLineEvents() {
+    const copyLines = document.querySelectorAll('.copy-line');
+    copyLines.forEach(line => {
+        // 檢查是否已經加上了自訂標記，避免重複綁定
+        if (!line.dataset.bound) {
+            line.addEventListener('click', function() {
+                copyText(this);
+            });
+            // 綁定完成後，給它一個已綁定的標記
+            line.dataset.bound = 'true'; 
+        }
+    });
+}
+
+// 綁定PE複製按鈕事件
+function bindPECopyEvents() {
+    const copyButtons = document.querySelectorAll('.pe-content .copy-button');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const peContent = this.closest('.pe-content');
+            const tabId = peContent.id;
+            copyPEContent(tabId);
+        });
+    });
+}
+
+// 複製文字函數
+function copyText(element) {
+    const text = element.textContent.trim();
+    
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showQuickCopySuccess(element);
+        }).catch(() => {
+            fallbackCopy(text, element);
+        });
+    } else {
+        fallbackCopy(text, element);
+    }
+}
+
+function fallbackCopy(text, element) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        showQuickCopySuccess(element);
+    } catch (err) {
+        alert('複製失敗');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+function showQuickCopySuccess(element) {
+    const originalBg = element.style.backgroundColor;
+    element.style.backgroundColor = '#d4edda';
+    
+    setTimeout(() => {
+        element.style.backgroundColor = originalBg;
+    }, 1000);
+}
+
+// PE分頁切換功能
+function showPETab(tabName) {
+    // 隱藏所有PE內容
+    document.querySelectorAll('.pe-content').forEach(content => {
+        content.classList.add('hidden');
+    });
+
+    // 顯示選中的PE內容
+    document.getElementById(tabName).classList.remove('hidden');
+    
+    // 更新tab樣式
+    document.querySelectorAll('.pe-tabs span').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+}
+
+// 複製PE內容功能
+function copyPEContent(tabId) {
+    const content = document.querySelector(`#${tabId} p`).textContent;
+
+    // 保留換行，但移除每行前後的空白
+    const cleanedContent = content
+        .split('\n')                    // 按換行分割
+        .map(line => line.trim())       // 每行去除前後空白
+        .filter(line => line.length > 0) // 過濾空行
+        .join('\n');                    // 重新組合
+
+    // 使用 Clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(cleanedContent).then(() => {
+            showCopySuccess(tabId);
+        }).catch(err => {
+            console.error('複製失敗:', err);
+            fallbackCopyTextToClipboard(cleanedContent, tabId);
+        });
+    } else {
+        // 降級方案
+        fallbackCopyTextToClipboard(cleanedContent, tabId);
+    }
+}
+
+// 降級複製方案
+function fallbackCopyTextToClipboard(text, tabId) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showCopySuccess(tabId);
+        } else {
+            alert('複製失敗，請手動選擇文字複製');
+        }
+    } catch (err) {
+        console.error('複製失敗:', err);
+        alert('複製失敗，請手動選擇文字複製');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// 顯示複製成功提示
+function showCopySuccess(tabId) {
+    const button = document.querySelector(`#${tabId} .copy-button`);
+    const originalText = button.textContent;
+    
+    button.textContent = '已複製！';
+    button.classList.add('success');
+    
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('success');
+    }, 2000);
+}
+
+// 自動填入診斷證明書的日期
+function updateCertificateDate() {
+    const today = new Date();
+    const taiwanYear = today.getFullYear() - 1911; // 民國年
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const hours = today.getHours();
+    const minutes = today.getMinutes();
+    
+    // 格式化時間（補0）
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    
+    // 更新證明書文字
+    const certificateLines = [
+        `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。`,
+        `病人因上述疾病於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。`,
+        `病人於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分至本院急診時無呼吸心跳(OHCA)，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於民國${taiwanYear}年${month}月${day}日${formattedHours}時${formattedMinutes}分停止急救，病人死亡。`
+    ];
+    
+    const certificateElement = document.getElementById('certificateText');
+    if (certificateElement) {
+        certificateElement.innerHTML = certificateLines.map(line => 
+            `<span class="copy-line" title="點擊複製此行">${line}</span>`
+        ).join('');
+        
+        // 重新綁定事件
+        bindCopyLineEvents();
+    }
+}
+
+// 備忘錄功能
+function copyNote() {
+    const noteText = document.getElementById('noteText').value;
+
+    if (!noteText.trim()) {
+        alert('沒有內容可以複製！');
+        return;
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(noteText).then(() => {
+            showNoteCopySuccess();
+        }).catch(err => {
+            console.error('複製失敗:', err);
+            fallbackCopyNote(noteText);
+        });
+    } else {
+        fallbackCopyNote(noteText);
+    }
+}
+
+function fallbackCopyNote(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showNoteCopySuccess();
+        } else {
+            alert('複製失敗，請手動選擇文字複製');
+        }
+    } catch (err) {
+        alert('複製失敗，請手動選擇文字複製');
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function showNoteCopySuccess() {
+    const button = document.querySelector('#Note .copy-button');
+    const originalText = button.textContent;
+
+    button.textContent = '已複製！';
+    button.classList.add('success');
+
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('success');
+    }, 2000);
+}
+
+function clearNote() {
+    if (confirm('確定要清除所有備忘內容嗎？')) {
+        document.getElementById('noteText').value = '';
+    }
+}
+
+// 控制病歷整理助手顯示/隱藏
+function toggleChatbot() {
+    const container = document.getElementById('chatbotContainer');
+    const button = document.getElementById('toggleChatbotBtn');
+    
+    if (container.style.display === 'none' || container.style.display === '') {
+        container.style.display = 'block';
+        button.textContent = '隱藏助手';
+        button.style.background = '#6c757d';
+    } else {
+        container.style.display = 'none';
+        button.textContent = '顯示助手';
+        button.style.background = '#28a745';
+    }
+}
+
+// ICD搜尋功能
+let csvData = [];
+let headers = [];
+let searchTimeout;
+// 抗生素搜尋功能
+let antibioticData = [];
+let antibioticHeaders = [];
+let antibioticSearchTimeout;
+let abbreviationData = {};
+let abbreviationHeaders = [];
+let icdParentCategories = new Set();
+let activeIcdHighlightTerms = [];
+
+// 載入 CSV 檔案
+showLoading();
+fetch('ICD_10_CM.csv')
+    .then(response => response.text())
+    .then(data => {
+        Papa.parse(data, {
+            complete: function(results) {
+                csvData = results.data;
+                headers = csvData[0];
+
+                // 建立父分類清單。若無小數點的代碼仍有下層代碼，
+                // 它只是分類標題，不應因為字元較短而獲得最高代碼深度分數。
+                icdParentCategories = new Set();
+                for (let i = 1; i < csvData.length; i++) {
+                    const code = (csvData[i][0] || '').toString().trim().toUpperCase();
+                    const dotIndex = code.indexOf('.');
+                    if (dotIndex > 0) {
+                        icdParentCategories.add(code.substring(0, dotIndex));
+                    }
+                }
+
+                hideLoading();
+                document.getElementById('minLengthNotice').textContent = 
+                    '請輸入至少3個字元開始搜尋';
+            }
+        });
+    });
+
+// 載入醫學縮寫字典
+fetch('medical_abbreviations.csv')
+    .then(response => response.text())
+    .then(data => {
+        Papa.parse(data, {
+            complete: function(results) {
+                const abbrevData = results.data;
+                abbreviationHeaders = abbrevData[0];
+        
+                // 建立縮寫對照表
+                for (let i = 1; i < abbrevData.length; i++) {
+                    if (abbrevData[i][0] && abbrevData[i][1]) {
+                        const abbrev = abbrevData[i][0].toLowerCase();
+                        const terms = abbrevData[i][1].split(',').map(term => term.trim().toLowerCase());
+                        abbreviationData[abbrev] = terms;
+                    }
+                }
+                console.log('醫學縮寫字典載入完成:', Object.keys(abbreviationData).length, '個縮寫');
+            }
+        });
+    })
+    .catch(err => {
+        console.log('醫學縮寫字典載入失敗，使用原始搜尋功能');
+    });
+
+// 載入抗生素 CSV檔案
+fetch('antibiotic_dosage.csv')
+    .then(response => response.text())
+    .then(data => {
+        Papa.parse(data, {
+            complete: function(results) {
+                antibioticData = results.data;
+                antibioticHeaders = antibioticData[0];
+            }
+        });
+    });
+
+function showLoading() {
+    document.getElementById('results').innerHTML = 
+        '<div class="loading">載入中，請稍候...</div>';
+}
+
+function hideLoading() {
+    document.getElementById('results').innerHTML = '';
+}
+
+function debounceSearch() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(searchData, 300);
+}
+
+// 將大小寫、全半形、空白與標點統一，供搜尋相關性比較使用。
+function normalizeIcdSearchText(value) {
+    return (value || '')
+        .toString()
+        .normalize('NFKC')
+        .toLowerCase()
+        .replace(/[\s\.\-_,;:'"()\[\]{}\/\\]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function compactIcdSearchText(value) {
+    return normalizeIcdSearchText(value).replace(/[^a-z0-9\u3400-\u9fff]/g, '');
+}
+
+// 判斷英文完整詞組；中文沒有空格分詞，因此使用一般 includes。
+function containsWholeIcdPhrase(text, term) {
+    if (!text || !term) return false;
+    const containsChinese = /[\u3400-\u9fff]/.test(term);
+    return containsChinese
+        ? text.includes(term)
+        : (` ${text} `).includes(` ${term} `);
+}
+
+// 中文沒有空格分詞；用逗號辨識「診斷名稱, 限定說明」的完整開頭。
+function startsWithDelimitedIcdTerm(field, term) {
+    const rawField = (field || '').toString().normalize('NFKC').toLowerCase().trim();
+    const rawTerm = (term || '').toString().normalize('NFKC').toLowerCase().trim();
+    if (!rawField.startsWith(rawTerm)) return false;
+    const remainder = rawField.substring(rawTerm.length);
+    return /^\s*[,，:：;]/.test(remainder);
+}
+
+// 文字符合度：完全符合 > 名稱開頭 > 完整詞組 > 多關鍵字 > 部分符合。
+function calculateIcdTextScore(row, term) {
+    const normalizedTerm = normalizeIcdSearchText(term);
+    if (!normalizedTerm) return { score: 0 };
+
+    const code = (row[0] || '').toString();
+    const compactCode = compactIcdSearchText(code);
+    const compactTerm = compactIcdSearchText(term);
+    const looksLikeIcdCode = /^[a-z]\d/i.test(compactTerm);
+
+    if (looksLikeIcdCode) {
+        if (compactCode === compactTerm) {
+            return { score: 100 };
+        }
+        if (compactCode.startsWith(compactTerm)) {
+            return { score: 90 };
+        }
+    }
+
+    const fields = [row[1] || '', row[2] || ''];
+    let bestScore = 0;
+    const isChineseTerm = /[\u3400-\u9fff]/.test(normalizedTerm);
+
+    fields.forEach(field => {
+        const normalizedField = normalizeIcdSearchText(field);
+        if (!normalizedField) return;
+
+        let score = 0;
+        if (normalizedField === normalizedTerm) {
+            score = 65;
+        } else if (isChineseTerm && startsWithDelimitedIcdTerm(field, term)) {
+            score = 62;
+        } else if (normalizedField.startsWith(normalizedTerm + ' ') ||
+                   (/^[\u3400-\u9fff]/.test(normalizedTerm) && normalizedField.startsWith(normalizedTerm))) {
+            score = 60;
+        } else if (containsWholeIcdPhrase(normalizedField, normalizedTerm)) {
+            score = 50;
+        } else {
+            const keywords = normalizedTerm.split(/\s+/).filter(Boolean);
+            const matchedKeywords = keywords.filter(keyword =>
+                containsWholeIcdPhrase(normalizedField, keyword) || normalizedField.includes(keyword)
+            ).length;
+
+            if (keywords.length > 1 && matchedKeywords === keywords.length) {
+                score = 45;
+            } else if (matchedKeywords > 0) {
+                score = Math.round(15 * matchedKeywords / keywords.length);
+            } else if (normalizedField.includes(normalizedTerm)) {
+                // 例如 pneumonia 對 bronchopneumonia：保留結果，但低於完整單字符合。
+                score = 12;
+            }
+        }
+
+        if (score > bestScore) {
+            bestScore = score;
+        }
+    });
+
+    // 在相同文字符合層級中，讓一般未特定診斷小幅優先。
+    // +2 不足以跨越不同文字層級，只用來打破同層級結果的排序。
+    const englishName = (row[1] || '').toString().toLowerCase();
+    if (bestScore > 0 && /\bunspecified\b|\bnot specified\b/.test(englishName)) {
+        bestScore += 2;
+    }
+
+    return { score: bestScore };
+}
+
+// 小數點後字元越少，越接近主要代碼；父分類標題不加分。
+function calculateIcdDepthScore(code) {
+    const normalizedCode = (code || '').toString().trim().toUpperCase();
+    const dotIndex = normalizedCode.indexOf('.');
+
+    if (dotIndex === -1) {
+        return icdParentCategories.has(normalizedCode) ? 0 : 20;
+    }
+
+    const decimalLength = normalizedCode.substring(dotIndex + 1).length;
+    if (decimalLength <= 1) return 20;
+    if (decimalLength === 2) return 14;
+    if (decimalLength === 3) return 8;
+    return 4;
+}
+
+function rankIcdSearchResults(rows, searchTerms) {
+    return rows
+        .map((row, originalIndex) => {
+            let bestTextScore = 0;
+
+            searchTerms.forEach(term => {
+                const match = calculateIcdTextScore(row, term);
+                if (match.score > bestTextScore) {
+                    bestTextScore = match.score;
+                }
+            });
+
+            const depthScore = calculateIcdDepthScore(row[0]);
+            const normalizedEnglishName = normalizeIcdSearchText(row[1] || '');
+            const englishWordCount = normalizedEnglishName
+                ? normalizedEnglishName.split(/\s+/).filter(Boolean).length
+                : Number.MAX_SAFE_INTEGER;
+            return {
+                row,
+                originalIndex,
+                textScore: bestTextScore,
+                depthScore,
+                englishWordCount
+            };
+        })
+        .sort((a, b) =>
+            b.textScore - a.textScore ||
+            a.englishWordCount - b.englishWordCount ||
+            b.depthScore - a.depthScore ||
+            (a.row[0] || '').toString().localeCompare((b.row[0] || '').toString()) ||
+            a.originalIndex - b.originalIndex
+        )
+        .map(item => item.row);
+}
+
+function escapeIcdHighlightRegExp(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// 黃字標示使用整理後的實際搜尋詞；若完整詞組因標點不同而無法直接匹配，
+// 也會標示其中的個別關鍵字。縮寫搜尋則標示展開後的正式詞或ICD碼。
+function highlightIcdCellText(value) {
+    const cellText = (value || '').toString();
+    const candidates = [];
+
+    activeIcdHighlightTerms.forEach(term => {
+        const trimmedTerm = (term || '').toString().trim();
+        if (!trimmedTerm) return;
+
+        candidates.push(trimmedTerm);
+        normalizeIcdSearchText(trimmedTerm)
+            .split(/\s+/)
+            .filter(keyword => keyword.length >= 2)
+            .forEach(keyword => candidates.push(keyword));
+    });
+
+    const uniqueCandidates = [...new Map(
+        candidates
+            .sort((a, b) => b.length - a.length)
+            .map(candidate => [candidate.toLowerCase(), candidate])
+    ).values()];
+
+    if (uniqueCandidates.length === 0) return cellText;
+
+    const pattern = uniqueCandidates.map(escapeIcdHighlightRegExp).join('|');
+    return cellText.replace(new RegExp(`(${pattern})`, 'gi'), '<mark>$1</mark>');
+}
+
+function searchData() {
+    const originalSearchTerm = document.getElementById('searchInput').value.trim();
+    const searchTerm = originalSearchTerm.toLowerCase();
+
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('countInfo').textContent = '';
+    document.getElementById('minLengthNotice').textContent = '';
+
+    if (searchTerm.length < 3) {
+        activeIcdHighlightTerms = [];
+        document.getElementById('minLengthNotice').textContent = 
+            '請輸入至少3個字元開始搜尋';
+        return;
+    }
+
+    // 建立搜尋詞列表
+    let searchTerms = [];
+
+    // 只有當輸入的是大寫且在字典中找到時，才用字典搜尋
+    if (originalSearchTerm === originalSearchTerm.toUpperCase() && abbreviationData[searchTerm]) {
+        // 只用字典中的全名搜尋，不包含原始縮寫
+        searchTerms = abbreviationData[searchTerm];
+        console.log('啟動縮寫搜尋:', originalSearchTerm, '→', abbreviationData[searchTerm]);
+    } else {
+        // 一般搜尋，使用原始輸入
+        searchTerms = [searchTerm];
+    }
+
+    activeIcdHighlightTerms = searchTerms
+        .map(term => (term || '').toString().trim())
+        .filter(Boolean);
+
+    const filteredData = csvData.filter((row, index) => {
+        if (index === 0) return false;
+
+        const icdCode = row[0]?.toString().toLowerCase() || '';
+        const icdName = row[1]?.toString().toLowerCase() || '';
+        const icdNameCh = row[2]?.toString().toLowerCase() || '';
+
+        // 對每個搜尋詞進行匹配
+        return searchTerms.some(term => {
+            // 1. 精確匹配（保持原有功能）
+            if (icdCode.includes(term) || icdName.includes(term) || icdNameCh.includes(term)) {
+                return true;
+            }
+
+            // 2. 標準化匹配（移除標點符號和空格）
+            const normalizedTerm = term.replace(/[\s\.\-'',]/g, '');
+            const normalizedIcdCode = icdCode.replace(/[\s\.\-'',]/g, '');
+            const normalizedIcdName = icdName.replace(/[\s\.\-'',]/g, '');
+            const normalizedIcdNameCh = icdNameCh.replace(/[\s\.\-'',]/g, '');
+            
+            if (normalizedIcdCode.includes(normalizedTerm) ||
+                normalizedIcdName.includes(normalizedTerm) ||
+                normalizedIcdNameCh.includes(normalizedTerm)) {
+                return true;
+            }
+
+            // 3. 關鍵詞分割匹配（針對多詞搜尋如 "Crohn disease unspecified"）
+            const keywords = term.trim().split(/\s+/);
+            if (keywords.length > 1) {
+                // 檢查所有關鍵詞是否都存在於某個欄位中
+                const matchesAllKeywords = (text) => {
+                    const normalizedText = text.replace(/[,\.\-''""\s]/g, ' ').toLowerCase();
+                    return keywords.every(keyword => {
+                        const normalizedKeyword = keyword.replace(/[,\.\-''""\s]/g, '');
+                        return normalizedText.includes(keyword) || 
+                               normalizedText.includes(normalizedKeyword) ||
+                               text.includes(keyword);
+                    });
+                };
+
+                if (matchesAllKeywords(icdName) || matchesAllKeywords(icdNameCh)) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+    });
+
+    const rankedData = rankIcdSearchResults(filteredData, searchTerms);
+    displayData([headers, ...rankedData]);
+}            
+
+function displayData(data) {
+    if (!data || data.length <= 1) {
+        document.getElementById('results').innerHTML = '<p>找不到符合的結果</p>';
+        document.getElementById('countInfo').textContent = '找到 0 筆符合的資料';
+        return;
+    }
+
+    let table = '<table><thead><tr>';
+
+    table += '<th> </th>'; // 操作欄放到最前面
+    data[0].forEach(header => {
+        table += `<th>${header}</th>`;
+    });
+
+    table += '</tr></thead><tbody>';
+
+    for (let i = 1; i < data.length; i++) {
+        table += '<tr>';
+
+        // 先添加複製按鈕欄位
+        const icdCode = data[i][0] || '';
+        table += `<td style="width: 80px; text-align: center;"><button class="copy-button" onclick="copyIcdCode('${icdCode}', this)" style="font-size: 12px; padding: 4px 8px; background-color: white; color: #495057; border: 1px solid #dee2e6;">複製ICD</button></td>`;
+
+        // 再添加其他資料欄位
+        data[i].forEach((cell, cellIndex) => {
+            const cellContent = cell || '';
+            const cellStr = cellContent.toString();
+            table += `<td>${highlightIcdCellText(cellStr)}</td>`;
+        });
+        table += '</tr>';
+    }
+
+    table += '</tbody></table>';
+    document.getElementById('results').innerHTML = table;
+    document.getElementById('countInfo').textContent = 
+        `找到 ${data.length - 1} 筆符合的資料`;
+}
+
+// 抗生素搜尋功能
+function debounceAntibioticSearch() {
+    clearTimeout(antibioticSearchTimeout);
+    antibioticSearchTimeout = setTimeout(searchAntibioticData, 300);
+}
+
+function searchAntibioticData() {
+    const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
+
+    document.getElementById('antibioticResults').innerHTML = '';
+    document.getElementById('antibioticCountInfo').textContent = '';
+    document.getElementById('antibioticMinLengthNotice').textContent = '';
+
+    if (searchTerm.length === 0) {
+        document.getElementById('antibioticMinLengthNotice').textContent = 
+            '請輸入藥物名稱開始搜尋';
+        return;
+    }
+
+    // 移除搜尋詞中的空白和標點符號，用於比較
+    const normalizedSearchTerm = searchTerm.replace(/[\s\.\-]/g, '');
+
+    const filteredData = antibioticData.filter((row, index) => {
+        if (index === 0) return false;
+
+        const genericName = row[0]?.toString().toLowerCase() || '';
+        const brandName = row[1]?.toString().toLowerCase() || '';
+
+        // 移除資料中的空白和標點符號進行比較
+        const normalizedGenericName = genericName.replace(/[\s\.\-]/g, '');
+        const normalizedBrandName = brandName.replace(/[\s\.\-]/g, '');
+
+        return genericName.includes(searchTerm) || 
+               brandName.includes(searchTerm) ||
+               normalizedGenericName.includes(normalizedSearchTerm) ||
+               normalizedBrandName.includes(normalizedSearchTerm);
+    });
+
+    displayAntibioticData([antibioticHeaders, ...filteredData]);
+}
+
+function displayAntibioticData(data) {
+    if (!data || data.length <= 1) {
+        document.getElementById('antibioticResults').innerHTML = '<p>找不到符合的藥物</p>';
+        document.getElementById('antibioticCountInfo').textContent = '找到 0 筆符合的資料';
+        return;
+    }
+
+    let table = '<table><thead><tr>';
+
+    data[0].forEach(header => {
+        table += `<th>${header}</th>`;
+    });
+
+    table += '</tr></thead><tbody>';
+
+    const searchTerm = document.getElementById('antibioticSearchInput').value.toLowerCase();
+    for (let i = 1; i < data.length; i++) {
+        table += '<tr>';
+        data[i].forEach((cell, cellIndex) => {
+            const cellContent = cell || '';
+            const cellStr = cellContent.toString();
+    
+            // 對藥物名稱欄位(前兩欄)做高亮顯示
+            if (cellIndex < 2 && searchTerm && cellStr.toLowerCase().includes(searchTerm)) {
+                const highlightedContent = cellStr.replace(
+                    new RegExp(searchTerm, 'gi'),
+                    match => `<mark>${match}</mark>`
+                );
+                table += `<td>${highlightedContent}</td>`;
+            } else {
+                // 劑量欄位使用較小字體並保持換行
+                if (cellIndex >= 2) {
+                    table += `<td style="font-size: 16px; white-space: pre-wrap;">${cellStr}</td>`;
+                } else {
+                    table += `<td>${cellStr}</td>`;
+                }
+            }
+        });
+        table += '</tr>';
+    }
+
+    table += '</tbody></table>';
+    document.getElementById('antibioticResults').innerHTML = table;
+    document.getElementById('antibioticCountInfo').textContent = 
+        `找到 ${data.length - 1} 筆符合的藥物資料`;
+}
+
+// ICD碼複製功能
+function copyIcdCode(icdCode, buttonElement) {
+    if (!icdCode.trim()) {
+        alert('沒有ICD碼可以複製！');
+        return;
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(icdCode).then(() => {
+            showIcdCopySuccess(buttonElement);
+        }).catch(err => {
+            console.error('複製失敗:', err);
+            fallbackCopyIcd(icdCode, buttonElement);
+        });
+    } else {
+        fallbackCopyIcd(icdCode, buttonElement);
+    }
+}
+
+function fallbackCopyIcd(text, button) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showIcdCopySuccess(button);
+        } else {
+            alert('複製失敗，請手動選擇文字複製');
+        }
+    } catch (err) {
+        alert('複製失敗，請手動選擇文字複製');
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function showIcdCopySuccess(button) {
+    if (!button) return;
+
+    const originalText = button.textContent;
+
+    // 記住原始樣式，如果沒有設定就用預設值
+    const originalBg = button.style.backgroundColor || 'white';
+    const originalColor = button.style.color || '#495057';
+    const originalBorder = button.style.border || '1px solid #dee2e6';
+
+    button.textContent = '已複製！';
+    button.style.backgroundColor = '#f8f9fa';
+    button.style.color = '#28a745';
+    button.style.border = '1px solid #28a745';
+
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.style.backgroundColor = originalBg;
+        button.style.color = originalColor;
+        button.style.border = originalBorder;
+    }, 2000);
+}
+</script>
+</body>
+</html>
