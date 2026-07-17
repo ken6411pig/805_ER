@@ -168,8 +168,8 @@ TTNB,Transient tachypnea of newborn
 UCC,Malignant neoplasm bladder
 VP,ventricular shunt
 VZV,Varicella
-HF,heart failure unspecified
+HF,heart failure
 WPW,Pre-excitation syndrome
 FLU,J10
-OHCA,I46.9
-IHCA,I46.9
+OHCA,Cardiac arrest
+IHCA,Cardiac arrest
