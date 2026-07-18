@@ -96,11 +96,11 @@
         .search-container {
             margin-bottom: 20px;
         }
-        .icd-search-container {
+        .clearable-search-container {
             position: relative;
             display: inline-block;
         }
-        .icd-search-container .search-box {
+        .clearable-search-container .search-box {
             box-sizing: border-box;
             padding-right: 42px;
             margin-right: 0;
@@ -367,7 +367,7 @@
                 min-width: 0;
             }
 
-            .icd-search-container {
+            .clearable-search-container {
                 display: block;
             }
 

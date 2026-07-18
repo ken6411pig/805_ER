@@ -82,6 +82,17 @@ function search() {
 function scheduleSearch() {
     window.clearTimeout(state.searchTimer);
     state.searchTimer = window.setTimeout(search, 300);
+    elements.clearButton.classList.toggle('visible', elements.input.value.length > 0);
+}
+
+function clearSearch() {
+    window.clearTimeout(state.searchTimer);
+    elements.input.value = '';
+    elements.results.replaceChildren();
+    elements.count.textContent = '';
+    elements.notice.textContent = '';
+    elements.clearButton.classList.remove('visible');
+    elements.input.focus();
 }
 
 async function loadData() {
@@ -106,11 +117,13 @@ async function loadData() {
 
 export function initAntibioticSearch() {
     elements.input = document.getElementById('antibioticSearchInput');
+    elements.clearButton = document.getElementById('antibioticSearchClearButton');
     elements.results = document.getElementById('antibioticResults');
     elements.count = document.getElementById('antibioticCountInfo');
     elements.notice = document.getElementById('antibioticMinLengthNotice');
-    if (!elements.input) return;
+    if (!elements.input || !elements.clearButton) return;
     elements.input.addEventListener('input', scheduleSearch);
+    elements.clearButton.addEventListener('click', clearSearch);
 }
 
 export function activateAntibioticSearch() {
