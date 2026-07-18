@@ -1,0 +1,428 @@
+/* Basic layout */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .sidebar div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .sidebar div:hover {
+            background-color: #e0e0e0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            overflow-x: auto; /* Allow horizontal scrolling */
+        }
+
+        /* Content visibility */
+        .hidden {
+            display: none;
+        }
+
+        /* History & PE section styles */
+        .history-pe-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .history-section, .pe-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .history-section h2, .pe-section h2 {
+            margin-top: 0;
+            color: #495057;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        /* PE tabs */
+        .pe-tabs {
+            margin-bottom: 20px;
+        }
+
+        .pe-tabs span {
+            padding: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .pe-tabs span:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pe-tabs span.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pe-content {
+            margin-top: 20px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 20px;
+        }
+        .embedded-tool {
+            width: 100%;
+            height: calc(100vh - 40px); /* 減去 padding */
+            border: none;
+        }
+
+        /* ICD Search Styles */
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .icd-search-container {
+            position: relative;
+            display: inline-block;
+        }
+        .icd-search-container .search-box {
+            box-sizing: border-box;
+            padding-right: 42px;
+            margin-right: 0;
+        }
+        .search-clear-button {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            display: none;
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: transparent;
+            color: #777;
+            font-size: 24px;
+            line-height: 26px;
+            cursor: pointer;
+        }
+        .search-clear-button.visible {
+            display: block;
+        }
+        .search-clear-button:hover,
+        .search-clear-button:focus {
+            background: #eeeeee;
+            color: #333;
+            outline: none;
+        }
+        .search-box {
+            padding: 10px;
+            width: 400px;
+            font-size: 16px;
+            margin-right: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-box:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .quick-icd-table,
+        .icd-results-table,
+        .antibiotic-results-table,
+        #Plan table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .quick-icd-table th,
+        .quick-icd-table td,
+        .icd-results-table th,
+        .icd-results-table td,
+        .antibiotic-results-table th,
+        .antibiotic-results-table td,
+        #Plan th,
+        #Plan td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .icd-results-table th,
+        .antibiotic-results-table th,
+        #Plan th {
+            background-color: #f4f4f4;
+            position: sticky;
+            top: 0;
+        }
+        .quick-icd-table tr:nth-child(even),
+        .icd-results-table tr:nth-child(even),
+        .antibiotic-results-table tr:nth-child(even),
+        #Plan tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .quick-icd-table tr:hover,
+        .icd-results-table tr:hover,
+        .antibiotic-results-table tr:hover,
+        #Plan tr:hover {
+            background-color: #f5f5f5;
+        }
+        .quick-icd-code {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .quick-icd-code:focus {
+            outline: 2px solid #80bdff;
+            outline-offset: 2px;
+        }
+        #results {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .count-info {
+            margin-top: 10px;
+            color: #666;
+        }
+        .loading {
+            color: #666;
+            margin-top: 20px;
+        }
+        .min-length-notice {
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .icd-code-cell {
+            color: #007bff;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .icd-code-cell:hover,
+        .icd-code-cell:focus {
+            color: #0056b3;
+            background-color: #eaf4ff;
+            outline: 2px solid #80bdff;
+            outline-offset: -2px;
+        }
+        .icd-code-cell.copy-success {
+            color: #28a745;
+            background-color: #eaf7ed;
+            text-decoration: none;
+        }
+        .icd-results-toggle {
+            display: block;
+            margin: 16px auto 4px;
+            padding: 9px 18px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background: white;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .icd-results-toggle:hover {
+            background: #007bff;
+            color: white;
+        }
+    
+        .pe-content-wrapper {
+            position: relative;
+        }
+
+        .copy-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .copy-button:hover {
+            background: #0056b3;
+        }
+        
+        .copy-button.success {
+            background: #28a745;
+        }
+
+        .button-danger {
+            background: #dc3545;
+        }
+
+        .button-danger:hover {
+            background: #bd2130;
+        }
+
+        .button-success {
+            background: #28a745;
+        }
+
+        .button-success:hover {
+            background: #218838;
+        }
+
+        .text-panel {
+            white-space: pre-line;
+            background: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .discharge-panel {
+            margin-bottom: 10px;
+        }
+
+        .section-divider {
+            margin: 30px 0;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .note-textarea {
+            box-sizing: border-box;
+            width: 50%;
+            min-width: 320px;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .note-actions {
+            margin-top: 15px;
+        }
+
+        .note-actions .copy-button {
+            margin-right: 10px;
+        }
+
+        .chatbot-container {
+            display: none;
+            flex: 1;
+            min-width: 400px;
+            margin-top: 20px;
+        }
+
+        .chatbot-frame {
+            width: 50%;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .data-error {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* 外部連結樣式 - 移除不需要的CSS */
+
+        /* 響應式設計 */
+        @media screen and (max-width: 1024px) {
+            .history-pe-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .search-box,
+            .note-textarea,
+            .chatbot-frame {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .icd-search-container {
+                display: block;
+            }
+
+            .chatbot-container {
+                min-width: 0;
+            }
+        }
+
+        /* History區塊樣式 */
+        .history-section p, .history-section ul, .history-section li {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .history-section h3 {
+            color: #007bff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .history-list {
+            padding-left: 20px;
+        }
+
+        /* 診斷證明書複製行樣式 */
+        .copy-line {
+            cursor: pointer;
+            display: block;
+            padding: 5px 0;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .copy-line:hover {
+            background-color: #e9ecef;
+        }
+
+        .copy-line.copy-success {
+            background-color: #d4edda;
+        }
+
+        .quick-icd-code.success {
+            color: #28a745;
+            text-decoration: none;
+        }
+
+        .dosage-cell {
+            font-size: 16px;
+            white-space: pre-wrap;
+        }
+
+        .button-secondary {
+            background: #6c757d;
+        }
+
+        .button-secondary:hover {
+            background: #5a6268;
+        }
