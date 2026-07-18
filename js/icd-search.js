@@ -2,6 +2,9 @@ import { appendHighlightedText, loadCsv, showDataError } from './csv-loader.js';
 import { copyText, flashButton } from './clipboard.js';
 
 const INITIAL_RESULT_LIMIT = 15;
+const PREFERRED_CODES_BY_TERM = {
+    hypertension: 'I10'
+};
 
 const state = {
     headers: [],
@@ -153,12 +156,16 @@ function rankResults(records, searchTerms) {
             return {
                 record,
                 originalIndex,
+                isPreferredCode: searchTerms.some(term =>
+                    PREFERRED_CODES_BY_TERM[normalizeText(term)] === record.row[0]
+                ),
                 textScore,
                 englishWordCount,
                 depthScore: calculateDepthScore(record.row[0])
             };
         })
         .sort((a, b) =>
+            Number(b.isPreferredCode) - Number(a.isPreferredCode) ||
             b.textScore - a.textScore ||
             a.englishWordCount - b.englishWordCount ||
             b.depthScore - a.depthScore ||
