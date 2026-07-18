@@ -59,7 +59,6 @@ function search() {
     elements.notice.textContent = '';
 
     if (!searchTerm) {
-        elements.notice.textContent = '請輸入藥物名稱開始搜尋';
         return;
     }
     if (!state.ready) {
@@ -111,7 +110,6 @@ async function loadData() {
         };
     });
     state.ready = true;
-    elements.notice.textContent = '請輸入藥物名稱開始搜尋';
     if (elements.input.value.trim()) search();
 }
 

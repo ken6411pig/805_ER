@@ -213,6 +213,11 @@
             margin-top: 10px;
             font-style: italic;
         }
+        .data-source {
+            margin: 8px 0 16px;
+            color: #666;
+            font-size: 0.9rem;
+        }
         .icd-code-cell {
             color: #007bff;
             font-weight: bold;
