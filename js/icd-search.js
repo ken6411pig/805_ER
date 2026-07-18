@@ -416,7 +416,6 @@ async function loadData() {
 
     if (abbreviationResult.status === 'fulfilled') {
         prepareAbbreviations(abbreviationResult.value);
-        elements.notice.textContent = '英文至少3個字元；中文或已收錄的全大寫縮寫可輸入2個字元';
     } else {
         elements.notice.textContent = 'ICD 已載入，但縮寫表載入失敗；仍可使用一般搜尋';
         console.error(abbreviationResult.reason);

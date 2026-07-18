@@ -74,12 +74,37 @@
 
         .checkbox-group {
             display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
             margin-right: 5px;
         }
 
         .checkbox-group input[type="checkbox"] {
-            margin-right: 5px;
-            transform: scale(1.3);
+            margin-right: 1px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #333;
+            background-color: white;
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"]:checked {
+            background-color: white;
+        }
+
+        .checkbox-group input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            left: 1px;
+            top: -4px;
+            color: black;
+            font-size: 18px;
+            line-height: 1;
         }
 
         .date-input {
@@ -147,6 +172,10 @@
             z-index: 5;
         }
 
+        #print-diagram-snapshot {
+            display: none;
+        }
+
         .text-label {
             position: absolute;
             background-color: transparent;
@@ -159,6 +188,7 @@
             user-select: none;
             z-index: 10;
             text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+            white-space: nowrap;
         }
 
         /* 新增圓圈標記樣式 */
@@ -266,6 +296,14 @@
             background-color: #0056b3;
         }
 
+        .clear-action-btn {
+            background-color: #e67e22;
+        }
+
+        .clear-action-btn:hover {
+            background-color: #d35400;
+        }
+
         .quick-text-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -350,36 +388,30 @@
                 max-width: 180mm;
             }
             
-            .body-diagram {
-                height: 500px;
+            .body-diagram.has-print-snapshot {
+                height: auto !important;
+                aspect-ratio: var(--print-diagram-aspect, 4 / 3);
                 page-break-inside: avoid;
                 print-color-adjust: exact;
                 position: relative !important;
+                display: block !important;
+                overflow: hidden !important;
+                background-image: none !important;
             }
-            
-            /* 確保文字標籤在列印時保持位置 */
-            .text-label {
-                position: absolute !important;
-                background-color: transparent !important;
-                border: none !important;
-                color: red !important;
-                font-size: 16px !important;
-                font-weight: bold !important;
-                text-shadow: none !important;
-                z-index: 10 !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
+
+            .body-diagram.has-print-snapshot #body-canvas,
+            .body-diagram.has-print-snapshot .text-label,
+            .body-diagram.has-print-snapshot .circle-marker {
+                display: none !important;
             }
-            
-            /* 確保圓圈標記在列印時保持位置和顏色 */
-            .circle-marker {
+
+            .body-diagram.has-print-snapshot #print-diagram-snapshot {
+                display: block !important;
                 position: absolute !important;
-                border: 2px solid red !important;
-                border-radius: 50% !important;
-                background-color: transparent !important;
-                z-index: 8 !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
+                inset: 0;
+                width: 100% !important;
+                height: 100% !important;
+                z-index: 10;
             }
             .title-switch-btn {
                 display: none !important;
@@ -568,31 +600,23 @@
                         <div class="text-input-group">
                             <label for="injury-text-input">傷情：</label>
                             <input type="text" id="injury-text-input" class="text-input-field" placeholder="如：右膝擦傷、瘀血、腫脹等">
-                            <button class="add-text-btn" onclick="addCustomTextLabel()">添加到圖上</button>
+                            <button class="add-text-btn" onclick="addCustomTextLabel()">添加</button>
+                            <button class="add-text-btn" onclick="addInspectionResultsToDiagram()">一鍵帶入</button>
+                            <button class="add-text-btn clear-action-btn" onclick="clearAllTextLabels()">清除全部文字</button>
+                            <button class="quick-text-btn" onclick="printForm()" style="background-color: #007bff; color: white; font-weight: bold;">列印表單</button>
                         </div>
                         <div class="text-input-group">
                             <label>標記圓圈：</label>
                             <button class="add-text-btn" onclick="addCircleMarker('center', 'small')" style="background-color: #28a745;">小圈</button>
                             <button class="add-text-btn" onclick="addCircleMarker('center', 'medium')" style="background-color: #ffc107; color: black;">中圈</button>
                             <button class="add-text-btn" onclick="addCircleMarker('center', 'large')" style="background-color: #dc3545;">大圈</button>
-                        </div>
-                        <div class="quick-text-buttons">
-                            <button class="quick-text-btn" onclick="addTextLabel('擦傷')">擦傷</button>
-                            <button class="quick-text-btn" onclick="addTextLabel('瘀血')">瘀血</button>
-                            <button class="quick-text-btn" onclick="addTextLabel('腫脹')">腫脹</button>
-                            <button class="quick-text-btn" onclick="addTextLabel('撕裂傷')">撕裂傷</button>
-                            <button class="quick-text-btn" onclick="addTextLabel('刺傷')">刺傷</button>
-                            <button class="quick-text-btn" onclick="addTextLabel('壓痕')">壓痕</button>
-                            <button class="quick-text-btn" onclick="addTextLabel('紅腫')">紅腫</button>
-                            <button class="quick-text-btn" onclick="addTextLabel('瘀青')">瘀青</button>
-                            <button class="quick-text-btn" onclick="clearAllCircles()">清除圈圈</button>
-                            <button class="quick-text-btn" onclick="clearAllTextLabels()">清除全部文字</button>
-                            <button class="quick-text-btn" onclick="printForm()" style="background-color: #007bff; color: white; font-weight: bold;">列印表單</button>
+                            <button class="add-text-btn clear-action-btn" onclick="clearAllCircles()">清除圈圈</button>
                         </div>
                     </div>
 
                     <div class="body-diagram" id="body-diagram-container">
                         <canvas id="body-canvas" width="800" height="600"></canvas>
+                        <canvas id="print-diagram-snapshot" aria-hidden="true"></canvas>
                     </div>
                 </td>
             </tr>
@@ -640,6 +664,7 @@
         let circleMarkers = [];
         let draggedLabel = null;
         let dragOffset = { x: 0, y: 0 };
+        let bodyDiagramImagePromise = null;
 
         // 數字轉中文的對應表
         const numberToChinese = {
@@ -710,6 +735,7 @@
             initializeCheckboxes();
             autoFillDate();
             initializeEditableDates(); // 初始化可編輯日期功能
+            loadBodyDiagramImage().catch(error => console.error('人體圖載入失敗：', error));
         });
 
         // 初始化可編輯日期功能
@@ -858,6 +884,7 @@
             
             const circle = document.createElement('div');
             circle.className = `circle-marker circle-${size}`;
+            circle.title = '雙擊可移除';
             
             // 計算圓圈尺寸
             const circleSize = size === 'small' ? 20 : size === 'medium' ? 40 : 60;
@@ -1027,13 +1054,15 @@
         }
 
         // 添加文字標籤到圖上
-        function addTextLabel(text) {
+        function addTextLabel(text, options = {}) {
             const container = document.getElementById('body-diagram-container');
             if (!container) return;
             
             const label = document.createElement('div');
             label.className = 'text-label';
             label.textContent = text;
+            label.title = '雙擊可移除';
+            label.dataset.source = options.source || 'manual';
             label.id = 'label-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
             
             // 設定初始位置在畫布中央
@@ -1046,11 +1075,11 @@
                 const rect = label.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
                 
-                const pixelLeft = (containerRect.width / 2) - (rect.width / 2);
-                const pixelTop = (containerRect.height / 2) - (rect.height / 2);
-                
-                label.style.left = pixelLeft + 'px';
-                label.style.top = pixelTop + 'px';
+                const position = options.position || { x: 50, y: 50 };
+                const pixelLeft = (containerRect.width * position.x / 100) - (rect.width / 2);
+                const pixelTop = (containerRect.height * position.y / 100) - (rect.height / 2);
+                label.style.left = Math.max(0, Math.min(pixelLeft, containerRect.width - rect.width)) + 'px';
+                label.style.top = Math.max(0, Math.min(pixelTop, containerRect.height - rect.height)) + 'px';
                 label.style.transform = 'none';
             }, 10);
             
@@ -1060,6 +1089,45 @@
             
             container.appendChild(label);
             textLabels.push(label);
+        }
+
+        function getInspectionText(value) {
+            return String(value || '')
+                .replace(/[\r\n]+/g, ' ')
+                .replace(/\s+/g, ' ')
+                .replace(/[\uFF08(]?\s*\u4EE5\u4E0B\u7A7A\u767D[\u3002\uFF0E.]?\s*[\uFF09)]?/g, '')
+                .trim();
+        }
+
+        function addInspectionResultsToDiagram() {
+            const inspectionFields = [
+                { id: 'head-face', position: { x: 50, y: 15 } },
+                { id: 'neck-shoulder', position: { x: 50, y: 28 } },
+                { id: 'chest-abdomen', position: { x: 50, y: 42 } },
+                { id: 'back-buttocks', position: { x: 50, y: 56 } },
+                { id: 'genital', position: { x: 50, y: 66 } },
+                { id: 'limbs', position: { x: 50, y: 76 } },
+                { id: 'other-parts', position: { x: 50, y: 88 } }
+            ];
+
+            textLabels
+                .filter(label => label.dataset.source === 'inspection')
+                .forEach(label => label.remove());
+            textLabels = textLabels.filter(label => label.dataset.source !== 'inspection');
+
+            let addedCount = 0;
+            inspectionFields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const text = getInspectionText(input?.value);
+                if (!text) return;
+
+                addTextLabel(text, { source: 'inspection', position: field.position });
+                addedCount += 1;
+            });
+
+            if (!addedCount) {
+                window.alert('沒有可帶入的檢查結果；請先填寫各部位的傷勢描述。');
+            }
         }
 
         // 開始拖拽標籤
@@ -1139,83 +1207,87 @@
             }
         });
 
-        // 列印功能
-        function printForm() {
-            // 列印前調整標記位置，防止跑掉
-            adjustMarksForPrint();
-            
-            // 延遲一點時間讓調整生效，然後列印
-            setTimeout(() => {
-                window.print();
-                
-                // 列印後恢復標記位置
-                setTimeout(() => {
-                    restoreMarksAfterPrint();
-                }, 100);
-            }, 100);
+        function loadBodyDiagramImage() {
+            if (bodyDiagramImagePromise) return bodyDiagramImagePromise;
+
+            bodyDiagramImagePromise = new Promise((resolve, reject) => {
+                const image = new Image();
+                image.onload = () => resolve(image);
+                image.onerror = () => reject(new Error('無法載入人體圖'));
+                image.src = 'assets/images/DV_body.jpg';
+            });
+            return bodyDiagramImagePromise;
         }
 
-        // 列印前調整標記位置
-        function adjustMarksForPrint() {
+        async function renderPrintDiagramSnapshot() {
             const container = document.getElementById('body-diagram-container');
-            if (!container) return;
-            
+            const snapshot = document.getElementById('print-diagram-snapshot');
+            if (!container || !snapshot) throw new Error('找不到驗傷解析圖');
+
             const containerRect = container.getBoundingClientRect();
-            
-            // 調整文字標籤
-            textLabels.forEach(label => {
-                // 保存原始位置
-                label.dataset.originalLeft = label.style.left;
-                label.dataset.originalTop = label.style.top;
-                
-                // 計算相對位置百分比
-                const currentLeft = parseFloat(label.style.left) || 0;
-                const currentTop = parseFloat(label.style.top) || 0;
-                
-                const percentLeft = (currentLeft / containerRect.width) * 100;
-                const percentTop = (currentTop / containerRect.height) * 100;
-                
-                // 設定為百分比定位，列印時更穩定
-                label.style.left = Math.max(0, Math.min(95, percentLeft)) + '%';
-                label.style.top = Math.max(0, Math.min(95, percentTop)) + '%';
-            });
-            
-            // 調整圓圈標記
+            const width = Math.round(containerRect.width);
+            const height = Math.round(containerRect.height);
+            if (!width || !height) throw new Error('驗傷解析圖尺寸無效');
+
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            snapshot.width = Math.round(width * pixelRatio);
+            snapshot.height = Math.round(height * pixelRatio);
+            container.style.setProperty('--print-diagram-aspect', `${width} / ${height}`);
+
+            const context = snapshot.getContext('2d');
+            context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            context.clearRect(0, 0, width, height);
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, width, height);
+
+            const bodyImage = await loadBodyDiagramImage();
+            const imageScale = Math.min(width / bodyImage.naturalWidth, height / bodyImage.naturalHeight);
+            const imageWidth = bodyImage.naturalWidth * imageScale;
+            const imageHeight = bodyImage.naturalHeight * imageScale;
+            context.drawImage(bodyImage, (width - imageWidth) / 2, (height - imageHeight) / 2, imageWidth, imageHeight);
+
             circleMarkers.forEach(circle => {
-                // 保存原始位置
-                circle.dataset.originalLeft = circle.style.left;
-                circle.dataset.originalTop = circle.style.top;
-                
-                // 計算相對位置百分比
-                const currentLeft = parseFloat(circle.style.left) || 0;
-                const currentTop = parseFloat(circle.style.top) || 0;
-                
-                const percentLeft = (currentLeft / containerRect.width) * 100;
-                const percentTop = (currentTop / containerRect.height) * 100;
-                
-                // 設定為百分比定位，列印時更穩定
-                circle.style.left = Math.max(0, Math.min(95, percentLeft)) + '%';
-                circle.style.top = Math.max(0, Math.min(95, percentTop)) + '%';
+                const rect = circle.getBoundingClientRect();
+                const style = window.getComputedStyle(circle);
+                const borderWidth = parseFloat(style.borderTopWidth) || 3;
+                const left = rect.left - containerRect.left;
+                const top = rect.top - containerRect.top;
+
+                context.save();
+                context.strokeStyle = style.borderTopColor || 'red';
+                context.lineWidth = borderWidth;
+                context.beginPath();
+                context.arc(left + rect.width / 2, top + rect.height / 2, Math.max(0, (Math.min(rect.width, rect.height) - borderWidth) / 2), 0, Math.PI * 2);
+                context.stroke();
+                context.restore();
             });
+
+            textLabels.forEach(label => {
+                const rect = label.getBoundingClientRect();
+                const style = window.getComputedStyle(label);
+                const left = rect.left - containerRect.left + (parseFloat(style.paddingLeft) || 0);
+                const top = rect.top - containerRect.top + (parseFloat(style.paddingTop) || 0);
+
+                context.save();
+                context.fillStyle = style.color || 'red';
+                context.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+                context.textBaseline = 'top';
+                context.fillText(label.textContent, left, top);
+                context.restore();
+            });
+
+            container.classList.add('has-print-snapshot');
         }
 
-        // 列印後恢復標記位置
-        function restoreMarksAfterPrint() {
-            // 恢復文字標籤位置
-            textLabels.forEach(label => {
-                if (label.dataset.originalLeft && label.dataset.originalTop) {
-                    label.style.left = label.dataset.originalLeft;
-                    label.style.top = label.dataset.originalTop;
-                }
-            });
-            
-            // 恢復圓圈標記位置
-            circleMarkers.forEach(circle => {
-                if (circle.dataset.originalLeft && circle.dataset.originalTop) {
-                    circle.style.left = circle.dataset.originalLeft;
-                    circle.style.top = circle.dataset.originalTop;
-                }
-            });
+        // 列印時把人體圖、圈圈與文字合成為同一張快照，避免列印引擎分別重新排版標註。
+        async function printForm() {
+            try {
+                await renderPrintDiagramSnapshot();
+            } catch (error) {
+                console.error('建立列印快照失敗：', error);
+                alert('無法建立驗傷解析圖快照，將使用一般列印模式。');
+            }
+            window.print();
         }
 
         // 切換標題功能

@@ -95,7 +95,7 @@ function clearSearch() {
 }
 
 async function loadData() {
-    elements.notice.textContent = '抗生素資料載入中...';
+    elements.notice.textContent = '';
     const rows = await loadCsv('assets/data/antibiotic_dosage.csv');
     state.headers = rows[0] || [];
     state.records = rows.slice(1).map(row => {
@@ -110,6 +110,7 @@ async function loadData() {
         };
     });
     state.ready = true;
+    elements.notice.textContent = '';
     if (elements.input.value.trim()) search();
 }
 
