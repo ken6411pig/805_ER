@@ -29,7 +29,7 @@ BPPV,Benign paroxysmal vertigo
 CABG,Atherosclerosis of autologous artery coronary artery bypass graft(s)
 CAD,Atherosclerotic heart disease
 CBD,Calculus of bile duct
-CD,Crohn's disease unspecified
+CD,Crohn's disease
 CDI,Clostridium difficile
 CF,Cystic fibrosis
 CHD,Congenital malformation of heart
@@ -42,8 +42,8 @@ CVA,Cerebral infarction
 DCM,Dilated cardiomyopathy
 DI,Diabetes Insipidus
 DIC,Disseminated Intravascular Coagulation
-DKA,Ketoacidosis
-DM,Type 2 diabetes mellitus complications
+DKA,Diabetes mellitus ketoacidosis
+DM,Type 2 diabetes mellitus
 DU,Duodenal Ulcer
 DVT,Deep vein thrombosis
 EBV,Gammaherpesviral mononucleosis
@@ -98,55 +98,55 @@ TIA,Transient Cerebral Ischemic Attack
 TR,tricuspid insufficiency
 UC,Ulcerative colitis unspecified
 URI,Upper Respiratory Infection
-UTI,"Urinary tract infection, site not specified"
+UTI,Urinary tract infection
 VF,Ventricular Fibrillation
 VHD,valve disorders
 VSD,Ventricular septal defect
 VT,Ventricular Tachycardia
 ALD,Adrenoleukodystrophy
 ALS,amyotrophic lateral sclerosis
-AOE,"Unspecified acute noninfective otitis externa, unspecified ear"
+AOE,acute otitis externa
 APC,Atrial premature depolarization
 APE,Acute pulmonary edema
 ATN,Acute tubular necrosis
 AVF,Arteriovenous fistula
 AVM,Arteriovenous malformation
-RBBB,Unspecified right bundle-branch block
-LBBB,"Left bundle-branch block, unspecified"
+RBBB,right bundle-branch block
+LBBB,Left bundle-branch block
 CAA,cerebral amyloid angiopathy
 CAPD,peritoneal dialysis
 CCB,Calcium channel blocker
 CJD,Creutzfeldt-jakob disease
 CMV,Cytomegaloviral
 CP,Cerebral palsy
-CRAO,"Central retinal artery occlusion, unspecified eye"
+CRAO,Central retinal artery occlusion
 CRVO,Central retinal vein occlusion
 DNI,Cutaneous abscess of neck
 EPS,Extrapyramidal
-FB,"Foreign body entering through skin, initial encounter"
 FSGS,Nephrotic syndrome with focal and segmental glomerular lesions
 FTD,Other frontotemporal neurocognitive disorder
-GBM,"Malignant neoplasm of brain, unspecified"
-GVHD,"Graft-versus-host disease, unspecified"
-CAP,"Pneumonia, unspecified organism"
-HAP,"Pneumonia, unspecified organism"
-HCAP,"Pneumonia, unspecified organism"
-HAV,Hepatitis A without hepatic coma
+GBM,Malignant neoplasm of brain
+GVHD,Graft-versus-host disease
+CAP,Pneumonia
+HAP,Pneumonia
+HCAP,Pneumonia
+HAV,Hepatitis A
+HBV,Hepatitis B
 HHV,herpesvirus
 HLH,Hemophagocytic Lymphohistiocytosis
 HRS,Hepatorenal syndrome
-HSV,"Herpesviral infection, unspecified"
-IAI,Peritonitis unspecified
+HSV,Herpesviral infection
+IAI,Peritonitis
 IC,Interstitial cystitis
 ITP,Immune thrombocytopenic purpura
-TTP,Other thrombotic microangiopathy
+TTP,thrombotic microangiopathy
 KD,Kawasaki
 MDD,Major depressive disorder
 NTM,mycobacterial
 OCD,Obsessive-compulsive disorder
 OHSS,Hyperstimulation of ovaries
 PDA,Patent ductus arteriosus
-PJS,"Other phakomatoses, not elsewhere classified"
+PJS,phakomatoses
 PPH,Postpartum hemorrhage
 PPM,pacemaker
 PPU,peptic ulcer perforation
@@ -154,22 +154,22 @@ PV,Pemphigus vulgaris
 PVC,Ventricular premature depolarization
 VPC,Ventricular premature depolarization
 RCC,Malignant neoplasm kidney
-RD,"Unspecified retinal detachment with retinal break, unspecified eye"
-SMA,"Spinal muscular atrophy, unspecified"
+RD,retinal detachment with retinal break
+SMA,Spinal muscular atrophy
 SVC,Superior vena cava
 TCA,Tricyclic antidepressant
 TEN,Toxic epidermal necrolysis
 TGA,Transient global amnesia
 TMJ,temporomandibular joint
-TOA,"Salpingitis and oophoritis, unspecified"
+TOA,Salpingitis and oophoritis
 TOF,Tetralogy of Fallot
 TACO,Transfusion associated circulatory overload
 TTNB,Transient tachypnea of newborn
 UCC,Malignant neoplasm bladder
 VP,ventricular shunt
 VZV,Varicella
-HF,heart failure unspecified
+HF,heart failure
 WPW,Pre-excitation syndrome
-FLU,Influenza due to other identified influenza virus with other respiratory manifestations
-OHCA,"Cardiac arrest, cause unspecified"
-IHCA,"Cardiac arrest, cause unspecified"
+FLU,influenza virus with other manifestations
+OHCA,Cardiac arrest
+IHCA,Cardiac arrest
