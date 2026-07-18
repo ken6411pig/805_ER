@@ -1,0 +1,175 @@
+abbreviation,full_terms
+AAA,Abdominal aortic aneurysm
+ACS,Acute Ischemic Heart Disease
+AD,Alzheimer's disease
+ADHD,Attention-deficit hyperactivity disorder
+AF,Atrial fibrillation
+AFL,Atrial flutter
+AGE,Gastroenteritis
+AH,Auditory hallucinations
+AIDP,Inflammatory polyneuropathy
+AIDS,Human immunodeficiency virus
+AKI,Acute Kidney Failure
+ALL,Acute Lymphoblastic Leukemia
+AMI,Acute Myocardial Infarction
+AML,Acute Myeloid Leukemia
+AOM,Acute serous otitis media
+APN,Acute Pyelonephritis
+AR,aortic insufficiency
+ARDS,Acute Respiratory Distress Syndrome
+ARF,Acute kidney failure
+AS,aortic stenosis
+ASD,Atrial septal defect
+AUB,Abnormal uterine and vaginal bleeding
+AUR,Retention of urine
+AVB,Atrioventricular block
+BA,Atresia of bile ducts
+BPH,Benign Prostatic Hyperplasia
+BPPV,Benign paroxysmal vertigo
+CABG,Atherosclerosis of autologous artery coronary artery bypass graft(s)
+CAD,Atherosclerotic heart disease
+CBD,Calculus of bile duct
+CD,Crohn's disease unspecified
+CDI,Clostridium difficile
+CF,Cystic fibrosis
+CHD,Congenital malformation of heart
+CHF,(Congestive) Heart Failure
+CKD,Chronic kidney disease
+CO,carbon monoxide
+COPD,Chronic Obstructive Pulmonary Disease
+CSR,spondylosis with radiculopathy
+CVA,Cerebral infarction
+DCM,Dilated cardiomyopathy
+DI,Diabetes Insipidus
+DIC,Disseminated Intravascular Coagulation
+DKA,Ketoacidosis
+DM,Type 2 diabetes mellitus complications
+DU,Duodenal Ulcer
+DVT,Deep vein thrombosis
+EBV,Gammaherpesviral mononucleosis
+ESRD,End Stage Renal Disease
+GB,Gall bladder
+GBS,Guillain-Barre syndrome
+GERD,Gastroesophageal Reflux
+GIB,Gastrointestinal hemorrhage
+GN,Acute nephritic syndrome
+GU,Gastric Ulcer
+HBV,hepatitis B
+HCC,Liver Cell Carcinoma
+HCM,hypertrophic cardiomyopathy
+HCV,viral hepatitis C
+HD,Dependence on renal dialysis
+HHS,NKHHC
+HIVD,Intervertebral Disc Disorders
+HTN,(Primary) Hypertension
+IBS,Irritable Bowel Syndrome
+ICH,Nontraumatic intracerebral hemorrhage
+IE,Infective Endocarditis
+ILD,pulmonary fibrosis
+MI,Myocardial Infarction
+MR,mitral insufficiency
+MS,Multiple Sclerosis
+NHL,Non-Hodgkin Lymphoma
+OA,osteoarthritis
+PAH,pulmonary hypertension
+PAOD,Atherosclerosis of Native Arteries of Extremities
+PD,Parkinson's Disease
+PE,Pulmonary Embolism
+PID,Pelvic Inflammatory Disease
+PJP,Pneumocystosis
+PSVT,Supraventricular Tachycardia
+PUD,Peptic Ulcer
+RA,Rheumatoid arthritis
+RHD,Rheumatic heart disease
+SAH,Nontraumatic subarachnoid hemorrhage
+SBP,Spontaneous bacterial peritonitis
+SDH,Nontraumatic subdural hemorrhage
+SIADH,Syndrome of inappropriate secretion of antidiuretic hormone
+SIH,Intracranial hypotension
+SLE,Systemic Lupus Erythematosus
+SOB,Shortness of Breath
+SSS,Sick Sinus Syndrome
+STD,Sexually transmitted disease
+STEMI,ST Elevation (STEMI) Myocardial Infarction
+Stroke,Cerebral infarction
+TAA,Thoracic aortic aneurysm
+TB,Respiratory tuberculosis unspecified
+TIA,Transient Cerebral Ischemic Attack
+TR,tricuspid insufficiency
+UC,Ulcerative colitis unspecified
+URI,Upper Respiratory Infection
+UTI,"Urinary tract infection, site not specified"
+VF,Ventricular Fibrillation
+VHD,valve disorders
+VSD,Ventricular septal defect
+VT,Ventricular Tachycardia
+ALD,Adrenoleukodystrophy
+ALS,amyotrophic lateral sclerosis
+AOE,"Unspecified acute noninfective otitis externa, unspecified ear"
+APC,Atrial premature depolarization
+APE,Acute pulmonary edema
+ATN,Acute tubular necrosis
+AVF,Arteriovenous fistula
+AVM,Arteriovenous malformation
+RBBB,Unspecified right bundle-branch block
+LBBB,"Left bundle-branch block, unspecified"
+CAA,cerebral amyloid angiopathy
+CAPD,peritoneal dialysis
+CCB,Calcium channel blocker
+CJD,Creutzfeldt-jakob disease
+CMV,Cytomegaloviral
+CP,Cerebral palsy
+CRAO,"Central retinal artery occlusion, unspecified eye"
+CRVO,Central retinal vein occlusion
+DNI,Cutaneous abscess of neck
+EPS,Extrapyramidal
+FB,"Foreign body entering through skin, initial encounter"
+FSGS,Nephrotic syndrome with focal and segmental glomerular lesions
+FTD,Other frontotemporal neurocognitive disorder
+GBM,"Malignant neoplasm of brain, unspecified"
+GVHD,"Graft-versus-host disease, unspecified"
+CAP,"Pneumonia, unspecified organism"
+HAP,"Pneumonia, unspecified organism"
+HCAP,"Pneumonia, unspecified organism"
+HAV,Hepatitis A without hepatic coma
+HHV,herpesvirus
+HLH,Hemophagocytic Lymphohistiocytosis
+HRS,Hepatorenal syndrome
+HSV,"Herpesviral infection, unspecified"
+IAI,Peritonitis unspecified
+IC,Interstitial cystitis
+ITP,Immune thrombocytopenic purpura
+TTP,Other thrombotic microangiopathy
+KD,Kawasaki
+MDD,Major depressive disorder
+NTM,mycobacterial
+OCD,Obsessive-compulsive disorder
+OHSS,Hyperstimulation of ovaries
+PDA,Patent ductus arteriosus
+PJS,"Other phakomatoses, not elsewhere classified"
+PPH,Postpartum hemorrhage
+PPM,pacemaker
+PPU,peptic ulcer perforation
+PV,Pemphigus vulgaris
+PVC,Ventricular premature depolarization
+VPC,Ventricular premature depolarization
+RCC,Malignant neoplasm kidney
+RD,"Unspecified retinal detachment with retinal break, unspecified eye"
+SMA,"Spinal muscular atrophy, unspecified"
+SVC,Superior vena cava
+TCA,Tricyclic antidepressant
+TEN,Toxic epidermal necrolysis
+TGA,Transient global amnesia
+TMJ,temporomandibular joint
+TOA,"Salpingitis and oophoritis, unspecified"
+TOF,Tetralogy of Fallot
+TACO,Transfusion associated circulatory overload
+TTNB,Transient tachypnea of newborn
+UCC,Malignant neoplasm bladder
+VP,ventricular shunt
+VZV,Varicella
+HF,heart failure unspecified
+WPW,Pre-excitation syndrome
+FLU,Influenza due to other identified influenza virus with other respiratory manifestations
+OHCA,"Cardiac arrest, cause unspecified"
+IHCA,"Cardiac arrest, cause unspecified"
