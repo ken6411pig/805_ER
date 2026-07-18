@@ -400,13 +400,13 @@ async function loadData() {
     elements.results.appendChild(loading);
 
     const [icdResult, abbreviationResult] = await Promise.allSettled([
-        loadCsv('ICD_10_CM.csv'),
-        loadCsv('medical_abbreviations.csv')
+        loadCsv('assets/data/ICD_10_CM.csv'),
+        loadCsv('assets/data/medical_abbreviations.csv')
     ]);
 
     if (icdResult.status === 'rejected') {
         showDataError(elements.results, `ICD 資料載入失敗：${icdResult.reason.message}`);
-        elements.notice.textContent = '請確認 ICD_10_CM.csv 與 index.html 位於同一資料夾';
+        elements.notice.textContent = '請確認 assets/data/ICD_10_CM.csv 存在且可讀取';
         return;
     }
 

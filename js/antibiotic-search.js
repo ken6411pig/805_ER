@@ -86,7 +86,7 @@ function scheduleSearch() {
 
 async function loadData() {
     elements.notice.textContent = '抗生素資料載入中...';
-    const rows = await loadCsv('antibiotic_dosage.csv');
+    const rows = await loadCsv('assets/data/antibiotic_dosage.csv');
     state.headers = rows[0] || [];
     state.records = rows.slice(1).map(row => {
         const genericName = String(row[0] || '').toLowerCase();
@@ -118,7 +118,7 @@ export function activateAntibioticSearch() {
     state.loadPromise = loadData().catch(error => {
         console.error(error);
         showDataError(elements.results, `抗生素資料載入失敗：${error.message}`);
-        elements.notice.textContent = '請確認 antibiotic_dosage.csv 與 index.html 位於同一資料夾';
+        elements.notice.textContent = '請確認 assets/data/antibiotic_dosage.csv 存在且可讀取';
         state.loadPromise = null;
         return null;
     });
