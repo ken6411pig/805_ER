@@ -96,13 +96,12 @@ function bindPageEvents() {
     });
 }
 
-// 全新設計：AI 圖片辨識專用邏輯
+// 緊湊版：AI 圖片辨識專用邏輯
 function initAiVisionAssistant() {
     const aiPage = document.getElementById('Note');
     const pasteZone = document.getElementById('pasteZone');
     const pasteInstruction = document.getElementById('pasteInstruction');
     const imagePreview = document.getElementById('imagePreview');
-    const aiPromptInput = document.getElementById('aiPromptInput');
     const sendToAiBtn = document.getElementById('sendToAiBtn');
     const clearAllBtn = document.getElementById('clearAllBtn');
     const aiResultContent = document.getElementById('aiResultContent');
@@ -112,9 +111,7 @@ function initAiVisionAssistant() {
 
     let currentBase64Image = null;
 
-    // 全局與區域貼上事件監聽
     function handlePaste(e) {
-        // 如果目前不是顯示 AI 頁面，則不處理貼上事件
         if (aiPage.classList.contains('hidden')) return;
 
         const clipboardData = e.clipboardData || window.clipboardData;
@@ -140,69 +137,52 @@ function initAiVisionAssistant() {
             currentBase64Image = event.target.result; 
             imagePreview.src = currentBase64Image;
             imagePreview.style.display = 'block';
-            pasteInstruction.style.display = 'none'; // 隱藏提示文字
+            pasteInstruction.style.display = 'none'; 
         };
         reader.readAsDataURL(file);
     }
 
-    // 一鍵清除功能
     clearAllBtn.addEventListener('click', function() {
         currentBase64Image = null;
         imagePreview.src = '';
         imagePreview.style.display = 'none';
-        pasteInstruction.style.display = 'block'; // 顯示提示文字
-        aiPromptInput.value = '';
-        aiResultContent.innerHTML = '<span style="color: #999; font-style: italic;">等待貼上圖片並傳送辨識...</span>';
+        pasteInstruction.style.display = 'block'; 
+        aiResultContent.innerHTML = '<span style="color: #999; font-style: italic;">等待貼上圖片並傳送...</span>';
         copyAiResultBtn.style.display = 'none';
     });
 
-sendToAiBtn.addEventListener('click', async function() {
-        console.log("--- 偵錯開始 ---");
-        console.log("1. 成功觸發按鈕點擊事件！");
-
+    sendToAiBtn.addEventListener('click', async function() {
         if (!currentBase64Image) {
-            console.log("2. 檢查結果：沒有圖片");
             window.alert('⚠️ 請先按下 Ctrl+V 貼上截圖，再傳送辨識！');
             return;
         }
-        console.log("2. 檢查結果：有圖片，準備改變畫面...");
+
+        copyAiResultBtn.style.display = 'none';
+        aiResultContent.innerHTML = '<span style="color: #007bff; font-weight: bold;">⏳ AI 正在辨識處理中，請稍候...</span>';
 
         try {
-            // 如果是在這一步之前就報錯，代表上面有殘留舊變數沒刪乾淨
-            copyAiResultBtn.style.display = 'none';
-            aiResultContent.innerHTML = '<span style="color: #007bff; font-weight: bold;">⏳ AI 正在辨識處理中，請稍候...</span>';
-            console.log("3. 畫面已成功切換為漏斗！準備呼叫 API...");
-
-            // ⚠️ 請記得把這裡改成你的真實 Render 網址
-            const backendURL = 'https://eight05-er.onrender.com/api/chat'; 
-            console.log("4. 目標網址是：", backendURL);
-
+            // [重點] 請記得將這裡改為你的真實 Render 網址
+            const backendURL = 'https://你的專案名稱.onrender.com/api/chat'; 
+            
             const response = await fetch(backendURL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: "", image: currentBase64Image }) 
             });
 
-            console.log("5. 伺服器有回應了！狀態碼：", response.status);
-
-            if (!response.ok) {
-                throw new Error('伺服器回應錯誤，狀態碼：' + response.status);
-            }
+            if (!response.ok) throw new Error('伺服器回應錯誤');
             
             const data = await response.json();
-            console.log("6. 成功解讀伺服器資料！準備顯示在畫面上...");
             
             aiResultContent.innerText = data.reply;
             copyAiResultBtn.style.display = 'inline-block';
-            console.log("--- 偵錯結束，任務完成 ---");
             
         } catch (error) {
-            console.error("❌ 抓到錯誤了！詳細原因：", error);
-            aiResultContent.innerHTML = `<span style="color: #dc3545; font-weight: bold;">⚠️ 執行發生錯誤：${error.message}</span>`;
+            aiResultContent.innerHTML = '<span style="color: #dc3545; font-weight: bold;">⚠️ 目前無法連接伺服器。</span>';
+            console.error(error);
         }
     });
 
-    // 複製 AI 結果
     copyAiResultBtn.addEventListener('click', async function() {
         const textToCopy = aiResultContent.innerText;
         if (!textToCopy) return;
@@ -215,12 +195,32 @@ sendToAiBtn.addEventListener('click', async function() {
     });
 }
 
+// ==========================================
+// 全新功能：網頁載入時默默喚醒 Render 伺服器
+// ==========================================
+function wakeUpServer() {
+    // [重點] 請記得將這裡改為你的真實 Render 網址 (加上 /api/ping)
+    const pingURL = 'https://https://eight05-er.onrender.com/api/ping'; 
+    
+    // 使用 fetch 發送請求，但不去干擾畫面 (即使失敗也不會跳警告)
+    fetch(pingURL)
+        .then(response => {
+            if (response.ok) {
+                console.log("🚀 成功傳送 Ping，伺服器已喚醒！");
+            }
+        })
+        .catch(error => {
+            console.log("💤 伺服器喚醒中或連線異常...");
+        });
+}
+
 function initializePage() {
+    wakeUpServer(); // 網頁一打開就立刻發送 Ping
     bindPageEvents();
     updateCertificateDate();
     initIcdSearch();
     initAntibioticSearch();
-    initAiVisionAssistant(); // 初始化全新的圖片辨識助手
+    initAiVisionAssistant(); 
     showPage('ICD_code');
 }
 
