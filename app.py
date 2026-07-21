@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import google.generativeai as genai
+from openai import OpenAI
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -9,19 +9,19 @@ app = Flask(__name__)
 CORS(app)
 
 load_dotenv()
-API_KEY  = os.getenv("MY_API_KEY")
-genai.configure(api_key=API_KEY)
+# 改為讀取 OpenAI 的 API Key
+OPENAI_API_KEY  = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 # ==========================================
-# 新增：用來「提早喚醒伺服器」的 Ping 通道
+# 1. 用來「提早喚醒伺服器」的 Ping 通道
 # ==========================================
 @app.route('/api/ping', methods=['GET'])
 def ping():
-    # 只要前端一呼叫這個網址，就回傳一個簡單的成功訊息，達到開機目的
     return jsonify({"status": "awake", "message": "伺服器已準備就緒！"}), 200
 
 # ==========================================
-# 2. 建立接收前端請求的 API 路由
+# 2. 建立接收前端請求的 API 路由 (改用 OpenAI)
 # ==========================================
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -35,26 +35,12 @@ def chat():
         return jsonify({'reply': '錯誤：未提供圖片。'}), 400
 
     try:
-        # 指定使用支援多模態 (圖+文) 且速度快的 flash 模型
-        model = genai.GenerativeModel('gemini-3.5-flash')
+        # OpenAI 要求的圖片格式必須包含完整的 Data URI scheme
+        # 前端傳來的格式通常已包含 "data:image/png;base64,"，若沒有則補上
+        if "," not in image_b64:
+            image_b64 = f"data:image/jpeg;base64,{image_b64}"
 
-        # 前端傳來的 Base64 格式通常是 "data:image/png;base64,iVBORw0KGgo..."
-        # 我們需要將標頭與實際內容分離
-        if "," in image_b64:
-            mime_type_str, base64_data = image_b64.split(',', 1)
-            # 從 "data:image/png;base64" 萃取出 "image/png"
-            mime_type = mime_type_str.split(':')[1].split(';')[0]
-        else:
-            mime_type = 'image/jpeg'
-            base64_data = image_b64
-
-        # 準備要傳給 Gemini 的圖片格式
-        image_part = {
-            "mime_type": mime_type,
-            "data": base64_data
-        }
-
-        # 如果使用者沒有輸入文字，給予預設的系統提示詞 (System Prompt)
+        # 如果使用者沒有輸入文字，給予預設的系統提示詞
         if not message:
             prompt = """
             你是一個藥物資訊統整助手。我會提供病患的藥物截圖，格式為: [日期] [開立機構] [診斷] [複方註記] [藥物學名] [商品名]  
@@ -68,20 +54,37 @@ def chat():
         else:
             prompt = message
 
-        # 呼叫 Gemini API 進行辨識
-        response = model.generate_content([prompt, image_part])
+        # 呼叫 OpenAI API (使用速度極快且便宜的 gpt-4o-mini)
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": image_b64
+                            }
+                        }
+                    ]
+                }
+            ],
+            max_tokens=800
+        )
 
-        # 將結果回傳給前端
-        return jsonify({'reply': response.text})
+        # 提取回傳的文字結果
+        reply_text = response.choices[0].message.content
+        return jsonify({'reply': reply_text})
 
     except Exception as e:
         print(f"Error during API call: {e}")
         return jsonify({'reply': f'伺服器發生錯誤: {str(e)}'}), 500
 
 # ==========================================
-# 3. 啟動伺服器 (已修改為 Render 相容設定)
+# 3. 啟動伺服器
 # ==========================================
 if __name__ == '__main__':
-    # 抓取 Render 動態分配的 PORT，並將 host 設為 0.0.0.0 以允許外部連線
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
