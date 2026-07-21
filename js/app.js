@@ -157,36 +157,34 @@ function initAiVisionAssistant() {
     });
 
     // 傳送給 AI
-    sendToAiBtn.addEventListener('click', async function() {
+sendToAiBtn.addEventListener('click', async function() {
         if (!currentBase64Image) {
-            window.alert('⚠️ 請先按下 Ctrl+V 貼上截圖，再傳送給 AI 辨識！');
+            window.alert('⚠️ 請先按下 Ctrl+V 貼上截圖，再傳送辨識！');
             return;
         }
 
-        const promptText = aiPromptInput.value.trim();
-        
         copyAiResultBtn.style.display = 'none';
         aiResultContent.innerHTML = '<span style="color: #007bff; font-weight: bold;">⏳ AI 正在辨識處理中，請稍候...</span>';
 
         try {
-            const backendURL = 'https://eight05-er.onrender.com/api/chat'; 
+            // [再次確認] 這裡要填上你 GitHub 部署到 Render 後的真實網址
+            const backendURL = 'https://你的專案名稱.onrender.com/api/chat'; 
             
             const response = await fetch(backendURL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: promptText, image: currentBase64Image })
+                body: JSON.stringify({ message: "", image: currentBase64Image }) 
             });
 
             if (!response.ok) throw new Error('伺服器回應錯誤');
             
             const data = await response.json();
             
-            // 顯示結果
             aiResultContent.innerText = data.reply;
             copyAiResultBtn.style.display = 'inline-block';
             
         } catch (error) {
-            aiResultContent.innerHTML = '<span style="color: #dc3545; font-weight: bold;">⚠️ 目前無法連接後端伺服器，請確認 API 連線狀態。</span>';
+            aiResultContent.innerHTML = '<span style="color: #dc3545; font-weight: bold;">⚠️ 目前無法連接伺服器。</span>';
             console.error(error);
         }
     });
