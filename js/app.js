@@ -156,36 +156,49 @@ function initAiVisionAssistant() {
         copyAiResultBtn.style.display = 'none';
     });
 
-    // 傳送給 AI
 sendToAiBtn.addEventListener('click', async function() {
+        console.log("--- 偵錯開始 ---");
+        console.log("1. 成功觸發按鈕點擊事件！");
+
         if (!currentBase64Image) {
+            console.log("2. 檢查結果：沒有圖片");
             window.alert('⚠️ 請先按下 Ctrl+V 貼上截圖，再傳送辨識！');
             return;
         }
-
-        copyAiResultBtn.style.display = 'none';
-        aiResultContent.innerHTML = '<span style="color: #007bff; font-weight: bold;">⏳ AI 正在辨識處理中，請稍候...</span>';
+        console.log("2. 檢查結果：有圖片，準備改變畫面...");
 
         try {
-            // [再次確認] 這裡要填上你 GitHub 部署到 Render 後的真實網址
+            // 如果是在這一步之前就報錯，代表上面有殘留舊變數沒刪乾淨
+            copyAiResultBtn.style.display = 'none';
+            aiResultContent.innerHTML = '<span style="color: #007bff; font-weight: bold;">⏳ AI 正在辨識處理中，請稍候...</span>';
+            console.log("3. 畫面已成功切換為漏斗！準備呼叫 API...");
+
+            // ⚠️ 請記得把這裡改成你的真實 Render 網址
             const backendURL = 'https://eight05-er.onrender.com/api/chat'; 
-            
+            console.log("4. 目標網址是：", backendURL);
+
             const response = await fetch(backendURL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: "", image: currentBase64Image }) 
             });
 
-            if (!response.ok) throw new Error('伺服器回應錯誤');
+            console.log("5. 伺服器有回應了！狀態碼：", response.status);
+
+            if (!response.ok) {
+                throw new Error('伺服器回應錯誤，狀態碼：' + response.status);
+            }
             
             const data = await response.json();
+            console.log("6. 成功解讀伺服器資料！準備顯示在畫面上...");
             
             aiResultContent.innerText = data.reply;
             copyAiResultBtn.style.display = 'inline-block';
+            console.log("--- 偵錯結束，任務完成 ---");
             
         } catch (error) {
-            aiResultContent.innerHTML = '<span style="color: #dc3545; font-weight: bold;">⚠️ 目前無法連接伺服器。</span>';
-            console.error(error);
+            console.error("❌ 抓到錯誤了！詳細原因：", error);
+            aiResultContent.innerHTML = `<span style="color: #dc3545; font-weight: bold;">⚠️ 執行發生錯誤：${error.message}</span>`;
         }
     });
 
