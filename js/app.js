@@ -162,7 +162,7 @@ function initAiVisionAssistant() {
 
         try {
             // [重點] 請記得將這裡改為你的真實 Render 網址
-            const backendURL = 'https://你的專案名稱.onrender.com/api/chat'; 
+            const backendURL = 'https://eight05-er.onrender.com/api/chat'; 
             
             const response = await fetch(backendURL, {
                 method: 'POST',
