@@ -13,6 +13,14 @@ API_KEY  = os.getenv("MY_API_KEY")
 genai.configure(api_key=API_KEY)
 
 # ==========================================
+# 新增：用來「提早喚醒伺服器」的 Ping 通道
+# ==========================================
+@app.route('/api/ping', methods=['GET'])
+def ping():
+    # 只要前端一呼叫這個網址，就回傳一個簡單的成功訊息，達到開機目的
+    return jsonify({"status": "awake", "message": "伺服器已準備就緒！"}), 200
+
+# ==========================================
 # 2. 建立接收前端請求的 API 路由
 # ==========================================
 @app.route('/api/chat', methods=['POST'])
@@ -71,8 +79,9 @@ def chat():
         return jsonify({'reply': f'伺服器發生錯誤: {str(e)}'}), 500
 
 # ==========================================
-# 3. 啟動伺服器
+# 3. 啟動伺服器 (已修改為 Render 相容設定)
 # ==========================================
 if __name__ == '__main__':
-    # 預設會在 127.0.0.1 (localhost) 的 5000 port 執行
-    app.run(debug=True, port=5000)
+    # 抓取 Render 動態分配的 PORT，並將 host 設為 0.0.0.0 以允許外部連線
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
