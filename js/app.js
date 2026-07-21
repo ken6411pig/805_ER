@@ -169,7 +169,7 @@ function initAiVisionAssistant() {
         aiResultContent.innerHTML = '<span style="color: #007bff; font-weight: bold;">⏳ AI 正在辨識處理中，請稍候...</span>';
 
         try {
-            const backendURL = 'https://eight05-er.onrender.com'; 
+            const backendURL = 'https://eight05-er.onrender.com/api/chat'; 
             
             const response = await fetch(backendURL, {
                 method: 'POST',
