@@ -199,8 +199,8 @@ function initAiVisionAssistant() {
 // 全新功能：網頁載入時默默喚醒 Render 伺服器
 // ==========================================
 function wakeUpServer() {
-    // [重點] 請記得將這裡改為你的真實 Render 網址 (加上 /api/ping)
-    const pingURL = 'https://https://eight05-er.onrender.com/api/ping'; 
+    // 修正：移除多餘的 https://
+    const pingURL = 'https://eight05-er.onrender.com/api/ping'; 
     
     // 使用 fetch 發送請求，但不去干擾畫面 (即使失敗也不會跳警告)
     fetch(pingURL)
@@ -216,6 +216,10 @@ function wakeUpServer() {
 
 function initializePage() {
     wakeUpServer(); // 網頁一打開就立刻發送 Ping
+    
+    // 新增：設定每 14 分鐘 (14 * 60 * 1000 = 840000 毫秒) 自動執行一次
+    setInterval(wakeUpServer, 840000); 
+
     bindPageEvents();
     updateCertificateDate();
     initIcdSearch();
