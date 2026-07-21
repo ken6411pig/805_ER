@@ -168,7 +168,7 @@ sendToAiBtn.addEventListener('click', async function() {
 
         try {
             // [再次確認] 這裡要填上你 GitHub 部署到 Render 後的真實網址
-            const backendURL = 'https://你的專案名稱.onrender.com/api/chat'; 
+            const backendURL = 'https://eight05-er.onrender.com/api/chat'; 
             
             const response = await fetch(backendURL, {
                 method: 'POST',
