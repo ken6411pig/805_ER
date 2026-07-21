@@ -56,7 +56,7 @@ def chat():
 
         # 呼叫 OpenAI API (使用速度極快且便宜的 gpt-4o-mini)
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5.4-nano",
             messages=[
                 {
                     "role": "user",
