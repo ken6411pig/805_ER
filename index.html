@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="utf-8"/>
@@ -19,7 +18,7 @@
     <div data-page="Trauma_System">👤 多處外傷圖譜系統</div>
     <div data-page="DV_Image">📷 家暴/兒少診斷書</div>
     <div data-page="Antibiotic_Dosage">💊 抗生素劑量查詢</div>
-    <div data-page="Note">📓 備忘錄</div>
+    <div data-page="Note">✨ AI 圖片辨識</div>
 </div>
 <div class="main-content">
 
@@ -347,23 +346,37 @@ pt and family agreed to CT w/ contrast<br/><br/>
 <u> Reference: Tintinalli's Emergency Medicine(9th) </u> 
 </div>
 
+<!-- 緊湊版：AI 圖片辨識專用區塊 (上下排版) -->
 <div class="content hidden" id="Note">
-    <h2>備忘錄</h2>
-    <textarea class="note-textarea" id="noteText" placeholder="在此輸入備忘內容..."></textarea>
-    <div class="note-actions">
-        <button class="copy-button" id="copyNoteButton" type="button">複製</button>
-        <button class="copy-button button-danger" id="clearNoteButton" type="button">清除</button>
-        <button class="copy-button button-success" id="toggleChatbotBtn" type="button">顯示助手</button>
-    </div>
-    <div class="chatbot-container" id="chatbotContainer">
-        <h3>AI病歷/藥歷助手</h3>
-<p>病歷助手:根據關鍵字生成完整英文病歷</p>
-<p>藥歷助手:根據雲端健保藥歷的截圖整理成適合貼在病歷的格式(截圖請截開立時間到商品名)</p>
-        <iframe 
-            src="https://udify.app/chatbot/3s6sWBWnalSAUEKH" 
-            class="chatbot-frame"
-            title="AI病歷及藥歷助手">
-        </iframe>
+    <h2>✨ AI 藥歷與圖片辨識</h2>
+    <p style="color: #666; margin-bottom: 15px;">直接點擊下方虛線框並按下 <b>Ctrl+V</b> 貼上截圖。</p>
+    
+    <div class="ai-vision-compact">
+        <!-- 小型貼圖熱區 -->
+        <div id="pasteZone" class="paste-zone compact" tabindex="0">
+            <div id="pasteInstruction" class="paste-instruction">
+                <span style="font-size: 1.5em; display: block; margin-bottom: 5px;">📋</span>
+                點擊此處並按下 <b>Ctrl+V</b>
+            </div>
+            <img id="imagePreview" src="" alt="圖片預覽" style="display: none;" />
+        </div>
+        
+        <!-- 按鈕區 -->
+        <div class="ai-action-buttons compact-buttons">
+            <button class="copy-button button-success" id="sendToAiBtn" type="button">🚀 傳送辨識</button>
+            <button class="copy-button button-danger" id="clearAllBtn" type="button">🗑️ 清除圖片</button>
+        </div>
+
+        <!-- 結果輸出區 -->
+        <div class="ai-output-area">
+            <div class="ai-result-header">
+                <h3 style="margin: 0; color: #007bff; font-size: 16px;">AI 辨識結果</h3>
+                <button class="copy-button" id="copyAiResultBtn" type="button" style="margin: 0; padding: 4px 10px; display: none;">複製結果</button>
+            </div>
+            <div id="aiResultContent" class="ai-result-content compact-result">
+                <span style="color: #999; font-style: italic;">等待貼上圖片並傳送...</span>
+            </div>
+        </div>
     </div>
 </div>
 
