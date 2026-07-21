@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Medical Record System</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>🏥</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+<div class="sidebar">
+    <div data-page="History_PE">📋 History & PE</div>
+    <div data-page="ICD_code">🔍 ICD Code</div>
+    <div data-page="Plan">📝 Plan</div>
+    <div data-page="Surgery_ICD">📖 外傷代碼速查</div>
+    <div data-page="SER_Image">🖼️ 電子外傷圖</div> 
+    <div data-page="Trauma_System">👤 多處外傷圖譜系統</div>
+    <div data-page="DV_Image">📷 家暴/兒少診斷書</div>
+    <div data-page="Antibiotic_Dosage">💊 抗生素劑量查詢</div>
+    <div data-page="Note">✨ AI 圖片辨識</div>
+</div>
+<div class="main-content">
+
+<!-- 合併的 History & PE 頁面 -->
+<div class="content hidden" id="History_PE">
+    <h1>History & Physical Examination</h1>
+    
+    <div class="history-pe-container">
+        <!-- History 區塊 -->
+        <div class="history-section">
+            <h2>📋 History</h2>
+            
+            <div class="section">
+                <p class="mb-2">
+                    The patient who denied systemic disease before. NKA. No op history.
+                </p>
+                <h3>Negative findings:</h3>
+                <p>
+                    chills(-), fever(-), cough(-), sputum(-), hemoptysis(-), chest tightness(-), chest pain(-), refer pain(-), cold sweating(-), SOB(-), DOE(-), PND(-), orthopnea(-), abdominal pain(-), anorexia(-), dysphagia(-), nausea(-), vomiting(-), constipation(-), diarrhea(-),hematemesis(-), tarry stools(-), hematochezia(-), urgency(-), burning sensation(-), frequency(-), dysuria(-), hematuria(-), oligouria(-), body weight loss(-)
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>TOCC history:</h3>
+                <ul class="history-list">
+                    <li>Occupation:</li>
+                    <li>Cluster/contact history: Nil</li>
+                    <li>Traveling history: Nil</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>CAD risk factors:</h3>
+                <p>DM (-), HTN (-), hyperlipidemia (-), smoking (-), family history (-), 
+                    Old age (-) Male (-) Post menopause (-)</p>
+                    
+                <h3>SER</h3>
+                <p>
+                    This year-old woman denied any systemic disease.<br/>
+                    She suffered from TA (自摔) with helmet. ILOC(-), no head, chest, abdomen injury.<br/>
+                    There was no nausea/vomiting, limitation ROMo f extremities.<br/>
+                </p>
+                <h3>OHCA</h3>
+                <p>
+                    witnesses(-), bystander CPR(-)<br/>
+                    EMT arrived ______<br/>
+                    The initial rhythm was non-shockable.<br/>
+                    DC shock *0 time(s) were delivered in the prehospital setting.<br/>
+                    Advanced airway (LMA) was established.<br/>
+                    Epinephrine of 0 mg was given.<br/>
+                    Mechanical CPR (LUCAS) has been deployed.<br/>
+                    He was sent to our ER at ______<br/>
+                    The presenting rhythm at ER was asystole/PEA.<br/>
+                </p> 
+                <h3>PER</h3>
+                <p>
+                    Fever up to C for days.<br/>
+                    No fever, cough, rhinorrhea, SOB, abdominal discomfort, N/V, diarrhea, dysuria or skin rash.<br/>
+                    Fair activity, appetite and urine output.<br/>
+                    TOCC histories: denied; <br/>
+                    Vaccination hx: <br/>
+                    Allergy: denied; <br/>
+                    PMH: denied, no G6PD deficiency<br/>
+                    Last anti-pyretic medication:<br/>
+                    FHx: denied<br/>
+                    Last meal:<br/>
+                    LMP on<br/>
+                </p>
+            </div>
+        </div>
+
+        <!-- PE 區塊 -->
+        <div class="pe-section">
+            <h2>🩺 Physical Examination</h2>
+            
+            <div class="pe-tabs">
+                <span data-tab="內科" class="active">🫀 MER</span>
+                <span data-tab="外科">🔪 SER</span>
+                <span data-tab="OHCA">💔 OHCA</span>
+                <span data-tab="NE">🧠 NE</span>
+                <span data-tab="外傷FAST">🩸 外傷FAST</span>
+                <span data-tab="POCUS">🎯 POCUS</span>
+            </div>
+            
+            <div class="pe-content" id="內科">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Clear, GCS: E4M6V5<br/>
+                        Skin: Normal skin turgor<br/>
+                        HEENT: Intact. No icteric sclera. No anemic conjunctiva, OU. No congestion over pharyngeal wall.<br/>
+                        Neck: Supple. No JVE noted.<br/>
+                        Chest: Symmetrical expension. Clear breathing sounds. Rale(-), Rhonchi(-), Wheezing(-)<br/>
+                        Heart: Regular heart beat<br/>
+                        Abdomen: Soft and flat. Normal bowel sound. No tenderness. No rebounding pain.<br/>
+                        Extremities: no skin rash. no edema.<br/>
+                        MP: 5, all limbs.
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="外科">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Clear <br/>
+                        GCS: E4M6V5, pupil: 2+/2+<br/>
+                        Neck: Supple.<br/>
+                        Chest: Symmetrical expension.Wheezing(-)<br/>
+                        Heart: Regular heart beat<br/>
+                        Abdomen: Soft. No tenderness.<br/>
+                        Extremities: Free of ROM. <br/>
+                        MP: 5, all limbs.
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="OHCA">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Consciousness: Coma GCS: E1M1V1<br/>
+                        Skin:Normal skin turgor, no skin rash<br/>
+                        Neck: Supple.no palpable pulsation.<br/>
+                        Chest: No breath sound.<br/>
+                        Heart: No heart beat.<br/>
+                        Abdomen: Soft and ovoid.<br/>
+                        Extremities: No obvious wound over four limbs.<br/>
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="NE">
+                <div class="pe-content-wrapper">
+                    <p>
+                        GCS: E4V5M6, poor attention<br/>
+                        CNs: pupil: 3/3, LR: +/+, VF: intact by threatening test, <br/>
+                        EOM: full, no eye ptosis(+), no diplopia/nystagmus, no central facial palsy, normal shoulder shrug<br/>
+                        MP: UE: proximal 5/5, distal 5/5, LE: proximal 5/5, distal 5/5<br/>
+                        DTR: UE: ++/++, LE: knee: ++/++, ankle: ++/++<br/>
+                        Plantar reflex: downgoing bilaterally<br/>
+                        Sensation: symmetric by pinprick, no hemi-necglect<br/>
+                        FNF: no dysmetria/no dysmetria<br/>
+                        HKS: no zigzag/no zigzag<br/>
+                        Romberg test/Gait/Tandem gait: Cannot cooperate<br/>
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+            
+            <div class="pe-content hidden" id="外傷FAST">
+                <div class="pe-content-wrapper">
+                    <p>
+                        No pericardial effusion, bilateral lung sliding present, no pleural effusion, no ascites
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+
+            <div class="pe-content hidden" id="POCUS">
+                <div class="pe-content-wrapper">
+                    <p>
+                        Cardiac: no pericardial effusion, normal global wall motion, no regional wall motion abnormalities, normal RV size, IVC normal caliber with >50% respiratory variation<br/>
+                        Thoracic: bilateral lung sliding present, B-lines <3 per intercostal space, no pleural effusion<br/>
+                        Abdominal: no ascites, no hydronephrosis, no IHD dilatation, no CBD dilatation or GB wall thickening, no echo Murphy sign<br/>
+                        DVT: femoral and popliteal veins compressible bilaterally<br/>
+                    </p>
+                    <button class="copy-button">複製</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content hidden" id="Surgery_ICD">
+    <iframe src="Surgery_ICD.html" 
+            width="100%" 
+            height="800px" 
+            class="embedded-tool"
+            title="外傷代碼速查">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="Surgery_ICD.html">Surgery_ICD.html</a></p>
+    </iframe>
+</div>
+<div class="content hidden" id="SER_Image">
+    <iframe src="SER_image.html" 
+            width="100%" 
+            height="800px" 
+            class="embedded-tool"
+            title="電子外傷圖">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="SER_image.html">SER_image.html</a></p>
+    </iframe>
+</div>
+<div class="content hidden" id="DV_Image">
+    <iframe src="DV_image.html" 
+            width="100%" 
+            height="800px" 
+            class="embedded-tool"
+            title="家暴及兒少診斷書">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="DV_image.html">DV_image.html</a></p>
+    </iframe>
+</div>
+<div class="content" id="ICD_code">
+<h1>ICD-10-CM 診斷碼搜尋系統</h1>
+<div class="section">
+<h3>常用症狀ICD碼:</h3>
+<table class="quick-icd-table">
+<tr>
+<td><button class="quick-icd-code" data-icd-code="R50.9" type="button">R50.9</button> Fever, unspecified</td>
+<td><button class="quick-icd-code" data-icd-code="R06.00" type="button">R06.00</button> Dyspnea, unspecified</td>
+<td><button class="quick-icd-code" data-icd-code="R07.9" type="button">R07.9</button> Chest pain, unspecified</td>
+</tr>
+<tr>
+<td><button class="quick-icd-code" data-icd-code="R11.10" type="button">R11.10</button> Vomiting, unspecified</td>
+<td><button class="quick-icd-code" data-icd-code="R10.9" type="button">R10.9</button> Unspecified abdominal pain</td>
+<td><button class="quick-icd-code" data-icd-code="R19.7" type="button">R19.7</button> Diarrhea, unspecified</td>
+</tr>
+<tr>
+<td><button class="quick-icd-code" data-icd-code="R42" type="button">R42</button> Dizziness and giddiness</td>
+<td><button class="quick-icd-code" data-icd-code="R51.9" type="button">R51.9</button> Headache, unspecified</td>
+<td><button class="quick-icd-code" data-icd-code="R05.9" type="button">R05.9</button> Cough, unspecified</td>
+</tr>
+<tr>
+<td><button class="quick-icd-code" data-icd-code="R53.1" type="button">R53.1</button> Weakness</td>
+<td><button class="quick-icd-code" data-icd-code="L03.90" type="button">L03.90</button> Cellulitis, unspecified</td>
+<td><button class="quick-icd-code" data-icd-code="T78.40XA" type="button">T78.40XA</button> Allergy, unspecified, initial encounter</td>
+</tr>
+<tr>
+<td><button class="quick-icd-code" data-icd-code="T65.92XA" type="button">T65.92XA</button> Toxic effect of unspecified substance, intentional self-harm, initial encounter</td>
+<td><button class="quick-icd-code" data-icd-code="R57.9" type="button">R57.9</button> Shock, unspecified</td>
+<td><button class="quick-icd-code" data-icd-code="I46.9" type="button">I46.9</button> Cardiac arrest, cause unspecified</td>
+</tr>
+</table>
+</div>
+<div class="search-container clearable-search-container">
+<input class="search-box" id="searchInput" placeholder="英文至少3字；中文或全大寫縮寫可2字" type="text"/>
+<button aria-label="清除搜尋" class="search-clear-button" id="searchClearButton" title="清除搜尋" type="button">&times;</button>
+</div>
+<div class="count-info" id="countInfo"></div>
+<div class="min-length-notice" id="minLengthNotice"></div>
+<div id="results"></div>
+<p class="data-source">資料來源：衛生福利部網站「2023 年版 ICD-10-CM」（114.05.09 更新）</p>
+</div>
+
+<div class="content hidden" id="Plan">
+<h3>診斷證明書</h3>
+<div>
+<p class="text-panel" id="certificateText">
+    <span class="copy-line" title="點擊複製此行">病人因上述疾病於民國115年 月 日 時 分至 時 分期間至本院急診就診並接受檢查，建議休養三日並門診追蹤複查。</span>
+    <span class="copy-line" title="點擊複製此行">病人因上述疾病於民國115年 月 日 時 分至 時 分期間至本院急診就診並接受傷口縫合 針，建議門診追蹤複查。</span>
+    <span class="copy-line" title="點擊複製此行">病人於民國115年 月 日 時 分至本院急診時無呼吸心跳(OHCA)，於急診行高級心臟救命術(ACLS)仍無恢復自發性呼吸心跳(ROSC)，於民國113年 月 日 時 分停止急救，病人死亡。</span>
+</p>
+</div>
+<hr class="section-divider">
+<h3>出院指示</h3>
+    <div class="text-panel discharge-panel"><span class="copy-line" title="點擊複製此行">symptoms improved, opd f/u was suggested, educated back asap if red flag sign</span><span class="copy-line" title="點擊複製此行">已告知細微骨裂未能完全於急診X光片能診斷出，若出院後持續疼痛需立即返診評估。</span><span class="copy-line" title="點擊複製此行">已詳細向病人與家屬解釋可能之病程變化與相關併發症，病人本人及家屬清楚明白。</span><span class="copy-line" title="點擊複製此行">影像學檢查以最終放射科報告為主，建議相關科別門診複查。</span><span class="copy-line" title="點擊複製此行">We suggested that further hospitalization is necessary, but patient was discharged against medical advice (under his families requested)</span> <span class="copy-line" title="點擊複製此行">Due to the patient's personal reason, the patient asked for AAD. After well informing the possibility of sepsis and toxic signs, AAD was arranged. Keep OPD follow up.</span></div>
+<hr class="section-divider">
+<h3>腎功能不良打顯影劑 CT</h3>
+<p>arrange CT w/ contrast<br/>
+explain compared to the risk of contrast nephropathy, sepsis is more harmful to kidney<br/>
+CT w/ contrast is crucial for the ddx of sepsis<br/>
+pt and family agreed to CT w/ contrast<br/><br/>
+</p>
+<h3>輕度頭部外傷病人接受電腦斷層檢查準則 (CT Rules for MTBI)</h3>
+<h4>指引（Guideline）：</h4>
+<p>受傷後 2 小時，沒有恢復到 GCS score15 分<br/>
+疑似有顱骨骨折的現象<br/>
+顱底骨折的任何徵候（例如腦脊髓液鼻漏、耳漏等）<br/>
+局部神經學異常<br/>
+癲癇<br/>
+嚴重顏面撕傷<br/>
+</p>
+<h4>建議（Options）：</h4>
+<p>嘔吐 2 次或以上<br/>
+年齡大於 65 歲或小於 2 歲<br/>
+藥物或酒精過量<br/>
+持續嚴重漫性頭痛<br/>
+傷後失憶 30 分鐘以上<br/>
+危險的受傷機轉（例如行人被機動車撞擊、乘客被拋出車外、從大於 1 公尺 或 5 個階梯以上高度跌落）<br/>
+凝血異常<br/>
+多重創傷<br/>
+開顱病史
+</p>
+<u> Reference: 台灣神經外科醫學會網站</u>
+<h3>New Orleans Criteria and Canadian CT Head Rule Clinical Decision Rules </h3>
+<table border="1">
+<tr>
+<th>New Orleans Criteria—GCS 15*</th>
+<th>Canadian CT Head Rule—GCS 13-15*</th>
+</tr>
+<tr>
+<td>Headache</td>
+<td>GCS <15 at 2 h</td>
+</tr>
+<tr>
+<td>Vomiting</td>
+<td>Suspected open or depressed skull fracture</td>
+</tr>
+<tr>
+<td>Age >60 y</td>
+<td>Age ≥65 y</td>
+</tr>
+<tr>
+<td>Intoxication</td>
+<td>>1 episode of vomiting</td>
+</tr>
+<tr>
+<td>Persistent anterograde amnesia</td>
+<td>Retrograde amnesia >30 min</td>
+</tr>
+<tr>
+<td>Evidence of trauma above the clavicles</td>
+<td>Dangerous mechanism</td>
+</tr>
+<tr>
+<td>Seizure</td>
+<td>Any sign of basal skull fracture</td>
+</tr>
+<tr>
+<td><strong>100% sensitive, 5% specific</strong></td>
+<td><strong>83% sensitive, 38% specific</strong></td>
+</tr>
+</table>
+<p> *Presence of any one finding indicates need for CT scan.</p> 
+<p> Dangerous mechanism: Pedestrian struck by motor vehicle, occupant ejected from motor vehicle, or fall from >3 feet or >5 stairs.</p> 
+<u> Reference: Tintinalli's Emergency Medicine(9th) </u> 
+</div>
+
+<!-- 緊湊版：AI 圖片辨識專用區塊 (上下排版) -->
+<div class="content hidden" id="Note">
+    <h2>✨ AI 藥歷與圖片辨識</h2>
+    <p style="color: #666; margin-bottom: 15px;">直接點擊下方虛線框並按下 <b>Ctrl+V</b> 貼上截圖。</p>
+    
+    <div class="ai-vision-compact">
+        <!-- 小型貼圖熱區 -->
+        <div id="pasteZone" class="paste-zone compact" tabindex="0">
+            <div id="pasteInstruction" class="paste-instruction">
+                <span style="font-size: 1.5em; display: block; margin-bottom: 5px;">📋</span>
+                點擊此處並按下 <b>Ctrl+V</b>
+            </div>
+            <img id="imagePreview" src="" alt="圖片預覽" style="display: none;" />
+        </div>
+        
+        <!-- 按鈕區 -->
+        <div class="ai-action-buttons compact-buttons">
+            <button class="copy-button button-success" id="sendToAiBtn" type="button">🚀 傳送辨識</button>
+            <button class="copy-button button-danger" id="clearAllBtn" type="button">🗑️ 清除圖片</button>
+        </div>
+
+        <!-- 結果輸出區 -->
+        <div class="ai-output-area">
+            <div class="ai-result-header">
+                <h3 style="margin: 0; color: #007bff; font-size: 16px;">AI 辨識結果</h3>
+                <button class="copy-button" id="copyAiResultBtn" type="button" style="margin: 0; padding: 4px 10px; display: none;">複製結果</button>
+            </div>
+            <div id="aiResultContent" class="ai-result-content compact-result">
+                <span style="color: #999; font-style: italic;">等待貼上圖片並傳送...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content hidden" id="Antibiotic_Dosage">
+    <h1>抗生素腎功能劑量調整查詢系統</h1>
+    <div class="search-container clearable-search-container">
+        <input class="search-box" id="antibioticSearchInput" placeholder="請輸入藥物名稱進行搜尋" type="text"/>
+        <button aria-label="清除搜尋" class="search-clear-button" id="antibioticSearchClearButton" title="清除搜尋" type="button">&times;</button>
+    </div>
+    <div class="count-info" id="antibioticCountInfo"></div>
+    <div class="min-length-notice" id="antibioticMinLengthNotice"></div>
+    <div id="antibioticResults"></div>
+    <p class="data-source">資料來源：《熱病》2022 年版</p>
+</div>
+<div class="content hidden" id="Trauma_System">
+    <iframe src="trauma_system.html" 
+            width="100%" 
+            height="800px"
+            class="embedded-tool"
+            title="多處外傷圖譜系統">
+        <p>您的瀏覽器不支援 iframe，請直接訪問 <a href="trauma_system.html">trauma_system.html</a></p>
+    </iframe>
+</div>
+
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
