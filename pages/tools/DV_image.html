@@ -13,11 +13,17 @@
         }
 
         .form-container {
-            width: 100%;
-            max-width: 210mm;
+            width: 17.19cm;
+            max-width: 17.19cm;
             margin: 0 auto;
             background-color: white;
             padding: 20px;
+        }
+
+        @media screen and (min-width: 1000px) {
+            .form-container {
+                zoom: 1.25;
+            }
         }
 
         .header {
@@ -131,6 +137,40 @@
             font-size: 20px;
         }
 
+        .result-heading-column {
+            width: 1.95cm;
+            min-width: 1.95cm;
+            max-width: 1.95cm;
+            position: relative;
+            writing-mode: initial;
+            text-orientation: initial;
+            padding: 5px;
+        }
+
+        .result-heading-column .bracket-text {
+            position: absolute;
+            top: 8px;
+            right: 4px;
+            bottom: 8px;
+            margin: 0;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .result-heading-letters {
+            position: absolute;
+            top: 8px;
+            right: 25px;
+            bottom: 8px;
+            left: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            line-height: 1;
+        }
+
         .vertical-text-with-brackets .bracket-text {
             writing-mode: vertical-rl;
             text-orientation: mixed;
@@ -147,18 +187,78 @@
         }
 
         .body-diagram {
-            height: 600px;
+            height: 16.47cm;
             position: relative;
             background-color: white;
             margin: 10px 0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            background-image: url('assets/images/DV_body.jpg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            justify-content: space-between;
+            gap: 0;
             border: none;
+        }
+
+        .body-image-panel {
+            width: 50%;
+            height: 100%;
+            padding: 8px 0 4px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .body-image-panel--front {
+            align-items: flex-end;
+        }
+
+        .body-image-panel--back {
+            align-items: flex-end;
+        }
+
+        .body-image-figure {
+            height: calc(15.1cm + 28px);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .body-image-figure img {
+            display: block;
+            object-fit: contain;
+        }
+
+        .body-image-panel--front .body-image-figure,
+        .body-image-panel--front .body-image-figure img {
+            width: 6.68cm;
+        }
+
+        .body-image-panel--front .body-image-figure img {
+            height: 15.1cm;
+        }
+
+        .body-image-panel--back .body-image-figure,
+        .body-image-panel--back .body-image-figure img {
+            width: 7cm;
+        }
+
+        .body-image-panel--back .body-image-figure img {
+            height: 14.61cm;
+        }
+
+        .body-image-caption {
+            margin-top: auto;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 1.2;
+            font-family: 'DFKai-SB', '標楷體', serif;
+        }
+
+        .print-body-image-caption {
+            display: none;
         }
 
         #body-canvas {
@@ -208,21 +308,29 @@
             margin-top: -16px;
             font-size: 16px;
             border: 1px solid black;
-            padding: 15px;
+            padding: 0;
+            height: 7.1cm;
+            box-sizing: content-box;
+            display: grid;
+            grid-template-rows: 0.8cm 1.7cm 1.3cm 3.3cm;
         }
 
         .signature-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 10px 0;
+            margin: 0;
+            height: auto;
+            padding: 0 10px;
         }
 
         .signature-field {
             text-align: center;
-            padding: 10px;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 2px 4px;
             border: 0px;
-            margin: 0 10px;
+            margin: 0 5px;
             flex: 1;
         }
 
@@ -242,9 +350,11 @@
 
         .signature-date-line {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin: 0;
+            padding: 0 10px;
+            text-align: center;
+            font-size: 18px;
         }
 
         .signature-date-line .date-input {
@@ -253,9 +363,45 @@
             margin: 0 2px;
         }
 
-        .signature-date-line span {
+        .signature-date-line .date-character {
+            flex: 1 1 0;
             white-space: nowrap;
             padding: 0 2px;
+            text-align: center;
+        }
+
+        .signature-date-line .editable-date {
+            display: contents;
+        }
+
+        .exam-date-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            white-space: nowrap;
+        }
+
+        .exam-date-content > span,
+        .exam-date-content .date-input {
+            margin: 0;
+            flex: 0 0 auto;
+        }
+
+        .hospital-address {
+            margin: 0;
+            padding: 0 10px;
+            font-size: 16px;
+            line-height: 1.35;
+            display: flex;
+            align-items: center;
+        }
+
+        .seal-note {
+            justify-self: end;
+            align-self: end;
+            padding: 0 10px 6px;
+            font-size: 14px;
         }
 
         /* 新增的文字輸入工具樣式 */
@@ -270,8 +416,13 @@
         .text-input-group {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .text-input-group > label {
+            font-size: 12px;
+            white-space: nowrap;
         }
 
         .text-input-field {
@@ -283,13 +434,15 @@
         }
 
         .add-text-btn {
-            padding: 5px 15px;
+            padding: 3px 8px;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 3px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
+            white-space: nowrap;
+            flex: 0 0 auto;
         }
 
         .add-text-btn:hover {
@@ -312,13 +465,15 @@
         }
 
         .quick-text-btn {
-            padding: 4px 8px;
+            padding: 3px 6px;
             background-color: #e9ecef;
             color: #495057;
             border: 1px solid #ced4da;
             border-radius: 3px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
+            white-space: nowrap;
+            flex: 0 0 auto;
         }
 
         .quick-text-btn:hover {
@@ -385,24 +540,43 @@
             .form-container {
                 box-shadow: none;
                 padding: 10px;
-                max-width: 180mm;
+                width: 17.19cm;
+                max-width: 17.19cm;
             }
             
             .body-diagram.has-print-snapshot {
-                height: auto !important;
-                aspect-ratio: var(--print-diagram-aspect, 4 / 3);
+                height: 16.47cm !important;
+                aspect-ratio: auto;
                 page-break-inside: avoid;
                 print-color-adjust: exact;
                 position: relative !important;
                 display: block !important;
                 overflow: hidden !important;
                 background-image: none !important;
+                border: none !important;
             }
 
             .body-diagram.has-print-snapshot #body-canvas,
             .body-diagram.has-print-snapshot .text-label,
             .body-diagram.has-print-snapshot .circle-marker {
                 display: none !important;
+            }
+
+            .diagram-cell {
+                border-left: 1px solid black !important;
+                position: relative;
+            }
+
+            .diagram-cell::after {
+                content: '';
+                position: absolute;
+                z-index: 100;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 1px;
+                background: black;
+                pointer-events: none;
             }
 
             .body-diagram.has-print-snapshot #print-diagram-snapshot {
@@ -413,6 +587,25 @@
                 height: 100% !important;
                 z-index: 10;
             }
+
+            .body-diagram.has-print-snapshot .print-body-image-caption {
+                display: block !important;
+                position: absolute;
+                z-index: 11;
+                font: 18px 'DFKai-SB', '標楷體', serif;
+                line-height: 1.2;
+            }
+
+            .print-body-image-caption--front {
+                left: calc(50% - 6.68cm);
+                top: calc(8px + 15.1cm + 4px);
+            }
+
+        .print-body-image-caption--back {
+            right: 7cm;
+            top: calc(8px + 15.1cm + 4px);
+        }
+
             .title-switch-btn {
                 display: none !important;
             }
@@ -479,8 +672,10 @@
             </tr>
             <tr style="height: 30px;">
                 <td class="label-cell">驗傷時間</td>
-                <td colspan="5" style="text-align: left;">
-                    民國 <input type="text" class="date-input" id="exam-year"> 年 <input type="text" class="date-input" id="exam-month"> 月 <input type="text" class="date-input" id="exam-day"> 日 <input type="text" class="date-input" id="exam-hour"> 時 <input type="text" class="date-input" id="exam-minute"> 分
+                <td colspan="5" style="text-align: center;">
+                    <div class="exam-date-content">
+                        <span>民國</span><input type="text" class="date-input" id="exam-year"><span>年</span><input type="text" class="date-input" id="exam-month"><span>月</span><input type="text" class="date-input" id="exam-day"><span>日</span><input type="text" class="date-input" id="exam-hour"><span>時</span><input type="text" class="date-input" id="exam-minute"><span>分</span>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -512,12 +707,9 @@
                 </td>
             </tr>
             <tr>
-                <td class="label-cell vertical-text-with-brackets" rowspan="7">
+                <td class="label-cell vertical-text-with-brackets result-heading-column" rowspan="7">
                     <span class="bracket-text">〈受傷之部位形狀程度〉</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">檢&nbsp;&nbsp;</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">查&nbsp;&nbsp;</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">結&nbsp;&nbsp;</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 10px 0;">果</span>
+                    <span class="result-heading-letters"><span>檢</span><span>查</span><span>結</span><span>果</span></span>
                 </td>
                 <td class="label-cell">頭面部</td>
                 <td colspan="4">
@@ -586,15 +778,11 @@
 
         <table style="table-layout: fixed; width: 100%;">
             <tr>
-                <td class="label-cell vertical-text-with-brackets" style="width: 40px; min-width: 40px; max-width: 40px; padding: 5px;">
+                <td class="label-cell vertical-text-with-brackets result-heading-column" style="padding: 5px;">
                     <span class="bracket-text">〈請以紅筆正楷註記受傷位置及程度等〉</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">驗</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">傷</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">解</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">析</span>
-                    <span style="writing-mode: vertical-rl; text-orientation: upright; margin: 5px 0; font-size: 20px;">圖</span>
+                    <span class="result-heading-letters"><span>驗</span><span>傷</span><span>解</span><span>析</span><span>圖</span></span>
                 </td>
-                <td style="width: calc(100% - 40px);">
+                <td class="diagram-cell" style="width: calc(100% - 1.95cm);">
                     <!-- 新增的文字輸入工具 -->
                     <div class="text-input-tools">
                         <div class="text-input-group">
@@ -615,8 +803,22 @@
                     </div>
 
                     <div class="body-diagram" id="body-diagram-container">
+                        <div class="body-image-panel body-image-panel--front">
+                            <div class="body-image-figure">
+                                <img src="../../assets/images/DV_body_front.png" alt="人體正面圖">
+                                <span class="body-image-caption">正面</span>
+                            </div>
+                        </div>
+                        <div class="body-image-panel body-image-panel--back">
+                            <div class="body-image-figure">
+                                <img src="../../assets/images/DV_body_back.png" alt="人體背面圖">
+                                <span class="body-image-caption">背面</span>
+                            </div>
+                        </div>
                         <canvas id="body-canvas" width="800" height="600"></canvas>
                         <canvas id="print-diagram-snapshot" aria-hidden="true"></canvas>
+                        <span class="print-body-image-caption print-body-image-caption--front">正面</span>
+                        <span class="print-body-image-caption print-body-image-caption--back">背面</span>
                     </div>
                 </td>
             </tr>
@@ -624,37 +826,37 @@
 
         <div class="signature-section">
             <div class="signature-date-line">
-                <div style="font-size: 18px"><span>中&nbsp;&nbsp;&nbsp;&nbsp;</span><span>華&nbsp;&nbsp;&nbsp;&nbsp;</span><span>民&nbsp;&nbsp;&nbsp;&nbsp;</span><span>國</span></div>
+                <span class="date-character">中</span>
+                <span class="date-character">華</span>
+                <span class="date-character">民</span>
+                <span class="date-character">國</span>
                 <span id="signature-year-chinese" class="editable-date" style="font-size: 20px; cursor: pointer; padding: 2px; border-radius: 3px;" title="雙擊編輯年份"></span>
-                <div style="font-size: 18px"><span>年</span></div>
+                <span class="date-character">年</span>
                 <span id="signature-month-chinese" class="editable-date" style="font-size: 20px; cursor: pointer; padding: 2px; border-radius: 3px;" title="雙擊編輯月份"></span>
-                <div style="font-size: 18px"><span>月</span></div>
+                <span class="date-character">月</span>
                 <span id="signature-day-chinese" class="editable-date" style="font-size: 20px; cursor: pointer; padding: 2px; border-radius: 3px;" title="雙擊編輯日期"></span>
-                <div style="font-size: 18px"><span>日</span></div>
+                <span class="date-character">日</span>
             </div>
             
             <div class="signature-row">
                 <div class="signature-field">
-                    <div style="margin-bottom: 10px;text-align: left;font-size: 16px">院長</div>
+                    <div style="margin-bottom: 4px;text-align: left;font-size: 16px">院長</div>
                     <div style="text-align: left;font-size: 14px">(負責醫師)</div>
                     <div style="text-align: right;font-size: 14px">(簽章)</div>
                 </div>
                 <div class="signature-field">
-                    <div style="margin-bottom: 10px;text-align: left;font-size: 16px">科主任</div>
+                    <div style="margin-bottom: 4px;text-align: left;font-size: 16px">科主任</div>
                     <div style="text-align: left;font-size: 14px">(主治醫師)</div>
                     <div style="text-align: right;font-size: 14px">(簽章)</div>
                 </div>
                 <div class="signature-field">
-                    <div style="margin-bottom: 10px;text-align: left;font-size: 16px">檢診<br>醫師</div>
-                    <div style="text-align: right;font-size: 16px">醫師</div>
+                    <div style="margin-bottom: 4px;text-align: left;font-size: 16px">檢診<br>醫師</div>
+                    <div style="text-align: right;font-size: 16px">(簽章)</div>
                 </div>
             </div>
             
-            <div style="margin-bottom: 10px;font-size: 16px">
-                醫院地址：971花蓮縣新城鄉嘉里村嘉里路163號<br><br><br><br><br><br><br><br><br><br><br>
-            </div>
-            <div style="text-align: right; font-size: 14px; margin-top: 10px;"> (加蓋關防或印信)
-            </div>
+            <div class="hospital-address">醫院地址：971花蓮縣新城鄉嘉里村嘉里路163號</div>
+            <div class="seal-note">(加蓋關防或印信)</div>
         </div>
     </div>
 
@@ -664,7 +866,7 @@
         let circleMarkers = [];
         let draggedLabel = null;
         let dragOffset = { x: 0, y: 0 };
-        let bodyDiagramImagePromise = null;
+        let bodyDiagramImagesPromise = null;
 
         // 數字轉中文的對應表
         const numberToChinese = {
@@ -688,23 +890,23 @@
                 const hundreds = Math.floor(n / 100);
                 const remainder = n % 100;
                 
-                result += numberToChinese[hundreds] + '&nbsp;&nbsp;百';
+                result += numberToChinese[hundreds] + '百';
                 
                 if (remainder >= 10) {
                     const tens = Math.floor(remainder / 10);
                     const ones = remainder % 10;
                     
                     if (tens === 1) {
-                        result += '&nbsp;&nbsp;一&nbsp;&nbsp;十';
+                        result += '一十';
                     } else {
-                        result += '&nbsp;&nbsp;' + numberToChinese[tens] + '&nbsp;&nbsp;十';
+                        result += numberToChinese[tens] + '十';
                     }
                     
                     if (ones > 0) {
-                        result += '&nbsp;&nbsp;' + numberToChinese[ones];
+                        result += numberToChinese[ones];
                     }
                 } else if (remainder > 0 && remainder < 10) {
-                    result += '&nbsp;&nbsp;○&nbsp;&nbsp;' + numberToChinese[remainder];
+                    result += '○' + numberToChinese[remainder];
                 }
             }
             // 處理10-99
@@ -715,11 +917,11 @@
                 if (tens === 1) {
                     result = '十';
                 } else {
-                    result = numberToChinese[tens] + '&nbsp;&nbsp;十';
+                    result = numberToChinese[tens] + '十';
                 }
                 
                 if (ones > 0) {
-                    result += '&nbsp;&nbsp;' + numberToChinese[ones];
+                    result += numberToChinese[ones];
                 }
             }
             // 處理1-9
@@ -735,7 +937,7 @@
             initializeCheckboxes();
             autoFillDate();
             initializeEditableDates(); // 初始化可編輯日期功能
-            loadBodyDiagramImage().catch(error => console.error('人體圖載入失敗：', error));
+            loadBodyDiagramImages().catch(error => console.error('人體圖載入失敗：', error));
         });
 
         // 初始化可編輯日期功能
@@ -743,9 +945,19 @@
             const editableElements = document.querySelectorAll('.editable-date');
             editableElements.forEach(element => {
                 element.addEventListener('dblclick', function(e) {
-                    startEditDate(e.target);
+                    startEditDate(element);
                 });
             });
+        }
+
+        function setSignatureDateValue(element, value) {
+            const characters = [...String(value)].filter(character => character.trim());
+            element.replaceChildren(...characters.map(character => {
+                const cell = document.createElement('span');
+                cell.className = 'date-character';
+                cell.textContent = character;
+                return cell;
+            }));
         }
 
         // 開始編輯日期
@@ -753,7 +965,7 @@
             // 如果已經在編輯狀態，則不執行
             if (element.querySelector('input')) return;
             
-            const currentText = element.innerHTML;
+            const currentText = element.textContent;
             const currentValue = convertChineseToNumber(currentText);
             
             // 創建輸入框
@@ -827,12 +1039,12 @@
             }
             
             // 轉換為中文數字並更新顯示
-            element.innerHTML = convertNumberToChinese(newValue);
+            setSignatureDateValue(element, convertNumberToChinese(newValue));
         }
 
         // 取消編輯日期
         function cancelEditDate(element, originalText) {
-            element.innerHTML = originalText;
+            setSignatureDateValue(element, originalText);
         }
 
         // 將中文數字轉換為阿拉伯數字
@@ -877,6 +1089,20 @@
             return result.toString();
         }
 
+        function getDiagramScale(container) {
+            const rect = container.getBoundingClientRect();
+            return container.offsetWidth ? rect.width / container.offsetWidth : 1;
+        }
+
+        function getDiagramPointerPosition(event, container) {
+            const rect = container.getBoundingClientRect();
+            const scale = getDiagramScale(container);
+            return {
+                x: (event.clientX - rect.left) / scale,
+                y: (event.clientY - rect.top) / scale
+            };
+        }
+
         // 添加圓圈標記
         function addCircleMarker(position, size) {
             const container = document.getElementById('body-diagram-container');
@@ -896,11 +1122,8 @@
             
             // 調整為像素位置
             setTimeout(() => {
-                const rect = circle.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
-                
-                const pixelLeft = (containerRect.width / 2) - (circleSize / 2);
-                const pixelTop = (containerRect.height / 2) - (circleSize / 2);
+                const pixelLeft = (container.offsetWidth / 2) - (circleSize / 2);
+                const pixelTop = (container.offsetHeight / 2) - (circleSize / 2);
                 
                 circle.style.left = pixelLeft + 'px';
                 circle.style.top = pixelTop + 'px';
@@ -929,23 +1152,23 @@
             
             const draggedCircle = e.target;
             const rect = draggedCircle.getBoundingClientRect();
-            const containerRect = document.getElementById('body-diagram-container').getBoundingClientRect();
+            const container = document.getElementById('body-diagram-container');
+            const scale = getDiagramScale(container);
             
             const dragOffset = {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top
+                x: (e.clientX - rect.left) / scale,
+                y: (e.clientY - rect.top) / scale
             };
             
             function dragCircle(e) {
-                const container = document.getElementById('body-diagram-container');
-                const containerRect = container.getBoundingClientRect();
+                const pointer = getDiagramPointerPosition(e, container);
                 
-                let newX = e.clientX - containerRect.left - dragOffset.x;
-                let newY = e.clientY - containerRect.top - dragOffset.y;
+                let newX = pointer.x - dragOffset.x;
+                let newY = pointer.y - dragOffset.y;
                 
                 // 限制在容器範圍內
-                newX = Math.max(0, Math.min(newX, containerRect.width - draggedCircle.offsetWidth));
-                newY = Math.max(0, Math.min(newY, containerRect.height - draggedCircle.offsetHeight));
+                newX = Math.max(0, Math.min(newX, container.offsetWidth - draggedCircle.offsetWidth));
+                newY = Math.max(0, Math.min(newY, container.offsetHeight - draggedCircle.offsetHeight));
                 
                 draggedCircle.style.left = newX + 'px';
                 draggedCircle.style.top = newY + 'px';
@@ -1032,9 +1255,9 @@
             const sigMonth = document.getElementById('signature-month-chinese');
             const sigDay = document.getElementById('signature-day-chinese');
             
-            if (sigYear) sigYear.innerHTML = convertNumberToChinese(year);
-            if (sigMonth) sigMonth.innerHTML = convertNumberToChinese(month);
-            if (sigDay) sigDay.innerHTML = convertNumberToChinese(day);
+            if (sigYear) setSignatureDateValue(sigYear, convertNumberToChinese(year));
+            if (sigMonth) setSignatureDateValue(sigMonth, convertNumberToChinese(month));
+            if (sigDay) setSignatureDateValue(sigDay, convertNumberToChinese(day));
         }
 
         // 從輸入框添加自訂文字標籤
@@ -1072,14 +1295,11 @@
             
             // 調整為像素位置
             setTimeout(() => {
-                const rect = label.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
-                
                 const position = options.position || { x: 50, y: 50 };
-                const pixelLeft = (containerRect.width * position.x / 100) - (rect.width / 2);
-                const pixelTop = (containerRect.height * position.y / 100) - (rect.height / 2);
-                label.style.left = Math.max(0, Math.min(pixelLeft, containerRect.width - rect.width)) + 'px';
-                label.style.top = Math.max(0, Math.min(pixelTop, containerRect.height - rect.height)) + 'px';
+                const pixelLeft = (container.offsetWidth * position.x / 100) - (label.offsetWidth / 2);
+                const pixelTop = (container.offsetHeight * position.y / 100) - (label.offsetHeight / 2);
+                label.style.left = Math.max(0, Math.min(pixelLeft, container.offsetWidth - label.offsetWidth)) + 'px';
+                label.style.top = Math.max(0, Math.min(pixelTop, container.offsetHeight - label.offsetHeight)) + 'px';
                 label.style.transform = 'none';
             }, 10);
             
@@ -1137,10 +1357,11 @@
             draggedLabel = e.target;
             
             const rect = draggedLabel.getBoundingClientRect();
-            const containerRect = document.getElementById('body-diagram-container').getBoundingClientRect();
+            const container = document.getElementById('body-diagram-container');
+            const scale = getDiagramScale(container);
             
-            dragOffset.x = e.clientX - rect.left;
-            dragOffset.y = e.clientY - rect.top;
+            dragOffset.x = (e.clientX - rect.left) / scale;
+            dragOffset.y = (e.clientY - rect.top) / scale;
             
             document.addEventListener('mousemove', dragLabel);
             document.addEventListener('mouseup', stopDragLabel);
@@ -1153,14 +1374,14 @@
             if (!draggedLabel) return;
             
             const container = document.getElementById('body-diagram-container');
-            const containerRect = container.getBoundingClientRect();
+            const pointer = getDiagramPointerPosition(e, container);
             
-            let newX = e.clientX - containerRect.left - dragOffset.x;
-            let newY = e.clientY - containerRect.top - dragOffset.y;
+            let newX = pointer.x - dragOffset.x;
+            let newY = pointer.y - dragOffset.y;
             
             // 限制在容器範圍內
-            newX = Math.max(0, Math.min(newX, containerRect.width - draggedLabel.offsetWidth));
-            newY = Math.max(0, Math.min(newY, containerRect.height - draggedLabel.offsetHeight));
+            newX = Math.max(0, Math.min(newX, container.offsetWidth - draggedLabel.offsetWidth));
+            newY = Math.max(0, Math.min(newY, container.offsetHeight - draggedLabel.offsetHeight));
             
             draggedLabel.style.left = newX + 'px';
             draggedLabel.style.top = newY + 'px';
@@ -1207,16 +1428,23 @@
             }
         });
 
-        function loadBodyDiagramImage() {
-            if (bodyDiagramImagePromise) return bodyDiagramImagePromise;
-
-            bodyDiagramImagePromise = new Promise((resolve, reject) => {
+        function loadDiagramImage(source) {
+            return new Promise((resolve, reject) => {
                 const image = new Image();
                 image.onload = () => resolve(image);
                 image.onerror = () => reject(new Error('無法載入人體圖'));
-                image.src = 'assets/images/DV_body.jpg';
+                image.src = source;
             });
-            return bodyDiagramImagePromise;
+        }
+
+        function loadBodyDiagramImages() {
+            if (!bodyDiagramImagesPromise) {
+                bodyDiagramImagesPromise = Promise.all([
+                    loadDiagramImage('../../assets/images/DV_body_front.png'),
+                    loadDiagramImage('../../assets/images/DV_body_back.png')
+                ]);
+            }
+            return bodyDiagramImagesPromise;
         }
 
         async function renderPrintDiagramSnapshot() {
@@ -1225,8 +1453,9 @@
             if (!container || !snapshot) throw new Error('找不到驗傷解析圖');
 
             const containerRect = container.getBoundingClientRect();
-            const width = Math.round(containerRect.width);
-            const height = Math.round(containerRect.height);
+            const scale = getDiagramScale(container);
+            const width = Math.round(containerRect.width / scale);
+            const height = Math.round(containerRect.height / scale);
             if (!width || !height) throw new Error('驗傷解析圖尺寸無效');
 
             const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -1240,24 +1469,38 @@
             context.fillStyle = 'white';
             context.fillRect(0, 0, width, height);
 
-            const bodyImage = await loadBodyDiagramImage();
-            const imageScale = Math.min(width / bodyImage.naturalWidth, height / bodyImage.naturalHeight);
-            const imageWidth = bodyImage.naturalWidth * imageScale;
-            const imageHeight = bodyImage.naturalHeight * imageScale;
-            context.drawImage(bodyImage, (width - imageWidth) / 2, (height - imageHeight) / 2, imageWidth, imageHeight);
+            const [frontImage, backImage] = await loadBodyDiagramImages();
+            const pixelsPerCm = height / 16.47;
+            const topInset = 8;
+            const panelWidth = width / 2;
+            const drawDiagram = (image, dimensions, alignment) => {
+                const imageWidth = dimensions.width * pixelsPerCm;
+                const imageHeight = dimensions.height * pixelsPerCm;
+                const x = alignment === 'right'
+                    ? width - imageWidth
+                    : panelWidth - imageWidth;
+                const y = topInset;
+
+                context.drawImage(image, x, y, imageWidth, imageHeight);
+            };
+
+            drawDiagram(frontImage, { width: 6.68, height: 15.1 }, 'center');
+            drawDiagram(backImage, { width: 7, height: 14.61 }, 'right');
 
             circleMarkers.forEach(circle => {
                 const rect = circle.getBoundingClientRect();
                 const style = window.getComputedStyle(circle);
                 const borderWidth = parseFloat(style.borderTopWidth) || 3;
-                const left = rect.left - containerRect.left;
-                const top = rect.top - containerRect.top;
+                const left = (rect.left - containerRect.left) / scale;
+                const top = (rect.top - containerRect.top) / scale;
 
                 context.save();
                 context.strokeStyle = style.borderTopColor || 'red';
                 context.lineWidth = borderWidth;
                 context.beginPath();
-                context.arc(left + rect.width / 2, top + rect.height / 2, Math.max(0, (Math.min(rect.width, rect.height) - borderWidth) / 2), 0, Math.PI * 2);
+                const circleWidth = rect.width / scale;
+                const circleHeight = rect.height / scale;
+                context.arc(left + circleWidth / 2, top + circleHeight / 2, Math.max(0, (Math.min(circleWidth, circleHeight) - borderWidth) / 2), 0, Math.PI * 2);
                 context.stroke();
                 context.restore();
             });
@@ -1265,8 +1508,8 @@
             textLabels.forEach(label => {
                 const rect = label.getBoundingClientRect();
                 const style = window.getComputedStyle(label);
-                const left = rect.left - containerRect.left + (parseFloat(style.paddingLeft) || 0);
-                const top = rect.top - containerRect.top + (parseFloat(style.paddingTop) || 0);
+                const left = (rect.left - containerRect.left) / scale + (parseFloat(style.paddingLeft) || 0);
+                const top = (rect.top - containerRect.top) / scale + (parseFloat(style.paddingTop) || 0);
 
                 context.save();
                 context.fillStyle = style.color || 'red';

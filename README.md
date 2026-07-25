@@ -1,5 +1,16 @@
 # 805_ER
 
+## 後端環境設定
+
+將 `.env.example` 複製為 `.env`，填入 `OPENAI_API_KEY`，並設定可存取 API 的前端網域：
+
+```env
+CORS_ORIGINS=https://ken6411pig.github.io
+MAX_IMAGE_BYTES=5242880
+```
+
+`CORS_ORIGINS` 必須列出正式前端網域（不含 `/805_ER/` 路徑）；未設定時，API 預設允許 `https://ken6411pig.github.io` 與本機開發來源。`.env` 已由 Git 忽略，不應提交 API 金鑰。
+
 急診臨床工作輔助的靜態網站。主入口提供病歷範本、ICD-10-CM 與抗生素查詢，並整合多個獨立工具頁。
 
 ## 使用方式

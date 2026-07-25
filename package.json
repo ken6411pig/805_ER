@@ -1,0 +1,12 @@
+{
+  "name": "805-er",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:encoding": "node scripts/check-encoding.mjs",
+    "check:links": "node scripts/check-local-links.mjs",
+    "check:js": "node --check scripts/app.js && node --check scripts/antibiotic-search.js && node --check scripts/clipboard.js && node --check scripts/csv-loader.js && node --check scripts/icd-search.js",
+    "check:python": "py -c \"import ast, pathlib; ast.parse(pathlib.Path('app.py').read_text(encoding='utf-8'))\"",
+    "check": "npm run check:encoding && npm run check:links && npm run check:js && npm run check:python"
+  }
+}
