@@ -150,6 +150,13 @@ body {
     border-collapse: collapse;
     margin-top: 20px;
 }
+.quick-icd-table {
+    table-layout: fixed;
+}
+.quick-icd-table td {
+    width: 25%;
+    overflow-wrap: anywhere;
+}
 .quick-icd-table th,
 .quick-icd-table td,
 .icd-results-table th,
