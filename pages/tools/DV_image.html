@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'DFKai-SB', '標楷體', serif;
-            font-size: 16px;
+            font-size: 12pt;
             margin: 20px;
             background-color: white;
         }
@@ -51,6 +51,14 @@
 
         table, th, td {
             border: 1px solid black;
+        }
+
+        .patient-info-table {
+            table-layout: fixed;
+        }
+
+        .patient-info-table .label-cell {
+            width: auto;
         }
 
         th, td {
@@ -141,10 +149,15 @@
             width: 1.95cm;
             min-width: 1.95cm;
             max-width: 1.95cm;
+            box-sizing: border-box;
             position: relative;
             writing-mode: initial;
             text-orientation: initial;
             padding: 5px;
+        }
+
+        .narrative-table {
+            table-layout: fixed;
         }
 
         .result-heading-column .bracket-text {
@@ -255,6 +268,29 @@
             font-weight: normal;
             line-height: 1.2;
             font-family: 'DFKai-SB', '標楷體', serif;
+        }
+
+        .birth-date-cell {
+            padding-left: 1px;
+            padding-right: 1px;
+            white-space: nowrap;
+        }
+
+        .birth-date-content {
+            display: grid;
+            grid-template-columns: auto 0.64cm auto 0.64cm auto 0.64cm auto;
+            align-items: center;
+            justify-content: center;
+            column-gap: 0;
+            width: 100%;
+        }
+
+        .birth-date-content .date-input {
+            box-sizing: border-box;
+            width: 0.64cm;
+            min-width: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .print-body-image-caption {
@@ -521,6 +557,32 @@
             background-color: #007bff;
         }
 
+        body,
+        input,
+        textarea,
+        select {
+            font-family: 'DFKai-SB', '標楷體', serif;
+        }
+
+        .form-container *:not(button) {
+            font-family: 'DFKai-SB', '標楷體', serif !important;
+            font-size: 12pt !important;
+        }
+
+        .form-container .header h1 {
+            font-size: 18pt !important;
+        }
+
+        .form-container .parenthetical-text,
+        .form-container .bracket-text,
+        .form-container .seal-note {
+            font-size: 10pt !important;
+        }
+
+        .form-container .id-number-note {
+            font-size: 11pt !important;
+        }
+
         @media print {
             body {
                 margin: 0;
@@ -609,6 +671,12 @@
             .title-switch-btn {
                 display: none !important;
             }
+
+            .diagram-table {
+                break-before: page;
+                page-break-before: always;
+            }
+
             .circle-small { 
                 width: 18px !important; 
                 height: 18px !important; 
@@ -642,18 +710,28 @@
             </div>
         </div>
 
-        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;margin-top: -21px;">
+        <table class="patient-info-table" style="width: 100%; border-collapse: collapse; border: 1px solid black;margin-top: -21px;">
+            <colgroup>
+                <col style="width: 1.95cm;">
+                <col style="width: 21.89113%;">
+                <col style="width: 10.97429%;">
+                <col style="width: 20.10996%;">
+                <col style="width: 10.97429%;">
+                <col style="width: 24.70652%;">
+            </colgroup>
             <tr style="height: 40px;">
-                <td class="label-cell" style="width: 60px;">姓 名</td>
-                <td style="width: calc((100% - 60px * 3) / 3); text-align: left;"><input type="text" class="input-field" id="patient-name"></td>
-                <td class="label-cell" style="width: 60px;">性 別</td>
-                <td style="width: calc((100% - 60px * 3) / 3); text-align: center;">
+                <td class="label-cell">姓 名</td>
+                <td style="text-align: left;"><input type="text" class="input-field" id="patient-name"></td>
+                <td class="label-cell">性 別</td>
+                <td style="text-align: center;">
                     <label class="checkbox-group"><input type="checkbox" name="gender" value="female" id="gender-female">女</label>
                     <label class="checkbox-group"><input type="checkbox" name="gender" value="male" id="gender-male">男</label>
                 </td>
-                <td class="label-cell" style="width: 60px;">出 生</td>
-                <td style="width: calc((100% - 60px * 3) / 3);white-space: nowrap;">
-                    民國 <input type="text" class="date-input" id="birth-year"> 年 <input type="text" class="date-input" id="birth-month"> 月 <input type="text" class="date-input" id="birth-day"> 日
+                <td class="label-cell">出 生</td>
+                <td class="birth-date-cell">
+                    <div class="birth-date-content">
+                        <span>民國</span><input type="text" class="date-input" id="birth-year"><span>年</span><input type="text" class="date-input" id="birth-month"><span>月</span><input type="text" class="date-input" id="birth-day"><span>日</span>
+                    </div>
                 </td>
             </tr>
             <tr style="height: 40px;">
@@ -680,10 +758,15 @@
             </tr>
         </table>
 
-        <table style="width: 100%; table-layout: auto; border-collapse: collapse; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; border-top: none; margin-top: -16px;">
+        <table class="narrative-table" style="width: 100%; border-collapse: collapse; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; border-top: none; margin-top: -16px;">
+            <colgroup>
+                <col style="width: 1.95cm;">
+                <col style="width: 2.86cm;">
+                <col span="4">
+            </colgroup>
             <tr>
-                <td class="label-cell" rowspan="3" style="vertical-align: middle; writing-mode: vertical-rl; text-orientation: upright; width: 80px; min-width: 80px; max-width: 80px;">受&nbsp;害&nbsp;人&nbsp;主&nbsp;訴</td>
-                <td class="label-cell" style="width: 120px;">事件發生時間</td>
+                <td class="label-cell" rowspan="3" style="vertical-align: middle; writing-mode: vertical-rl; text-orientation: upright; width: 1.95cm; min-width: 1.95cm; max-width: 1.95cm; box-sizing: border-box;">受&nbsp;害&nbsp;人&nbsp;主&nbsp;訴</td>
+                <td class="label-cell">事件發生時間</td>
                 <td colspan="4" style="text-align: left;">
                     民國&nbsp; <input type="text" class="date-input" id="event-year"> &nbsp;年&nbsp; <input type="text" class="date-input" id="event-month"> &nbsp;月&nbsp; <input type="text" class="date-input" id="event-day"> &nbsp;日&nbsp; <input type="text" class="date-input" id="event-hour"> &nbsp;時&nbsp; <input type="text" class="date-input" id="event-minute"> &nbsp;分&nbsp;
                 </td>
@@ -698,7 +781,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="label-cell" style="font-size: 16px;">依受害者主訴，以何種外力造成之傷害(徒手、工具或不詳)</td>
+                <td class="label-cell" style="font-size: 16px;">依受害者主訴，以何種外力造成之傷害<span>(徒手、工具或不詳)</span></td>
                 <td colspan="4">
                     <textarea class="textarea-field" id="force-description" rows="3" placeholder="徒手、工具或不詳...">
 
@@ -774,9 +857,9 @@
                 </td>
             </tr>
         </table>
-        <p>身分證字號欄：若無身分證則可填居留證號碼或護照號碼</p>
+        <p class="id-number-note">身分證字號欄：若無身分證則可填居留證號碼或護照號碼</p>
 
-        <table style="table-layout: fixed; width: 100%;">
+        <table class="diagram-table" style="table-layout: fixed; width: 100%;">
             <tr>
                 <td class="label-cell vertical-text-with-brackets result-heading-column" style="padding: 5px;">
                     <span class="bracket-text">〈請以紅筆正楷註記受傷位置及程度等〉</span>
@@ -841,17 +924,17 @@
             <div class="signature-row">
                 <div class="signature-field">
                     <div style="margin-bottom: 4px;text-align: left;font-size: 16px">院長</div>
-                    <div style="text-align: left;font-size: 14px">(負責醫師)</div>
-                    <div style="text-align: right;font-size: 14px">(簽章)</div>
+                    <div class="parenthetical-text" style="text-align: left;font-size: 14px">(負責醫師)</div>
+                    <div class="parenthetical-text" style="text-align: right;font-size: 14px">(簽章)</div>
                 </div>
                 <div class="signature-field">
                     <div style="margin-bottom: 4px;text-align: left;font-size: 16px">科主任</div>
-                    <div style="text-align: left;font-size: 14px">(主治醫師)</div>
-                    <div style="text-align: right;font-size: 14px">(簽章)</div>
+                    <div class="parenthetical-text" style="text-align: left;font-size: 14px">(主治醫師)</div>
+                    <div class="parenthetical-text" style="text-align: right;font-size: 14px">(簽章)</div>
                 </div>
                 <div class="signature-field">
                     <div style="margin-bottom: 4px;text-align: left;font-size: 16px">檢診<br>醫師</div>
-                    <div style="text-align: right;font-size: 16px">(簽章)</div>
+                    <div class="parenthetical-text" style="text-align: right;font-size: 16px">(簽章)</div>
                 </div>
             </div>
             
