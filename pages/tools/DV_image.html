@@ -82,6 +82,7 @@
             font-size: 18px;
             padding: 2px;
             width: 100%;
+            box-sizing: border-box; /* 限制寬度計算，避免遮擋框線 */
             outline: none;
             font-family: 'DFKai-SB', '標楷體', serif;
         }
@@ -375,8 +376,9 @@
         }
 
         .textarea-field {
-            width: 95%;
-            padding: 1px;
+            width: 100%; /* 從95%改為100%以對齊 */
+            padding: 2px; /* 統一為2px */
+            box-sizing: border-box; /* 限制寬度計算，避免遮擋框線 */
             font-family: inherit;
             font-size: 18px;
             resize: none;
@@ -776,7 +778,7 @@
             </tr>
             <tr style="height: 40px;">
                 <td class="label-cell">住 址</td>
-                <td colspan="3"><textarea class="input-field" id="patient-address" rows="2" style="resize: none; font-family: 'DFKai-SB', '標楷體', serif; font-size: 18px; width: 100%; border: none; background: transparent; padding: 2px;"></textarea></td>
+                <td colspan="3"><textarea class="input-field" id="patient-address" rows="2" style="resize: none; font-family: 'DFKai-SB', '標楷體', serif; font-size: 18px; width: 100%; box-sizing: border-box; border: none; background: transparent; padding: 2px;"></textarea></td>
                 <td class="label-cell">電 話</td>
                 <td><input type="text" class="input-field" id="patient-phone"></td>
             </tr>
