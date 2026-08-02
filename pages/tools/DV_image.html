@@ -1639,6 +1639,37 @@
             container.classList.add('has-print-snapshot');
         }
 
+        function getPrintFileName() {
+            const year = document.getElementById('exam-year')?.value.trim() || '';
+            const month = document.getElementById('exam-month')?.value.trim() || '';
+            const day = document.getElementById('exam-day')?.value.trim() || '';
+            const patientName = document.getElementById('patient-name')?.value.trim() || '';
+            const date = year && month && day
+                ? `${year}${month.padStart(2, '0')}${day.padStart(2, '0')}`
+                : '';
+
+            // 避免姓名中的特殊字元造成 Windows 無法使用此檔名。
+            return [date, patientName].filter(Boolean).join(' ')
+                .replace(/[<>:"/\\|?*\x00-\x1F]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim() || '家庭暴力事件驗傷診斷書';
+        }
+
+        function getPrintTitleDocuments() {
+            const titleDocuments = [document];
+
+            // 診斷書平時顯示在首頁 iframe 中；Chrome 會以最外層頁面的標題作為 PDF 檔名。
+            try {
+                if (window.top && window.top.document !== document) {
+                    titleDocuments.push(window.top.document);
+                }
+            } catch (error) {
+                console.warn('無法修改外層頁面標題，將只使用診斷書頁面標題。', error);
+            }
+
+            return titleDocuments;
+        }
+
         // 列印時把人體圖、圈圈與文字合成為同一張快照，避免列印引擎分別重新排版標註。
         async function printForm() {
             try {
@@ -1647,6 +1678,26 @@
                 console.error('建立列印快照失敗：', error);
                 alert('無法建立驗傷解析圖快照，將使用一般列印模式。');
             }
+
+            const titleDocuments = getPrintTitleDocuments();
+            const originalTitles = titleDocuments.map(titleDocument => titleDocument.title);
+            const printFileName = getPrintFileName();
+            let restoreTimer;
+
+            const restoreTitles = () => {
+                titleDocuments.forEach((titleDocument, index) => {
+                    titleDocument.title = originalTitles[index];
+                });
+                window.removeEventListener('afterprint', restoreTitles);
+                clearTimeout(restoreTimer);
+            };
+
+            titleDocuments.forEach(titleDocument => {
+                titleDocument.title = printFileName;
+            });
+            window.addEventListener('afterprint', restoreTitles, { once: true });
+            // 極少數瀏覽器不觸發 afterprint，避免標題永久停留在病患姓名。
+            restoreTimer = setTimeout(restoreTitles, 120000);
             window.print();
         }
 
