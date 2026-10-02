@@ -220,6 +220,24 @@ color: #4338ca; /* 深藍色文字 */
         
         /* 針對姓名欄位做微調 */
         #name { margin-top: 0; }
+
+        /* 確認頁沿用原版綠色預班、紅色預假設計。 */
+        #editView[hidden], #confirmView[hidden] { display: none !important; }
+        .confirm-intro { color: var(--text-muted); text-align: center; font-size: 14px; line-height: 1.6; margin: -10px 0 22px; }
+        .confirm-identity, .confirm-remarks { padding: 16px; border: 1px solid var(--border-color); border-radius: 11px; margin: 14px 0; overflow-wrap: anywhere; }
+        .confirm-identity { background: #f8fafc; }
+        .confirm-remarks { white-space: pre-wrap; }
+        .confirm-card { padding: 18px; border-radius: 12px; margin: 16px 0; border: 2px solid; }
+        .confirm-card h3 { font-size: 20px; margin: 0 0 10px; }
+        .confirm-warning { font-weight: 800; font-size: 16px; line-height: 1.6; margin: 0 0 12px; }
+        .confirm-date-item { font-size: 18px; font-weight: 650; line-height: 1.8; }
+        .confirm-work { background: #f0fdf4; color: #166534; border-color: #86d8a4; }
+        .confirm-leave { background: #fff1f2; color: #9f1239; border-color: #e11d48; }
+        .confirm-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .confirm-actions .btn-submit { margin-top: 0; }
+        .btn-back { color: #334155; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 13px; }
+        .btn-back:disabled { opacity: 0.5; cursor: not-allowed; }
+        @media(max-width: 410px) { .confirm-actions { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -227,6 +245,7 @@ color: #4338ca; /* 深藍色文字 */
 <div class="container">
     <h2>🏥 班表與預假登記系統</h2>
     
+    <div id="editView">
     <form id="leaveForm">
         <div class="form-group">
             <label for="name">醫師姓名：</label>
@@ -262,7 +281,7 @@ color: #4338ca; /* 深藍色文字 */
             <textarea id="remark" rows="4" placeholder="如因公差(院方任務)、公務(公立單位)、演講(公私受邀)、年會(註明科別)、私事(旅遊出國)請備註於此。&#10;※ 如遇太多人同時預假，則以公差公務優先。"></textarea>
         </div>
 
-        <button type="button" id="submitBtn" class="btn-submit" onclick="submitData()">送出資料</button>
+        <button type="button" id="submitBtn" class="btn-submit" onclick="previewSubmission()">下一步：確認資料</button>
         
         <div id="successMessage">🎉 資料送出成功！</div>
     </form>
@@ -278,6 +297,27 @@ color: #4338ca; /* 深藍色文字 */
         無法支援之假日為：8月8日、9日、15日、16日
         </p>
     </div>
+    </div><!-- /editView -->
+    <section id="confirmView" hidden aria-live="polite">
+        <h2>確認預班與預假資料</h2>
+        <p class="confirm-intro">請仔細核對，確認後才會正式送出。</p>
+        <div class="confirm-identity"><strong>醫師姓名：</strong><span id="confirmName"></span></div>
+        <section class="confirm-card confirm-work">
+            <h3>✔️ 可上班（平日預班）</h3>
+            <p class="confirm-warning">以下日期有可能被排班，請特別確認！</p>
+            <div id="confirmWork"></div>
+        </section>
+        <section class="confirm-card confirm-leave">
+            <h3>❌ 不可上班（假日預假）</h3>
+            <p class="confirm-warning">以下日期無法上班，請特別確認！</p>
+            <div id="confirmLeave"></div>
+        </section>
+        <div class="confirm-remarks"><strong>📝 備註：</strong><div id="confirmRemark" style="margin-top:6px;white-space:pre-wrap;"></div></div>
+        <div class="confirm-actions">
+            <button type="button" id="backToEditBtn" class="btn-back" onclick="backToEdit()">返回修改</button>
+            <button type="button" id="confirmSubmitBtn" class="btn-submit" onclick="submitData()">確認並正式送出</button>
+        </div>
+    </section>
 </div>
 
 <script>
@@ -340,36 +380,89 @@ color: #4338ca; /* 深藍色文字 */
         container.appendChild(row);
     }
 
-    async function submitData() {
-        const name = document.getElementById('name').value;
-        if (!name) return alert('請填寫姓名');
 
+    let pendingPayload = null;
+
+    // 使用原本的資料欄位與 YYYY-MM-DD 日期傳送，僅確認畫面改為 MM/DD。
+    function collectSubmission() {
+        const name = document.getElementById('name').value.trim();
+        if (!name) {
+            alert('請填寫姓名');
+            document.getElementById('name').focus();
+            return null;
+        }
         const workDates = document.querySelectorAll('.work-date');
         const workTypes = document.querySelectorAll('.work-type');
         const workShifts = [];
         for (let i = 0; i < workDates.length; i++) {
             if (workDates[i].value) workShifts.push({ date: workDates[i].value, type: workTypes[i].value });
         }
-
         const leaveDateInputs = document.querySelectorAll('.leave-date');
         const leaveDates = [];
         for (let i = 0; i < leaveDateInputs.length; i++) {
             if (leaveDateInputs[i].value) leaveDates.push({ date: leaveDateInputs[i].value });
         }
-
         if (workShifts.length === 0 && leaveDates.length === 0) {
-            return alert('請至少填寫一天預班或預假日期！');
+            alert('請至少填寫一天預班或預假日期！');
+            return null;
         }
-
+        const leaveSet = new Set(leaveDates.map(item => item.date));
+        const conflicts = [...new Set(workShifts.map(item => item.date).filter(date => leaveSet.has(date)))];
+        if (conflicts.length) {
+            alert('下列日期同時設定為可上班與不可上班，請先修正：' + conflicts.map(formatConfirmDate).join('、'));
+            return null;
+        }
         const remark = document.getElementById('remark').value;
-        const payload = { name, workShifts, leaveDates, remark };
+        return { name, workShifts, leaveDates, remark };
+    }
 
+    function formatConfirmDate(isoDate) {
+        const [, mm, dd] = isoDate.split('-');
+        return mm + '/' + dd;
+    }
+
+    function renderConfirmItems(targetId, items) {
+        const target = document.getElementById(targetId);
+        target.replaceChildren();
+        (items.length ? items : ['未填寫']).forEach(value => {
+            const row = document.createElement('div');
+            row.className = 'confirm-date-item';
+            row.textContent = value;
+            target.appendChild(row);
+        });
+    }
+
+    function previewSubmission() {
+        const payload = collectSubmission();
+        if (!payload) return;
+        pendingPayload = payload;
+        document.getElementById('confirmName').textContent = payload.name;
+        renderConfirmItems('confirmWork', payload.workShifts.map(s => formatConfirmDate(s.date) + '　' + s.type));
+        renderConfirmItems('confirmLeave', payload.leaveDates.map(s => formatConfirmDate(s.date)));
+        document.getElementById('confirmRemark').textContent = payload.remark.trim() || '無';
+        document.getElementById('editView').hidden = true;
+        document.getElementById('confirmView').hidden = false;
+        window.scrollTo(0, 0);
+    }
+
+    function backToEdit() {
+        pendingPayload = null;
+        document.getElementById('confirmView').hidden = true;
+        document.getElementById('editView').hidden = false;
+        window.scrollTo(0, 0);
+    }
+
+    async function submitData() {
+        if (!pendingPayload || document.getElementById('confirmView').hidden) return;
+        const payload = pendingPayload;
         const scriptURL = 'https://script.google.com/macros/s/AKfycbw32jofgKu0CNHDRl_1vSWxJPkBpfWxvzFVguNTEKxUPUGQSfXEOo_qba9-mowGxQxcFw/exec'; 
         
         // 防止重複點擊
-        const submitBtn = document.getElementById('submitBtn');
+        const submitBtn = document.getElementById('confirmSubmitBtn');
+        const backBtn = document.getElementById('backToEditBtn');
         submitBtn.innerText = '資料傳送中...';
         submitBtn.disabled = true;
+        backBtn.disabled = true;
 
         try {
             const response = await fetch(scriptURL, {
@@ -383,16 +476,19 @@ color: #4338ca; /* 深藍色文字 */
             if (result.status === 'success') {
                 alert('資料送出成功！您可以直接關閉此網頁。建議截圖保存預假結果！');
                 submitBtn.innerText = '已成功送出 ✔️';
+                pendingPayload = null;
             } else {
                 alert('送出失敗，請稍後再試');
-                submitBtn.innerText = '送出資料';
+                submitBtn.innerText = '確認並正式送出';
                 submitBtn.disabled = false;
+                backBtn.disabled = false;
             }
         } catch (error) {
             console.error('Error:', error);
             alert('連線異常，請確認網路狀態');
-            submitBtn.innerText = '送出資料';
-            submitBtn.disabled = false;
+            submitBtn.innerText = '確認並正式送出';
+                submitBtn.disabled = false;
+                backBtn.disabled = false;
         }
     }
 </script>
