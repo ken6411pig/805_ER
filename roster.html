@@ -237,7 +237,73 @@ color: #4338ca; /* 深藍色文字 */
         .confirm-actions .btn-submit { margin-top: 0; }
         .btn-back { color: #334155; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 13px; }
         .btn-back:disabled { opacity: 0.5; cursor: not-allowed; }
-        @media(max-width: 410px) { .confirm-actions { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px 14px;
+                border-radius: 12px;
+            }
+
+            .form-group {
+                padding: 14px;
+            }
+
+            /* 平日預班：日期獨立一列，班別與刪除鍵放下一列 */
+            #workContainer .shift-row {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 10px;
+                align-items: stretch;
+            }
+
+            #workContainer .work-date {
+                grid-column: 1 / -1;
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            #workContainer .work-type {
+                grid-column: 1;
+                width: 100%;
+                min-width: 0;
+            }
+
+            #workContainer .btn-remove {
+                grid-column: 2;
+                width: auto;
+            }
+
+            /* 假日預假：日期與刪除鍵維持同列，但避免超出卡片寬度 */
+            #leaveContainer .shift-row {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 10px;
+                align-items: stretch;
+            }
+
+            #leaveContainer .leave-date {
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            #leaveContainer .btn-remove {
+                width: auto;
+            }
+
+            .shift-row input,
+            .shift-row select {
+                min-width: 0;
+            }
+
+            .confirm-actions {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
