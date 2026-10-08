@@ -1,0 +1,2919 @@
+{
+  "title": "正常 X 光圖庫",
+  "selectionExportedAt": "2026-10-08T12:39:36.724Z",
+  "primaryCount": 27,
+  "selectedCount": 46,
+  "requestedCount": 3,
+  "count": 76,
+  "visibleCount": 71,
+  "hiddenIds": [
+    "rp-62046494",
+    "rp-16054653",
+    "rp-2828",
+    "rmc-calcaneus-lateral",
+    "rp-13587844"
+  ],
+  "visibilityExportedAt": "2026-10-08T13:39:00.510Z",
+  "partOrder": [
+    "顱骨",
+    "顏面骨",
+    "鼻竇",
+    "鼻骨",
+    "顴弓",
+    "下顎骨",
+    "頸椎",
+    "頸胸椎交界",
+    "鎖骨",
+    "肩關節",
+    "肩胛骨",
+    "胸部",
+    "胸骨",
+    "肋骨",
+    "胸椎",
+    "肱骨",
+    "肘關節",
+    "前臂",
+    "手腕",
+    "手",
+    "拇指",
+    "手指",
+    "腹部",
+    "腰椎",
+    "骨盆",
+    "薦髂關節",
+    "薦骨",
+    "尾骨",
+    "髖關節",
+    "股骨",
+    "下肢全長",
+    "膝關節",
+    "髕骨",
+    "脛腓骨",
+    "踝關節",
+    "跟骨",
+    "後足",
+    "足",
+    "足趾"
+  ],
+  "items": [
+    {
+      "id": "rmc-skull-ap",
+      "part": "顱骨",
+      "region": "頭頸",
+      "partEn": "Skull",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_skull_fracture#top_2nd_img",
+      "originalTitle": "Normal skull - AP",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_skull_fracture#top_2nd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "標示正常顱骨縫。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-skull-ap/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/skull_normal_ap.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        600
+      ],
+      "imageSha256": "ff5004a70affaa8a52bbbd42b9a8b31c66bd6bb2007c17bee0e5b6bae6bb31a1",
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "skull cranium 頭部 頭 head",
+      "displaySize": [
+        450,
+        600
+      ],
+      "title": "Skull AP view"
+    },
+    {
+      "id": "rmc-skull-lateral",
+      "part": "顱骨",
+      "region": "頭頸",
+      "partEn": "Skull",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_skull_fracture#top_1st_img",
+      "originalTitle": "Normal skull - Lateral",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_skull_fracture#top_1st_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "標示顱骨內外板及血管壓跡。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-skull-lateral/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/skull_lateral_normal.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        375
+      ],
+      "imageSha256": "54ed29511796c71dbc26126670ff7e6be4bf9d5867537d59ccfb9abc63634107",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "skull cranium 頭部 頭 head",
+      "displaySize": [
+        450,
+        375
+      ],
+      "title": "Skull lateral view"
+    },
+    {
+      "id": "tr-facial-bones",
+      "part": "顏面骨",
+      "region": "頭頸",
+      "partEn": "Facial bones",
+      "view": "OM0／Waters view",
+      "viewFamily": "OM",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/facial-bone-x-ray-guide/",
+      "originalTitle": "Facial bone X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "同站顏面骨教學文章明確將此張標示圖列為 OM0（Waters view）。",
+      "image": "images/tr-facial-bones/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0547.jpeg",
+      "imageSize": [
+        1280,
+        1314
+      ],
+      "imageSha256": "d3f73361caa2757b9d0dea97395694d964742446ffa890d11e68936435daa0dd",
+      "collectionRole": "primary",
+      "families": [
+        "OM"
+      ],
+      "aliases": "顏面 facial face 頭部 頭 head Waters water's water OM occipitomental",
+      "displaySize": [
+        1280,
+        1314
+      ],
+      "title": "Facial bones Waters view"
+    },
+    {
+      "id": "rmc-face-om",
+      "part": "顏面骨",
+      "region": "頭頸",
+      "partEn": "Facial bones",
+      "view": "Occipitomental (OM)",
+      "viewFamily": "OM",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_face_fracture#top_1st_img",
+      "originalTitle": "Occipito-Mental (OM) view - Normal",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_face_fracture#top_1st_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "枕頦位。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-face-om/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/face_normal_om.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        546
+      ],
+      "imageSha256": "3313fec89d01579cae29d977427a01361832f0317524e79c698d2d4cac5d9dc0",
+      "collectionRole": "candidate",
+      "families": [
+        "OM"
+      ],
+      "aliases": "顏面 facial face 頭部 頭 head Waters water's water OM occipitomental",
+      "displaySize": [
+        450,
+        546
+      ],
+      "title": "Facial bones occipitomental (OM) view"
+    },
+    {
+      "caseId": 76406,
+      "author": "Amanda Er",
+      "part": "顏面骨",
+      "region": "頭頸",
+      "partEn": "Facial bones",
+      "notes": "",
+      "normalEvidence": "作者稱正常檢查，未見移位性顏面或顱骨骨折。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-52429427",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-facial-bones-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/52429427/f3d6080ba9bba2483c8b12d1ba3981f0eda7fd2f41335b6ceebb9218c7a427da_big_gallery.jpeg",
+      "view": "Waters (OM0°)",
+      "originalTitle": "normal facial bones series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "OM",
+      "hasAnnotation": false,
+      "image": "images/rp-52429427/image.jpeg",
+      "imageSize": [
+        630,
+        623
+      ],
+      "imageSha256": "4bd565f216eb51c76c6bb9a10a243875a40152900708b63ed4e5300049c4766d",
+      "collectionRole": "candidate",
+      "families": [
+        "OM"
+      ],
+      "aliases": "顏面 facial face 頭部 頭 head Waters water's water OM occipitomental",
+      "displaySize": [
+        630,
+        623
+      ],
+      "title": "Facial bones Waters view"
+    },
+    {
+      "id": "rmc-face-om30",
+      "part": "顏面骨",
+      "region": "頭頸",
+      "partEn": "Facial bones",
+      "view": "Occipitomental 30° (OM30)",
+      "viewFamily": "OM30",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_face_fracture#top_2nd_img",
+      "originalTitle": "Occipito-Mental (OM30) view - Normal",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_face_fracture#top_2nd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "原站 OM30 投照。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-face-om30/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/face_normal_om_30.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        474
+      ],
+      "imageSha256": "367074e27f8038084ed1311bb3959eaf1ea0ccc470f171be621c3239628c7e36",
+      "collectionRole": "candidate",
+      "families": [
+        "OM30"
+      ],
+      "aliases": "顏面 facial face 頭部 頭 head",
+      "displaySize": [
+        450,
+        474
+      ],
+      "title": "Facial bones OM30 view"
+    },
+    {
+      "caseId": 155890,
+      "author": "Gni Liew",
+      "part": "鼻竇",
+      "region": "頭頸",
+      "partEn": "Paranasal sinuses",
+      "notes": "",
+      "normalEvidence": "來源為正常鼻竇系列；未見氣液面，眼眶骨緣完整。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-60025217",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-paranasal-sinuses-x-ray-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/60025217/a26e62e62f788d1207b5e2554769e809cf55100332d63b7311d4568f605e3427_big_gallery.jpeg",
+      "view": "Open-mouth Waters / OM",
+      "originalTitle": "normal paranasal sinuses x ray series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "OM",
+      "hasAnnotation": false,
+      "image": "images/rp-60025217/image.jpeg",
+      "imageSize": [
+        577,
+        630
+      ],
+      "imageSha256": "aba26c213b2c78805123104445391eab457ef9b4d148442110698738aa5d0752",
+      "collectionRole": "candidate",
+      "families": [
+        "OM"
+      ],
+      "aliases": "paranasal sinus sinuses PNS 頭部 頭 head Waters water's water OM occipitomental",
+      "displaySize": [
+        577,
+        630
+      ],
+      "title": "Paranasal sinuses open-mouth Waters view"
+    },
+    {
+      "caseId": 32745,
+      "author": "Dalia Ibrahim",
+      "part": "鼻骨",
+      "region": "頭頸",
+      "partEn": "Nasal bones",
+      "notes": "來源正常鼻骨側位解剖圖；保留原圖描線或編號。編號圖：1 鼻額縫；2 前篩神經溝；3 額竇；4 額骨鼻突。",
+      "normalEvidence": "來源以正常鼻骨 X 光解剖為例。",
+      "annotation": "原圖解剖標示",
+      "ageGroup": "成人",
+      "id": "rp-9494140",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/nasal-bone-anatomy-x-ray",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/9494140/6e2261529163695ac5f17210a5f8e3.png",
+      "view": "Lateral anatomy 2",
+      "originalTitle": "nasal bone anatomy x ray",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "embedded",
+      "viewFamily": "Lateral",
+      "hasAnnotation": true,
+      "image": "images/rp-9494140/image.png",
+      "imageSize": [
+        615,
+        964
+      ],
+      "imageSha256": "36c35056ccf6d2ba49addd358846ce6f67ed539fd88bf44e7b5b0cdbee544949",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "nasal bones nose 頭部 頭 head",
+      "displaySize": [
+        615,
+        964
+      ],
+      "title": "Nasal bones lateral view"
+    },
+    {
+      "caseId": 98057,
+      "author": "Amanda Er",
+      "part": "顴弓",
+      "region": "頭頸",
+      "partEn": "Zygomatic arch",
+      "notes": "16 歲；同病例含顏面骨與顴弓系列。",
+      "normalEvidence": "來源正常顴弓及顏面骨病例，未見移位性骨折。",
+      "annotation": "純 X 光",
+      "ageGroup": "青少年",
+      "id": "rp-57412087",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-zygomatic-arch-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/57412087/0._big_gallery.jpeg",
+      "view": "SMV / Submentovertex",
+      "originalTitle": "normal zygomatic arch series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "SMV",
+      "hasAnnotation": false,
+      "image": "images/rp-57412087/image.jpeg",
+      "imageSize": [
+        630,
+        627
+      ],
+      "imageSha256": "74063cefce222866cc730cd5f030f1a0209a72a3e98e3e2ceadd9f3839fc98bd",
+      "collectionRole": "candidate",
+      "families": [
+        "SMV"
+      ],
+      "aliases": "zygomatic arch zygoma 頭部 頭 head",
+      "displaySize": [
+        630,
+        627
+      ],
+      "title": "Zygomatic arch submentovertex (SMV) view"
+    },
+    {
+      "id": "rmc-mandible-view",
+      "part": "下顎骨",
+      "region": "頭頸",
+      "partEn": "Mandible",
+      "view": "Mandibular view（依原站名稱）",
+      "viewFamily": "Other",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_mandible_fracture#top_3rd_img",
+      "originalTitle": "Normal mandible - Mandibular view",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_mandible_fracture#top_3rd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "原站未更細分此投照方式，不自行指定 AP／PA。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-mandible-view/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/mandible_normal.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        380
+      ],
+      "imageSha256": "23400d458679d4859040dd4bf60c45b2542a85426314a8eba12baac5ba10b65f",
+      "collectionRole": "candidate",
+      "families": [
+        "Other"
+      ],
+      "aliases": "下頜 mandible jaw opg 頭部 頭 head",
+      "displaySize": [
+        450,
+        380
+      ],
+      "title": "Mandible radiograph"
+    },
+    {
+      "id": "tr-cervical-ap",
+      "part": "頸椎",
+      "region": "脊椎",
+      "partEn": "Cervical spine",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "AP C-spine X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-cervical-ap/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/08/IMG_0516.jpeg",
+      "imageSize": [
+        1067,
+        1600
+      ],
+      "imageSha256": "9b102a8901dbffc83b50abbb4b9b8fa2c4fb742f3f564572c2fc1ee3ed78c750",
+      "collectionRole": "primary",
+      "families": [
+        "AP"
+      ],
+      "aliases": "cspine c-spine cervical",
+      "displaySize": [
+        1067,
+        1600
+      ],
+      "title": "Cervical spine AP view"
+    },
+    {
+      "id": "rmc-cervical-ap",
+      "part": "頸椎",
+      "region": "脊椎",
+      "partEn": "Cervical spine",
+      "view": "AP／對位",
+      "viewFamily": "AP",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_c-spine_normal#top_4th_img",
+      "originalTitle": "C-spine systematic approach - Normal AP",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_c-spine_normal#top_4th_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "補充頸椎正位的骨性對位標示。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-cervical-ap/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/c-spine_normal_ap.jpg?mtime=20210304211354&focal=none",
+      "imageSize": [
+        900,
+        591
+      ],
+      "imageSha256": "8dad5460e9cf7e68d05290aba34ecfdff499523229eece8e31817dd2f81a5979",
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "cspine c-spine cervical",
+      "displaySize": [
+        450,
+        591
+      ],
+      "title": "Cervical spine AP view"
+    },
+    {
+      "id": "tr-cervical-lateral",
+      "part": "頸椎",
+      "region": "脊椎",
+      "partEn": "Cervical spine",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Lateral C-spine X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-cervical-lateral/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/08/IMG_0507.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "bb19e26ad9c8f96dd97405afb382442f0d142a0b152566083b98c0de7b351544",
+      "collectionRole": "primary",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "cspine c-spine cervical",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Cervical spine lateral view"
+    },
+    {
+      "id": "tr-cervical-odontoid",
+      "part": "頸椎",
+      "region": "脊椎",
+      "partEn": "Cervical spine",
+      "view": "Open-mouth odontoid／張口齒突位",
+      "viewFamily": "Odontoid",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Open mouth peg view anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-cervical-odontoid/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/08/IMG_0513.jpeg",
+      "imageSize": [
+        1598,
+        1058
+      ],
+      "imageSha256": "c252826464512d618532e7b91cc1816be2911d7168dbe4d8d183a11ecbf52e8c",
+      "collectionRole": "primary",
+      "families": [
+        "Odontoid"
+      ],
+      "aliases": "cspine c-spine cervical",
+      "displaySize": [
+        1598,
+        1058
+      ],
+      "title": "Cervical spine open-mouth odontoid view"
+    },
+    {
+      "id": "rmc-cervical-swimmer",
+      "part": "頸胸椎交界",
+      "region": "脊椎",
+      "partEn": "Cervicothoracic junction",
+      "view": "Swimmer’s view／游泳者位",
+      "viewFamily": "Swimmer",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_c-spine_normal#top_7th_img",
+      "originalTitle": "C-spine normal anatomy - ' Swimmer's' view",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_c-spine_normal#top_7th_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "頸胸椎交界 C7–T1；原圖以線條標記對位。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-cervical-swimmer/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/c-spine_swimmer_normal.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        554
+      ],
+      "imageSha256": "1aa44d2ba745c7bfe4e2af73e03ca9e731467b2d1ae914442c26bdabef1c6c66",
+      "collectionRole": "candidate",
+      "families": [
+        "Swimmer"
+      ],
+      "aliases": "",
+      "displaySize": [
+        450,
+        554
+      ],
+      "title": "Cervicothoracic junction swimmer's view"
+    },
+    {
+      "caseId": 36886,
+      "author": "Craig Hacking",
+      "part": "鎖骨",
+      "region": "上肢",
+      "partEn": "Clavicle",
+      "notes": "",
+      "normalEvidence": "來源正常鎖骨兩種標準投照；未見骨折，肩鎖關節正常。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-12717896",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-clavicle-radiographs",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/12717896/cf06dffd88c129afbfdda0c6d36241b47aa2beb7ad20330cc2627dccc4a61563_big_gallery.jpeg",
+      "view": "Frontal／正位（未細分 AP／PA）",
+      "originalTitle": "normal clavicle radiographs",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Frontal",
+      "hasAnnotation": false,
+      "image": "images/rp-12717896/image.jpeg",
+      "imageSize": [
+        630,
+        269
+      ],
+      "imageSha256": "e5575fd74377c4884051d4b10054dbddd0c0f71fdce903df3d32180828656e0f",
+      "collectionRole": "candidate",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "clavicle collarbone",
+      "displaySize": [
+        630,
+        269
+      ],
+      "title": "Clavicle frontal view"
+    },
+    {
+      "id": "tr-shoulder-ap",
+      "part": "肩關節",
+      "region": "上肢",
+      "partEn": "Shoulder",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "AP shoulder X-Ray",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-shoulder-ap/image.png",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/07/IMG_0372.png",
+      "imageSize": [
+        1080,
+        1350
+      ],
+      "imageSha256": "6a3abdaadd43be3ba371fffff020c5c854083a0b76832b292ed5e3365db01f4b",
+      "collectionRole": "primary",
+      "families": [
+        "AP"
+      ],
+      "aliases": "肩膀 shoulder GHJ scapula 肩胛",
+      "displaySize": [
+        1080,
+        1350
+      ],
+      "title": "Shoulder AP view"
+    },
+    {
+      "id": "tr-shoulder-axial",
+      "part": "肩關節",
+      "region": "上肢",
+      "partEn": "Shoulder",
+      "view": "Axial／腋下軸位",
+      "viewFamily": "Axial",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Axial shoulder X-Ray",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-shoulder-axial/image.png",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/07/IMG_0373.png",
+      "imageSize": [
+        1080,
+        1350
+      ],
+      "imageSha256": "7e97c5dde247eb702448355c4bcd85cec3fdfca59559340295a66d09ea15e4bf",
+      "collectionRole": "primary",
+      "families": [
+        "Axial"
+      ],
+      "aliases": "肩膀 shoulder GHJ scapula 肩胛",
+      "displaySize": [
+        1080,
+        1350
+      ],
+      "title": "Shoulder axillary view"
+    },
+    {
+      "id": "tr-shoulder-y",
+      "part": "肩關節",
+      "region": "上肢",
+      "partEn": "Shoulder",
+      "view": "Scapular Y",
+      "viewFamily": "Y-view",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Y-view shoulder X-Ray",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-shoulder-y/image.png",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/07/IMG_0375.png",
+      "imageSize": [
+        1080,
+        1350
+      ],
+      "imageSha256": "649d6688167c8d488ee6d568ad5d6f3d36ae280e8226ce088b966121fefe0cfb",
+      "collectionRole": "primary",
+      "families": [
+        "Y-view"
+      ],
+      "aliases": "肩膀 shoulder GHJ scapula 肩胛",
+      "displaySize": [
+        1080,
+        1350
+      ],
+      "title": "Shoulder scapular Y view"
+    },
+    {
+      "id": "rp-25380109",
+      "part": "肩胛骨",
+      "region": "上肢",
+      "partEn": "Scapula",
+      "view": "Lateral / Scapular Y",
+      "viewFamily": "Lateral",
+      "caseId": 48377,
+      "author": "Andrew Murphy",
+      "originalTitle": "Normal shoulder radiograph",
+      "sourcePage": "https://radiopaedia.org/cases/normal-shoulder-radiograph",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/25380109/5e71cf2ada8fbdcd51af4ac7ea5187_jumbo.jpeg",
+      "normalEvidence": "原作者標示正常肩部影像，盂肱與肩鎖關節外觀正常；檢視器標為 Lateral。",
+      "notes": "正常病例的肩胛骨側位／Y view；包含肩胛骨下角。",
+      "title": "Scapula lateral view",
+      "source": "Radiopaedia",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "ageGroup": "成人",
+      "annotation": "純 X 光",
+      "annotationKind": "none",
+      "hasAnnotation": false,
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "requested-ribs-scapula-2026-10-08",
+      "image": "images/rp-25380109/image.jpeg",
+      "imageSize": [
+        906,
+        1024
+      ],
+      "imageSha256": "2186874cdab5e14ce965aa2eec7080c2a8e2ce68502d6768e262fd41cec236a2",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "",
+      "displaySize": [
+        906,
+        1024
+      ]
+    },
+    {
+      "id": "tr-chest-pa",
+      "part": "胸部",
+      "region": "胸腹",
+      "partEn": "Chest",
+      "view": "PA／一般解剖",
+      "viewFamily": "PA",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Chest X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-chest-pa/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/10/IMG_0754.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "df849cdad48427620ad4fec002cb32bb29ccbcbf54a7731925a1c4a240a1e968",
+      "collectionRole": "primary",
+      "families": [
+        "PA"
+      ],
+      "aliases": "胸腔 胸片 chest cxr",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Chest PA view"
+    },
+    {
+      "id": "tr-chest-bones",
+      "part": "胸部",
+      "region": "胸腹",
+      "partEn": "Chest",
+      "view": "正位／骨骼解剖",
+      "viewFamily": "Frontal",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "CXR bone anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-chest-bones/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/10/IMG_0755.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "175456a6def0e0dd6972f99d840b4327c75431e34c20ec68976fc6a163844214",
+      "collectionRole": "primary",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "胸腔 胸片 chest cxr",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Chest frontal view - bony anatomy"
+    },
+    {
+      "id": "tr-chest-mediastinum",
+      "part": "胸部",
+      "region": "胸腹",
+      "partEn": "Chest",
+      "view": "正位／縱膈解剖",
+      "viewFamily": "Frontal",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "CXR mediastinal anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-chest-mediastinum/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/10/IMG_0756.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "6677da21e1cc4faefa400f7bf4623091bfa43a5c5100137265e4259703d14d3c",
+      "collectionRole": "primary",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "胸腔 胸片 chest cxr",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Chest frontal view - mediastinum"
+    },
+    {
+      "id": "tr-chest-lateral",
+      "part": "胸部",
+      "region": "胸腹",
+      "partEn": "Chest",
+      "view": "Lateral／判讀區域標示",
+      "viewFamily": "Lateral",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/chest-x-ray-review-areas/",
+      "originalTitle": "Lateral Chest X-ray checklist",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "判讀區域標示",
+      "normalEvidence": "來源教學文章用於介紹側位的判讀區域；未提供獨立正常病例報告。",
+      "acquiredDate": "2026-10-08",
+      "notes": "同站胸部教學文章的側位檢查圖；標示胸骨、心臟、橫膈與判讀區域，並非完整逐項解剖圖。",
+      "image": "images/tr-chest-lateral/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/10/IMG_0760.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "8e74199843b09f59537a16ac6227f6034abf6dd83e9dd03dc19a1cbf843a7cc5",
+      "collectionRole": "primary",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "胸腔 胸片 chest cxr",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Chest lateral view"
+    },
+    {
+      "id": "ra-chest-lateral",
+      "part": "胸部",
+      "region": "胸腹",
+      "partEn": "Chest",
+      "view": "Lateral／正常輪廓",
+      "viewFamily": "Lateral",
+      "source": "The Radiology Assistant",
+      "sourcePage": "https://radiologyassistant.nl/chest/chest-x-ray/basic-interpretation#normal-and-variants-lateral-view",
+      "originalTitle": "Lateral view",
+      "author": "Robin Smithuis; Otto van Delden",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://radiologyassistant.nl/chest/chest-x-ray/basic-interpretation#normal-and-variants-lateral-view",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "原圖以箭頭標記側位輪廓與透亮區，並非完整逐項骨骼命名。",
+      "image": "images/ra-chest-lateral/image.jpg",
+      "imageUrl": "https://radiologyassistant.nl/assets/_1-lungs-lucent.jpg",
+      "imageSize": [
+        700,
+        404
+      ],
+      "imageSha256": "a19da47ccf5d6410ca09dc5f07b6c73b1079dfa64ccfd6a3fe681dac41782dfd",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "胸腔 胸片 chest cxr",
+      "displaySize": [
+        700,
+        404
+      ],
+      "title": "Chest lateral view"
+    },
+    {
+      "id": "rmc-sternum-lateral",
+      "part": "胸骨",
+      "region": "胸腹",
+      "partEn": "Sternum",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_sternum_fracture#top_1st_img",
+      "originalTitle": "Sternum - Normal - Lateral",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_sternum_fracture#top_1st_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "胸骨柄與胸骨體交界。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-sternum-lateral/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/sternum_normal.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        371
+      ],
+      "imageSha256": "93646b363437569eee722f0f199880289d52f8148c7803cd74ddb4afe9792022",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "sternum sternal",
+      "displaySize": [
+        450,
+        371
+      ],
+      "title": "Sternum lateral view"
+    },
+    {
+      "caseId": 85561,
+      "author": "Amanda Er",
+      "part": "肋骨",
+      "region": "胸腹",
+      "partEn": "Ribs",
+      "notes": "PA 胸片與 LAO 肋骨斜位依來源討論確認；可見肋軟骨鈣化。",
+      "normalEvidence": "來源正常肋骨系列，未見移位性肋骨骨折，無氣胸或積液。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-54151097",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-ribs-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/54151097/bf08cac3156189e9301a1e31712eed2c2b65a20c132775bfef81079a07f2b107_big_gallery.jpeg",
+      "view": "LAO / Oblique",
+      "originalTitle": "normal ribs series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Oblique",
+      "hasAnnotation": false,
+      "image": "images/rp-54151097/image.jpeg",
+      "imageSize": [
+        584,
+        630
+      ],
+      "imageSha256": "60b56b31a0d55b243ddc53358be06555b4b45fc68037165184a6949e72e1fe39",
+      "collectionRole": "candidate",
+      "families": [
+        "Oblique"
+      ],
+      "aliases": "ribs rib",
+      "displaySize": [
+        584,
+        630
+      ],
+      "title": "Ribs left anterior oblique (LAO) view"
+    },
+    {
+      "id": "rp-62046494",
+      "part": "肋骨",
+      "region": "胸腹",
+      "partEn": "Ribs",
+      "view": "Right oblique（未明示 anterior／posterior）",
+      "viewFamily": "Oblique",
+      "caseId": 166774,
+      "author": "Gni Liew",
+      "originalTitle": "Normal rib series",
+      "sourcePage": "https://radiopaedia.org/cases/normal-rib-series-1",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/62046494/f22ee390e1ac24e466e2af312488bce7b73f18f0ad3ac24c7665225ebaa7d881.png",
+      "normalEvidence": "原作者稱正常肋骨系列供參考，未見骨折或肺部病灶。",
+      "notes": "來源僅標 Right oblique，沒有明示 anterior／posterior，故不標為已確認 RAO。作為正常肋骨右斜位參考。",
+      "title": "Ribs right oblique view",
+      "source": "Radiopaedia",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "ageGroup": "成人",
+      "annotation": "純 X 光",
+      "annotationKind": "none",
+      "hasAnnotation": false,
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "requested-ribs-scapula-2026-10-08",
+      "image": "images/rp-62046494/image.png",
+      "imageSize": [
+        560,
+        827
+      ],
+      "imageSha256": "f22ee390e1ac24e466e2af312488bce7b73f18f0ad3ac24c7665225ebaa7d881",
+      "collectionRole": "candidate",
+      "families": [
+        "Oblique"
+      ],
+      "aliases": "ribs rib",
+      "displaySize": [
+        560,
+        827
+      ]
+    },
+    {
+      "id": "rp-70803237",
+      "part": "肋骨",
+      "region": "胸腹",
+      "partEn": "Ribs",
+      "view": "RAO",
+      "viewFamily": "Oblique",
+      "caseId": 210356,
+      "author": "Dalia Ibrahim",
+      "originalTitle": "Normal ribs series",
+      "sourcePage": "https://radiopaedia.org/cases/normal-ribs-series-1",
+      "viewerUrl": "https://radiopaedia.org/cases/210356/studies/163573?lang=gb",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/70803237/a17c84360366620581b9a2f6cbd420094a77ed6f1beddde9bb71e84ed71b3566.jpg",
+      "sourceView": "Oblique",
+      "projectionVerified": "Oblique only; RAO not confirmed",
+      "displayLabelSource": "user request 2026-10-08",
+      "normalEvidence": "Case author reports clear lungs and costophrenic angles, normal cardiothoracic ratio, and no rib fractures.",
+      "notes": "Candidate A；依使用者指定標示為 RAO。來源原標籤為 Oblique，RAO 為本機圖庫的使用者指定名稱，非來源已驗證投照。保留原始影像，不放大或銳化。",
+      "title": "Ribs RAO view",
+      "source": "Radiopaedia",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "ageGroup": "成人",
+      "annotation": "純 X 光",
+      "annotationKind": "none",
+      "hasAnnotation": false,
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "requested-ribs-rao-2026-10-08",
+      "image": "images/rp-70803237/image.jpg",
+      "imageSize": [
+        577,
+        630
+      ],
+      "imageSha256": "a17c84360366620581b9a2f6cbd420094a77ed6f1beddde9bb71e84ed71b3566",
+      "collectionRole": "candidate",
+      "families": [
+        "Oblique"
+      ],
+      "aliases": "ribs rib",
+      "displaySize": [
+        577,
+        630
+      ]
+    },
+    {
+      "id": "rmc-thoracic-ap-lateral",
+      "part": "胸椎",
+      "region": "脊椎",
+      "partEn": "Thoracic spine",
+      "view": "AP + Lateral／全貌",
+      "viewFamily": "AP + Lateral",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_thoracolumbar_spine_normal#top_1st_img",
+      "originalTitle": "Thoracic spine systematic approach - Lateral and AP",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_thoracolumbar_spine_normal#top_1st_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "左右兩張不同投照置於同一原圖。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-thoracic-ap-lateral/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/t-spine_normal_2.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        653
+      ],
+      "imageSha256": "cfa12164a47eb025b0e6d219dadc0124573a0ee6496c6753bd248b813d69eb6a",
+      "collectionRole": "candidate",
+      "families": [
+        "AP",
+        "Lateral"
+      ],
+      "aliases": "tspine t-spine thoracic",
+      "displaySize": [
+        450,
+        653
+      ],
+      "title": "Thoracic spine AP and lateral views"
+    },
+    {
+      "id": "rmc-thoracic-ap",
+      "part": "胸椎",
+      "region": "脊椎",
+      "partEn": "Thoracic spine",
+      "view": "AP／局部解剖",
+      "viewFamily": "AP",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_thoracolumbar_spine_normal#top_3rd_img",
+      "originalTitle": "T-spine normal anatomy - AP (detail)",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_thoracolumbar_spine_normal#top_3rd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "SP＝棘突；TP＝橫突。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-thoracic-ap/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/t-spine_normal_ap.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        500
+      ],
+      "imageSha256": "9fc4c34e57690cee38f32605be7ccdaa650fb458001da17cf32ff0ec05830786",
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "tspine t-spine thoracic",
+      "displaySize": [
+        450,
+        500
+      ],
+      "title": "Thoracic spine AP view"
+    },
+    {
+      "id": "rmc-thoracic-lateral",
+      "part": "胸椎",
+      "region": "脊椎",
+      "partEn": "Thoracic spine",
+      "view": "Lateral／局部解剖",
+      "viewFamily": "Lateral",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_thoracolumbar_spine_normal#top_2nd_img",
+      "originalTitle": "T-spine normal anatomy - Lateral (detail)",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_thoracolumbar_spine_normal#top_2nd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "VB＝椎體；P＝椎弓根；SP＝棘突；F＝椎間孔。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-thoracic-lateral/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/t-spine_normal_lateral.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        427
+      ],
+      "imageSha256": "99452930f086447d34f4466782f745e3b628cd7a8185b378f1f8e3dbaa29383a",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "tspine t-spine thoracic",
+      "displaySize": [
+        450,
+        427
+      ],
+      "title": "Thoracic spine lateral view"
+    },
+    {
+      "id": "im-humerus-ap",
+      "part": "肱骨",
+      "region": "上肢",
+      "partEn": "Humerus",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "IMAIOS e-Anatomy",
+      "sourcePage": "https://www.imaios.com/en/e-anatomy/upper-limb/radiography-upper-extremity",
+      "originalTitle": "Radiographs - Arm - Humerus : Body of humerus, Surgical neck, Medial supraepicondylar ridge, Medial epicondyle, Greater tubercle, Anatomical neck",
+      "author": "Antoine Micheau, MD; Denis Hoa, MD",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.imaios.com/en/e-anatomy/upper-limb/radiography-upper-extremity",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "僅收錄公開頁面提供的標示預覽圖。",
+      "image": "images/im-humerus-ap/image.jpg",
+      "imageUrl": "https://cdn1.imaios.com/i/images/6/0/7/2/482706-1-eng-GB/upper-limb-radiographs-arm.jpg?caption=1&q=75&w=1280&s=749c7764c0c926a962d02fc07a4a50ad",
+      "imageSize": [
+        1280,
+        660
+      ],
+      "imageSha256": "064a90e808d560e6c8abfdf729f797d2113d9463c21c6cf49a148641b03649b0",
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        660
+      ],
+      "title": "Humerus AP view"
+    },
+    {
+      "id": "mun-humerus-lateral",
+      "part": "肱骨",
+      "region": "上肢",
+      "partEn": "Humerus",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Memorial University",
+      "sourcePage": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf#page=12",
+      "originalTitle": "Humerus Lateral",
+      "author": "Memorial University of Newfoundland, Faculty of Medicine",
+      "rights": "來源保留版權；本機個人學習用，未取得公開再散布授權。",
+      "rightsUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "ageGroup": "一般",
+      "annotation": "原頁標示",
+      "normalEvidence": "放射解剖教材中的骨性解剖頁；排除教材中明示關節積液及 CT／MRI 的頁面。",
+      "acquiredDate": "2026-10-08",
+      "notes": "教材第 12 頁原頁轉圖；保留標題、原始標籤與影像對照。",
+      "image": "images/mun-humerus-lateral/image.png",
+      "imageUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "imageSize": [
+        1800,
+        1350
+      ],
+      "imageSha256": "e6bc70ab7a4d75bebedefca6f44f2031f39758f674ef2ae84c8a6635a9496fa5",
+      "pdfPage": 12,
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1800,
+        1350
+      ],
+      "title": "Humerus lateral view"
+    },
+    {
+      "id": "tr-elbow-ap",
+      "part": "肘關節",
+      "region": "上肢",
+      "partEn": "Elbow",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "AP elbow X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-elbow-ap/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/07/IMG_0303.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "f10cd9b496e52c454ddccbb2a3ba4f4b3fcc102cbaf74412eeea40096904edd9",
+      "collectionRole": "primary",
+      "families": [
+        "AP"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Elbow AP view"
+    },
+    {
+      "id": "tr-elbow-lateral",
+      "part": "肘關節",
+      "region": "上肢",
+      "partEn": "Elbow",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Lateral elbow X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-elbow-lateral/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/07/IMG_0302.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "933e35268630445dba6074baa6c1e5918b0483b7e3e6139a73ba5c217e427f23",
+      "collectionRole": "primary",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Elbow lateral view"
+    },
+    {
+      "id": "tr-elbow-ossification",
+      "part": "肘關節",
+      "region": "上肢",
+      "partEn": "Elbow",
+      "view": "骨化中心（兒童）",
+      "viewFamily": "Other",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Elbow ossification centres",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "兒童",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-elbow-ossification/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/07/IMG_0304.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "7ada8a91e94ad9085a146daafdbb8830c0399839c0f44eb52a0dd0d14a33b9c7",
+      "collectionRole": "primary",
+      "families": [
+        "Other"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Pediatric elbow ossification centers"
+    },
+    {
+      "id": "im-forearm-ap",
+      "part": "前臂",
+      "region": "上肢",
+      "partEn": "Forearm",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "IMAIOS e-Anatomy",
+      "sourcePage": "https://www.imaios.com/en/e-anatomy/upper-limb/radiography-upper-extremity",
+      "originalTitle": "Radiographs - Forearm : Radius, Ulna, Capitulum of humerus, Tuberosity of ulna, Radial tuberosity, Pronator tuberosity, Interosseous border",
+      "author": "Antoine Micheau, MD; Denis Hoa, MD",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.imaios.com/en/e-anatomy/upper-limb/radiography-upper-extremity",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "僅收錄公開頁面提供的標示預覽圖。",
+      "image": "images/im-forearm-ap/image.jpg",
+      "imageUrl": "https://cdn1.imaios.com/i/images/5/5/4/7/487455-1-eng-GB/upper-limb-radiographs-forearm.jpg?caption=1&q=75&w=1280&s=cd1adea8ac60f78ca630aca64a6e9b62",
+      "imageSize": [
+        1280,
+        660
+      ],
+      "imageSha256": "d36e2eb7e04a88aa1561a65029c741dee808e72e9e3e4ea1fa268aac28756b73",
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "橈骨 尺骨 radius ulna forearm",
+      "displaySize": [
+        1280,
+        660
+      ],
+      "title": "Forearm AP view"
+    },
+    {
+      "id": "mun-forearm-lateral",
+      "part": "前臂",
+      "region": "上肢",
+      "partEn": "Forearm",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Memorial University",
+      "sourcePage": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf#page=17",
+      "originalTitle": "Forearm Lateral",
+      "author": "Memorial University of Newfoundland, Faculty of Medicine",
+      "rights": "來源保留版權；本機個人學習用，未取得公開再散布授權。",
+      "rightsUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "ageGroup": "一般",
+      "annotation": "原頁標示",
+      "normalEvidence": "放射解剖教材中的骨性解剖頁；排除教材中明示關節積液及 CT／MRI 的頁面。",
+      "acquiredDate": "2026-10-08",
+      "notes": "教材第 17 頁原頁轉圖；保留標題、原始標籤與影像對照。",
+      "image": "images/mun-forearm-lateral/image.png",
+      "imageUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "imageSize": [
+        1800,
+        1350
+      ],
+      "imageSha256": "ae87a9395dbfc7c615e74c8a1ece89f6651d1118165e19f9ad3150a7498dbffd",
+      "pdfPage": 17,
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "橈骨 尺骨 radius ulna forearm",
+      "displaySize": [
+        1800,
+        1350
+      ],
+      "title": "Forearm lateral view"
+    },
+    {
+      "id": "tr-wrist-pa",
+      "part": "手腕",
+      "region": "上肢",
+      "partEn": "Wrist",
+      "view": "PA／腕骨",
+      "viewFamily": "PA",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Carpal bones X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-wrist-pa/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/08/IMG_0461.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "676e0e8df2bcd561c569273a7bcf3a825e9d469ed9469c2b40a62914035d4c7a",
+      "collectionRole": "primary",
+      "families": [
+        "PA"
+      ],
+      "aliases": "腕骨 wrist carpal 舟狀骨 scaphoid 月狀骨 lunate 頭狀骨 capitate",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Wrist PA view"
+    },
+    {
+      "id": "rmc-wrist-lateral",
+      "part": "手腕",
+      "region": "上肢",
+      "partEn": "Wrist",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_upper_limb/wrist_trauma_x-ray#top_2nd_img",
+      "originalTitle": "Wrist bones - Normal X-ray (Lateral)",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_upper_limb/wrist_trauma_x-ray#top_2nd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "橈骨 Radius、月狀骨 Lunate、頭狀骨 Capitate 的排列；彩色輪廓標示腕骨。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-wrist-lateral/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/upper-limb/wrist_normal_lat.jpg?mtime=20210304211401&focal=none",
+      "imageSize": [
+        900,
+        450
+      ],
+      "imageSha256": "121b2d823baaf42a4eb283d93b13f23461ff8c645df01f1a8132274cdd6798a7",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "腕骨 wrist carpal 舟狀骨 scaphoid 月狀骨 lunate 頭狀骨 capitate",
+      "displaySize": [
+        450,
+        450
+      ],
+      "title": "Wrist lateral view"
+    },
+    {
+      "caseId": 48081,
+      "author": "Andrew Murphy",
+      "part": "手腕",
+      "region": "上肢",
+      "partEn": "Wrist",
+      "notes": "",
+      "normalEvidence": "原作者將此病例列為正常 X 光範例。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-25120749",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-wrist-1",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/25120749/400acc43fdd4a5ef435d04540d8648_big_gallery.jpeg",
+      "view": "Lateral",
+      "originalTitle": "normal wrist 1",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Lateral",
+      "hasAnnotation": false,
+      "image": "images/rp-25120749/image.jpeg",
+      "imageSize": [
+        296,
+        630
+      ],
+      "imageSha256": "8191af02a917833b6a8cf2ea8e0d550ec8eed5513c121c2ba649d78fb946a807",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "腕骨 wrist carpal 舟狀骨 scaphoid 月狀骨 lunate 頭狀骨 capitate",
+      "displaySize": [
+        296,
+        630
+      ],
+      "title": "Wrist lateral view"
+    },
+    {
+      "id": "rmc-wrist-ulnar-deviation",
+      "part": "手腕",
+      "region": "上肢",
+      "partEn": "Wrist",
+      "view": "PA with ulnar deviation／尺偏位",
+      "viewFamily": "Scaphoid",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_upper_limb/wrist_trauma_x-ray#top_7th_img",
+      "originalTitle": "Normal scapholunate space",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_upper_limb/wrist_trauma_x-ray#top_7th_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "正常舟月骨間隙；原圖以箭頭標示關節間隙，並非所有腕骨逐一命名。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-wrist-ulnar-deviation/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/upper-limb/wrist_scapholunate.jpg?mtime=20210304211401&focal=none",
+      "imageSize": [
+        900,
+        450
+      ],
+      "imageSha256": "6128e702f3af39db0dc3a2af19f43f1584fbc5e5322e548d79c878c435cdc28b",
+      "collectionRole": "candidate",
+      "families": [
+        "Scaphoid"
+      ],
+      "aliases": "腕骨 wrist carpal 舟狀骨 scaphoid 月狀骨 lunate 頭狀骨 capitate",
+      "displaySize": [
+        450,
+        450
+      ],
+      "title": "Wrist PA view with ulnar deviation"
+    },
+    {
+      "id": "tr-hand-pa",
+      "part": "手",
+      "region": "上肢",
+      "partEn": "Hand",
+      "view": "PA",
+      "viewFamily": "PA",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "PA hand X-Ray",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-hand-pa/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/08/IMG_0442.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "6f03b2fd61cb4fbd55bdac1825a034b2442c262e66efd86a5ffd3415bb8ae8ca",
+      "collectionRole": "primary",
+      "families": [
+        "PA"
+      ],
+      "aliases": "hand",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Hand PA view"
+    },
+    {
+      "id": "mun-hand-lateral",
+      "part": "手",
+      "region": "上肢",
+      "partEn": "Hand",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Memorial University",
+      "sourcePage": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf#page=20",
+      "originalTitle": "Hand Lateral",
+      "author": "Memorial University of Newfoundland, Faculty of Medicine",
+      "rights": "來源保留版權；本機個人學習用，未取得公開再散布授權。",
+      "rightsUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "ageGroup": "一般",
+      "annotation": "原頁標示",
+      "normalEvidence": "放射解剖教材中的骨性解剖頁；排除教材中明示關節積液及 CT／MRI 的頁面。",
+      "acquiredDate": "2026-10-08",
+      "notes": "教材第 20 頁原頁轉圖；保留標題、原始標籤與影像對照。",
+      "image": "images/mun-hand-lateral/image.png",
+      "imageUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "imageSize": [
+        1800,
+        1350
+      ],
+      "imageSha256": "7701aac2cce12a025acbae223dcd8dec227e8f37f38a82019cd9492847f73681",
+      "pdfPage": 20,
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "hand",
+      "displaySize": [
+        1800,
+        1350
+      ],
+      "title": "Hand lateral view"
+    },
+    {
+      "id": "im-hand-oblique",
+      "part": "手",
+      "region": "上肢",
+      "partEn": "Hand",
+      "view": "Oblique",
+      "viewFamily": "Oblique",
+      "source": "IMAIOS e-Anatomy",
+      "sourcePage": "https://www.imaios.com/en/e-anatomy/upper-limb/radiography-upper-extremity",
+      "originalTitle": "Radiographs - Hand - Digiti manus : Metacarpals [I -V],  Digital bones; Phalanges,  Proximal phalanx,  Middle phalanx,  Distal phalanx,  Sesamoid bones, Carpometacarpal joints,  Intermetacarpal joints,  Metacarpophalangeal joints,  Interphalangeal joints of hand",
+      "author": "Antoine Micheau, MD; Denis Hoa, MD",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.imaios.com/en/e-anatomy/upper-limb/radiography-upper-extremity",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "僅收錄公開頁面提供的標示預覽圖。",
+      "image": "images/im-hand-oblique/image.jpg",
+      "imageUrl": "https://cdn1.imaios.com/i/images/0/6/7/2/482760-1-eng-GB/upper-limb-radiographs-hand.jpg?caption=1&q=75&w=1280&s=3b548ab53713784bb0e0449a6e6a8760",
+      "imageSize": [
+        1280,
+        660
+      ],
+      "imageSha256": "3a1b45e0e394c57dbb7fdbc0f8fe4470b8deaef70d9be91219d82cff95e2f185",
+      "collectionRole": "candidate",
+      "families": [
+        "Oblique"
+      ],
+      "aliases": "hand",
+      "displaySize": [
+        1280,
+        660
+      ],
+      "title": "Hand oblique view"
+    },
+    {
+      "caseId": 37511,
+      "author": "Craig Hacking",
+      "part": "拇指",
+      "region": "上肢",
+      "partEn": "Thumb",
+      "notes": "",
+      "normalEvidence": "來源為正常拇指系列，報告 NAD（未見異常）。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-13597214",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-thumb-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/13597214/2b526f54bece63ddc908101f51289d_big_gallery.jpeg",
+      "view": "PA",
+      "originalTitle": "normal thumb series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "PA",
+      "hasAnnotation": false,
+      "image": "images/rp-13597214/image.jpeg",
+      "imageSize": [
+        336,
+        630
+      ],
+      "imageSha256": "1d33b126314285e5a63d69b1c37ca94204d71bb991f05e92f7aa497affd8b67e",
+      "collectionRole": "candidate",
+      "families": [
+        "PA"
+      ],
+      "aliases": "thumb",
+      "displaySize": [
+        336,
+        630
+      ],
+      "title": "Thumb PA view"
+    },
+    {
+      "caseId": 37511,
+      "author": "Craig Hacking",
+      "part": "拇指",
+      "region": "上肢",
+      "partEn": "Thumb",
+      "notes": "",
+      "normalEvidence": "來源為正常拇指系列，報告 NAD（未見異常）。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-13597213",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-thumb-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/13597213/f99fddcc397afa161e0d58e0123e95_big_gallery.jpeg",
+      "view": "Lateral",
+      "originalTitle": "normal thumb series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Lateral",
+      "hasAnnotation": false,
+      "image": "images/rp-13597213/image.jpeg",
+      "imageSize": [
+        393,
+        630
+      ],
+      "imageSha256": "6f9fcd40491bea5ad0623e718919e7bf893d1523250c48392c3ace408e69a522",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "thumb",
+      "displaySize": [
+        393,
+        630
+      ],
+      "title": "Thumb lateral view"
+    },
+    {
+      "id": "tr-abdomen",
+      "part": "腹部",
+      "region": "胸腹",
+      "partEn": "Abdomen",
+      "view": "正位（原站未註明姿勢）",
+      "viewFamily": "Frontal",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Abdominal X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-abdomen/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/10/IMG_0757.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "04f077064ef4efb937c95f47316f5e11213311d0876c1107866bd4718bf892a9",
+      "collectionRole": "primary",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "肚子 abdominal abdomen kub axr",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Abdomen frontal view"
+    },
+    {
+      "id": "tr-lumbar-ap",
+      "part": "腰椎",
+      "region": "脊椎",
+      "partEn": "Lumbar spine",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "AP L-spine X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-lumbar-ap/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0525.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "59af43db6d9456dd870a5cd9c8bba4eef07964d0d9ba479e1ae2e15df27c9d9c",
+      "collectionRole": "primary",
+      "families": [
+        "AP"
+      ],
+      "aliases": "lspine l-spine lumbar",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Lumbar spine AP view"
+    },
+    {
+      "id": "tr-lumbar-lateral",
+      "part": "腰椎",
+      "region": "脊椎",
+      "partEn": "Lumbar spine",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Lateral L-spine X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-lumbar-lateral/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0526.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "26affc16c35dcf9c1b61e9a4f3b79d4c825536c3fe506617fbc456b8f012fa2b",
+      "collectionRole": "primary",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "lspine l-spine lumbar",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Lumbar spine lateral view"
+    },
+    {
+      "id": "tr-pelvis-ap",
+      "part": "骨盆",
+      "region": "下肢",
+      "partEn": "Pelvis",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "AP pelvis X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-pelvis-ap/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0565.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "1acb2824464e7cef989f96d63b6cafa03f7b4a80ff28602fbe7e27f0f10e797d",
+      "collectionRole": "primary",
+      "families": [
+        "AP"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Pelvis AP view"
+    },
+    {
+      "caseId": 48083,
+      "author": "Andrew Murphy",
+      "part": "骨盆",
+      "region": "下肢",
+      "partEn": "Pelvis",
+      "notes": "來源列為正常骨盆骨性解剖；骨盆圖可見子宮內避孕器。",
+      "normalEvidence": "原作者將此病例列為正常 X 光範例。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-25120796",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-pelvis-1",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/25120796/db4a95942b726be608f31765c98816_jumbo.jpeg",
+      "view": "Frontal／正位（未細分 AP／PA）",
+      "originalTitle": "normal pelvis 1",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Frontal",
+      "hasAnnotation": false,
+      "image": "images/rp-25120796/image.jpeg",
+      "imageSize": [
+        1024,
+        717
+      ],
+      "imageSha256": "0af9d4a461a868f94b81ffc5b0aac9347c0df7a63bcf299e217f4a755695ecf0",
+      "collectionRole": "candidate",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1024,
+        717
+      ],
+      "title": "Pelvis frontal view"
+    },
+    {
+      "caseId": 39777,
+      "author": "Luke Danaher",
+      "part": "骨盆",
+      "region": "下肢",
+      "partEn": "Pelvis",
+      "notes": "",
+      "normalEvidence": "原作者將此病例列為正常 X 光範例。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-16054653",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-pelvis-adult-judet-views-1",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/16054653/db318054ccbdbb0f1982ff4818699c_jumbo.jpeg",
+      "view": "Frontal／正位（未細分 AP／PA）",
+      "originalTitle": "normal pelvis adult judet views 1",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Frontal",
+      "hasAnnotation": false,
+      "image": "images/rp-16054653/image.jpeg",
+      "imageSize": [
+        1024,
+        886
+      ],
+      "imageSha256": "e9862d000ab2aa4d95fa8c31b0f1a6091ed5b77c233c1392e898f443531f070d",
+      "collectionRole": "candidate",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1024,
+        886
+      ],
+      "title": "Pelvis frontal view"
+    },
+    {
+      "caseId": 48083,
+      "author": "Andrew Murphy",
+      "part": "骨盆",
+      "region": "下肢",
+      "partEn": "Pelvis",
+      "notes": "來源列為正常骨盆骨性解剖；骨盆圖可見子宮內避孕器。",
+      "normalEvidence": "原作者將此病例列為正常 X 光範例。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-25120797",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-pelvis-1",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/25120797/198c3baed3912586e814e9883ab6ec_jumbo.jpeg",
+      "view": "Inlet",
+      "originalTitle": "normal pelvis 1",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Inlet",
+      "hasAnnotation": false,
+      "image": "images/rp-25120797/image.jpeg",
+      "imageSize": [
+        1024,
+        876
+      ],
+      "imageSha256": "2748f481aab94e06af1550ac33f8c1ab1ffe111d78d3f912411dcc02a8efe166",
+      "collectionRole": "candidate",
+      "families": [
+        "Inlet"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1024,
+        876
+      ],
+      "title": "Pelvis inlet view"
+    },
+    {
+      "caseId": 48083,
+      "author": "Andrew Murphy",
+      "part": "骨盆",
+      "region": "下肢",
+      "partEn": "Pelvis",
+      "notes": "來源列為正常骨盆骨性解剖；骨盆圖可見子宮內避孕器。",
+      "normalEvidence": "原作者將此病例列為正常 X 光範例。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-25120798",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-pelvis-1",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/25120798/7828efc0570f5c0e605a120b56055e_jumbo.jpeg",
+      "view": "Outlet",
+      "originalTitle": "normal pelvis 1",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Outlet",
+      "hasAnnotation": false,
+      "image": "images/rp-25120798/image.jpeg",
+      "imageSize": [
+        1024,
+        864
+      ],
+      "imageSha256": "7fa5bce22f87dbacd6b5a032bb37d0ed6dae6d9cf6b06750d690e01867d157f5",
+      "collectionRole": "candidate",
+      "families": [
+        "Outlet"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1024,
+        864
+      ],
+      "title": "Pelvis outlet view"
+    },
+    {
+      "id": "rmc-sacrum-ap",
+      "part": "薦骨",
+      "region": "脊椎",
+      "partEn": "Sacrum",
+      "view": "AP／骨盆局部",
+      "viewFamily": "AP",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_pelvis_sacrum_fracture#top_7th_img",
+      "originalTitle": "Pelvis anatomy - Sacrum - Normal AP",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_spinal/x-ray_pelvis_sacrum_fracture#top_7th_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "弓狀線與薦髂關節；此圖為骨盆正位的薦骨局部。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-sacrum-ap/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/axial-trauma/pelvis_sacrum_normal.jpg?mtime=20210304211355&focal=none",
+      "imageSize": [
+        900,
+        350
+      ],
+      "imageSha256": "954a7dd6c2b28c9c0bf732f1afdb01437b44a0c0ddfa68f912d7c60bb2564388",
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "骶骨 sacrum sacral",
+      "displaySize": [
+        450,
+        350
+      ],
+      "title": "Sacrum AP view"
+    },
+    {
+      "caseId": 2674,
+      "author": "Frank Gaillard",
+      "part": "薦骨",
+      "region": "脊椎",
+      "partEn": "Sacrum",
+      "notes": "來源未註明射束角度。",
+      "normalEvidence": "來源明確說明為正常薦骨平片；側位包含尾骨。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-2828",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-sacrum",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/2828/7aa45557360bada5409958b9a6ff31_jumbo.jpeg",
+      "view": "薦骨正位／Frontal",
+      "originalTitle": "normal sacrum",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Frontal",
+      "hasAnnotation": false,
+      "image": "images/rp-2828/image.jpeg",
+      "imageSize": [
+        992,
+        1024
+      ],
+      "imageSha256": "8bed1ded814691ad4fb6d482526d59b97ef3093f7ccd2bfa319267dba4b36644",
+      "collectionRole": "candidate",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "骶骨 sacrum sacral",
+      "displaySize": [
+        992,
+        1024
+      ],
+      "title": "Sacrum frontal view"
+    },
+    {
+      "caseId": 2674,
+      "author": "Frank Gaillard",
+      "part": "尾骨",
+      "region": "脊椎",
+      "partEn": "Sacrum and coccyx",
+      "notes": "完整呈現薦尾骨側位，可同時對照薦骨與尾骨。",
+      "normalEvidence": "來源明確說明為正常薦骨平片；側位包含尾骨。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-2831",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-sacrum",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/2831/aebb6ae7db594d8cb8c96e670d5513_jumbo.jpeg",
+      "view": "薦骨／尾骨 Lateral",
+      "originalTitle": "normal sacrum",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Lateral",
+      "hasAnnotation": false,
+      "alsoParts": [
+        "薦骨"
+      ],
+      "image": "images/rp-2831/image.jpeg",
+      "imageSize": [
+        992,
+        1024
+      ],
+      "imageSha256": "eb0a5c884f5f47355a7cee6103cf4d20af8df6a86f0ec80f35a8e76fbcb257fb",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "尾椎 coccyx coccygeal tailbone sacrococcygeal 薦骨 骶骨 sacrum sacral",
+      "displaySize": [
+        992,
+        1024
+      ],
+      "title": "Sacrum and coccyx lateral view"
+    },
+    {
+      "id": "tr-hip-ap",
+      "part": "髖關節",
+      "region": "下肢",
+      "partEn": "Hip",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "AP hip X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-hip-ap/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0564.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "4800df271c31ab11c06f7124b2e919e3033a127880b20a1eaacc1449747ea046",
+      "collectionRole": "primary",
+      "families": [
+        "AP"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Hip AP view"
+    },
+    {
+      "id": "tr-hip-lateral",
+      "part": "髖關節",
+      "region": "下肢",
+      "partEn": "Hip",
+      "view": "Lateral（原站未註明細分投照）",
+      "viewFamily": "Lateral",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Lateral hip X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-hip-lateral/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0567.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "6abe77933e528e2138c7a195cb2ab28b6801a208b5931fc57d7e96d927f3c4dc",
+      "collectionRole": "primary",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Hip lateral view"
+    },
+    {
+      "caseId": 79974,
+      "author": "Amanda Er",
+      "part": "股骨",
+      "region": "下肢",
+      "partEn": "Femur",
+      "notes": "臨床有大腿膿瘍；來源指出 X 光骨性表現正常。此圖膝端涵蓋不完整，僅作局部骨性解剖參考，不計為完整股骨系列。",
+      "normalEvidence": "來源稱正常股骨 AP、側位系列；無骨折、骨侵蝕、骨膜反應或軟組織氣體。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-53101705",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-femur-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/53101705/8eabbbeaf5ecacc07695524a45dd9ebabc2098ffabd253acd72cec09822770e4_big_gallery.jpeg",
+      "view": "AP／股骨長段（膝端不完整）",
+      "originalTitle": "normal femur series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "AP",
+      "hasAnnotation": false,
+      "image": "images/rp-53101705/image.jpeg",
+      "imageSize": [
+        517,
+        630
+      ],
+      "imageSha256": "68e8fb5388d41105d64bcd3d34c6db38482f0c2b89d901eca288fd3d75de19d2",
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "大腿 femur",
+      "displaySize": [
+        517,
+        630
+      ],
+      "title": "Femur AP view"
+    },
+    {
+      "caseId": 79974,
+      "author": "Amanda Er",
+      "part": "股骨",
+      "region": "下肢",
+      "partEn": "Femur",
+      "notes": "臨床有大腿膿瘍；來源指出 X 光骨性表現正常。此圖膝端涵蓋不完整，僅作局部骨性解剖參考，不計為完整股骨系列。",
+      "normalEvidence": "來源稱正常股骨 AP、側位系列；無骨折、骨侵蝕、骨膜反應或軟組織氣體。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-53101706",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-femur-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/53101706/a301daef368acf367136bca809ef4e4028864f73850fdb1d7a632ba55734c053_big_gallery.jpeg",
+      "view": "Lateral／股骨長段（膝端不完整）",
+      "originalTitle": "normal femur series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Lateral",
+      "hasAnnotation": false,
+      "image": "images/rp-53101706/image.jpeg",
+      "imageSize": [
+        512,
+        630
+      ],
+      "imageSha256": "a8d93cf5b00d07c438bb2c1fd83d6529d62a61b154b50469ed8eac022ed1a7d2",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "大腿 femur",
+      "displaySize": [
+        512,
+        630
+      ],
+      "title": "Femur lateral view"
+    },
+    {
+      "id": "tr-knee-ap",
+      "part": "膝關節",
+      "region": "下肢",
+      "partEn": "Knee",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "AP knee X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-knee-ap/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0615.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "f4392b2c4415c344b9fb3b98edf673b80a9ef58f8f4668b291af58751bda3394",
+      "collectionRole": "primary",
+      "families": [
+        "AP"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Knee AP view"
+    },
+    {
+      "id": "tr-knee-lateral",
+      "part": "膝關節",
+      "region": "下肢",
+      "partEn": "Knee",
+      "view": "Horizontal-beam lateral",
+      "viewFamily": "Lateral",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Horizontal beam lateral knee X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-knee-lateral/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0616.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "280e50d8e0156307952a15ffa11215e4aaf1454924e9c9b981ba61c7fdb9c478",
+      "collectionRole": "primary",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Knee horizontal-beam lateral view"
+    },
+    {
+      "id": "rmc-patella-skyline",
+      "part": "髕骨",
+      "region": "下肢",
+      "partEn": "Patella",
+      "view": "Skyline／髕骨軸位",
+      "viewFamily": "Skyline",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_lower_limb/knee_x-ray#top_3rd_img",
+      "originalTitle": "Knee - Normal 'Skyline' view",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_lower_limb/knee_x-ray#top_3rd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "原圖箭頭標示髕股關節間隙。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-patella-skyline/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/lower-limb/knee_sunrise.jpg?mtime=20210304211358&focal=none",
+      "imageSize": [
+        900,
+        223
+      ],
+      "imageSha256": "872a2b9e1e470aa317d7b4229de1841846c0bead0d5f3bda3e70a49acec06627",
+      "collectionRole": "candidate",
+      "families": [
+        "Skyline"
+      ],
+      "aliases": "膝蓋 knee patella skyline merchant",
+      "displaySize": [
+        450,
+        223
+      ],
+      "title": "Patella skyline view"
+    },
+    {
+      "id": "mun-tibia-fibula-ap",
+      "part": "脛腓骨",
+      "region": "下肢",
+      "partEn": "Tibia and fibula",
+      "view": "AP",
+      "viewFamily": "AP",
+      "source": "Memorial University",
+      "sourcePage": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf#page=38",
+      "originalTitle": "Tibia and fibula AP",
+      "author": "Memorial University of Newfoundland, Faculty of Medicine",
+      "rights": "來源保留版權；本機個人學習用，未取得公開再散布授權。",
+      "rightsUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "ageGroup": "一般",
+      "annotation": "原頁標示",
+      "normalEvidence": "放射解剖教材中的骨性解剖頁；排除教材中明示關節積液及 CT／MRI 的頁面。",
+      "acquiredDate": "2026-10-08",
+      "notes": "教材第 38 頁原頁轉圖；保留標題、原始標籤與影像對照。",
+      "image": "images/mun-tibia-fibula-ap/image.png",
+      "imageUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "imageSize": [
+        1800,
+        1350
+      ],
+      "imageSha256": "8c0236c7823d9976f2581b8df8484ed571ef764e09e9762650bc4d73abd45034",
+      "pdfPage": 38,
+      "collectionRole": "candidate",
+      "families": [
+        "AP"
+      ],
+      "aliases": "小腿 tibia fibula tibfib",
+      "displaySize": [
+        1800,
+        1350
+      ],
+      "title": "Tibia and fibula AP view"
+    },
+    {
+      "id": "mun-tibia-fibula-lateral",
+      "part": "脛腓骨",
+      "region": "下肢",
+      "partEn": "Tibia and fibula",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Memorial University",
+      "sourcePage": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf#page=39",
+      "originalTitle": "Tibia and fibula Lateral",
+      "author": "Memorial University of Newfoundland, Faculty of Medicine",
+      "rights": "來源保留版權；本機個人學習用，未取得公開再散布授權。",
+      "rightsUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "ageGroup": "一般",
+      "annotation": "原頁標示",
+      "normalEvidence": "放射解剖教材中的骨性解剖頁；排除教材中明示關節積液及 CT／MRI 的頁面。",
+      "acquiredDate": "2026-10-08",
+      "notes": "教材第 39 頁原頁轉圖；保留標題、原始標籤與影像對照。",
+      "image": "images/mun-tibia-fibula-lateral/image.png",
+      "imageUrl": "https://www.med.mun.ca/anatomy/imagedb/radiology/MSK.pdf",
+      "imageSize": [
+        1800,
+        1350
+      ],
+      "imageSha256": "65d2b3f76b350c751e7a2ec7a9aedbd9112183dfc4ec19255f5888518fa15e88",
+      "pdfPage": 39,
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "小腿 tibia fibula tibfib",
+      "displaySize": [
+        1800,
+        1350
+      ],
+      "title": "Tibia and fibula lateral view"
+    },
+    {
+      "id": "tr-ankle-mortise",
+      "part": "踝關節",
+      "region": "下肢",
+      "partEn": "Ankle",
+      "view": "Mortise",
+      "viewFamily": "Mortise",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Ankle mortise X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-ankle-mortise/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0631.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "e0a62a157e9d8e36859867687ea98a7e83d9b58ae4d0bb9077816b2c757ffa2c",
+      "collectionRole": "primary",
+      "families": [
+        "Mortise"
+      ],
+      "aliases": "腳踝 ankle mortise",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Ankle mortise view"
+    },
+    {
+      "id": "tr-ankle-lateral",
+      "part": "踝關節",
+      "region": "下肢",
+      "partEn": "Ankle",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Lateral ankle X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-ankle-lateral/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0632.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "5791dff6f3386994b780aa72420392646afeff191a9f19fadaaaf834caa7d9cc",
+      "collectionRole": "primary",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "腳踝 ankle mortise",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Ankle lateral view"
+    },
+    {
+      "id": "rmc-calcaneus-lateral",
+      "part": "跟骨",
+      "region": "下肢",
+      "partEn": "Calcaneus",
+      "view": "Lateral",
+      "viewFamily": "Lateral",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_lower_limb/calcaneus_fracture_x-ray#top_1st_img",
+      "originalTitle": "Normal calcaneus - Lateral",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_lower_limb/calcaneus_fracture_x-ray#top_1st_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "原圖標示 Böhler angle；為局部重點標示。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-calcaneus-lateral/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/lower-limb/calcaneus_normal.jpg?mtime=20210304211358&focal=none",
+      "imageSize": [
+        900,
+        351
+      ],
+      "imageSha256": "af39e2f8126970e1009fe78f2cd6f3e722fcf28c8c07058d0913ca616e76dd87",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "",
+      "displaySize": [
+        450,
+        351
+      ],
+      "title": "Calcaneus lateral view"
+    },
+    {
+      "caseId": 69095,
+      "author": "Craig Hacking",
+      "part": "跟骨",
+      "region": "下肢",
+      "partEn": "Calcaneus",
+      "notes": "",
+      "normalEvidence": "來源正常跟骨系列；未見骨折，排列正常。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-49857977",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-calcaneum-radiographs",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/49857977/82e347c135961df7c5225c8ead6abb_jumbo.jpeg",
+      "view": "Lateral",
+      "originalTitle": "normal calcaneum radiographs",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Lateral",
+      "hasAnnotation": false,
+      "image": "images/rp-49857977/image.jpeg",
+      "imageSize": [
+        1024,
+        866
+      ],
+      "imageSha256": "28d92f1dc133a205d8f05b4f1016096b626de10693220aade5b296df39f7d5c5",
+      "collectionRole": "candidate",
+      "families": [
+        "Lateral"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1024,
+        866
+      ],
+      "title": "Calcaneus lateral view"
+    },
+    {
+      "id": "rmc-foot-dp-oblique",
+      "part": "足",
+      "region": "下肢",
+      "partEn": "Foot",
+      "view": "DP + Oblique",
+      "viewFamily": "DP + Oblique",
+      "source": "Radiology Masterclass",
+      "sourcePage": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_lower_limb/foot_fracture_x-ray#top_2nd_img",
+      "originalTitle": "Foot X-ray anatomy - DP and Oblique views",
+      "author": "Dr Graham Lloyd-Jones",
+      "rights": "來源保留版權；僅整理為本機個人學習資料，未取得公開再散布授權。",
+      "rightsUrl": "https://www.radiologymasterclass.co.uk/tutorials/musculoskeletal/x-ray_trauma_lower_limb/foot_fracture_x-ray#top_2nd_img",
+      "ageGroup": "一般",
+      "annotation": "可切換標示",
+      "normalEvidence": "原作者正常影像／解剖教學範例。",
+      "acquiredDate": "2026-10-08",
+      "notes": "MC＝內側楔狀骨；IC＝中間楔狀骨；LC＝外側楔狀骨。",
+      "sprite": "horizontal-pair",
+      "image": "images/rmc-foot-dp-oblique/image.jpg",
+      "imageUrl": "https://www.radiologymasterclass.co.uk/images/musculoskeletal-images/lower-limb/foot_normal_2.jpg?mtime=20210304211358&focal=none",
+      "imageSize": [
+        900,
+        494
+      ],
+      "imageSha256": "26466387d241834f4e106245d15fa23ca80366c422db0b14bcb41b4091ad0d16",
+      "collectionRole": "candidate",
+      "families": [
+        "DP",
+        "Oblique"
+      ],
+      "aliases": "",
+      "displaySize": [
+        450,
+        494
+      ],
+      "title": "Foot DP and oblique views"
+    },
+    {
+      "caseId": 37497,
+      "author": "Craig Hacking",
+      "part": "足",
+      "region": "下肢",
+      "partEn": "Foot",
+      "notes": "可見三角骨（os trigonum），為來源註明的附屬骨變異。",
+      "normalEvidence": "來源正常足部系列，未見不透光異物。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-13587841",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-foot-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/13587841/b21fe80fc9f150788c596834789dd60f61c95f208d7244feda4fb42f0ef5c57e_big_gallery.jpeg",
+      "view": "Frontal／正位（未細分 AP／PA）",
+      "originalTitle": "normal foot series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Frontal",
+      "hasAnnotation": false,
+      "image": "images/rp-13587841/image.jpeg",
+      "imageSize": [
+        289,
+        630
+      ],
+      "imageSha256": "fba83cecec9e8d2ef97ae5a4636905482b2994b16a95892162c54237afdde3a1",
+      "collectionRole": "candidate",
+      "families": [
+        "Frontal"
+      ],
+      "aliases": "",
+      "displaySize": [
+        289,
+        630
+      ],
+      "title": "Foot frontal view"
+    },
+    {
+      "id": "tr-foot-oblique",
+      "part": "足",
+      "region": "下肢",
+      "partEn": "Foot",
+      "view": "Oblique",
+      "viewFamily": "Oblique",
+      "source": "The Radiologist",
+      "sourcePage": "https://theradiologist.co.uk/anatomy-gallery/",
+      "originalTitle": "Oblique foot X-Ray anatomy",
+      "author": "The Radiologist / Dr Naveen Sharma",
+      "rights": "僅供個人學習；未經來源許可不可重用或分享。",
+      "rightsUrl": "https://theradiologist.co.uk/anatomy-gallery/",
+      "ageGroup": "一般",
+      "annotation": "原圖標示",
+      "normalEvidence": "原網站 Anatomy Gallery 解剖教學圖；不代表獨立臨床診斷。",
+      "acquiredDate": "2026-10-08",
+      "notes": "",
+      "image": "images/tr-foot-oblique/image.jpeg",
+      "imageUrl": "https://theradiologist.co.uk/wp-content/uploads/2025/09/IMG_0630.jpeg",
+      "imageSize": [
+        1280,
+        1600
+      ],
+      "imageSha256": "e7ce84a30d45080b4c8f868f7d498786b8676f24ac86331134b3713fd2fded1c",
+      "collectionRole": "primary",
+      "families": [
+        "Oblique"
+      ],
+      "aliases": "",
+      "displaySize": [
+        1280,
+        1600
+      ],
+      "title": "Foot oblique view"
+    },
+    {
+      "caseId": 37497,
+      "author": "Craig Hacking",
+      "part": "足",
+      "region": "下肢",
+      "partEn": "Foot",
+      "notes": "可見三角骨（os trigonum），為來源註明的附屬骨變異。",
+      "normalEvidence": "來源正常足部系列，未見不透光異物。",
+      "annotation": "純 X 光",
+      "ageGroup": "成人",
+      "id": "rp-13587844",
+      "source": "Radiopaedia",
+      "sourcePage": "https://radiopaedia.org/cases/normal-foot-series",
+      "imageUrl": "https://prod-images-static.radiopaedia.org/images/13587844/07a8020c571a443aded9feefeb8121273d0517be59802a550119286a456966df_big_gallery.jpeg",
+      "view": "Oblique",
+      "originalTitle": "normal foot series",
+      "acquiredDate": "2026-10-08",
+      "addedBatch": "expanded-views-2026-10-08",
+      "rights": "CC BY-NC-SA 3.0；依 Radiopaedia 條款使用。保留作者、病例 rID 與來源，限本機個人非商業學習。",
+      "rightsUrl": "https://radiopaedia.org/licence",
+      "annotationKind": "none",
+      "viewFamily": "Oblique",
+      "hasAnnotation": false,
+      "image": "images/rp-13587844/image.jpeg",
+      "imageSize": [
+        287,
+        630
+      ],
+      "imageSha256": "1e55578b544bbd9f2cc1ef592b0a492a9ca3c5cf0754d73884e3be24eebd9649",
+      "collectionRole": "candidate",
+      "families": [
+        "Oblique"
+      ],
+      "aliases": "",
+      "displaySize": [
+        287,
+        630
+      ],
+      "title": "Foot oblique view"
+    }
+  ]
+}
