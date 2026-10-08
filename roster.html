@@ -266,6 +266,13 @@ color: #4338ca; /* 深藍色文字 */
                 max-width: 100%;
             }
 
+            /* 每一組平日預班之間增加輕微分隔，避免日期／班別看成同一組 */
+            #workContainer .shift-row + .shift-row {
+                margin-top: 4px;
+                padding-top: 14px;
+                border-top: 1px dashed #a7f3d0;
+            }
+
             #workContainer .work-type {
                 grid-column: 1;
                 width: 100%;
