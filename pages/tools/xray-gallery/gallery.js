@@ -96,13 +96,31 @@
   }
   function show(){
     const item=items[cursor];if(!item)return;
-    const photo=document.createElement('div');photo.className='radiograph'+(item.sprite?' sprite':'');
+    const photo=document.createElement('div');
+    photo.className='radiograph'+(!item.thumbnail&&item.sprite?' sprite':'');
     photo.style.setProperty('--ratio',item.displaySize[0]/item.displaySize[1]);
-    const image=document.createElement('img');image.src=item.image;image.alt=item.title;image.decoding='async';image.draggable=false;
+    const preview=document.createElement('img');
+    preview.src=item.thumbnail||item.image;preview.alt=item.title;preview.decoding='async';preview.draggable=false;
     get('viewer-title').textContent=item.title;
-    photo.append(image);canvas.replaceChildren(photo);zoom=1;stage.scrollTop=0;stage.scrollLeft=0;
-    get('position').textContent=`第 ${cursor+1} 張，共 ${items.length} 張。${image.alt}`;
+    photo.append(preview);canvas.replaceChildren(photo);zoom=1;stage.scrollTop=0;stage.scrollLeft=0;
+    get('position').textContent=`第 ${cursor+1} 張，共 ${items.length} 張。${item.title}`;
     get('previous').disabled=items.length<2;get('next').disabled=items.length<2;resize();
+    const status=get('image-status');status.hidden=true;
+    if(!item.thumbnail)return;
+    status.textContent='載入原圖…';status.hidden=false;photo.setAttribute('aria-busy','true');
+    // This request starts only after opening or navigating to this image.
+    const original=document.createElement('img');
+    original.alt=item.title;original.decoding='async';original.draggable=false;
+    original.onload=()=>{
+      if(canvas.firstElementChild!==photo||!dialog.open)return;
+      photo.classList.toggle('sprite',Boolean(item.sprite));
+      photo.replaceChildren(original);photo.removeAttribute('aria-busy');status.hidden=true;
+    };
+    original.onerror=()=>{
+      if(canvas.firstElementChild!==photo||!dialog.open)return;
+      photo.removeAttribute('aria-busy');status.textContent='原圖載入失敗，請稍後重新開啟。';status.hidden=false;
+    };
+    original.src=item.image;
   }
   function next(delta){if(!items.length)return;cursor=(cursor+delta+items.length)%items.length;show();}
   gallery.addEventListener('click',event=>{
@@ -118,7 +136,7 @@
   canvas.addEventListener('dblclick',event=>{if(event.target.closest('.radiograph'))setZoom(zoom===1?2.5:1);});
   stage.addEventListener('click',event=>{if(event.target===canvas||event.target===stage)dialog.close();});
   stage.addEventListener('wheel',event=>{if(!(event.ctrlKey||event.metaKey))return;event.preventDefault();setZoom(zoom+(event.deltaY<0?.25:-.25));},{passive:false});
-  dialog.addEventListener('close',()=>{document.body.style.overflow='';opener?.focus({preventScroll:true});});
+  dialog.addEventListener('close',()=>{document.body.style.overflow='';canvas.replaceChildren();get('image-status').hidden=true;opener?.focus({preventScroll:true});});
   document.addEventListener('keydown',event=>{
     if(dialog.open){
       if(event.key==='ArrowRight'){event.preventDefault();next(1);}

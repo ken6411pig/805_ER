@@ -33,7 +33,7 @@ docs/
 
 `index.html` 以 iframe 載入 `pages/tools/` 中的工具頁。獨立工具與排班頁僅保留在 `pages/` 或 `pages/tools/`；根目錄舊網址不再提供相容轉址。
 
-正常 X 光圖庫由首頁側欄連到 `pages/tools/xray-gallery/index.html`，以獨立頁面提供完整畫面的大圖瀏覽。`sources.html` 保留圖片來源；`scripts/build-xray-gallery.py` 可從 Git 忽略的個人離線圖庫重新產生網站副本。
+正常 X 光圖庫由首頁側欄連到 `pages/tools/xray-gallery/index.html`，以獨立頁面提供完整畫面的大圖瀏覽。`sources.html` 保留圖片來源；`scripts/build-xray-gallery.py` 可從 Git 忽略的個人離線圖庫重新產生選圖資料與 480 px WebP 快照；網站的 JS/CSS 直接維護於圖庫目錄。列表載入快照，點開或切換大圖時才下載對應原圖；下載期間顯示快照，完成後換成原圖。
 
 工具頁仍保有各自的內嵌 CSS 與 JavaScript，避免不同醫療表單的樣式互相影響。後續若某工具有穩定的共用行為，再抽取成其專屬的 `styles/`、`scripts/` 檔案。
 

@@ -60,3 +60,5 @@ dialog::backdrop{background:#000}
 @media(max-width:650px){.gallery-toolbar{padding:8px 8px 0}.manage-menu{font-size:12px}.manage-options{width:min(270px,calc(100vw - 16px))}.selection-bar{margin:8px 8px 0;padding:8px;gap:8px;font-size:12px}.selection-bar button{padding:8px 10px}.pick-control{top:6px;right:6px}}
 
 .gallery-toolbar{justify-content:space-between;align-items:center;gap:16px}.gallery-links{display:flex;gap:18px;font-size:13px}.gallery-links a{color:#cfd8de;text-decoration:none}.gallery-links a:hover{text-decoration:underline}.gallery-links a:focus-visible{outline:2px solid #dde5e9;outline-offset:4px}
+
+.image-status{position:absolute;z-index:2;left:50%;bottom:74px;transform:translateX(-50%);max-width:calc(100% - 40px);padding:5px 10px;border-radius:4px;background:#10161ee8;color:#dae4eb;font-size:13px;line-height:1.5;text-align:center;pointer-events:none}
